@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ros2_control">
     <!-- Base Link -->
     <link name="base_link">
         <visual>
@@ -116,7 +116,7 @@
     <!-- Individual ros2_control sections for each joint -->
     <ros2_control name="joint1_controller" type="actuator">
         <hardware>
-            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <plugin>arctos_hardware/SingleJointHardware</plugin>
             <param name="can_interface">can0</param>
             <param name="can_id">0x01</param>
         </hardware>
@@ -130,7 +130,7 @@
 
     <ros2_control name="joint2_controller" type="actuator">
         <hardware>
-            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <plugin>arctos_hardware/SingleJointHardware</plugin>
             <param name="can_interface">can0</param>
             <param name="can_id">0x02</param>
         </hardware>
@@ -144,7 +144,7 @@
 
     <ros2_control name="joint3_controller" type="actuator">
         <hardware>
-            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <plugin>arctos_hardware/SingleJointHardware</plugin>
             <param name="can_interface">can0</param>
             <param name="can_id">0x03</param>
         </hardware>
@@ -158,7 +158,7 @@
 
     <ros2_control name="joint4_controller" type="actuator">
         <hardware>
-            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <plugin>arctos_hardware/SingleJointHardware</plugin>
             <param name="can_interface">can0</param>
             <param name="can_id">0x04</param>
         </hardware>
@@ -172,7 +172,7 @@
 
     <ros2_control name="joint5_controller" type="actuator">
         <hardware>
-            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <plugin>arctos_hardware/SingleJointHardware</plugin>
             <param name="can_interface">can0</param>
             <param name="can_id">0x05</param>
         </hardware>
@@ -186,7 +186,7 @@
 
     <ros2_control name="joint6_controller" type="actuator">
         <hardware>
-            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <plugin>arctos_hardware/SingleJointHardware</plugin>
             <param name="can_interface">can0</param>
             <param name="can_id">0x06</param>
         </hardware>

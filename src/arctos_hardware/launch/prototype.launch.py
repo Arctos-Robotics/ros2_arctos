@@ -9,10 +9,10 @@ from launch_ros.parameter_descriptions import ParameterValue
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
-    pkg_dir = get_package_share_directory('my_robot_hardware')
+    pkg_dir = get_package_share_directory('arctos_hardware')
     
     # Get URDF via xacro
-    urdf_file = os.path.join(pkg_dir, 'urdf', 'my_robot.urdf.xacro')
+    urdf_file = os.path.join(pkg_dir, 'urdf', 'prototype.urdf.xacro')
     robot_description = ParameterValue(
         Command(['xacro ', urdf_file]),
         value_type=str

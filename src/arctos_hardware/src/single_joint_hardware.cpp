@@ -1,7 +1,7 @@
-#include "my_robot_hardware/single_joint_hardware.hpp"
+#include "arctos_hardware/single_joint_hardware.hpp"
 #include <chrono>
 
-namespace my_robot_hardware
+namespace arctos_hardware
 {
 
 hardware_interface::CallbackReturn SingleJointHardware::on_init(
@@ -134,8 +134,8 @@ hardware_interface::return_type SingleJointHardware::write(
   return hardware_interface::return_type::OK;
 }
 
-}  // namespace my_robot_hardware
+}  // namespace arctos_hardware
 
 #include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(
-  my_robot_hardware::SingleJointHardware, hardware_interface::ActuatorInterface)
+  arctos_hardware::SingleJointHardware, hardware_interface::ActuatorInterface)

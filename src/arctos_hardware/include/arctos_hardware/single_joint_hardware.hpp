@@ -1,5 +1,6 @@
-#ifndef MY_ROBOT_HARDWARE__ARM_SYSTEM_HARDWARE_HPP_
-#define MY_ROBOT_HARDWARE__ARM_SYSTEM_HARDWARE_HPP_
+// include/arctos_hardware/single_joint_hardware.hpp
+#ifndef MY_ROBOT_HARDWARE__SINGLE_JOINT_HARDWARE_HPP_
+#define MY_ROBOT_HARDWARE__SINGLE_JOINT_HARDWARE_HPP_
 
 #include <memory>
 #include <string>
@@ -16,13 +17,13 @@
 #include "rclcpp_lifecycle/state.hpp"
 #include "can_msgs/msg/frame.hpp"
 
-namespace my_robot_hardware
+namespace arctos_hardware
 {
 
-class ArmSystemHardware : public hardware_interface::ActuatorInterface
+class SingleJointHardware : public hardware_interface::ActuatorInterface
 {
 public:
-  RCLCPP_SHARED_PTR_DEFINITIONS(ArmSystemHardware)
+  RCLCPP_SHARED_PTR_DEFINITIONS(SingleJointHardware)
 
   hardware_interface::CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
   
@@ -36,20 +37,26 @@ public:
   hardware_interface::return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
 private:
-  std::vector<double> hw_commands_;
-  std::vector<double> hw_positions_;
-  std::vector<double> hw_velocities_;
-  std::vector<double> hw_efforts_;
+  // Hardware parameters
+  uint32_t can_id_;
+  std::string can_interface_;
   
+  // State and command interfaces
+  double hw_position_;
+  double hw_velocity_;
+  double hw_effort_;
+  double hw_command_;
+  
+  // ROS2 communication
   std::shared_ptr<rclcpp::Node> can_node_;
   rclcpp::Publisher<can_msgs::msg::Frame>::SharedPtr can_pub_;
   rclcpp::Subscription<can_msgs::msg::Frame>::SharedPtr can_sub_;
-  std::vector<uint32_t> can_ids_;
-  std::string can_interface_;
 
+  // CAN message handling
   void canCallback(const can_msgs::msg::Frame::SharedPtr msg);
+  bool validateCanId(const can_msgs::msg::Frame::SharedPtr msg) const;
 };
 
-}  // namespace my_robot_hardware
+}  // namespace arctos_hardware
 
 #endif

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>my_robot_hardware</name>
+  <name>arctos_hardware</name>
   <version>0.1.0</version>
   <description>Hardware interface for 6-DOF robot arm using ros2_socketcan</description>
   <maintainer email="your_email@example.com">Your Name</maintainer>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(my_robot_hardware)
+project(arctos_hardware)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -39,7 +39,7 @@ ament_target_dependencies(
 )
 
 # Export hardware plugin
-pluginlib_export_plugin_description_file(hardware_interface robot_hardware.xml)
+pluginlib_export_plugin_description_file(hardware_interface single_actuator_interface.xml)
 
 # Install
 install(
