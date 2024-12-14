@@ -27,7 +27,7 @@ endforeach()
 add_library(
   arctos_hardware
   SHARED
-  hardware/rrbot_actuator.cpp
+  hardware/arctos_actuator.cpp
 )
 target_compile_features(arctos_hardware PUBLIC cxx_std_17)
 target_include_directories(arctos_hardware PUBLIC

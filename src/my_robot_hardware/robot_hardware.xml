@@ -1,0 +1,9 @@
+<library path="my_robot_hardware">
+  <class name="my_robot_hardware/SingleJointHardware"
+         type="my_robot_hardware::SingleJointHardware"
+         base_class_type="hardware_interface::ActuatorInterface">
+    <description>
+      Hardware interface for single MKS servo actuator using CAN communication
+    </description>
+  </class>
+</library>

@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot">
+    <!-- Base Link -->
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.1" length="0.1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Link 1 -->
+    <link name="link1">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Link 2 -->
+    <link name="link2">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Link 3 -->
+    <link name="link3">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.2"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Link 4 -->
+    <link name="link4">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.15"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Link 5 -->
+    <link name="link5">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Link 6 -->
+    <link name="link6">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Joints -->
+    <joint name="joint1" type="revolute">
+        <parent link="base_link"/>
+        <child link="link1"/>
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-3.14" upper="3.14" effort="100" velocity="1"/>
+    </joint>
+
+    <joint name="joint2" type="revolute">
+        <parent link="link1"/>
+        <child link="link2"/>
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-3.14" upper="3.14" effort="100" velocity="1"/>
+    </joint>
+
+    <joint name="joint3" type="revolute">
+        <parent link="link2"/>
+        <child link="link3"/>
+        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-3.14" upper="3.14" effort="100" velocity="1"/>
+    </joint>
+
+    <joint name="joint4" type="revolute">
+        <parent link="link3"/>
+        <child link="link4"/>
+        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-3.14" upper="3.14" effort="100" velocity="1"/>
+    </joint>
+
+    <joint name="joint5" type="revolute">
+        <parent link="link4"/>
+        <child link="link5"/>
+        <origin xyz="0 0 0.15" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-3.14" upper="3.14" effort="100" velocity="1"/>
+    </joint>
+
+    <joint name="joint6" type="revolute">
+        <parent link="link5"/>
+        <child link="link6"/>
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-3.14" upper="3.14" effort="100" velocity="1"/>
+    </joint>
+
+    <!-- ROS2 Control -->
+    <!-- Individual ros2_control sections for each joint -->
+    <ros2_control name="joint1_controller" type="actuator">
+        <hardware>
+            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <param name="can_interface">can0</param>
+            <param name="can_id">0x01</param>
+        </hardware>
+        <joint name="joint1">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+    </ros2_control>
+
+    <ros2_control name="joint2_controller" type="actuator">
+        <hardware>
+            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <param name="can_interface">can0</param>
+            <param name="can_id">0x02</param>
+        </hardware>
+        <joint name="joint2">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+    </ros2_control>
+
+    <ros2_control name="joint3_controller" type="actuator">
+        <hardware>
+            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <param name="can_interface">can0</param>
+            <param name="can_id">0x03</param>
+        </hardware>
+        <joint name="joint3">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+    </ros2_control>
+
+    <ros2_control name="joint4_controller" type="actuator">
+        <hardware>
+            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <param name="can_interface">can0</param>
+            <param name="can_id">0x04</param>
+        </hardware>
+        <joint name="joint4">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+    </ros2_control>
+
+    <ros2_control name="joint5_controller" type="actuator">
+        <hardware>
+            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <param name="can_interface">can0</param>
+            <param name="can_id">0x05</param>
+        </hardware>
+        <joint name="joint5">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+    </ros2_control>
+
+    <ros2_control name="joint6_controller" type="actuator">
+        <hardware>
+            <plugin>my_robot_hardware/SingleJointHardware</plugin>
+            <param name="can_interface">can0</param>
+            <param name="can_id">0x06</param>
+        </hardware>
+        <joint name="joint6">
+            <command_interface name="position"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+            <state_interface name="effort"/>
+        </joint>
+    </ros2_control>
+    <!-- Repeat for joints 3-6 -->
+</robot>
