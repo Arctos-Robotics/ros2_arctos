@@ -38,15 +38,3 @@ _Optional: Suggest a fix or reason for the bug if you have an idea._
 
 ### **Additional Context**
 _Add any other context about the problem here._
-
----
-
-### **Checklist**
-Before submitting the bug report, please confirm:
-
-- [ ] I have found none for similar issues in the repository.
-- [ ] I have included a clear and detailed description of the bug.
-- [ ] I have provided steps to reproduce the issue.
-- [ ] I have included all relevant details, logs, and screenshots (if applicable).
-
----

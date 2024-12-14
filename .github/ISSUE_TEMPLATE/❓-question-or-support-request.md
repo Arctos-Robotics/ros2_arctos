@@ -29,14 +29,3 @@ _Provide details about the environment where the issue occurred:_
 
 ### **Additional Context**
 _Add any other context, screenshots, or links to documentation that might be helpful._
-
----
-
-### **Checklist**
-Before submitting your question or support request, please confirm:
-
-- [ ] I have searched the repository for similar questions or issues.
-- [ ] I have described my question or issue clearly and concisely.
-- [ ] I have provided all relevant details, environment information, and any steps taken.
-
----

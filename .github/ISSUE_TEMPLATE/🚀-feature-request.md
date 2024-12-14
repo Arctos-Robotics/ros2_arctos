@@ -24,14 +24,3 @@ _Have you considered any alternative solutions? If so, please describe them and 
 
 ### **Additional Context**
 _Include any other information, screenshots, or links that might help clarify the request._
-
----
-
-### **Checklist**
-Before submitting this feature request, please confirm:
-
-- [ ] I have checked for existing feature requests and this is not a duplicate.
-- [ ] I have provided a clear and detailed explanation of the feature.
-- [ ] I have described the use cases and benefits of this feature.
-
----
