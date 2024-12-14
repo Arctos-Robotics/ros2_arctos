@@ -41,7 +41,7 @@ from launch_testing.actions import ReadyToTest
 # import launch_testing.markers
 import rclpy
 from rclpy.node import Node
-from ros2_control_demo_testing.test_utils import (
+from arctos_testing.test_utils import (
     check_controllers_running,
     check_if_js_published,
     check_node_running,
@@ -54,7 +54,7 @@ def generate_test_description():
     launch_include = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory("ros2_control_demo_example_6"),
+                get_package_share_directory("arctos_hardware"),
                 "launch/rrbot_modular_actuators.launch.py",
             )
         ),

@@ -1,4 +1,4 @@
-# Copyright (c) 2022 FZI Forschungszentrum Informatik
+# Copyright (c) 2024 AIT - Austrian Institute of Technology GmbH
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -26,29 +26,28 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# Author: Lukas Sackewitz
+# Author: Christoph Froehlich
 
-import os
-import pytest
+from setuptools import find_packages, setup
 
-from ament_index_python.packages import get_package_share_directory
-from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch_testing.actions import ReadyToTest
+package_name = "arctos_testing"
 
-
-# Executes the given launch file and checks if all nodes can be started
-@pytest.mark.rostest
-def generate_test_description():
-    launch_include = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(
-                get_package_share_directory("arctos_hardware"),
-                "launch/view_robot.launch.py",
-            )
-        ),
-        launch_arguments={"gui": "true"}.items(),
-    )
-
-    return LaunchDescription([launch_include, ReadyToTest()])
+setup(
+    name=package_name,
+    version="0.0.0",
+    packages=find_packages(exclude=["test"]),
+    data_files=[
+        ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
+        ("share/" + package_name, ["package.xml"]),
+    ],
+    install_requires=["setuptools"],
+    zip_safe=True,
+    maintainer="Christoph Froehlich",
+    maintainer_email="christoph.froehlich@ait.ac.at",
+    description="Utilities for launch testing",
+    license="Apache-2.0",
+    tests_require=["pytest"],
+    entry_points={
+        "console_scripts": [],
+    },
+)

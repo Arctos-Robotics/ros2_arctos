@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(ros2_control_demo_example_6 LANGUAGES CXX)
+project(arctos_hardware LANGUAGES CXX)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
   add_compile_options(-Wall -Wextra)
@@ -25,38 +25,38 @@ endforeach()
 
 ## COMPILE
 add_library(
-  ros2_control_demo_example_6
+  arctos_hardware
   SHARED
   hardware/rrbot_actuator.cpp
 )
-target_compile_features(ros2_control_demo_example_6 PUBLIC cxx_std_17)
-target_include_directories(ros2_control_demo_example_6 PUBLIC
+target_compile_features(arctos_hardware PUBLIC cxx_std_17)
+target_include_directories(arctos_hardware PUBLIC
 $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/hardware/include>
-$<INSTALL_INTERFACE:include/ros2_control_demo_example_6>
+$<INSTALL_INTERFACE:include/arctos_hardware>
 )
 ament_target_dependencies(
-  ros2_control_demo_example_6 PUBLIC
+  arctos_hardware PUBLIC
   ${THIS_PACKAGE_INCLUDE_DEPENDS}
 )
 
 # Export hardware plugins
-pluginlib_export_plugin_description_file(hardware_interface ros2_control_demo_example_6.xml)
+pluginlib_export_plugin_description_file(hardware_interface arctos_hardware_plugin.xml)
 
 # INSTALL
 install(
   DIRECTORY hardware/include/
-  DESTINATION include/ros2_control_demo_example_6
+  DESTINATION include/arctos_hardware
 )
 install(
   DIRECTORY description/launch description/ros2_control description/urdf
-  DESTINATION share/ros2_control_demo_example_6
+  DESTINATION share/arctos_hardware
 )
 install(
   DIRECTORY bringup/launch bringup/config
-  DESTINATION share/ros2_control_demo_example_6
+  DESTINATION share/arctos_hardware
 )
-install(TARGETS ros2_control_demo_example_6
-  EXPORT export_ros2_control_demo_example_6
+install(TARGETS arctos_hardware
+  EXPORT export_arctos_hardware
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
@@ -65,12 +65,12 @@ install(TARGETS ros2_control_demo_example_6
 if(BUILD_TESTING)
   find_package(ament_cmake_pytest REQUIRED)
 
-  ament_add_pytest_test(example_6_urdf_xacro test/test_urdf_xacro.py)
-  ament_add_pytest_test(view_example_6_launch test/test_view_robot_launch.py)
-  ament_add_pytest_test(run_example_6_launch test/test_rrbot_modular_actuators_launch.py)
+  ament_add_pytest_test(arctos_hardware_urdf_xacro test/test_urdf_xacro.py)
+  ament_add_pytest_test(view_arctos_hardware_launch test/test_view_robot_launch.py)
+  ament_add_pytest_test(run_arctos_hardware_launch test/test_rrbot_modular_actuators_launch.py)
 endif()
 
 ## EXPORTS
-ament_export_targets(export_ros2_control_demo_example_6 HAS_LIBRARY_TARGET)
+ament_export_targets(export_arctos_hardware HAS_LIBRARY_TARGET)
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
 ament_package()

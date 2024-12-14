@@ -30,3 +30,10 @@
 *.exe
 *.out
 *.app
+
+# colcon/CMake output
+build
+install
+log
+
+.catkin_workspace

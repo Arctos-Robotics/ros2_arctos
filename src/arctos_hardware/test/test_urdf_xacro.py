@@ -38,7 +38,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def test_urdf_xacro():
     # General Arguments
-    description_package = "ros2_control_demo_example_6"
+    description_package = "arctos_hardware"
     description_file = "rrbot_modular_actuators.urdf.xacro"
 
     description_file_path = os.path.join(

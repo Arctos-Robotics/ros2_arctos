@@ -1,6 +1,6 @@
-:github_url: https://github.com/ros-controls/ros2_control_demos/blob/{REPOS_FILE_BRANCH}/example_6/doc/userdoc.rst
+:github_url: https://github.com/ros-controls/ros2_control_demos/blob/{REPOS_FILE_BRANCH}/arctos_hardware/doc/userdoc.rst
 
-.. _ros2_control_demos_example_6_userdoc:
+.. _ros2_control_demos_arctos_hardware_userdoc:
 
 ***********************************************************************
 Example 6: Modular Robots with separate communication to each actuator
@@ -23,7 +23,7 @@ Tutorial steps
 
    .. code-block:: shell
 
-    ros2 launch ros2_control_demo_example_6 view_robot.launch.py
+    ros2 launch arctos_hardware view_robot.launch.py
 
    .. note::
 
@@ -36,7 +36,7 @@ Tutorial steps
 
    .. code-block:: shell
 
-    ros2 launch ros2_control_demo_example_6 rrbot_modular_actuators.launch.py
+    ros2 launch arctos_hardware rrbot_modular_actuators.launch.py
 
    The launch file loads and starts the robot hardware, controllers and opens *RViz*.
    In starting terminal you will see a lot of output from the hardware implementation showing its internal states.
@@ -75,14 +75,14 @@ Tutorial steps
     Hardware Component 1
             name: RRBotModularJoint2
             type: actuator
-            plugin name: ros2_control_demo_example_6/RRBotModularJoint
+            plugin name: arctos_hardware/RRBotModularJoint
             state: id=3 label=active
             command interfaces
                     joint2/position [available] [claimed]
     Hardware Component 2
             name: RRBotModularJoint1
             type: actuator
-            plugin name: ros2_control_demo_example_6/RRBotModularJoint
+            plugin name: arctos_hardware/RRBotModularJoint
             state: id=3 label=active
             command interfaces
                     joint1/position [available] [claimed]
@@ -112,7 +112,7 @@ Tutorial steps
 
       .. code-block:: shell
 
-        ros2 launch ros2_control_demo_example_6 test_forward_position_controller.launch.py
+        ros2 launch arctos_hardware test_forward_position_controller.launch.py
 
    You should now see orange and yellow blocks moving in *RViz*.
    Also, you should see changing states in the terminal where launch file is started, e.g.
@@ -128,16 +128,16 @@ Tutorial steps
 Files used for this demos
 --------------------------
 
-* Launch file: `rrbot_modular_actuators.launch.py <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/example_6/bringup/launch/rrbot_modular_actuators.launch.py>`__
-* Controllers yaml: `rrbot_modular_actuators.yaml <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/example_6/bringup/config/rrbot_modular_actuators.yaml>`__
-* URDF: `rrbot_modular_actuators.urdf.xacro <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/example_6/description/urdf/rrbot_modular_actuators.urdf.xacro>`__
+* Launch file: `rrbot_modular_actuators.launch.py <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/arctos_hardware/bringup/launch/rrbot_modular_actuators.launch.py>`__
+* Controllers yaml: `rrbot_modular_actuators.yaml <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/arctos_hardware/bringup/config/rrbot_modular_actuators.yaml>`__
+* URDF: `rrbot_modular_actuators.urdf.xacro <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/arctos_hardware/description/urdf/rrbot_modular_actuators.urdf.xacro>`__
 
-  * Description: `rrbot_description.urdf.xacro <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/ros2_control_demo_description/rrbot/urdf/rrbot_description.urdf.xacro>`__
-  * ``ros2_control`` URDF tag: `rrbot_modular_actuators.ros2_control.xacro <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/example_6/description/ros2_control/rrbot_modular_actuators.ros2_control.xacro>`__
+  * Description: `rrbot_description.urdf.xacro <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/arctos_description/rrbot/urdf/rrbot_description.urdf.xacro>`__
+  * ``ros2_control`` URDF tag: `rrbot_modular_actuators.ros2_control.xacro <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/arctos_hardware/description/ros2_control/rrbot_modular_actuators.ros2_control.xacro>`__
 
-* RViz configuration: `rrbot.rviz <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/ros2_control_demo_description/rrbot/rviz/rrbot.rviz>`__
+* RViz configuration: `rrbot.rviz <https://github.com/ros-controls/ros2_control_demos/tree/{REPOS_FILE_BRANCH}/arctos_description/rrbot/rviz/rrbot.rviz>`__
 
-* Hardware interface plugin: `rrbot_actuator.cpp <https://github.com/ros-controls/ros2_control_demos/blob/{REPOS_FILE_BRANCH}/example_6/hardware/rrbot_actuator.cpp>`__
+* Hardware interface plugin: `rrbot_actuator.cpp <https://github.com/ros-controls/ros2_control_demos/blob/{REPOS_FILE_BRANCH}/arctos_hardware/hardware/rrbot_actuator.cpp>`__
 
 Controllers from this demo
 --------------------------

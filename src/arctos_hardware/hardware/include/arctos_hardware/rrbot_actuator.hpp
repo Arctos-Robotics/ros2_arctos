@@ -16,8 +16,8 @@
 // Authors: Subhas Das, Denis Stogl
 //
 
-#ifndef ROS2_CONTROL_DEMO_EXAMPLE_6__RRBOT_ACTUATOR_HPP_
-#define ROS2_CONTROL_DEMO_EXAMPLE_6__RRBOT_ACTUATOR_HPP_
+#ifndef ARCTOS_HARDWARE__RRBOT_ACTUATOR_HPP_
+#define ARCTOS_HARDWARE__RRBOT_ACTUATOR_HPP_
 
 #include <memory>
 #include <string>
@@ -32,7 +32,7 @@
 #include "rclcpp/logger.hpp"
 #include "rclcpp/macros.hpp"
 
-namespace ros2_control_demo_example_6
+namespace arctos_hardware
 {
 class RRBotModularJoint : public hardware_interface::ActuatorInterface
 {
@@ -85,6 +85,6 @@ private:
   double hw_joint_state_;
 };
 
-}  // namespace ros2_control_demo_example_6
+}  // namespace arctos_hardware
 
-#endif  // ROS2_CONTROL_DEMO_EXAMPLE_6__RRBOT_ACTUATOR_HPP_
+#endif  // ARCTOS_HARDWARE__RRBOT_ACTUATOR_HPP_
