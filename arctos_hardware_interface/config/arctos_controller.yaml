@@ -1,0 +1,11 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 50 # Hz
+
+    # Joint state broadcaster exposes the current joint states
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # List the controllers names and node sources
+    arctos_controller:
+      type: arctos_controller/ArctosController
