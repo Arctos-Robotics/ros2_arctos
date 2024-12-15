@@ -1,6 +1,5 @@
-// include/arctos_hardware/single_joint_hardware.hpp
-#ifndef MY_ROBOT_HARDWARE__SINGLE_JOINT_HARDWARE_HPP_
-#define MY_ROBOT_HARDWARE__SINGLE_JOINT_HARDWARE_HPP_
+#ifndef ARCTOS_HARDWARE__SINGLE_JOINT_HARDWARE_HPP_
+#define ARCTOS_HARDWARE__SINGLE_JOINT_HARDWARE_HPP_
 
 #include <memory>
 #include <string>
