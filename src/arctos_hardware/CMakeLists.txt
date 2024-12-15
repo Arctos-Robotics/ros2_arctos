@@ -1,76 +1,83 @@
-cmake_minimum_required(VERSION 3.16)
-project(arctos_hardware LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.8)
+project(arctos_hardware)
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
-  add_compile_options(-Wall -Wextra)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# set the same behavior for windows as it is on linux
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+# Find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(hardware_interface REQUIRED)
+find_package(pluginlib REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(can_msgs REQUIRED)
+find_package(ros2_socketcan REQUIRED)
 
-# find dependencies
-set(THIS_PACKAGE_INCLUDE_DEPENDS
+# Add the hardware interface library
+add_library(
+  ${PROJECT_NAME}
+  SHARED
+  src/single_joint_hardware.cpp
+)
+
+target_include_directories(
+  ${PROJECT_NAME}
+  PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+
+ament_target_dependencies(
+  ${PROJECT_NAME}
   hardware_interface
   pluginlib
   rclcpp
   rclcpp_lifecycle
+  can_msgs
+  ros2_socketcan
 )
 
-# find dependencies
-find_package(backward_ros REQUIRED)
-find_package(ament_cmake REQUIRED)
-foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
-  find_package(${Dependency} REQUIRED)
-endforeach()
+# Export hardware plugin
+pluginlib_export_plugin_description_file(hardware_interface single_actuator_interface.xml)
 
-## COMPILE
-add_library(
-  arctos_hardware
-  SHARED
-  hardware/rrbot_actuator.cpp
-)
-target_compile_features(arctos_hardware PUBLIC cxx_std_17)
-target_include_directories(arctos_hardware PUBLIC
-$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/hardware/include>
-$<INSTALL_INTERFACE:include/arctos_hardware>
-)
-ament_target_dependencies(
-  arctos_hardware PUBLIC
-  ${THIS_PACKAGE_INCLUDE_DEPENDS}
-)
-
-# Export hardware plugins
-pluginlib_export_plugin_description_file(hardware_interface arctos_hardware_plugin.xml)
-
-# INSTALL
+# Install
 install(
-  DIRECTORY hardware/include/
-  DESTINATION include/arctos_hardware
-)
-install(
-  DIRECTORY description/launch description/ros2_control description/urdf
-  DESTINATION share/arctos_hardware
-)
-install(
-  DIRECTORY bringup/launch bringup/config
-  DESTINATION share/arctos_hardware
-)
-install(TARGETS arctos_hardware
-  EXPORT export_arctos_hardware
+  TARGETS ${PROJECT_NAME}
+  RUNTIME DESTINATION bin
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
 )
 
-if(BUILD_TESTING)
-  find_package(ament_cmake_pytest REQUIRED)
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
 
-  ament_add_pytest_test(arctos_hardware_urdf_xacro test/test_urdf_xacro.py)
-  ament_add_pytest_test(view_arctos_hardware_launch test/test_view_robot_launch.py)
-  ament_add_pytest_test(run_arctos_hardware_launch test/test_rrbot_modular_actuators_launch.py)
-endif()
+install(
+  DIRECTORY
+    config
+    launch
+    urdf
+  DESTINATION share/${PROJECT_NAME}
+)
 
-## EXPORTS
-ament_export_targets(export_arctos_hardware HAS_LIBRARY_TARGET)
-ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
+# Export dependencies
+ament_export_include_directories(
+  include
+)
+
+ament_export_libraries(
+  ${PROJECT_NAME}
+)
+
+ament_export_dependencies(
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  can_msgs
+  ros2_socketcan
+)
+
 ament_package()
