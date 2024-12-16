@@ -12,7 +12,7 @@ find_package(rclcpp REQUIRED)
 find_package(can_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
-# Create a library for the motor driver
+# Create a shared library for the motor driver
 add_library(arctos_motor_driver SHARED
   src/motor_driver.cpp
 )
@@ -32,8 +32,7 @@ ament_target_dependencies(arctos_motor_driver
 )
 
 # Install the library
-install(TARGETS
-  arctos_motor_driver
+install(TARGETS arctos_motor_driver
   EXPORT export_arctos_motor_driver
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
@@ -45,15 +44,15 @@ install(DIRECTORY include/
   DESTINATION include
 )
 
-# Install config directory
+# Install config directory if needed
 install(DIRECTORY config/
   DESTINATION share/${PROJECT_NAME}/
 )
 
-# Export library
+# Export the include directories and targets
 ament_export_include_directories(include)
 ament_export_targets(export_arctos_motor_driver HAS_LIBRARY_TARGET)
 ament_export_dependencies(rclcpp can_msgs sensor_msgs)
 
-# Export package information
+# Declare the package
 ament_package()

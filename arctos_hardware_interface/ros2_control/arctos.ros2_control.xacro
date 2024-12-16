@@ -9,7 +9,7 @@
         <plugin>libarctos_interface.so</plugin>
       </hardware>
 
-      <joint name="joint_1">
+      <joint name="X_joint">
         <command_interface name="position">
           <param name="min">{-2*pi}</param>
           <param name="max">{2*pi}</param>
@@ -24,7 +24,7 @@
         <state_interface name="velocity"/>
       </joint>
 
-      <joint name="joint_2">
+      <joint name="Y_joint">
         <command_interface name="position">
           <param name="min">{-2*pi}</param>
           <param name="max">{2*pi}</param>
@@ -39,7 +39,7 @@
         <state_interface name="velocity"/>
       </joint>
 
-      <joint name="joint_3">
+      <joint name="Z_joint">
         <command_interface name="position">
           <param name="min">{-pi}</param>
           <param name="max">{pi}</param>
@@ -54,7 +54,7 @@
         <state_interface name="velocity"/>
       </joint>
 
-      <joint name="joint_4">
+      <joint name="A_joint">
         <command_interface name="position">
           <param name="min">{-2*pi}</param>
           <param name="max">{2*pi}</param>
@@ -69,7 +69,7 @@
         <state_interface name="velocity"/>
       </joint>
 
-      <joint name="joint_5">
+      <joint name="B_joint">
         <command_interface name="position">
           <param name="min">{-2*pi}</param>
           <param name="max">{2*pi}</param>
@@ -84,7 +84,7 @@
         <state_interface name="velocity"/>
       </joint>
 
-      <joint name="joint_6">
+      <joint name="C_joint">
         <command_interface name="position">
           <param name="min">{-2*pi}</param>
           <param name="max">{2*pi}</param>

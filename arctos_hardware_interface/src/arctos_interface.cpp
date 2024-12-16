@@ -1,10 +1,10 @@
-#include "ros2_control_demo_example_7/r6bot_hardware.hpp"
+#include "arctos_hardware_interface/arctos_interface.hpp"
 #include <string>
 #include <vector>
 
-namespace ros2_control_demo_example_7
+namespace arctos_interface
 {
-CallbackReturn RobotSystem::on_init(const hardware_interface::HardwareInfo & info)
+CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo & info)
 {
   if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS)
   {
@@ -32,7 +32,7 @@ CallbackReturn RobotSystem::on_init(const hardware_interface::HardwareInfo & inf
   return CallbackReturn::SUCCESS;
 }
 
-std::vector<hardware_interface::StateInterface> RobotSystem::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> ArctosInterface::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
 
@@ -58,7 +58,7 @@ std::vector<hardware_interface::StateInterface> RobotSystem::export_state_interf
   return state_interfaces;
 }
 
-std::vector<hardware_interface::CommandInterface> RobotSystem::export_command_interfaces()
+std::vector<hardware_interface::CommandInterface> ArctosInterface::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
 
@@ -84,25 +84,26 @@ std::vector<hardware_interface::CommandInterface> RobotSystem::export_command_in
   return command_interfaces;
 }
 
-return_type RobotSystem::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
+return_type ArctosInterface::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
 {
   // TODO(pac48) set sensor_states_ values from subscriber
 
-  for (auto i = 0ul; i < joint_velocities_command_.size(); i++)
-  {
-    joint_velocities_[i] = joint_velocities_command_[i];
-    joint_position_[i] += joint_velocities_command_[i] * period.seconds();
-  }
+  // for (auto i = 0ul; i < joint_velocities_command_.size(); i++)
+  // {
+  //   joint_velocities_[i] = joint_velocities_command_[i];
+  //   joint_position_[i] += joint_velocities_command_[i] * period.seconds();
+  // }
 
-  for (auto i = 0ul; i < joint_position_command_.size(); i++)
-  {
-    joint_position_[i] = joint_position_command_[i];
-  }
+  // for (auto i = 0ul; i < joint_position_command_.size(); i++)
+  // {
+  //   // joint_position_[i] = joint_position_command_[i];
+  //   joint_position[i] = MotorDriver::publishJointState()
+  // }
 
   return return_type::OK;
 }
 
-return_type RobotSystem::write(const rclcpp::Time &, const rclcpp::Duration &)
+return_type ArctosInterface::write(const rclcpp::Time &, const rclcpp::Duration &)
 {
   return return_type::OK;
 }
@@ -112,4 +113,4 @@ return_type RobotSystem::write(const rclcpp::Time &, const rclcpp::Duration &)
 #include "pluginlib/class_list_macros.hpp"
 
 PLUGINLIB_EXPORT_CLASS(
-  ros2_control_demo_example_7::RobotSystem, hardware_interface::SystemInterface)
+  arctos_interface::ArctosInterface, hardware_interface::SystemInterface)

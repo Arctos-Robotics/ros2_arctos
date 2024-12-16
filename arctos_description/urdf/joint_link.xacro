@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arctos">
+
+  <xacro:macro name="arctos_link"
+    params="name origin_xyz origin_rpy material_name inertia_origin_xyz inertia_origin_rpy mass ixx iyy izz ixy iyz ixz">
+    <link name="${name}">
+      <visual>
+        <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+        <geometry>
+          <mesh filename="package://arctos_description/meshes/${name}.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="${material_name}" />
+      </visual>
+      <collision>
+        <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+        <geometry>
+          <mesh filename="package://arctos_description/meshes/${name}.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="${inertia_origin_xyz}" rpy="${inertia_origin_rpy}" />
+        <mass value="${mass}" />
+        <inertia ixx="${ixx}" iyy="${iyy}" izz="${izz}" ixy="${ixy}" iyz="${iyz}" ixz="${ixz}" />
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="arctos_joint"
+    params="name type parent child origin_xyz origin_rpy axis_xyz limit_u limit_l limit_e limit_v">
+    <joint name="${name}" type="${type}">
+      <parent link="${parent}" />
+      <child link="${child}" />
+      <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+      <axis xyz="${axis_xyz}" />
+      <limit upper="${limit_u}" lower="${limit_l}" effort="${limit_e}" velocity="${limit_v}" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="arctos_control" params="name can_id limit_u limit_l">
+  <ros2_control name="arctos" type="system">
+    <hardware>
+      <plugin>arctos_interface/ArctosInterface</plugin>
+    </hardware>
+    <joint name="X_joint">
+      <command_interface name="position">
+        <param name="min">{-2*pi}</param>
+        <param name="max">{2*pi}</param>
+      </command_interface>
+      <command_interface name="velocity">
+        <param name="min">-3.15</param>
+        <param name="max">3.15</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="Y_joint">
+      <command_interface name="position">
+        <param name="min">{-2*pi}</param>
+        <param name="max">{2*pi}</param>
+      </command_interface>
+      <command_interface name="velocity">
+        <param name="min">-3.15</param>
+        <param name="max">3.15</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="Z_joint">
+      <command_interface name="position">
+        <param name="min">{-pi}</param>
+        <param name="max">{pi}</param>
+      </command_interface>
+      <command_interface name="velocity">
+        <param name="min">-3.15</param>
+        <param name="max">3.15</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="A_joint">
+      <command_interface name="position">
+        <param name="min">{-2*pi}</param>
+        <param name="max">{2*pi}</param>
+      </command_interface>
+      <command_interface name="velocity">
+        <param name="min">-3.2</param>
+        <param name="max">3.2</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="B_joint">
+      <command_interface name="position">
+        <param name="min">{-2*pi}</param>
+        <param name="max">{2*pi}</param>
+      </command_interface>
+      <command_interface name="velocity">
+        <param name="min">-3.2</param>
+        <param name="max">3.2</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="C_joint">
+      <command_interface name="position">
+        <param name="min">{-2*pi}</param>
+        <param name="max">{2*pi}</param>
+      </command_interface>
+      <command_interface name="velocity">
+        <param name="min">-3.2</param>
+        <param name="max">3.2</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <sensor name="tcp_fts_sensor">
+      <state_interface name="force.x"/>
+      <state_interface name="force.y"/>
+      <state_interface name="force.z"/>
+      <state_interface name="torque.x"/>
+      <state_interface name="torque.y"/>
+      <state_interface name="torque.z"/>
+    </sensor>
+  </ros2_control>
+  </xacro:macro>
+
+</robot>
