@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arctos">
 
+  <!-- Define arctos_link macro -->
   <xacro:macro name="arctos_link"
     params="name origin_xyz origin_rpy material_name inertia_origin_xyz inertia_origin_rpy mass ixx iyy izz ixy iyz ixz">
     <link name="${name}">
@@ -25,8 +26,9 @@
     </link>
   </xacro:macro>
 
+  <!-- Define arctos_joint macro with a default value for axis_xyz -->
   <xacro:macro name="arctos_joint"
-    params="name type parent child origin_xyz origin_rpy axis_xyz limit_u limit_l limit_e limit_v">
+    params="name type parent child origin_xyz origin_rpy axis_xyz='0 0 0' limit_u limit_l limit_e limit_v">
     <joint name="${name}" type="${type}">
       <parent link="${parent}" />
       <child link="${child}" />
@@ -35,6 +37,5 @@
       <limit upper="${limit_u}" lower="${limit_l}" effort="${limit_e}" velocity="${limit_v}" />
     </joint>
   </xacro:macro>
-
 
 </robot>

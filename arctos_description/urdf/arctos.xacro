@@ -132,5 +132,5 @@
     axis_xyz="-0.0 1.0 -0.0"
     limit_u="${pi}" limit_l="${-pi}" limit_e="16.0" limit_v="3.0"
   />
-
+  <xacro:arctos_ros2_control name="arctos_interface" />
 </robot>

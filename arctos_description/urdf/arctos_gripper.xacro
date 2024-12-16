@@ -40,21 +40,32 @@
   />
 
   <!-- Left jaw joint, prismatic with axis directly defined -->
-  <joint name="Left_jaw_joint" type="prismatic">
-    <parent link="Gripper_1"/>
-    <child link="Left_jaw_1"/>
-    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
-    <axis xyz="0.0 0.0 -1.0"/>
-    <limit effort="1.0" lower="0.0" upper="0.015" velocity="10.0"/>
-  </joint>
-  
-  <!-- Right jaw joint, prismatic with axis directly defined -->
-  <joint name="Right_jaw_joint" type="prismatic">
-    <parent link="Gripper_1"/>
-    <child link="Right_jaw_1"/>
-    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
-    <axis xyz="0.0 0.0 -1.0"/>
-    <limit effort="1.0" lower="0.0" upper="0.1" velocity="10.0"/>
-  </joint>
+  <xacro:arctos_joint
+    name="Left_jaw_joint"
+    type="prismatic"
+    parent="Gripper_1"
+    child="Left_jaw_1"
+    origin_xyz="0.0 0.0 0.0"
+    origin_rpy="0 0 0"
+    axis_xyz="0 0 1"
+    limit_u="0.015"
+    limit_l="0.0"
+    limit_e="1.0"
+    limit_v="10.0"
+  />
+
+  <xacro:arctos_joint
+    name="Right_jaw_joint"
+    type="prismatic"
+    parent="Gripper_1"
+    child="Right_jaw_1"
+    origin_xyz="0.0 0.0 0.0"
+    origin_rpy="0 0 0"
+    axis_xyz="0 0 1"  
+    limit_u="0.015"
+    limit_l="0.0"
+    limit_e="1.0"
+    limit_v="10.0"
+  />
 
 </robot>

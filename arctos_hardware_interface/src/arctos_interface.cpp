@@ -10,7 +10,7 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
   {
     return CallbackReturn::ERROR;
   }
-
+ 
   // robot has 6 joints and 2 interfaces
   joint_position_.assign(6, 0);
   joint_velocities_.assign(6, 0);
@@ -108,9 +108,10 @@ return_type ArctosInterface::write(const rclcpp::Time &, const rclcpp::Duration 
   return return_type::OK;
 }
 
-}  // namespace ros2_control_demo_example_7
+}  // namespace arctos_interface
 
 #include "pluginlib/class_list_macros.hpp"
 
 PLUGINLIB_EXPORT_CLASS(
   arctos_interface::ArctosInterface, hardware_interface::SystemInterface)
+  

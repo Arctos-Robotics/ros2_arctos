@@ -15,6 +15,7 @@ find_package(hardware_interface REQUIRED)
 find_package(realtime_tools REQUIRED)
 find_package(trajectory_msgs REQUIRED)
 find_package(arctos_motor_driver REQUIRED)  # Ensure this line is present
+find_package(pluginlib REQUIRED)  # Add pluginlib for plugin export
 
 # Add library for hardware interface
 add_library(arctos_interface SHARED
@@ -44,6 +45,9 @@ ament_target_dependencies(arctos_interface
   trajectory_msgs
   realtime_tools
 )
+
+# Export the plugin description file
+pluginlib_export_plugin_description_file(arctos_hardware_interface "arctos_hardware_interface.xml")
 
 # Install targets
 install(TARGETS arctos_interface
