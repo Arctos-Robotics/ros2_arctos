@@ -6,7 +6,7 @@
     <ros2_control name="${name}" type="system">
 
       <hardware>
-        <plugin>libarctos_interface.so</plugin>
+        <plugin>arctos_interface/ArctosInterface</plugin>
       </hardware>
 
       <joint name="X_joint">

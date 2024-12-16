@@ -3,7 +3,7 @@
 
   <xacro:include filename="$(find arctos_description)/urdf/materials.xacro" />
   <xacro:include filename="$(find arctos_description)/urdf/joint_link.xacro" />
-  <xacro:include filename="$(find arctos_description)/urdf/arctos.ros2_control.xacro" />
+  <xacro:include filename="$(find arctos_description)/urdf/arctos_ros2_control.xacro" />
   <xacro:include filename="$(find arctos_description)/urdf/arctos_gripper.xacro" />
 
   <!-- Define all links -->

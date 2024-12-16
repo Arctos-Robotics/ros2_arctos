@@ -54,10 +54,10 @@ def generate_launch_description():
     )
 
     # Launch MoveIt
-    moveit_launch_file = os.path.join(arctos_moveit_dir, 'launch', 'move_group.launch.py')
-    moveit_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(moveit_launch_file),
-    )
+    # moveit_launch_file = os.path.join(arctos_moveit_dir, 'launch', 'move_group.launch.py')
+    # moveit_launch = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(moveit_launch_file),
+    # )
     can_launch_file = os.path.join(arctos_hardware_interface_dir, 'launch', 'can_interface.launch.py')
     can_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(can_launch_file),

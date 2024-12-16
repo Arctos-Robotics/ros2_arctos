@@ -28,14 +28,6 @@ def generate_launch_description():
         output="both",
     )
     
-    # Launch motor driver
-    motor_driver_node = Node(
-        package='arctos_motor_driver',
-        executable='arctos_motor_driver',
-        name='arctos_motor_driver',
-        output='screen',
-    )
-
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
@@ -58,7 +50,6 @@ def generate_launch_description():
 
     nodes = [
         control_node,        
-        motor_driver_node,
         joint_state_broadcaster_spawner,
         delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,
     ]
