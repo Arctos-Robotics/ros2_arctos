@@ -133,6 +133,6 @@
     limit_u="${pi}" limit_l="${-pi}" limit_e="16.0" limit_v="3.0"
   />
 
-<xacro:include filename="$(find arctos_description)/urdf/arctos.ros2_control.xacro" />
+<!-- <xacro:include filename="$(find arctos_description)/urdf/arctos.ros2_control.xacro" /> -->
 
 </robot>

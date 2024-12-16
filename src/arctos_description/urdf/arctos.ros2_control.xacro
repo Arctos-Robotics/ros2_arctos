@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot name="arctos" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arctos_control
+    name="X_joint"
+    can_id="0x01"
+    limit_u="${pi}"
+    limit_l="${-pi}"
+  />
+
+  <xacro:arctos_control
+    name="Y_joint"
+    can_id="0x02"
+    limit_u="2.18"
+    limit_l="-0.96"
+  />
+
+  <xacro:arctos_control
+    name="Z_joint"
+    can_id="0x03"
+    limit_u="${70/180*pi}"
+    limit_l="${-pi/2}"
+  />
+
+  <xacro:arctos_control
+    name="A_joint"
+    can_id="0x04"
+    limit_u="${pi}"
+    limit_l="${-pi}"
+  />
+
+  <xacro:arctos_control
+    name="B_joint"
+    can_id="0x05"
+    limit_u="1.55"
+    limit_l="-1.55"
+  />
+
+  <xacro:arctos_control
+    name="C_joint"
+    can_id="0x06"
+    limit_u="${pi}"
+    limit_l="${-pi}"
+  />
+
+</robot>
