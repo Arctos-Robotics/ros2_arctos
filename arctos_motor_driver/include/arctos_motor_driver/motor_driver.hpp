@@ -13,8 +13,7 @@ namespace arctos_motor_driver  // Namespace for the motor driver
     public:
 
         MotorDriver();    
-        ~MotorDriver();
-        // Methods to interact with the motor
+
         void requestAngle();
         void requestVelocity();
         // void setAngle();

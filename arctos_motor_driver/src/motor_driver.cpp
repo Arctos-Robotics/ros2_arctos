@@ -25,13 +25,6 @@ MotorDriver::MotorDriver()
         std::chrono::milliseconds(10),
         std::bind(&MotorDriver::requestVelocity, this));
 }
-//Destructor to stop all motors
-MotorDriver::~MotorDriver() {
-    RCLCPP_INFO(this->get_logger(), "Shutting down MotorDriver. Sending stop command.");
-    stopMotor();  // Ensure the motor is stopped when the node shuts down
-    rclcpp::spin_some(this->get_node_base_interface());
-    rclcpp::sleep_for(std::chrono::milliseconds(500));
-}
 
 double MotorDriver::decodeInt48(const std::vector<uint8_t>& data) {
     if (data.size() != 6) {
@@ -86,18 +79,13 @@ void MotorDriver::canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg) 
     const std::vector<uint8_t> can_data(msg->data.begin(), msg->data.end());
 
     if (can_data.size() < 2) {
-        return;  // Exit if the message is too small to process.
+        return;
     }
-
     uint8_t identifier = can_data[0];
 
-    // Handle the velocity frame (identifier 0x32)
     if (identifier == 0x32) {
-        if (can_data.size() == 8) {  // Velocity frame: 2 data bytes + CRC byte, total 8 bytes
-            std::vector<uint8_t> velocity_data(can_data.begin() + 1, can_data.begin() + 3);  // Extract first 2 bytes for velocity
-
-            //RCLCPP_INFO(this->get_logger(), "Velocity Data: 0x%02X 0x%02X", velocity_data[0], velocity_data[1]);
-
+        if (can_data.size() == 8) {  
+            std::vector<uint8_t> velocity_data(can_data.begin() + 1, can_data.begin() + 3);
             try {
                 double rpm = decodeVelocityToRPM(velocity_data);
                 //RCLCPP_INFO(this->get_logger(), "Decoded Velocity (RPM): %f", rpm);
@@ -108,10 +96,10 @@ void MotorDriver::canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg) 
             RCLCPP_WARN(this->get_logger(), "Unexpected frame size for velocity data (expected 8 bytes)");
         }
     }
-    // Handle the angle frame (identifier 0x31)
+
     else if (identifier == 0x31) {
-        if (can_data.size() == 8) {  // Angle frame: 6 data bytes + CRC byte, total 8 bytes
-            std::vector<uint8_t> angle_data(can_data.begin() + 1, can_data.begin() + 7);  // Extract first 6 bytes for angle
+        if (can_data.size() == 8) {
+            std::vector<uint8_t> angle_data(can_data.begin() + 1, can_data.begin() + 7);
 
             try {
                 angle = decodeInt48(angle_data);  // Decode the 48-bit angle
@@ -183,10 +171,25 @@ uint16_t MotorDriver::calculate_crc(const uint8_t* data, size_t length) {
 
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
+
     auto node = std::make_shared<arctos_motor_driver::MotorDriver>();
     rclcpp::executors::MultiThreadedExecutor exec;
     exec.add_node(node);
+
+    // Spin the node
     exec.spin();
+
+    // Stop the motor before shutting down
+    RCLCPP_INFO(node->get_logger(), "Stopping motor before shutdown.");
+    node->stopMotor();
+
+    // Ensure the stopMotor command is processed by the CAN bus
+    auto start_time = std::chrono::steady_clock::now();
+    while (rclcpp::ok() && (std::chrono::steady_clock::now() - start_time) < std::chrono::milliseconds(500)) {
+        rclcpp::spin_some(node);
+        rclcpp::sleep_for(std::chrono::milliseconds(50));
+    }
+
     rclcpp::shutdown();
     return 0;
 }
