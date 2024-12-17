@@ -1,4 +1,5 @@
 #include "arctos_hardware_interface/arctos_interface.hpp"
+#include <pluginlib/class_list_macros.hpp>
 #include <string>
 #include <vector>
 
@@ -109,8 +110,6 @@ return_type ArctosInterface::write(const rclcpp::Time &, const rclcpp::Duration 
 }
 
 }  // namespace arctos_interface
-
-#include "pluginlib/class_list_macros.hpp"
 
 PLUGINLIB_EXPORT_CLASS(
   arctos_interface::ArctosInterface, hardware_interface::SystemInterface)

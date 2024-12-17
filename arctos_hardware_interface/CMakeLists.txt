@@ -47,7 +47,7 @@ ament_target_dependencies(arctos_interface
 )
 
 # Export the plugin description file
-pluginlib_export_plugin_description_file(arctos_hardware_interface "arctos_hardware_interface.xml")
+pluginlib_export_plugin_description_file(hardware_interface "arctos_hardware_interface.xml")
 
 # Install targets
 install(TARGETS arctos_interface

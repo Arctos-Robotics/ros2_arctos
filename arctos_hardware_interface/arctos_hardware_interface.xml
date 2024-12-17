@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<library path="lib/libarctos_interface">
+<library path="arctos_interface">
   <class name="arctos_interface/ArctosInterface"
          type="arctos_interface::ArctosInterface"
          base_class_type="hardware_interface::SystemInterface">

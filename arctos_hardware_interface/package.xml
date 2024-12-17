@@ -24,7 +24,7 @@
   <test_depend>ament_lint_common</test_depend>
 
   <export>
-    <pluginlib plugin_description="arctos_hardware_interface.xml"/>
+    <pluginlib plugin_description="${prefix}/arctos_hardware_interface.xml"/>
     <build_type>ament_cmake</build_type>
   </export>
 </package>

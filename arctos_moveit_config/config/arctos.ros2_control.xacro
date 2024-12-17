@@ -6,7 +6,7 @@
     <ros2_control name="${name}" type="system">
 
       <hardware>
-        <plugin>libarctos_interface.so</plugin>
+        <plugin>arctos_interface/ArctosInterface</plugin>
       </hardware>
 
       <joint name="X_joint">
@@ -21,7 +21,7 @@
         <state_interface name="position">
           <param name="initial_value">0.0</param>
         </state_interface>
-        <state_interface name="velocity"/>
+        <state_interface name="velocity" />
       </joint>
 
       <joint name="Y_joint">
@@ -36,7 +36,7 @@
         <state_interface name="position">
           <param name="initial_value">0.0</param>
         </state_interface>
-        <state_interface name="velocity"/>
+        <state_interface name="velocity" />
       </joint>
 
       <joint name="Z_joint">
@@ -51,7 +51,7 @@
         <state_interface name="position">
           <param name="initial_value">0.0</param>
         </state_interface>
-        <state_interface name="velocity"/>
+        <state_interface name="velocity" />
       </joint>
 
       <joint name="A_joint">
@@ -62,11 +62,11 @@
         <command_interface name="velocity">
           <param name="min">-3.2</param>
           <param name="max">3.2</param>
-        </command_interface>        
+        </command_interface>
         <state_interface name="position">
           <param name="initial_value">0.0</param>
         </state_interface>
-        <state_interface name="velocity"/>
+        <state_interface name="velocity" />
       </joint>
 
       <joint name="B_joint">
@@ -77,11 +77,11 @@
         <command_interface name="velocity">
           <param name="min">-3.2</param>
           <param name="max">3.2</param>
-        </command_interface>        
+        </command_interface>
         <state_interface name="position">
           <param name="initial_value">0.0</param>
         </state_interface>
-        <state_interface name="velocity"/>
+        <state_interface name="velocity" />
       </joint>
 
       <joint name="C_joint">
@@ -92,20 +92,20 @@
         <command_interface name="velocity">
           <param name="min">-3.2</param>
           <param name="max">3.2</param>
-        </command_interface>        
+        </command_interface>
         <state_interface name="position">
           <param name="initial_value">0.0</param>
         </state_interface>
-        <state_interface name="velocity"/>
+        <state_interface name="velocity" />
       </joint>
 
       <sensor name="tcp_fts_sensor">
-        <state_interface name="force.x"/>
-        <state_interface name="force.y"/>
-        <state_interface name="force.z"/>
-        <state_interface name="torque.x"/>
-        <state_interface name="torque.y"/>
-        <state_interface name="torque.z"/>
+        <state_interface name="force.x" />
+        <state_interface name="force.y" />
+        <state_interface name="force.z" />
+        <state_interface name="torque.x" />
+        <state_interface name="torque.y" />
+        <state_interface name="torque.z" />
       </sensor>
 
     </ros2_control>

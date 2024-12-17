@@ -12,10 +12,10 @@
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 
-using hardware_interface::return_type;
 
 namespace arctos_interface
 {
+using hardware_interface::return_type;
 using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
 
 class HARDWARE_INTERFACE_PUBLIC ArctosInterface : public hardware_interface::SystemInterface
