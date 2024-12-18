@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arctos">
+
+  <!-- Define arctos_link macro -->
+  <xacro:macro name="arctos_link"
+    params="name origin_xyz origin_rpy material_name inertia_origin_xyz inertia_origin_rpy mass ixx iyy izz ixy iyz ixz">
+    <link name="${name}">
+      <visual>
+        <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+        <geometry>
+          <mesh filename="package://arctos_description/meshes/${name}.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="${material_name}" />
+      </visual>
+      <collision>
+        <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+        <geometry>
+          <mesh filename="package://arctos_description/meshes/${name}.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="${inertia_origin_xyz}" rpy="${inertia_origin_rpy}" />
+        <mass value="${mass}" />
+        <inertia ixx="${ixx}" iyy="${iyy}" izz="${izz}" ixy="${ixy}" iyz="${iyz}" ixz="${ixz}" />
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <!-- Define arctos_joint macro with a default value for axis_xyz -->
+  <xacro:macro name="arctos_joint"
+    params="name type parent child origin_xyz origin_rpy axis_xyz='0 0 0' limit_u limit_l limit_e limit_v">
+    <joint name="${name}" type="${type}">
+      <parent link="${parent}" />
+      <child link="${child}" />
+      <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
+      <axis xyz="${axis_xyz}" />
+      <limit upper="${limit_u}" lower="${limit_l}" effort="${limit_e}" velocity="${limit_v}" />
+    </joint>
+  </xacro:macro>
+
+</robot>

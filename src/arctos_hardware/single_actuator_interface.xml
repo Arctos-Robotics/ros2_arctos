@@ -1,9 +1,0 @@
-<library path="arctos_hardware">
-  <class name="arctos_hardware/SingleJointHardware"
-         type="arctos_hardware::SingleJointHardware"
-         base_class_type="hardware_interface::ActuatorInterface">
-    <description>
-      Hardware interface for single MKS servo actuator using CAN communication
-    </description>
-  </class>
-</library>
