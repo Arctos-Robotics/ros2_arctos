@@ -14,16 +14,37 @@ find_package(sensor_msgs REQUIRED)
 find_package(hardware_interface REQUIRED)
 find_package(realtime_tools REQUIRED)
 find_package(trajectory_msgs REQUIRED)
-find_package(arctos_motor_driver REQUIRED)  # Ensure this line is present
-find_package(pluginlib REQUIRED)  # Add pluginlib for plugin export
+find_package(arctos_motor_driver REQUIRED)
+find_package(pluginlib REQUIRED)
+find_package(std_srvs REQUIRED)
+find_package(std_msgs REQUIRED)
+
+# Add library for services
+add_library(arctos_services SHARED
+  src/arctos_services.cpp
+)
+
+target_include_directories(arctos_services
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
+ament_target_dependencies(arctos_services
+  rclcpp
+  std_srvs
+  std_msgs
+  arctos_motor_driver
+)
 
 # Add library for hardware interface
 add_library(arctos_interface SHARED
   src/arctos_interface.cpp
 )
 
-# Link the hardware interface libraries and the motor driver
+# Link the hardware interface libraries and dependencies
 target_link_libraries(arctos_interface
+  arctos_services
   ${rclcpp_LIBRARIES}
   ${hardware_interface_LIBRARIES} 
 )
@@ -44,13 +65,17 @@ ament_target_dependencies(arctos_interface
   hardware_interface
   trajectory_msgs
   realtime_tools
+  std_srvs
+  std_msgs
 )
 
 # Export the plugin description file
 pluginlib_export_plugin_description_file(hardware_interface "arctos_hardware_interface.xml")
 
 # Install targets
-install(TARGETS arctos_interface
+install(TARGETS 
+  arctos_interface
+  arctos_services
   EXPORT export_arctos_interface
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
@@ -62,7 +87,11 @@ install(TARGETS arctos_interface
 install(DIRECTORY include/
   DESTINATION include
 )
-install(DIRECTORY config DESTINATION share/${PROJECT_NAME})
+
+install(DIRECTORY config 
+  DESTINATION share/${PROJECT_NAME}
+)
+
 install(DIRECTORY ros2_control
   DESTINATION share/${PROJECT_NAME}/ros2_control
 )
@@ -71,12 +100,20 @@ install(DIRECTORY ros2_control
 install(DIRECTORY launch/
   DESTINATION share/${PROJECT_NAME}/launch
 )
+
 install(FILES arctos_hardware_interface.xml
   DESTINATION share/${PROJECT_NAME}
 )
 
 # Export package
 ament_export_targets(export_arctos_interface HAS_LIBRARY_TARGET)
-ament_export_dependencies(rclcpp can_msgs sensor_msgs hardware_interface)
+ament_export_dependencies(
+  rclcpp 
+  can_msgs 
+  sensor_msgs 
+  hardware_interface 
+  std_srvs
+  std_msgs
+)
 
 ament_package()

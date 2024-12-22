@@ -8,4 +8,4 @@ controller_manager:
 
     # List the controllers names and node sources
     arctos_controller:
-      type: arctos_controller/ArctosController
+      type: joint_trajectory_controller/JointTrajectoryController

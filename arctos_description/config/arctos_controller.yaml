@@ -6,7 +6,7 @@ controller_manager:
       type: joint_state_broadcaster/JointStateBroadcaster
 
     arctos_controller:
-      type: arctos_controller/ArctosController
+      type: joint_trajectory_controller/JointTrajectoryController
 
 arctos_controller:
   ros__parameters:

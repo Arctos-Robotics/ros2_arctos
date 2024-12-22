@@ -1,0 +1,39 @@
+arctos_hardware_interface:
+  ros__parameters:
+    motors:
+      # X_joint:
+      #   motor_id: 1
+      #   working_current: 1600
+      #   holding_current: 50
+      #   home_current: 800
+      #   requires_homing: true
+      # Y_joint:
+      #   motor_id: 2
+      #   working_current: 1600
+      #   holding_current: 50
+      #   home_current: 800
+      #   requires_homing: true
+      Z_joint:
+        motor_id: 3
+        # working_current: 1600
+        # holding_current: 50
+        # home_current: 800
+        requires_homing: false
+      # A_joint:
+      #   motor_id: 4
+      #   working_current: 1600
+      #   holding_current: 50
+      #   home_current: 800
+      #   requires_homing: true
+      # B_joint:
+      #   motor_id: 5
+      #   working_current: 1600
+      #   holding_current: 50
+      #   home_current: 800
+      #   requires_homing: true
+      # C_joint:
+      #   motor_id: 6
+      #   working_current: 1600
+      #   holding_current: 50
+      #   home_current: 800
+      #   requires_homing: true
