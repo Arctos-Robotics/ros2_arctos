@@ -57,7 +57,10 @@ def generate_launch_description():
         executable="ros2_control_node",
         parameters=[robot_description, motor_params],
         output={'stdout': 'screen', 'stderr': 'screen'},
-        arguments=['--ros-args', '--log-level', 'debug']
+        arguments=['--ros-args',
+                  '--log-level', 'debug',  # Set global level to debug
+                  '--log-level', 'arctos_hardware_interface:=debug',
+                  '--log-level', 'controller_manager:=debug']
     )
 
     can_launch_file = os.path.join(arctos_hardware_interface_dir, 'launch', 'can_interface.launch.py')
@@ -65,11 +68,18 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(can_launch_file),
     )
 
+    # Make sure the joint state broadcaster starts before the trajectory controller
+    delay_robot_controller_spawner = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_state_broadcaster_spawner,
+            on_exit=[robot_controller_spawner],
+        )
+    )
     nodes = [
         control_node,
         robot_state_pub_node,
         joint_state_broadcaster_spawner,
-        robot_controller_spawner,
+        delay_robot_controller_spawner,
         can_launch
     ]
 

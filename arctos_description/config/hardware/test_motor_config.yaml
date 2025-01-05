@@ -24,12 +24,21 @@ joint_trajectory_controller:
     action_monitor_rate: 20.0
 
     # Increased tolerances for testing
-    constraints:
-      stopped_velocity_tolerance: 0.1    # Increased from 0.01
-      goal_time: 0.0
-      test_joint:
-        trajectory: 0.5                  # Increased from 0.05
-        goal: 0.3                       # Increased from 0.03
+    # constraints:
+    #   stopped_velocity_tolerance: 0.1    # Increased from 0.01
+    #   goal_time: 0.0
+    #   test_joint:
+    #     trajectory: 0.5                  # Increased from 0.05
+    #     goal: 0.3                       # Increased from 0.03
+    # limits:
+    #   test_joint:
+    #     has_position_limits: true
+    #     min_position: -3.14159  # -180 degrees in radians
+    #     max_position: 3.14159   # +180 degrees in radians
+    #     has_velocity_limits: true
+    #     max_velocity: 1.0       # Adjust based on your needs
+    #     has_acceleration_limits: true
+    #     max_acceleration: 1.0   # Adjust based on your needs
 
     # Allow partial movements
     allow_partial_joints_goal: true      # Added this

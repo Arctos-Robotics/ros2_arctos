@@ -54,6 +54,7 @@ def generate_launch_description():
         parameters=[{
             'interface': LaunchConfiguration(motor_can_interface_arg.name),
         }],
+        arguments=['--ros-args', '--log-level', 'motor_can_receiver:=error'],
         remappings={
             "/from_can_bus": LaunchConfiguration(motor_can_recv_topic_arg.name),
         }.items(),

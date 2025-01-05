@@ -17,6 +17,7 @@ namespace arctos_motor_driver {
  */
 struct MotorStatus {
     bool is_enabled{false}; /**< Flag indicating if the motor is enabled. */
+    bool is_protected{false}; /**< Flag indicating if the motor has the shaft protection protected. */
     bool is_calibrated{false}; /**< Flag indicating if the motor is calibrated. */
     bool is_homed{false}; /**< Flag indicating if the motor is homed. */
     bool is_error{false}; /**< Flag indicating if the motor has encountered an error. */
@@ -47,6 +48,9 @@ struct JointConfig {
     uint8_t motor_id{0}; /**< ID of the motor. */
     std::string joint_name; /**< Name of the joint. */
     
+    // Gear ratio
+    double gear_ratio{1.0};
+    
     // Current state
     double position{0.0}; /**< Current position of the joint. */
     double velocity{0.0}; /**< Current velocity of the joint. */
@@ -71,9 +75,20 @@ struct JointConfig {
     // Default constructor
     JointConfig() = default;
 
-    // Constructor with id and name
+
+    // Legacy constructor for testing
     JointConfig(uint8_t id, const std::string& name) 
-        : motor_id(id), joint_name(name) {}
+        : motor_id(id)
+        , joint_name(name)
+        , last_update(0, 0, RCL_SYSTEM_TIME)
+        , last_command(0, 0, RCL_SYSTEM_TIME) {}
+        
+    // Constructor with id and name
+    JointConfig(uint8_t id, const std::string& name, rclcpp::Clock::SharedPtr clock) 
+        : motor_id(id)
+        , joint_name(name)
+        , last_update(clock->now())
+        , last_command(clock->now()) {}
 };
 
 /**
@@ -92,15 +107,19 @@ enum class MotorMode : uint8_t {
  * @brief Structure representing the CAN command codes from the MKS manual.
  */
 struct CANCommands {
+    // Query commands
+    static constexpr uint8_t QUERY_MOTOR = 0xF1; /**< Query motor command. */
+    
     // Read commands
-    static constexpr uint8_t READ_ENCODER = 0x31; /**< Read encoder command. */
+    static constexpr uint8_t READ_ENCODER = 0x31; /**< Read encoder value (addition). */
     static constexpr uint8_t READ_VELOCITY = 0x32; /**< Read velocity command. */
     static constexpr uint8_t READ_PULSES = 0x33; /**< Read pulses command. */
     static constexpr uint8_t READ_IO = 0x34; /**< Read IO command. */
     static constexpr uint8_t READ_RAW_ENCODER = 0x35; /**< Read raw encoder command. */
     static constexpr uint8_t READ_ERROR = 0x39; /**< Read error command. */
     static constexpr uint8_t READ_ENABLE_STATE = 0x3A; /**< Read enable state command. */
-    
+    static constexpr uint8_t READ_SHAFT_PROTECTION_STATE = 0x3E; /**< Read protection command. */
+
     // Set/Control commands
     static constexpr uint8_t CALIBRATE = 0x80; /**< Calibrate command. */
     static constexpr uint8_t SET_WORKING_MODE = 0x82; /**< Set working mode command. */

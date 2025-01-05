@@ -1,5 +1,5 @@
 #include "arctos_hardware_interface/arctos_interface.hpp"
-#include "arctos_hardware_interface/arctos_services.hpp"
+// #include "arctos_hardware_interface/arctos_services.hpp"
 #include <pluginlib/class_list_macros.hpp>
 #include <string>
 #include <vector>
@@ -97,33 +97,55 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
   }
 
   // Initialize services
-  services_ = std::make_unique<arctos_services::Services>(
-    node_, 
-    motor_driver_, 
-    joint_names,
-    motor_ids_);
+  // services_ = std::make_unique<arctos_services::Services>(
+  //   node_, 
+  //   motor_driver_, 
+  //   joint_names,
+  //   motor_ids_);
 
   return CallbackReturn::SUCCESS;
 }
 
-CallbackReturn ArctosInterface::on_configure(const rclcpp_lifecycle::State &)
+CallbackReturn ArctosInterface::on_configure(const rclcpp_lifecycle::State & previous_state)
 {
-  try {
-    initializeMotors();
-  } catch (const std::exception& e) {
-    RCLCPP_ERROR(node_->get_logger(), "Failed to initialize motors: %s", e.what());
-    return CallbackReturn::ERROR;
-  }
-  return CallbackReturn::SUCCESS;
+  auto can_sub = node_->create_subscription<can_msgs::msg::Frame>(
+      "/from_motor_can_bus", 
+      rclcpp::QoS(10).reliable(),
+      [this](const can_msgs::msg::Frame::SharedPtr msg) {
+          RCLCPP_ERROR(node_->get_logger(), 
+                      "CAN Message Received - Topic: %s, ID: %d, Data Length: %zu", 
+                      "/from_motor_can_bus", msg->id, msg->data.size());
+          
+          // Log raw message data
+          std::stringstream data_str;
+          for (size_t i = 0; i < msg->data.size(); ++i) {
+              data_str << std::hex << static_cast<int>(msg->data[i]) << " ";
+          }
+          RCLCPP_ERROR(node_->get_logger(), "Message Data: %s", data_str.str().c_str());
+
+          // Call processCANMessage
+          motor_driver_->processCANMessage(msg);
+      }
+  );
+    try {
+        initializeMotors();
+    } catch (const std::exception& e) {
+        RCLCPP_ERROR(node_->get_logger(), "Failed to initialize motors: %s", e.what());
+        return CallbackReturn::ERROR;
+    }
+    
+    return CallbackReturn::SUCCESS;
 }
 
-CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State &)
+CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & previous_state)
 {
+  RCLCPP_INFO(node_->get_logger(), "Transitioning to ACTIVE state from %s", previous_state.label().c_str());
   // Enable all motors
   for (size_t i = 0; i < info_.joints.size(); i++) {
     try {
       const auto& joint_name = info_.joints[i].name;
       
+      RCLCPP_INFO(node_->get_logger(), "Enabling motor for joint %s", joint_name.c_str());
       // Enable the motor first
       motor_driver_->enableMotor(joint_name);
       
@@ -156,6 +178,7 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State &)
             RCLCPP_ERROR(node_->get_logger(), "Homing error for joint %s", joint_name.c_str());
             return CallbackReturn::ERROR;
           }
+          rclcpp::spin_some(node_);
           rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 100ms
         }
         
@@ -173,8 +196,9 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State &)
   return CallbackReturn::SUCCESS;
 }
 
-CallbackReturn ArctosInterface::on_deactivate(const rclcpp_lifecycle::State &)
+CallbackReturn ArctosInterface::on_deactivate(const rclcpp_lifecycle::State & previous_state)
 {
+  RCLCPP_INFO(node_->get_logger(), "Transitioning to INACTIVE state from %s", previous_state.label().c_str());
   // Disable all motors
   for (size_t i = 0; i < info_.joints.size(); i++) {
     try {
@@ -241,25 +265,29 @@ std::vector<hardware_interface::CommandInterface> ArctosInterface::export_comman
   return command_interfaces;
 }
 
-return_type ArctosInterface::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
+return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Duration & period)
 {
-  // Read current joint states from motors
-  for (size_t i = 0; i < info_.joints.size(); i++) {
-    try {
-      if (has_position_interface_) {
-        joint_position_[i] = motor_driver_->getJointPosition(info_.joints[i].name);
-      }
-      if (has_velocity_interface_) {
-        joint_velocities_[i] = motor_driver_->getJointVelocity(info_.joints[i].name);
-      }
-    } catch (const std::exception& e) {
-      RCLCPP_ERROR(node_->get_logger(), "Failed to read state from joint %s: %s",
-                   info_.joints[i].name.c_str(), e.what());
-      return return_type::ERROR;
+    static rclcpp::Time last_request = time;
+    
+    // Request updates at 50Hz
+    if ((time - last_request).seconds() >= 0.02) {
+        for (size_t i = 0; i < info_.joints.size(); i++) {
+            const std::string& joint_name = info_.joints[i].name;
+            // Request both position and velocity simultaneously
+            motor_driver_->requestJointUpdate(joint_name, true, true);
+            
+            // Update joint states from motor driver's cached values
+            if (has_position_interface_) {
+                joint_position_[i] = motor_driver_->getJointPosition(joint_name);
+            }
+            if (has_velocity_interface_) {
+                joint_velocities_[i] = motor_driver_->getJointVelocity(joint_name);
+            }
+        }
+        last_request = time;
     }
-  }
 
-  return return_type::OK;
+    return return_type::OK;
 }
 
 return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
@@ -297,22 +325,32 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
   return return_type::OK;
 }
 
-void ArctosInterface::initializeMotors()
-{
+void ArctosInterface::initializeMotors() {
   for (size_t i = 0; i < info_.joints.size(); i++) {
-    const auto& joint = info_.joints[i];
-    uint8_t motor_id = motor_ids_[i];
+      const auto& joint = info_.joints[i];
+      uint8_t motor_id = motor_ids_[i];
 
-    // Add joint to motor driver
-    motor_driver_->addJoint(joint.name, motor_id);
+      // Get gear ratio parameter
+      std::string param_prefix = "motors." + joint.name + ".";
+      node_->declare_parameter(param_prefix + "gear_ratio", 1.0);
+      
+      double gear_ratio;
+      if (!node_->get_parameter(param_prefix + "gear_ratio", gear_ratio)) {
+          RCLCPP_WARN(node_->get_logger(), "No gear ratio specified for joint %s, using 1:1", 
+                      joint.name.c_str());
+          gear_ratio = 1.0;
+      }
 
-    // Configure motor parameters
-    if (!setupMotorParameters(joint, motor_id)) {
-      throw std::runtime_error("Failed to configure motor for joint " + joint.name);
-    }
+      // Add joint to motor driver with gear ratio
+      motor_driver_->addJoint(joint.name, motor_id, gear_ratio);
 
-    RCLCPP_INFO(node_->get_logger(), "Initialized motor for joint %s with ID %d",
-                joint.name.c_str(), motor_id);
+      // Configure motor parameters
+      if (!setupMotorParameters(joint, motor_id)) {
+          throw std::runtime_error("Failed to configure motor for joint " + joint.name);
+      }
+
+      RCLCPP_INFO(node_->get_logger(), "Initialized motor for joint %s with ID %d and gear ratio %.2f:1",
+                  joint.name.c_str(), motor_id, gear_ratio);
   }
 }
 

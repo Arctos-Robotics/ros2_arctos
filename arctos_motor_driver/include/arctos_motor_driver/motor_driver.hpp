@@ -30,6 +30,9 @@ public:
      */
     ~MotorDriver();
 
+    // CAN message handling
+    void setCANSubscription(rclcpp::Subscription<can_msgs::msg::Frame>::SharedPtr subscription);
+
     // Joint management
 
     void setCAN(std::shared_ptr<CANProtocol> can_protocol);
@@ -39,7 +42,7 @@ public:
      * @param joint_name The name of the joint.
      * @param motor_id The ID of the motor.
      */
-    void addJoint(const std::string& joint_name, uint8_t motor_id);
+    void addJoint(const std::string& joint_name, uint8_t motor_id, double gear_ratio = 1.0);
 
     /**
      * @brief Removes a joint from the motor driver.
@@ -48,6 +51,8 @@ public:
     void removeJoint(const std::string& joint_name);
     
     // Core control functions
+
+    void requestJointUpdate(const std::string& joint_name, bool request_position = true, bool request_velocity = true);
 
     /**
      * @brief Sets the position of a joint.
@@ -201,6 +206,11 @@ public:
      */
     void clearError(const std::string& joint_name);
 
+    /**
+     * @brief Processes a CAN message.
+     * @param msg A shared pointer to the CAN message.
+     */
+    void processCANMessage(const can_msgs::msg::Frame::SharedPtr msg);
 private:
     rclcpp::Node::SharedPtr node_; /**< A shared pointer to the ROS 2 node. */
     std::shared_ptr<CANProtocol> can_protocol_; /**< A shared pointer to the CAN protocol. */
@@ -216,12 +226,12 @@ private:
      * @brief Callback function for CAN messages.
      * @param msg A shared pointer to the CAN message.
      */
-    void canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg);
+    // void canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg);
 
     /**
      * @brief Updates the states of the joints.
      */
-    void updateJointStates();
+    // void updateJointStates();
 
     /**
      * @brief Processes a status response from a motor.
@@ -262,7 +272,7 @@ private:
      * @brief Requests data from a motor.
      * @param motor_id The ID of the motor.
      */
-    void requestMotorData(uint8_t motor_id);
+    // void requestMotorData(uint8_t motor_id);
 };
 
 } // namespace arctos_motor_driver
