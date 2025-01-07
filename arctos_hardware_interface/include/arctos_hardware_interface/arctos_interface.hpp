@@ -67,17 +67,17 @@ protected:
 
   // Motor driver components
   rclcpp::Node::SharedPtr node_;
+  rclcpp::TimerBase::SharedPtr update_timer_;
   std::shared_ptr<arctos_motor_driver::MotorDriver> motor_driver_;
   std::shared_ptr<arctos_motor_driver::CANProtocol> can_protocol_;
-  
   // Configuration parameters
   std::vector<uint8_t> motor_ids_;  // Mapping of joint indices to motor IDs
   bool has_velocity_interface_{false};
   bool has_position_interface_{false};
 
 private:
-  // Services implementation
-  std::unique_ptr<arctos_services::Services> services_;
+  rclcpp::Subscription<can_msgs::msg::Frame>::SharedPtr can_sub_;
+  void canCallback(const can_msgs::msg::Frame::SharedPtr msg);
   
   // Helper functions for motor initialization
   void initializeMotors();

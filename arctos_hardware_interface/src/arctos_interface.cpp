@@ -20,12 +20,9 @@ ArctosInterface::ArctosInterface()
   motor_driver_ = std::make_shared<arctos_motor_driver::MotorDriver>(node_);
   motor_driver_->setCAN(can_protocol_);
 
-  // Add periodic status check
-  node_->create_wall_timer(
-    std::chrono::seconds(1),
-    [this]() {
-      RCLCPP_DEBUG(node_->get_logger(), "Node is alive and spinning");
-    });
+  can_sub_ = node_->create_subscription<can_msgs::msg::Frame>(
+      "/from_motor_can_bus", 10,
+      std::bind(&ArctosInterface::canCallback, this, std::placeholders::_1));
 }
 
 ArctosInterface::~ArctosInterface() = default;
@@ -96,50 +93,26 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
     }
   }
 
-  // Initialize services
-  // services_ = std::make_unique<arctos_services::Services>(
-  //   node_, 
-  //   motor_driver_, 
-  //   joint_names,
-  //   motor_ids_);
-
   return CallbackReturn::SUCCESS;
 }
 
 CallbackReturn ArctosInterface::on_configure(const rclcpp_lifecycle::State & previous_state)
 {
-  auto can_sub = node_->create_subscription<can_msgs::msg::Frame>(
-      "/from_motor_can_bus", 
-      rclcpp::QoS(10).reliable(),
-      [this](const can_msgs::msg::Frame::SharedPtr msg) {
-          RCLCPP_ERROR(node_->get_logger(), 
-                      "CAN Message Received - Topic: %s, ID: %d, Data Length: %zu", 
-                      "/from_motor_can_bus", msg->id, msg->data.size());
-          
-          // Log raw message data
-          std::stringstream data_str;
-          for (size_t i = 0; i < msg->data.size(); ++i) {
-              data_str << std::hex << static_cast<int>(msg->data[i]) << " ";
-          }
-          RCLCPP_ERROR(node_->get_logger(), "Message Data: %s", data_str.str().c_str());
+  RCLCPP_INFO(node_->get_logger(), "Transitioning to CONFIGURE state from %s", previous_state.label().c_str());
 
-          // Call processCANMessage
-          motor_driver_->processCANMessage(msg);
-      }
-  );
-    try {
-        initializeMotors();
-    } catch (const std::exception& e) {
-        RCLCPP_ERROR(node_->get_logger(), "Failed to initialize motors: %s", e.what());
-        return CallbackReturn::ERROR;
-    }
-    
-    return CallbackReturn::SUCCESS;
+  try {
+    initializeMotors();
+  } catch (const std::exception& e) {
+    RCLCPP_ERROR(node_->get_logger(), "Failed to initialize motors: %s", e.what());
+    return CallbackReturn::ERROR;
+  }
+  return CallbackReturn::SUCCESS;
 }
 
 CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & previous_state)
 {
   RCLCPP_INFO(node_->get_logger(), "Transitioning to ACTIVE state from %s", previous_state.label().c_str());
+
   // Enable all motors
   for (size_t i = 0; i < info_.joints.size(); i++) {
     try {
@@ -193,6 +166,7 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & prev
       return CallbackReturn::ERROR;
     }
   }
+
   return CallbackReturn::SUCCESS;
 }
 
@@ -227,14 +201,6 @@ std::vector<hardware_interface::StateInterface> ArctosInterface::export_state_in
     }
   }
 
-  // Add force/torque sensor interfaces
-  state_interfaces.emplace_back("tcp_fts_sensor", "force.x", &ft_states_[0]);
-  state_interfaces.emplace_back("tcp_fts_sensor", "force.y", &ft_states_[1]);
-  state_interfaces.emplace_back("tcp_fts_sensor", "force.z", &ft_states_[2]);
-  state_interfaces.emplace_back("tcp_fts_sensor", "torque.x", &ft_states_[3]);
-  state_interfaces.emplace_back("tcp_fts_sensor", "torque.y", &ft_states_[4]);
-  state_interfaces.emplace_back("tcp_fts_sensor", "torque.z", &ft_states_[5]);
-
   return state_interfaces;
 }
 
@@ -254,48 +220,52 @@ std::vector<hardware_interface::CommandInterface> ArctosInterface::export_comman
     }
   }
 
-  // Add force/torque sensor command interfaces
-  command_interfaces.emplace_back("tcp_fts_sensor", "force.x", &ft_command_[0]);
-  command_interfaces.emplace_back("tcp_fts_sensor", "force.y", &ft_command_[1]);
-  command_interfaces.emplace_back("tcp_fts_sensor", "force.z", &ft_command_[2]);
-  command_interfaces.emplace_back("tcp_fts_sensor", "torque.x", &ft_command_[3]);
-  command_interfaces.emplace_back("tcp_fts_sensor", "torque.y", &ft_command_[4]);
-  command_interfaces.emplace_back("tcp_fts_sensor", "torque.z", &ft_command_[5]);
-
   return command_interfaces;
 }
 
-return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Duration & period)
-{
-    static rclcpp::Time last_request = time;
-    
-    // Request updates at 50Hz
-    if ((time - last_request).seconds() >= 0.02) {
-        for (size_t i = 0; i < info_.joints.size(); i++) {
-            const std::string& joint_name = info_.joints[i].name;
-            // Request both position and velocity simultaneously
-            motor_driver_->requestJointUpdate(joint_name, true, true);
-            
-            // Update joint states from motor driver's cached values
-            if (has_position_interface_) {
-                joint_position_[i] = motor_driver_->getJointPosition(joint_name);
-            }
-            if (has_velocity_interface_) {
-                joint_velocities_[i] = motor_driver_->getJointVelocity(joint_name);
-            }
-        }
-        last_request = time;
-    }
+return_type ArctosInterface::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/) {
+  rclcpp::spin_some(node_);
+  motor_driver_->updateJointStates();
 
-    return return_type::OK;
+  for (size_t i = 0; i < info_.joints.size(); i++) {
+      const std::string &joint_name = info_.joints[i].name;
+      try {
+          RCLCPP_DEBUG(node_->get_logger(), "Reading state for joint %s", joint_name.c_str());
+
+          if (has_position_interface_) {
+              double pos = motor_driver_->getJointPosition(joint_name);
+              joint_position_[i] = pos;
+              RCLCPP_DEBUG(node_->get_logger(), "Updated position for joint %s: %.3f", joint_name.c_str(), pos);
+          }
+
+          if (has_velocity_interface_) {
+              double vel = motor_driver_->getJointVelocity(joint_name);
+              joint_velocities_[i] = vel;
+              RCLCPP_DEBUG(node_->get_logger(), "Updated velocity for joint %s: %.3f", joint_name.c_str(), vel);
+          }
+
+          rclcpp::Duration time_since_update = motor_driver_->getTimeSinceLastUpdate(joint_name);
+          if (time_since_update.seconds() > 1.0) {
+              RCLCPP_WARN(node_->get_logger(),
+                          "Stale data for joint %s: %.3f seconds since last update",
+                          joint_name.c_str(), time_since_update.seconds());
+          }
+      } catch (const std::exception &e) {
+          RCLCPP_ERROR(node_->get_logger(), "Failed to read state from joint %s: %s",
+                        joint_name.c_str(), e.what());
+          return return_type::ERROR;
+      }
+  }
+
+  return return_type::OK;
 }
 
-return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
-{
+return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/) {
   // Resize last command vectors if not already done
   if (last_position_command_.size() != info_.joints.size()) {
     last_position_command_.resize(info_.joints.size(), 0.0);
     last_velocity_command_.resize(info_.joints.size(), 0.0);
+    RCLCPP_INFO(node_->get_logger(), "Initialized last command vectors.");
   }
 
   for (size_t i = 0; i < info_.joints.size(); i++) {
@@ -304,25 +274,46 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
         // Only send if position has changed significantly
         if (std::abs(joint_position_command_[i] - last_position_command_[i]) > position_tolerance_) {
           motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i]);
+          RCLCPP_INFO(node_->get_logger(),
+                      "Sent position command %.3f to joint %s. Last command: %.3f",
+                      joint_position_command_[i], info_.joints[i].name.c_str(),
+                      last_position_command_[i]);
           last_position_command_[i] = joint_position_command_[i];
+        } else {
+          RCLCPP_DEBUG(node_->get_logger(),
+                       "Position command for joint %s unchanged: %.3f",
+                       info_.joints[i].name.c_str(), joint_position_command_[i]);
         }
       }
-      
+
       if (has_velocity_interface_) {
         // Only send if velocity has changed significantly
         if (std::abs(joint_velocities_command_[i] - last_velocity_command_[i]) > velocity_tolerance_) {
           motor_driver_->setJointVelocity(info_.joints[i].name, joint_velocities_command_[i]);
+          RCLCPP_INFO(node_->get_logger(),
+                      "Sent velocity command %.3f to joint %s. Last command: %.3f",
+                      joint_velocities_command_[i], info_.joints[i].name.c_str(),
+                      last_velocity_command_[i]);
           last_velocity_command_[i] = joint_velocities_command_[i];
+        } else {
+          RCLCPP_DEBUG(node_->get_logger(),
+                       "Velocity command for joint %s unchanged: %.3f",
+                       info_.joints[i].name.c_str(), joint_velocities_command_[i]);
         }
       }
     } catch (const std::exception& e) {
-      RCLCPP_ERROR(node_->get_logger(), "Failed to write command to joint %s: %s",
+      RCLCPP_ERROR(node_->get_logger(),
+                   "Failed to write command to joint %s: %s",
                    info_.joints[i].name.c_str(), e.what());
       return return_type::ERROR;
     }
   }
 
   return return_type::OK;
+}
+
+void ArctosInterface::canCallback(const can_msgs::msg::Frame::SharedPtr msg) {
+    motor_driver_->processCANMessage(msg);
 }
 
 void ArctosInterface::initializeMotors() {

@@ -41,37 +41,61 @@ void CANProtocol::sendFrame(uint8_t motor_id, const std::vector<uint8_t>& data) 
 // }
 
 // https://discord.com/channels/1099629962618748958/1126799425205973012/1239584322122416179
+// double CANProtocol::decodeInt48(const std::vector<uint8_t>& data) {
+//     if (data.size() != 6) {
+//         throw std::runtime_error("Data size must be 6 bytes for int48_t decoding");
+//     }
+    
+//     std::cout << "Input bytes: ";
+//     for (int i = 0; i < 6; ++i) {
+//         std::cout << std::hex << static_cast<int>(data[i]) << " ";
+//     }
+//     std::cout << std::dec << std::endl;
+    
+//     // First three bytes represent the carry value
+//     int32_t carry = (data[0] << 16) | (data[1] << 8) | data[2];
+//     std::cout << "Carry value: " << carry << std::endl;
+    
+//     // Second three bytes represent the encoder value
+//     uint32_t encoder = (data[3] << 16) | (data[4] << 8) | data[5];
+//     std::cout << "Encoder value: 0x" << std::hex << encoder << std::dec << std::endl;
+
+//     // Full rotations from carry
+//     double fullRevolutions = static_cast<double>(carry) * 360.0;
+//     std::cout << "Degrees from carry: " << fullRevolutions << std::endl;
+
+//     // Partial rotation from encoder
+//     double partialRevolution = (static_cast<double>(encoder) * 360.0) / 0x4000;
+//     std::cout << "Degrees from encoder: " << partialRevolution << std::endl;
+    
+//     double total = fullRevolutions + partialRevolution;
+//     std::cout << "Total degrees: " << total << std::endl;
+    
+//     return total;
+// }
+
 double CANProtocol::decodeInt48(const std::vector<uint8_t>& data) {
     if (data.size() != 6) {
         throw std::runtime_error("Data size must be 6 bytes for int48_t decoding");
     }
-    
-    std::cout << "Input bytes: ";
-    for (int i = 0; i < 6; ++i) {
-        std::cout << std::hex << static_cast<int>(data[i]) << " ";
-    }
-    std::cout << std::dec << std::endl;
-    
-    // First three bytes represent the carry value
+
+    // Decode carry (signed 24-bit integer)
     int32_t carry = (data[0] << 16) | (data[1] << 8) | data[2];
-    std::cout << "Carry value: " << carry << std::endl;
-    
-    // Second three bytes represent the encoder value
+    if (carry & 0x800000) {  // Sign-extend if negative
+        carry |= 0xFF000000;
+    }
+
+    // Decode encoder value (unsigned 24-bit integer)
     uint32_t encoder = (data[3] << 16) | (data[4] << 8) | data[5];
-    std::cout << "Encoder value: 0x" << std::hex << encoder << std::dec << std::endl;
+    encoder %= 0x4000;  // Wrap within 16,384 steps
 
-    // Full rotations from carry
-    double fullRevolutions = static_cast<double>(carry) * 360.0;
-    std::cout << "Degrees from carry: " << fullRevolutions << std::endl;
+    // Compute absolute position in steps
+    int64_t absolute_position_steps = (static_cast<int64_t>(carry) * 0x4000) + encoder;
 
-    // Partial rotation from encoder
-    double partialRevolution = (static_cast<double>(encoder) * 360.0) / 0x4000;
-    std::cout << "Degrees from encoder: " << partialRevolution << std::endl;
-    
-    double total = fullRevolutions + partialRevolution;
-    std::cout << "Total degrees: " << total << std::endl;
-    
-    return total;
+    // Convert to degrees
+    double degrees = (static_cast<double>(absolute_position_steps) * 360.0) / 0x4000;
+
+    return degrees;
 }
 
 

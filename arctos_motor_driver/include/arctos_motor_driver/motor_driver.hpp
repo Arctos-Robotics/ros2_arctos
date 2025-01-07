@@ -30,13 +30,16 @@ public:
      */
     ~MotorDriver();
 
-    // CAN message handling
-    void setCANSubscription(rclcpp::Subscription<can_msgs::msg::Frame>::SharedPtr subscription);
-
+    void processCANMessage(const can_msgs::msg::Frame::SharedPtr msg);
     // Joint management
 
     void setCAN(std::shared_ptr<CANProtocol> can_protocol);
     
+    /**
+     * @brief Updates the states of the joints.
+     */
+    void updateJointStates();
+
     /**
      * @brief Adds a joint to the motor driver.
      * @param joint_name The name of the joint.
@@ -51,8 +54,6 @@ public:
     void removeJoint(const std::string& joint_name);
     
     // Core control functions
-
-    void requestJointUpdate(const std::string& joint_name, bool request_position = true, bool request_velocity = true);
 
     /**
      * @brief Sets the position of a joint.
@@ -206,16 +207,9 @@ public:
      */
     void clearError(const std::string& joint_name);
 
-    /**
-     * @brief Processes a CAN message.
-     * @param msg A shared pointer to the CAN message.
-     */
-    void processCANMessage(const can_msgs::msg::Frame::SharedPtr msg);
 private:
     rclcpp::Node::SharedPtr node_; /**< A shared pointer to the ROS 2 node. */
     std::shared_ptr<CANProtocol> can_protocol_; /**< A shared pointer to the CAN protocol. */
-    rclcpp::Subscription<can_msgs::msg::Frame>::SharedPtr can_sub_; /**< A shared pointer to the CAN subscription. */
-    rclcpp::TimerBase::SharedPtr update_timer_; /**< A shared pointer to the update timer. */
     
     std::map<std::string, JointConfig> joints_; /**< A map of joint names to joint configurations. */
     std::map<uint8_t, std::string> motor_to_joint_map_; /**< A map of motor IDs to joint names. */
@@ -226,12 +220,7 @@ private:
      * @brief Callback function for CAN messages.
      * @param msg A shared pointer to the CAN message.
      */
-    // void canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg);
-
-    /**
-     * @brief Updates the states of the joints.
-     */
-    // void updateJointStates();
+    void canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg);
 
     /**
      * @brief Processes a status response from a motor.
@@ -272,7 +261,7 @@ private:
      * @brief Requests data from a motor.
      * @param motor_id The ID of the motor.
      */
-    // void requestMotorData(uint8_t motor_id);
+    void requestMotorData(uint8_t motor_id);
 };
 
 } // namespace arctos_motor_driver
