@@ -111,66 +111,51 @@ CallbackReturn ArctosInterface::on_configure(const rclcpp_lifecycle::State & pre
   return CallbackReturn::SUCCESS;
 }
 
-CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & previous_state)
+CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & previous_state) 
 {
-  RCLCPP_INFO(node_->get_logger(), "Transitioning to ACTIVE state from %s", previous_state.label().c_str());
+    RCLCPP_INFO(node_->get_logger(), "Transitioning to ACTIVE state from %s", previous_state.label().c_str());
 
-  // Enable all motors
-  for (size_t i = 0; i < info_.joints.size(); i++) {
-    try {
-      const auto& joint_name = info_.joints[i].name;
-      
-      RCLCPP_INFO(node_->get_logger(), "Enabling motor for joint %s", joint_name.c_str());
-      // Enable the motor first
-      motor_driver_->enableMotor(joint_name);
-      
-      // Check if homing is required
-      bool requires_homing = false;
-      std::string param_prefix = "motors." + joint_name + ".";
-      if (node_->get_parameter(param_prefix + "requires_homing", requires_homing) && requires_homing) {
-        RCLCPP_INFO(node_->get_logger(), "Starting homing sequence for joint %s", joint_name.c_str());
-        
-        // Get homing current if specified
-        // int home_current = 800;  // Default 0.8A
-        // node_->get_parameter(param_prefix + "home_current", home_current);
-        
-        // Configure motor for homing
-        // auto current_status = motor_driver_->getMotorStatus(joint_name);
-        // uint16_t original_current = current_status.params.working_current;
-        // motor_driver_->setWorkingCurrent(joint_name, static_cast<uint16_t>(home_current));
-        
-        // Start homing
-        motor_driver_->homeMotor(joint_name);
-        
-        // Wait for homing to complete (with timeout)
-        rclcpp::Time start_time = node_->now();
-        while (!motor_driver_->getMotorStatus(joint_name).is_homed) {
-          if ((node_->now() - start_time).seconds() > 30.0) {  // 30 second timeout
-            RCLCPP_ERROR(node_->get_logger(), "Homing timeout for joint %s", joint_name.c_str());
+    // Enable all motors
+    for (size_t i = 0; i < info_.joints.size(); i++) {
+        try {
+            const auto& joint_name = info_.joints[i].name;
+
+            RCLCPP_INFO(node_->get_logger(), "Enabling motor and shaft protection for joint %s", joint_name.c_str());
+            motor_driver_->enableMotor(joint_name);
+            motor_driver_->enableShaftProtection(joint_name);
+
+            // Check if homing is required
+            bool requires_homing = false;
+            std::string param_prefix = "motors." + joint_name + ".";
+            if (node_->get_parameter(param_prefix + "requires_homing", requires_homing) && requires_homing) {
+                RCLCPP_INFO(node_->get_logger(), "Starting homing sequence for joint %s", joint_name.c_str());
+
+                // Initiate homing
+                motor_driver_->homeMotor(joint_name);
+
+                // Wait for homing to complete
+                while (!motor_driver_->getMotorStatus(joint_name).is_homed) {
+                    if (motor_driver_->getMotorStatus(joint_name).is_error) {
+                        RCLCPP_ERROR(node_->get_logger(), "Homing error for joint %s: %s", 
+                                     joint_name.c_str(), motor_driver_->getMotorStatus(joint_name).error_message.c_str());
+                        return CallbackReturn::ERROR;
+                    }
+                    rclcpp::spin_some(node_);
+                    rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 100ms
+                }
+
+                RCLCPP_INFO(node_->get_logger(), "Homing completed for joint %s", joint_name.c_str());
+            }
+        } catch (const std::exception& e) {
+            RCLCPP_ERROR(node_->get_logger(), "Failed to activate joint %s: %s",
+                         info_.joints[i].name.c_str(), e.what());
             return CallbackReturn::ERROR;
-          }
-          if (motor_driver_->getMotorStatus(joint_name).is_error) {
-            RCLCPP_ERROR(node_->get_logger(), "Homing error for joint %s", joint_name.c_str());
-            return CallbackReturn::ERROR;
-          }
-          rclcpp::spin_some(node_);
-          rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 100ms
         }
-        
-        // Restore original current
-        // motor_driver_->setWorkingCurrent(joint_name, original_current);
-        RCLCPP_INFO(node_->get_logger(), "Homing completed for joint %s", joint_name.c_str());
-      }
-      
-    } catch (const std::exception& e) {
-      RCLCPP_ERROR(node_->get_logger(), "Failed to activate joint %s: %s",
-                   info_.joints[i].name.c_str(), e.what());
-      return CallbackReturn::ERROR;
     }
-  }
-
-  return CallbackReturn::SUCCESS;
+    return CallbackReturn::SUCCESS;
 }
+
+
 
 CallbackReturn ArctosInterface::on_deactivate(const rclcpp_lifecycle::State & previous_state)
 {
@@ -230,6 +215,9 @@ return_type ArctosInterface::read(const rclcpp::Time & /*time*/, const rclcpp::D
   /* We don't need to put this here as the motors are not currently backdrivable, so we don't need to fetch the position from the motor at every cycle */
   // motor_driver_->updateJointStates(); 
 
+  // NOTE:
+  // The frequency of calling read() and write() is determined by the update rate of the controller manager, which is typically set in the ROS2 control parameters.
+
   for (size_t i = 0; i < info_.joints.size(); i++) {
       const std::string &joint_name = info_.joints[i].name;
       try {
@@ -271,6 +259,9 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
     RCLCPP_INFO(node_->get_logger(), "Initialized last command vectors.");
   }
 
+  node_->get_parameter("position_tolerance", position_tolerance_);
+  node_->get_parameter("velocity_tolerance", velocity_tolerance_);
+  
   for (size_t i = 0; i < info_.joints.size(); i++) {
     try {
       if (has_position_interface_) {

@@ -84,7 +84,13 @@ public:
     double getJointVelocity(const std::string& joint_name) const;
     
     // Motor control
-
+    
+    /**
+     * @brief Enable shaft protection for a joint.
+     * @param joint_name The name of the joint.
+     */
+    void enableShaftProtection(const std::string& joint_name);
+    
     /**
      * @brief Enables a motor.
      * @param joint_name The name of the joint associated with the motor.
@@ -213,7 +219,8 @@ private:
     
     std::map<std::string, JointConfig> joints_; /**< A map of joint names to joint configurations. */
     std::map<uint8_t, std::string> motor_to_joint_map_; /**< A map of motor IDs to joint names. */
-
+    double position_tolerance_; /**< The position tolerance for joint control. */
+    double velocity_tolerance_; /**< The velocity tolerance for joint control. */
     // Internal handlers
 
     /**

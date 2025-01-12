@@ -127,7 +127,8 @@ struct CANCommands {
     static constexpr uint8_t SET_SUBDIVISIONS = 0x84; /**< Set subdivisions command. */
     static constexpr uint8_t SET_ENABLE_SETTINGS = 0x85; /**< Set enable settings command. */
     static constexpr uint8_t SET_DIRECTION = 0x86; /**< Set direction command. */
-    static constexpr uint8_t ENABLE_PROTECTION = 0x88; /**< Enable protection command. */
+    static constexpr uint8_t ENABLE_SHAFT_PROTECTION = 0x88; /**< Enable protection command. */
+    static constexpr uint8_t RELEASE_SHAFT_PROTECTION = 0x3D; /**< Release the motor shaft locked-rotor protection state. */
     static constexpr uint8_t SET_HOME_PARAMS = 0x90; /**< Set home parameters command. */
     static constexpr uint8_t GO_HOME = 0x91; /**< Go home command. */
     static constexpr uint8_t SET_ZERO = 0x92; /**< Set zero command. */

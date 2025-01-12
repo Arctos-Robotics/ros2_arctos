@@ -52,7 +52,10 @@ arctos_hardware_interface:
       test_joint:
         motor_id: 3
         requires_homing: true
+        gear_ratio: 150.0
+        hardware_type: MKS_42D
       joint_y:
         motor_id: 2
         requires_homing: true
         gear_ratio: 150.0
+        hardware_type: MKS_57D

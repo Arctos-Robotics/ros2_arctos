@@ -35,7 +35,8 @@ public:
   CallbackReturn on_configure(const rclcpp_lifecycle::State & previous_state) override;
   CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
   CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
-  
+  // TODO: Implement on_cleanup, on_shutdown
+
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
   
@@ -48,9 +49,10 @@ protected:
   std::vector<double> last_velocity_command_;
   
   // Tolerance values for filtering commands
-  double position_tolerance_ = 0.001;  // Default value, can be overridden or set via parameter
-  double velocity_tolerance_ = 0.01;   // Default value, can be overridden or set via parameter
 
+  double position_tolerance_;  /**< The position tolerance for joint control. */
+  double velocity_tolerance_;  /**< The velocity tolerance for joint control. */
+  
   // Joint state storage
   std::vector<double> joint_position_command_;
   std::vector<double> joint_velocities_command_;
