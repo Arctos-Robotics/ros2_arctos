@@ -62,11 +62,13 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
     std::string param_prefix = "motors." + joint.name + ".";
     
     // Declare parameters for this joint
-    node_->declare_parameter(param_prefix + "motor_id", -1);         // Motor/CAN ID
+    node_->declare_parameter(param_prefix + "motor_id", -1);             // Motor/CAN ID
     // node_->declare_parameter(param_prefix + "working_current", 1600); // Default 1.6A
     // node_->declare_parameter(param_prefix + "holding_current", 50);   // Default 50%
     // node_->declare_parameter(param_prefix + "home_current", 800);     // Default 0.8A for homing
-    node_->declare_parameter(param_prefix + "requires_homing", false);// Default no homing needed
+    node_->declare_parameter(param_prefix + "hardware_type", "MKS_42D"); // Default MKS Servo
+    node_->declare_parameter(param_prefix + "gear_ratio", 1.0);          // Default 1:1 gear ratio
+    node_->declare_parameter(param_prefix + "requires_homing", false);   // Default no homing needed
     
     // Get motor ID from parameters
     int motor_id;
@@ -225,7 +227,8 @@ std::vector<hardware_interface::CommandInterface> ArctosInterface::export_comman
 
 return_type ArctosInterface::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/) {
   rclcpp::spin_some(node_);
-  motor_driver_->updateJointStates();
+  /* We don't need to put this here as the motors are not currently backdrivable, so we don't need to fetch the position from the motor at every cycle */
+  // motor_driver_->updateJointStates(); 
 
   for (size_t i = 0; i < info_.joints.size(); i++) {
       const std::string &joint_name = info_.joints[i].name;
@@ -321,9 +324,15 @@ void ArctosInterface::initializeMotors() {
       const auto& joint = info_.joints[i];
       uint8_t motor_id = motor_ids_[i];
 
-      // Get gear ratio parameter
       std::string param_prefix = "motors." + joint.name + ".";
-      node_->declare_parameter(param_prefix + "gear_ratio", 1.0);
+
+      // Get hardware_type parameter
+      std::string hardware_type;
+      if (!node_->get_parameter(param_prefix + "hardware_type", hardware_type)){
+          RCLCPP_WARN(node_->get_logger(), "No hardware type specified for joint %s, using default MKS_42D", 
+                      joint.name.c_str());
+          hardware_type = "MKS_42D";
+      }
       
       double gear_ratio;
       if (!node_->get_parameter(param_prefix + "gear_ratio", gear_ratio)) {
@@ -333,7 +342,7 @@ void ArctosInterface::initializeMotors() {
       }
 
       // Add joint to motor driver with gear ratio
-      motor_driver_->addJoint(joint.name, motor_id, gear_ratio);
+      motor_driver_->addJoint(joint.name, motor_id, hardware_type, gear_ratio);
 
       // Configure motor parameters
       if (!setupMotorParameters(joint, motor_id)) {

@@ -12,6 +12,7 @@ joint_trajectory_controller:
   ros__parameters:
     joints:
       - test_joint
+      - joint_y
       
     command_interfaces:
       - position
@@ -50,4 +51,8 @@ arctos_hardware_interface:
     motors:
       test_joint:
         motor_id: 3
-        requires_homing: false
+        requires_homing: true
+      joint_y:
+        motor_id: 2
+        requires_homing: true
+        gear_ratio: 150.0

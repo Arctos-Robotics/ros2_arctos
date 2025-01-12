@@ -4,6 +4,7 @@
 INTERFACE="can0"
 CANABLE_IDENTIFIER="CANable"  # Identifier for the CANable device
 BITRATE="500000"  # Bitrate in bps (e.g., 500000 for 500 kbps)
+QLEN="1000"
 
 # Ensure the script is running as root
 if [ "$EUID" -ne 0 ]; then
@@ -60,6 +61,8 @@ if [[ "$OS" == "Linux" ]]; then
     sudo ip link set down "$INTERFACE" 2>/dev/null || true
     echo "Setting bitrate for $INTERFACE to $BITRATE..."
     sudo ip link set "$INTERFACE" type can bitrate "$BITRATE"
+    echo "Setting qlen for $INTERFACE to $QLEN"
+    sudo ip link set "$INTERFACE" txqueuelen "$QLEN"
     echo "Bringing up $INTERFACE..."
     sudo ip link set up "$INTERFACE"
 elif [[ "$OS" == "Darwin" ]]; then

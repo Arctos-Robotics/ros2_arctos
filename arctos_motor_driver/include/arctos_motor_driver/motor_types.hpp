@@ -47,7 +47,7 @@ struct MotorParameters {
 struct JointConfig {
     uint8_t motor_id{0}; /**< ID of the motor. */
     std::string joint_name; /**< Name of the joint. */
-    
+    std::string hardware_type; /**< Hardware type of the joint (MKS_42D or MKS_57D). */
     // Gear ratio
     double gear_ratio{1.0};
     

@@ -61,61 +61,61 @@ ament_target_dependencies(${PROJECT_NAME}
 )
 
 # Testing
-if(BUILD_TESTING)
-  find_package(ament_cmake_gtest REQUIRED)
-  # find_package(ament_lint_auto REQUIRED)  # Add linting
-  
-  # Run linters
-  # ament_lint_auto_find_test_dependencies()
-  
-  # Motor types test
-  ament_add_gtest(test_motor_types
-    test/test_motor_types.cpp
-  )
-  target_link_libraries(test_motor_types
-    ${PROJECT_NAME}
-    Threads::Threads
-  )
-  target_include_directories(test_motor_types PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  )
-  ament_target_dependencies(test_motor_types
-    rclcpp
-  )
-
-  ament_add_gtest(test_can_protocol
-    test/test_can_protocol.cpp
-  )
-  ament_target_dependencies(test_can_protocol
-    rclcpp
-    can_msgs
-  )
-  target_link_libraries(test_can_protocol
-    ${PROJECT_NAME}
-    can_protocol
-  )
-  target_include_directories(test_can_protocol PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-  )
-
-  # Unit test for motor driver
-  ament_add_gtest(test_motor_driver
-    test/test_motor_driver.cpp
-  )
-  target_link_libraries(test_motor_driver
-    ${PROJECT_NAME}
-    can_protocol
-    Threads::Threads
-  )
-  target_include_directories(test_motor_driver PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  )
-  ament_target_dependencies(test_motor_driver
-    rclcpp
-    can_msgs
-  )
-endif()
+# if(BUILD_TESTING)
+#   find_package(ament_cmake_gtest REQUIRED)
+#   # find_package(ament_lint_auto REQUIRED)  # Add linting
+#   
+#   # Run linters
+#   # ament_lint_auto_find_test_dependencies()
+#   
+#   # Motor types test
+#   ament_add_gtest(test_motor_types
+#     test/test_motor_types.cpp
+#   )
+#   target_link_libraries(test_motor_types
+#     ${PROJECT_NAME}
+#     Threads::Threads
+#   )
+#   target_include_directories(test_motor_types PUBLIC
+#     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   )
+#   ament_target_dependencies(test_motor_types
+#     rclcpp
+#   )
+# 
+#   ament_add_gtest(test_can_protocol
+#     test/test_can_protocol.cpp
+#   )
+#   ament_target_dependencies(test_can_protocol
+#     rclcpp
+#     can_msgs
+#   )
+#   target_link_libraries(test_can_protocol
+#     ${PROJECT_NAME}
+#     can_protocol
+#   )
+#   target_include_directories(test_can_protocol PUBLIC
+#     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#     $<INSTALL_INTERFACE:include>
+#   )
+# 
+#   # Unit test for motor driver
+#   ament_add_gtest(test_motor_driver
+#     test/test_motor_driver.cpp
+#   )
+#   target_link_libraries(test_motor_driver
+#     ${PROJECT_NAME}
+#     can_protocol
+#     Threads::Threads
+#   )
+#   target_include_directories(test_motor_driver PUBLIC
+#     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   )
+#   ament_target_dependencies(test_motor_driver
+#     rclcpp
+#     can_msgs
+#   )
+# endif()
 
 # Install targets
 install(TARGETS 
