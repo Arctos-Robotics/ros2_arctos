@@ -1,105 +1,118 @@
+from launch import LaunchDescription
+from launch.actions import RegisterEventHandler, DeclareLaunchArgument
+from launch.event_handlers import OnProcessExit
+from launch.actions import IncludeLaunchDescription, LogInfo
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Command, FindExecutable
+from ament_index_python.packages import get_package_share_directory
+from launch_ros.actions import Node
 import os
 
-from ament_index_python.packages import get_package_share_directory
-from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
-from launch.conditions import IfCondition
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import Node
-from launch.substitutions import PathJoinSubstitution
-from launch_ros.substitutions import FindPackageShare
-from ament_index_python.packages import get_package_share_directory
-from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
-from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
+    # Get package paths
     arctos_description_dir = get_package_share_directory('arctos_description')
     arctos_hardware_interface_dir = get_package_share_directory('arctos_hardware_interface')
     arctos_moveit_dir = get_package_share_directory('arctos_moveit_config')
 
-    # # Launch RViz
-    rviz_config_file = os.path.join(arctos_description_dir, 'config', 'moveit.rviz')
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        output='screen',
-        arguments=['-d', rviz_config_file],
+    # Declare Launch Arguments
+    declare_rviz_arg = DeclareLaunchArgument(
+        "rviz_config_file",
+        default_value=PathJoinSubstitution([arctos_description_dir, "config", "moveit.rviz"]),
+        description="Path to RViz configuration file"
     )
 
-    # Launch robot state publisher
-    urdf_file = os.path.join(arctos_description_dir, 'urdf', 'arctos.xacro')
+    # RViz Configuration
+    rviz_config_file = LaunchConfiguration("rviz_config_file")
+
+    # Get URDF via xacro
     robot_description_content = Command(
         [
-            FindExecutable(name='xacro'), ' ',
-            urdf_file
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            PathJoinSubstitution([arctos_description_dir, "urdf", "arctos.xacro"]),
         ]
     )
-    robot_description = {'robot_description': ParameterValue(robot_description_content, value_type=str)}
 
+    robot_description = {"robot_description": robot_description_content}
+
+    # Parameters
+    motor_params = os.path.join(
+        arctos_description_dir, 'config', 'arctos_controller.yaml'
+    )
+
+    # Nodes
     robot_state_pub_node = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        output='screen',
-        parameters=[robot_description]
-    )
-
-    # Launch joint state publisher
-    joint_state_publisher_node = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher',
-        output='screen',
-    )
-
-    # Launch MoveIt
-    moveit_launch_file = os.path.join(arctos_moveit_dir, 'launch', 'move_group.launch.py')
-    moveit_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(moveit_launch_file),
-    )
-    can_launch_file = os.path.join(arctos_hardware_interface_dir, 'launch', 'can_interface.launch.py')
-    can_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(can_launch_file),
-    )
-
-    robot_controllers = PathJoinSubstitution(
-        [
-            FindPackageShare("arctos_description"),
-            "config",
-            "arctos_controller.yaml",
-        ]
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        output="both",
+        parameters=[robot_description],
     )
 
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_controllers],
-        remappings=[
-            (   
-                "/controller_manager/robot_description", 
-                "/robot_description",
-            ),
-            (
-                "/forward_position_controller/commands",
-                "/position_commands",
-            ),
+        parameters=[robot_description, motor_params],
+        output={'stdout': 'screen', 'stderr': 'screen'},
+        arguments=[
+            '--ros-args',
+            '--log-level', 'debug',
+            '--log-level', 'arctos_hardware_interface:=debug',
+            '--log-level', 'controller_manager:=debug',
         ],
-        output="both",
     )
+
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
+    )
+
     robot_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["arctos_controller", "-c", "/controller_manager"],
+        arguments=["joint_trajectory_controller", "--controller-manager", "/controller_manager"],
     )
-    nodes = [
-        control_node,
-        robot_controller_spawner,
-        rviz_node,
-        robot_state_pub_node,
-        joint_state_publisher_node,
-        moveit_launch,
-        can_launch,
-    ]
 
-    return LaunchDescription(nodes)
+    # Include CAN Launch
+    can_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([arctos_hardware_interface_dir, "launch", "can_interface.launch.py"])
+        )
+    )
+
+    # Include MoveIt Launch
+    move_group_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([arctos_moveit_dir, "launch", "move_group.launch.py"])
+        )
+    )
+
+    # RViz Node
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        output="screen",
+        arguments=["-d", rviz_config_file],
+    )
+
+    # Ensure joint state broadcaster starts before controllers
+    delay_robot_controller_spawner = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_state_broadcaster_spawner,
+            on_exit=[robot_controller_spawner],
+        )
+    )
+
+    return LaunchDescription([
+        declare_rviz_arg,
+        LogInfo(msg=["Launching Arctos Bringup with RViz..."]),
+        control_node,
+        robot_state_pub_node,
+        joint_state_broadcaster_spawner,
+        delay_robot_controller_spawner,
+        can_launch,
+        move_group_launch,
+        rviz_node,
+    ])

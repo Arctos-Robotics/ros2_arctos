@@ -1,14 +1,14 @@
 controller_manager:
   ros__parameters:
-    update_rate: 10  # Hz
+    update_rate: 100  # Hz
 
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+      
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    arctos_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-
-arctos_controller:
+joint_trajectory_controller:
   ros__parameters:
     joints:
       - X_joint
@@ -17,11 +17,51 @@ arctos_controller:
       - A_joint
       - B_joint
       - C_joint
-
+    
     command_interfaces:
       - position
       - velocity
-
+    
     state_interfaces:
       - position
       - velocity
+
+    state_publish_rate: 50.0
+    action_monitor_rate: 20.0
+
+    allow_partial_joints_goal: true
+    state_tolerance_check: false  # Disable tolerance checking for simplicity
+
+arctos_hardware_interface:
+  ros__parameters:
+    motors:
+      X_joint:
+        motor_id: 1
+        requires_homing: false
+        gear_ratio: 13.5
+        hardware_type: MKS_57D
+      Y_joint:
+        motor_id: 2
+        requires_homing: false
+        gear_ratio: 150.0
+        hardware_type: MKS_57D
+      Z_joint:
+        motor_id: 3
+        requires_homing: true
+        gear_ratio: 150.0
+        hardware_type: MKS_42D
+      A_joint:
+        motor_id: 4
+        requires_homing: false
+        gear_ratio: 48.0
+        hardware_type: MKS_42D
+      B_joint:
+        motor_id: 5
+        requires_homing: false
+        gear_ratio: 67.82
+        hardware_type: MKS_42D
+      C_joint:
+        motor_id: 6
+        requires_homing: false
+        gear_ratio: 67.82
+        hardware_type: MKS_42D
