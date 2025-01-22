@@ -45,7 +45,7 @@ public:
      * @param joint_name The name of the joint.
      * @param motor_id The ID of the motor.
      */
-    void addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio = 1.0);
+    void addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio = 1.0, bool inverted = false, double zero_position = 0.0, double home_position = 0.0, double opposite_limit = 0.0);
 
     /**
      * @brief Removes a joint from the motor driver.
@@ -68,6 +68,13 @@ public:
      * @param velocity The desired velocity.
      */
     void setJointVelocity(const std::string& joint_name, double velocity);
+
+    /**
+    * @brief Sets the zero position of a joint.
+    * @param joint_name The name of the joint.
+    * @param position The zero position.
+     */
+    void setZeroPosition(const std::string& joint_name);
 
     /**
      * @brief Gets the position of a joint.

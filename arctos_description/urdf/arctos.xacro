@@ -113,7 +113,7 @@
     name="A_joint" type="continuous"
     parent="Link_3_1" child="Link_4_1"
     origin_xyz="0 -0.13881 0.0217651" origin_rpy="0 0 0"
-    axis_xyz="-0.0 1.0 -0.0"
+    axis_xyz="0.0 1.0 0.0"
     limit_u="${pi}" limit_l="${-pi}" limit_e="22.0" limit_v="4.4"
   />
 
@@ -121,7 +121,7 @@
     name="B_joint" type="continuous"
     parent="Link_4_1" child="Link_5_1"
     origin_xyz="0.0 -0.12543 -0.00184" origin_rpy="0 0 0"
-    axis_xyz="-1.0 -0.0 0.0"
+    axis_xyz="-1.0 0.0 0.0"
     limit_u="1.55" limit_l="-1.55" limit_e="16.0" limit_v="3.0"
   />
 
@@ -129,8 +129,9 @@
     name="C_joint" type="continuous"
     parent="Link_5_1" child="Link_6_1"
     origin_xyz="0.0 -0.0398 0.0" origin_rpy="0 0 0"
-    axis_xyz="-0.0 1.0 -0.0"
+    axis_xyz="0.0 1.0 0.0"
     limit_u="${pi}" limit_l="${-pi}" limit_e="16.0" limit_v="3.0"
   />
+
   <xacro:arctos_ros2_control name="arctos_interface" />
 </robot>

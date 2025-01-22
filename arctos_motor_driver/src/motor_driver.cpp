@@ -49,7 +49,7 @@ void MotorDriver::setCAN(std::shared_ptr<CANProtocol> can_protocol) {
  * @param joint_name The name of the joint to be added.
  * @param motor_id The ID of the motor associated with the joint.
  */
-void MotorDriver::addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio) {
+void MotorDriver::addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio, bool inverted, double zero_position, double home_position, double opposite_limit) {
     // Check if joint already exists
     if (joints_.find(joint_name) != joints_.end()) {
         RCLCPP_WARN(node_->get_logger(), "Joint %s already exists", joint_name.c_str());
@@ -73,7 +73,12 @@ void MotorDriver::addJoint(const std::string& joint_name, uint8_t motor_id, std:
     joints_.insert({joint_name, JointConfig(motor_id, joint_name, node_->get_clock())});
     joints_[joint_name].hardware_type = hardware_type;
     joints_[joint_name].gear_ratio = gear_ratio;
+    joints_[joint_name].inverted = inverted;
+    joints_[joint_name].zero_position = zero_position;
+    joints_[joint_name].home_position = home_position;
+    joints_[joint_name].opposite_limit = opposite_limit;
     motor_to_joint_map_[motor_id] = joint_name;
+
     joints_[joint_name].last_update = node_->get_clock()->now();  // Initialize timestamp
 
     RCLCPP_INFO(node_->get_logger(), "Added joint %s with motor ID %d and gear ratio %.2f:1", 
@@ -127,6 +132,10 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
     }
 
     auto& joint = it->second;
+
+    if (joint.inverted) {
+        position = -position;
+    }
 
     // Scale the position by the gear ratio
     double motor_position = position * joint.gear_ratio;
@@ -182,6 +191,10 @@ void MotorDriver::setJointVelocity(const std::string& joint_name, double velocit
 
     auto& joint = it->second;
 
+    if (joint.inverted) {
+        velocity = -velocity;
+    }
+
     // Check velocity limits
     if (std::abs(velocity) > joint.velocity_max) {
         RCLCPP_WARN(node_->get_logger(), 
@@ -226,6 +239,18 @@ void MotorDriver::setJointVelocity(const std::string& joint_name, double velocit
     can_protocol_->sendFrame(joint.motor_id, data);
     joint.command_velocity = velocity;
     joint.last_command = node_->get_clock()->now();
+}
+
+void MotorDriver::setZeroPosition(const std::string& joint_name) {
+    auto it = joints_.find(joint_name);
+    if (it == joints_.end()) {
+        RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
+        return;
+    }
+
+    auto& joint = it->second;
+
+    can_protocol_->sendFrame(joint.motor_id, {CANCommands::SET_ZERO_POSITION});
 }
 
 /**
@@ -531,6 +556,7 @@ void MotorDriver::updateJointStates() {
         bool is_homing = !joint.status.is_homed; // Joint is still homing
         bool recently_homed = (node_->get_clock()->now() - joint.last_update).seconds() < 1.0; // Within 1 second of homing completion
 
+        // TODO: Add check for zeroed position otherwise if is_homing is false, we need to check if it has been zeroed, if so, we can update the joint state.
         bool is_active = is_homing || recently_homed ||
                         (std::abs(joint.command_position - joint.position) > position_tolerance_ ||
                         std::abs(joint.command_velocity - joint.velocity) > velocity_tolerance_);
@@ -622,6 +648,7 @@ void MotorDriver::canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg) 
         case CANCommands::CALIBRATE:
         case CANCommands::GO_HOME:
         case CANCommands::ENABLE_MOTOR:
+        case CANCommands::SET_ZERO_POSITION:
         case CANCommands::ENABLE_SHAFT_PROTECTION:
             RCLCPP_INFO(node_->get_logger(), "Processing status response");
             processStatusResponse(msg->id, data);
@@ -679,6 +706,10 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
         RCLCPP_DEBUG(node_->get_logger(), "Motor angle: %.2f degrees", motor_angle_deg);
         RCLCPP_DEBUG(node_->get_logger(), "Joint angle: %.2f radians", joint_angle_rad);
 
+        if (joint.inverted) {
+            joint_angle_rad = -joint_angle_rad;
+        }
+
         // Update joint state
         joint.position = joint_angle_rad;
         joint.position_error = joint.command_position - joint.position;
@@ -714,6 +745,9 @@ void MotorDriver::processVelocityResponse(uint8_t motor_id, const std::vector<ui
     
     try {
         double rpm = CANProtocol::decodeVelocityToRPM(velocity_data);
+        if (joint.inverted) {
+            rpm = -rpm;
+        }
         // Use exact conversion factor
         joint.velocity = rpm * MotorConstants::RPM_TO_RADPS;
         joint.last_update = node_->get_clock()->now();
@@ -754,6 +788,7 @@ void MotorDriver::processIOResponse(uint8_t motor_id, const std::vector<uint8_t>
 
     // Decode limit switch states based on hardware type
     // TODO: Fix the logic
+    // TODO: When one home switch is used, set the other limit switch as the opposite of the home switch
     if (joint.hardware_type == "MKS_42D") {
         // Remapped ports for MKS 42D
         joint.status.limit_switch_left = (io_status & (1 << 2)) != 0;  // IN_2 (Bit 2, Dir)
@@ -864,7 +899,15 @@ void MotorDriver::processStatusResponse(uint8_t motor_id, const std::vector<uint
             break;
             
         case CANCommands::ENABLE_MOTOR:
-            joint.status.is_enabled = (status == 1);
+            switch(status) {
+                case 0:  // Motor disabled
+                    joint.status.is_enabled = false;
+                    break;
+                    
+                case 1:  // Motor enabled
+                    joint.status.is_enabled = true;
+                    break;
+            }
             break;
             
         case CANCommands::CALIBRATE:
@@ -876,6 +919,24 @@ void MotorDriver::processStatusResponse(uint8_t motor_id, const std::vector<uint
                         data[1], data[1]);
             joint.status.is_protected = (status == 01);
             RCLCPP_DEBUG(node_->get_logger(), "Status: %d (0x%02X)", data[1], data[1]);
+            break;
+
+        case CANCommands::SET_ZERO_POSITION:
+            // Status 0 indicates that the zero position command failed, and status 1 indicates success
+            switch (status) {
+                case 00:
+                    joint.status.is_error = true;
+                    joint.status.error_message = "Zero position command failed";
+                    RCLCPP_DEBUG(node_->get_logger(), "Status 0: Failed to set zero position");
+                    break;
+                case 01:
+                    joint.status.is_zeroed = true;
+                    joint.status.is_error = false;
+                    joint.status.error_message.clear();
+                    RCLCPP_INFO(node_->get_logger(), "Status 1: Zero position set");
+                    updateJointStates();
+                    break;
+            }
             break;
         
         case CANCommands::ABSOLUTE_POSITION:

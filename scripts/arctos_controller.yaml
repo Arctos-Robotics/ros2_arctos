@@ -40,46 +40,30 @@ arctos_hardware_interface:
         requires_homing: true
         gear_ratio: 13.5
         hardware_type: MKS_57D
-        zero_position: 3.0348389535736033
-        home_position: -3.028106482337883
-        opposite_limit: 2.7484106520134013
+        zero_position: 0.0                 # -0.697 Home (Down is negative), 1.570261990153783 Other limit
       Y_joint:
         motor_id: 2
         requires_homing: true
         gear_ratio: 150.0
         hardware_type: MKS_57D
-        zero_position: 0.8549028328965467
-        home_position: -0.8539415382694717
-        opposite_limit: 2.0056236341982534
+        zero_position: -0.8549948717438199 # -0.818 Home (Backward is negative), 1.9906852179588936 Other limit
       Z_joint:
         motor_id: 3
         requires_homing: true
         gear_ratio: 150.0
         hardware_type: MKS_42D
-        zero_position: 0.6805250101989999
-        home_position: -0.6796301880727333
-        opposite_limit: 1.6709090262816064
       A_joint:
         motor_id: 4
         requires_homing: false
         gear_ratio: 48.0
         hardware_type: MKS_42D
-        zero_position: 0.6805250101989999
-        home_position: -0.6796301880727333
-        opposite_limit: 1.6709090262816064
       B_joint:
         motor_id: 5
         requires_homing: false
         gear_ratio: 67.82
         hardware_type: MKS_42D
-        zero_position: 0.0
-        home_position: -0.0
-        opposite_limit: 0.009090262816064
       C_joint:
         motor_id: 6
         requires_homing: false
         gear_ratio: 67.82
         hardware_type: MKS_42D
-        zero_position: 0.0
-        home_position: -0.0
-        opposite_limit: 0.0

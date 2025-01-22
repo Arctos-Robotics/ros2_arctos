@@ -18,10 +18,11 @@ namespace arctos_motor_driver {
 struct MotorStatus {
     bool is_enabled{false}; /**< Flag indicating if the motor is enabled. */
     bool is_protected{false}; /**< Flag indicating if the motor has the shaft protection protected. */
-    bool is_calibrated{false}; /**< Flag indicating if the motor is calibrated. */
-    bool is_homed{false}; /**< Flag indicating if the motor is homed. */
+    bool is_calibrated{false}; /**< Flag indicating if the motor is calibrated. */ // TODO: Unsure if this is needed.
+    bool is_homed{false}; /**< Flag indicating if the motor is homed. */ // TODO: Should this be set to True when the joint limit is reached since we use the zero_position param now?
+    bool is_zeroed{false}; /**< Flag indicating if the motor is zeroed using the `zero_position`. */
     bool is_error{false}; /**< Flag indicating if the motor has encountered an error. */
-    uint8_t error_code{0}; /**< Error code of the motor. */
+    uint8_t error_code{0}; /**< Error code of the motor. */ // TODO: Define error codes
     std::string error_message{}; /**< Error message associated with the motor. */
     bool limit_switch_left{false}; /**< Flag indicating if the left limit switch is triggered. */
     bool limit_switch_right{false}; /**< Flag indicating if the right limit switch is triggered. */
@@ -48,9 +49,17 @@ struct JointConfig {
     uint8_t motor_id{0}; /**< ID of the motor. */
     std::string joint_name; /**< Name of the joint. */
     std::string hardware_type; /**< Hardware type of the joint (MKS_42D or MKS_57D). */
+
     // Gear ratio
     double gear_ratio{1.0};
     
+    // Motor direction
+    bool inverted = false; /**< Flag indicating if the position of the motor is inverted. */
+
+    double zero_position{0.0}; /**< Zero position of the joint. */
+    double home_position{0.0}; /**< Home position of the joint. */
+    double opposite_limit{0.0}; /**< Opposite limit position of the joint. */
+
     // Current state
     double position{0.0}; /**< Current position of the joint. */
     double velocity{0.0}; /**< Current velocity of the joint. */
@@ -77,6 +86,7 @@ struct JointConfig {
 
 
     // Legacy constructor for testing
+    // TODO: Remove this constructor
     JointConfig(uint8_t id, const std::string& name) 
         : motor_id(id)
         , joint_name(name)
@@ -131,7 +141,7 @@ struct CANCommands {
     static constexpr uint8_t RELEASE_SHAFT_PROTECTION = 0x3D; /**< Release the motor shaft locked-rotor protection state. */
     static constexpr uint8_t SET_HOME_PARAMS = 0x90; /**< Set home parameters command. */
     static constexpr uint8_t GO_HOME = 0x91; /**< Go home command. */
-    static constexpr uint8_t SET_ZERO = 0x92; /**< Set zero command. */
+    static constexpr uint8_t SET_ZERO_POSITION = 0x92; /**< Set zero command. */
     
     // Motion commands
     static constexpr uint8_t ENABLE_MOTOR = 0xF3; /**< Enable motor command. */

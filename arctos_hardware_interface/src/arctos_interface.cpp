@@ -69,6 +69,10 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
     node_->declare_parameter(param_prefix + "hardware_type", "MKS_42D"); // Default MKS Servo
     node_->declare_parameter(param_prefix + "gear_ratio", 1.0);          // Default 1:1 gear ratio
     node_->declare_parameter(param_prefix + "requires_homing", false);   // Default no homing needed
+    node_->declare_parameter(param_prefix + "inverted", false);          // Default joint not inverted 
+    node_->declare_parameter(param_prefix + "zero_position", -1.0);        // Default zero position (unknown)
+    node_->declare_parameter(param_prefix + "home_position", -1.0);        // Default home position (unknown)
+    node_->declare_parameter(param_prefix + "opposite_limit", -1.0);       // Default opposite limit position (unknown)
     
     // Get motor ID from parameters
     int motor_id;
@@ -84,6 +88,28 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
 
     motor_ids_[i] = static_cast<uint8_t>(motor_id);
     
+    double zero_position, home_position, opposite_limit;
+    if (!node_->get_parameter(param_prefix + "zero_position", zero_position)) {
+      RCLCPP_ERROR(node_->get_logger(), "Failed to get zero_position for joint %s", joint.name.c_str());
+      return CallbackReturn::ERROR;
+    }
+
+    if (!node_->get_parameter(param_prefix + "home_position", home_position)) {
+      RCLCPP_ERROR(node_->get_logger(), "Failed to get home_position for joint %s", joint.name.c_str());
+      return CallbackReturn::ERROR;
+    }
+
+    if (!node_->get_parameter(param_prefix + "opposite_limit", opposite_limit)) {
+      RCLCPP_ERROR(node_->get_logger(), "Failed to get opposite_limit for joint %s", joint.name.c_str());
+      return CallbackReturn::ERROR;
+    }
+
+    if (zero_position == 1.0 || home_position == 1.0 || opposite_limit == 1.0) {
+      RCLCPP_ERROR(node_->get_logger(), "Invalid joint position parameters for joint %s", joint.name.c_str());
+      RCLCPP_ERROR(node_->get_logger(), "Please use the 'set_zero_position.py' script to configure joint positions.");
+      return CallbackReturn::ERROR;
+    }
+
     RCLCPP_INFO(node_->get_logger(), "Configured joint %s with motor_id %d", 
                 joint.name.c_str(), motor_id);
 
@@ -127,6 +153,7 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & prev
             // Check if homing is required
             bool requires_homing = false;
             std::string param_prefix = "motors." + joint_name + ".";
+
             if (node_->get_parameter(param_prefix + "requires_homing", requires_homing) && requires_homing) {
                 RCLCPP_INFO(node_->get_logger(), "Starting homing sequence for joint %s", joint_name.c_str());
 
@@ -145,6 +172,34 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & prev
                 }
 
                 RCLCPP_INFO(node_->get_logger(), "Homing completed for joint %s", joint_name.c_str());
+
+                // Move to zero position
+                double zero_position;
+                node_->get_parameter(param_prefix + "zero_position", zero_position);
+
+                RCLCPP_INFO(node_->get_logger(), "Moving to zero position for joint %s", joint_name.c_str());
+                motor_driver_->setJointPosition(joint_name, zero_position);
+
+                // Wait for motor to reach zero_position
+                while (std::abs(motor_driver_->getJointPosition(joint_name) - zero_position) > 0.03) {
+                    rclcpp::spin_some(node_);
+                    rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 100ms
+                }
+
+                RCLCPP_DEBUG(node_->get_logger(), "Joint %s at zero position, pos: %.3f rad", joint_name.c_str(), zero_position);
+                motor_driver_->setZeroPosition(joint_name);
+
+                // Check if motor is zeroed
+                while (!motor_driver_->getMotorStatus(joint_name).is_zeroed) {
+                    if (motor_driver_->getMotorStatus(joint_name).is_error) {
+                        RCLCPP_ERROR(node_->get_logger(), "Zeroing error for joint %s: %s", 
+                                     joint_name.c_str(), motor_driver_->getMotorStatus(joint_name).error_message.c_str());
+                        return CallbackReturn::ERROR;
+                    }
+                    rclcpp::spin_some(node_);
+                    rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 1s
+                }
+
             }
         } catch (const std::exception& e) {
             RCLCPP_ERROR(node_->get_logger(), "Failed to activate joint %s: %s",
@@ -332,8 +387,15 @@ void ArctosInterface::initializeMotors() {
           gear_ratio = 1.0;
       }
 
+      bool inverted;
+      double zero_position, home_position, opposite_limit;
+      node_->get_parameter(param_prefix + "inverted", inverted);
+      node_->get_parameter(param_prefix + "zero_position", zero_position);
+      node_->get_parameter(param_prefix + "home_position", home_position);
+      node_->get_parameter(param_prefix + "opposite_limit", opposite_limit);
+
       // Add joint to motor driver with gear ratio
-      motor_driver_->addJoint(joint.name, motor_id, hardware_type, gear_ratio);
+      motor_driver_->addJoint(joint.name, motor_id, hardware_type, gear_ratio, inverted, zero_position, home_position, opposite_limit);
 
       // Configure motor parameters
       if (!setupMotorParameters(joint, motor_id)) {
