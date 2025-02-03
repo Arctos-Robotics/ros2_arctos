@@ -56,7 +56,6 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
   // Process joints and their interfaces
   for (size_t i = 0; i < info_.joints.size(); i++) {
     const auto& joint = info_.joints[i];
-    joint_names.push_back(joint.name);
     
     // Create parameter name for this joint's settings
     std::string param_prefix = "motors." + joint.name + ".";
@@ -82,10 +81,11 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
     }
     
     if (motor_id < 0) {
-      RCLCPP_ERROR(node_->get_logger(), "Invalid motor_id (%d) for joint %s", motor_id, joint.name.c_str());
+      RCLCPP_WARN(node_->get_logger(), "Invalid motor_id for joint %s", joint.name.c_str());
       return CallbackReturn::ERROR;
     }
 
+    joint_names.push_back(joint.name);
     motor_ids_[i] = static_cast<uint8_t>(motor_id);
     
     double zero_position, home_position, opposite_limit;
@@ -173,6 +173,7 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & prev
 
                 RCLCPP_INFO(node_->get_logger(), "Homing completed for joint %s", joint_name.c_str());
 
+                rclcpp::sleep_for(std::chrono::milliseconds(1000));  // Wait for motor to stabilize
                 // Move to zero position
                 double zero_position;
                 node_->get_parameter(param_prefix + "zero_position", zero_position);
@@ -186,8 +187,11 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & prev
                     rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 100ms
                 }
 
+                rclcpp::sleep_for(std::chrono::milliseconds(1000));  // Wait for motor to stabilize
                 RCLCPP_DEBUG(node_->get_logger(), "Joint %s at zero position, pos: %.3f rad", joint_name.c_str(), zero_position);
                 motor_driver_->setZeroPosition(joint_name);
+
+                rclcpp::sleep_for(std::chrono::milliseconds(1000));  // Wait for motor to stabilize
 
                 // Check if motor is zeroed
                 while (!motor_driver_->getMotorStatus(joint_name).is_zeroed) {
@@ -199,6 +203,8 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & prev
                     rclcpp::spin_some(node_);
                     rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 1s
                 }
+              
+                rclcpp::sleep_for(std::chrono::milliseconds(1000));
 
             }
         } catch (const std::exception& e) {
@@ -265,46 +271,55 @@ std::vector<hardware_interface::CommandInterface> ArctosInterface::export_comman
   return command_interfaces;
 }
 
-return_type ArctosInterface::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/) {
-  rclcpp::spin_some(node_);
-  /* We don't need to put this here as the motors are not currently backdrivable, so we don't need to fetch the position from the motor at every cycle */
-  // motor_driver_->updateJointStates(); 
+return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Duration & /*period*/) {
+    rclcpp::spin_some(node_);
 
-  // NOTE:
-  // The frequency of calling read() and write() is determined by the update rate of the controller manager, which is typically set in the ROS2 control parameters.
+    static auto last_update_time = time;  // Store last update timestamp
+    auto elapsed_time = time - last_update_time;
 
-  for (size_t i = 0; i < info_.joints.size(); i++) {
-      const std::string &joint_name = info_.joints[i].name;
-      try {
-          RCLCPP_DEBUG(node_->get_logger(), "Reading state for joint %s", joint_name.c_str());
+    // Limit CAN queries to once every 500ms
+    if (elapsed_time.seconds() > 0.5) {
+        motor_driver_->updateJointStates();  // Fetch fresh data from CAN bus
+        last_update_time = time;
+    }
 
-          if (has_position_interface_) {
-              double pos = motor_driver_->getJointPosition(joint_name);
-              joint_position_[i] = pos;
-              RCLCPP_DEBUG(node_->get_logger(), "Updated position for joint %s: %.3f", joint_name.c_str(), pos);
-          }
+    for (size_t i = 0; i < info_.joints.size(); i++) {
+        const std::string &joint_name = info_.joints[i].name;
+        try {
+            RCLCPP_DEBUG(node_->get_logger(), "Reading state for joint %s", joint_name.c_str());
 
-          if (has_velocity_interface_) {
-              double vel = motor_driver_->getJointVelocity(joint_name);
-              joint_velocities_[i] = vel;
-              RCLCPP_DEBUG(node_->get_logger(), "Updated velocity for joint %s: %.3f", joint_name.c_str(), vel);
-          }
+            if (has_position_interface_) {
+                double pos = motor_driver_->getJointPosition(joint_name);
+                joint_position_[i] = pos;
+                RCLCPP_DEBUG(node_->get_logger(), "Updated position for joint %s: %.3f", joint_name.c_str(), pos);
+            }
 
-          rclcpp::Duration time_since_update = motor_driver_->getTimeSinceLastUpdate(joint_name);
-          if (time_since_update.seconds() > 1.0) {
-              RCLCPP_WARN(node_->get_logger(),
-                          "Stale data for joint %s: %.3f seconds since last update",
-                          joint_name.c_str(), time_since_update.seconds());
-          }
-      } catch (const std::exception &e) {
-          RCLCPP_ERROR(node_->get_logger(), "Failed to read state from joint %s: %s",
+            if (has_velocity_interface_) {
+                double vel = motor_driver_->getJointVelocity(joint_name);
+                
+                // If data is stale, force velocity to zero
+                rclcpp::Duration time_since_update = motor_driver_->getTimeSinceLastUpdate(joint_name);
+                if (time_since_update.seconds() > 1.0) {
+                    RCLCPP_WARN(node_->get_logger(),
+                                "Stale data for joint %s: %.3f seconds since last update. Forcing velocity to 0.",
+                                joint_name.c_str(), time_since_update.seconds());
+                    vel = 0.0;
+                }
+
+                joint_velocities_[i] = vel;
+                RCLCPP_DEBUG(node_->get_logger(), "Updated velocity for joint %s: %.3f", joint_name.c_str(), vel);
+            }
+
+        } catch (const std::exception &e) {
+            RCLCPP_ERROR(node_->get_logger(), "Failed to read state from joint %s: %s",
                         joint_name.c_str(), e.what());
-          return return_type::ERROR;
-      }
-  }
+            return return_type::ERROR;
+        }
+    }
 
-  return return_type::OK;
+    return return_type::OK;
 }
+
 
 return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/) {
   // Resize last command vectors if not already done
@@ -322,12 +337,16 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
       if (has_position_interface_) {
         // Only send if position has changed significantly
         if (std::abs(joint_position_command_[i] - last_position_command_[i]) > position_tolerance_) {
-          motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i]);
-          RCLCPP_INFO(node_->get_logger(),
-                      "Sent position command %.3f to joint %s. Last command: %.3f",
-                      joint_position_command_[i], info_.joints[i].name.c_str(),
-                      last_position_command_[i]);
-          last_position_command_[i] = joint_position_command_[i];
+            motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i]);
+            last_position_command_[i] = joint_position_command_[i];
+
+            // Wait until the motor reaches the last commanded position before sending a new one
+            while (std::abs(motor_driver_->getJointPosition(info_.joints[i].name) - last_position_command_[i]) > position_tolerance_) {
+                rclcpp::sleep_for(std::chrono::milliseconds(10));  // Prevent CAN flooding
+                rclcpp::spin_some(node_);  // Allow `read()` to process updates
+            }
+
+
         } else {
           RCLCPP_DEBUG(node_->get_logger(),
                        "Position command for joint %s unchanged: %.3f",
@@ -335,21 +354,22 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
         }
       }
 
-      if (has_velocity_interface_) {
-        // Only send if velocity has changed significantly
-        if (std::abs(joint_velocities_command_[i] - last_velocity_command_[i]) > velocity_tolerance_) {
-          motor_driver_->setJointVelocity(info_.joints[i].name, joint_velocities_command_[i]);
-          RCLCPP_INFO(node_->get_logger(),
-                      "Sent velocity command %.3f to joint %s. Last command: %.3f",
-                      joint_velocities_command_[i], info_.joints[i].name.c_str(),
-                      last_velocity_command_[i]);
-          last_velocity_command_[i] = joint_velocities_command_[i];
-        } else {
-          RCLCPP_DEBUG(node_->get_logger(),
-                       "Velocity command for joint %s unchanged: %.3f",
-                       info_.joints[i].name.c_str(), joint_velocities_command_[i]);
-        }
-      }
+      // That part is not needed for now, as we do not need to send velocity separately to the motors.
+      // if (has_velocity_interface_) {
+      //   // Only send if velocity has changed significantly
+      //   if (std::abs(joint_velocities_command_[i] - last_velocity_command_[i]) > velocity_tolerance_) {
+      //     motor_driver_->setJointVelocity(info_.joints[i].name, joint_velocities_command_[i]);
+      //     RCLCPP_INFO(node_->get_logger(),
+      //                 "Sent velocity command %.3f to joint %s. Last command: %.3f",
+      //                 joint_velocities_command_[i], info_.joints[i].name.c_str(),
+      //                 last_velocity_command_[i]);
+      //     last_velocity_command_[i] = joint_velocities_command_[i];
+      //   } else {
+      //     RCLCPP_DEBUG(node_->get_logger(),
+      //                  "Velocity command for joint %s unchanged: %.3f",
+      //                  info_.joints[i].name.c_str(), joint_velocities_command_[i]);
+      //   }
+      // }
     } catch (const std::exception& e) {
       RCLCPP_ERROR(node_->get_logger(),
                    "Failed to write command to joint %s: %s",

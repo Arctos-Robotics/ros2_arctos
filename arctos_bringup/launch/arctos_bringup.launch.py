@@ -13,7 +13,7 @@ def generate_launch_description():
     # Get package paths
     arctos_description_dir = get_package_share_directory('arctos_description')
     arctos_hardware_interface_dir = get_package_share_directory('arctos_hardware_interface')
-    arctos_moveit_dir = get_package_share_directory('arctos_moveit_config')
+    arctos_moveit_dir = get_package_share_directory('arctos_moveit_base_xyz')
 
     # Declare Launch Arguments
     declare_rviz_arg = DeclareLaunchArgument(
@@ -30,7 +30,7 @@ def generate_launch_description():
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
-            PathJoinSubstitution([arctos_description_dir, "urdf", "arctos.xacro"]),
+            PathJoinSubstitution([arctos_moveit_dir, "config", "arctos.urdf.xacro"]),
         ]
     )
 
@@ -38,7 +38,7 @@ def generate_launch_description():
 
     # Parameters
     motor_params = os.path.join(
-        arctos_description_dir, 'config', 'arctos_controller.yaml'
+        arctos_moveit_dir, 'config', 'ros2_controllers.yaml'
     )
 
     # Nodes
@@ -105,6 +105,13 @@ def generate_launch_description():
         )
     )
 
+    # Delay rviz and moveit launch until controllers are ready
+    delay_rviz_and_moveit_launch = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=robot_controller_spawner,
+            on_exit=[rviz_node, move_group_launch]
+        ))
+    
     return LaunchDescription([
         declare_rviz_arg,
         LogInfo(msg=["Launching Arctos Bringup with RViz..."]),
@@ -112,7 +119,6 @@ def generate_launch_description():
         robot_state_pub_node,
         joint_state_broadcaster_spawner,
         delay_robot_controller_spawner,
-        can_launch,
-        move_group_launch,
-        rviz_node,
+        delay_rviz_and_moveit_launch,
+        can_launch
     ])

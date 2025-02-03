@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="arctos_ros2_control" params="name">
+        <ros2_control name="${name}_system" type="system">
+            <hardware>
+                <plugin>arctos_interface/ArctosInterface</plugin>
+            </hardware>
+            <joint name="X_joint">
+                <command_interface name="position"/>
+                <command_interface name="velocity"/>
+                <state_interface name="position">
+                  <param name="initial_value">0</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="Y_joint">
+                <command_interface name="position"/>
+                <command_interface name="velocity"/>
+                <state_interface name="position">
+                  <param name="initial_value">0</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+            <joint name="Z_joint">
+                <command_interface name="position"/>
+                <command_interface name="velocity"/>
+                <state_interface name="position">
+                  <param name="initial_value">0</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+
+        </ros2_control>
+    </xacro:macro>
+</robot>

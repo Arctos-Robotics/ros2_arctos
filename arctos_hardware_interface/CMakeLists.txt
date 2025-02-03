@@ -88,13 +88,13 @@ install(DIRECTORY include/
   DESTINATION include
 )
 
-install(DIRECTORY config 
-  DESTINATION share/${PROJECT_NAME}
-)
+# install(DIRECTORY config 
+#   DESTINATION share/${PROJECT_NAME}
+# )
 
-install(DIRECTORY ros2_control
-  DESTINATION share/${PROJECT_NAME}/ros2_control
-)
+# install(DIRECTORY ros2_control
+#   DESTINATION share/${PROJECT_NAME}/ros2_control
+# )
 
 # Install launch files
 install(DIRECTORY launch/

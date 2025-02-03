@@ -19,6 +19,7 @@ CAN_ID = "can0"
 CAN_BITRATE = 500000
 TIMEOUT = 1
 
+# TODO: Update these values to add all joints
 JOINT_NAMES = ["X_joint", "Y_joint", "Z_joint"]
 GEAR_RATIOS = [13.5, 150., 150.]
 INVERTED_DIRECTION = {"X_joint", "Y_joint", "Z_joint"}

@@ -134,10 +134,10 @@ install(DIRECTORY include/
 )
 
 # Install config files if needed
-install(DIRECTORY config/
-  DESTINATION share/${PROJECT_NAME}/
-  OPTIONAL
-)
+# install(DIRECTORY config/
+#   DESTINATION share/${PROJECT_NAME}/
+#   OPTIONAL
+# )
 
 # Export dependencies and targets
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
