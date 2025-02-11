@@ -19,14 +19,15 @@ struct MotorStatus {
     bool is_enabled{false}; /**< Flag indicating if the motor is enabled. */
     bool is_protected{false}; /**< Flag indicating if the motor has the shaft protection protected. */
     bool is_calibrated{false}; /**< Flag indicating if the motor is calibrated. */ // TODO: Unsure if this is needed.
-    bool is_homed{false}; /**< Flag indicating if the motor is homed. */ // TODO: Should this be set to True when the joint limit is reached since we use the zero_position param now?
-    bool is_zeroed{false}; /**< Flag indicating if the motor is zeroed using the `zero_position`. */
+    bool is_homed{false}; /**< Flag indicating if the motor is homed. */ // TODO: Remove this, we will not use homing.
+    bool is_zeroed{false}; /**< Flag indicating if the motor is zeroed using the `zero_position`. */ // TODO: Remove this, we will use the script set_zero_position to set the zero position.
     bool is_error{false}; /**< Flag indicating if the motor has encountered an error. */
     uint8_t error_code{0}; /**< Error code of the motor. */ // TODO: Define error codes
     std::string error_message{}; /**< Error message associated with the motor. */
     bool limit_switch_left{false}; /**< Flag indicating if the left limit switch is triggered. */
     bool limit_switch_right{false}; /**< Flag indicating if the right limit switch is triggered. */
     bool is_stalled{false}; /**< Flag indicating if the motor is stalled. */
+    bool is_moving{false}; /**< Flag indicating if the motor is moving. */
 };
 
 /**

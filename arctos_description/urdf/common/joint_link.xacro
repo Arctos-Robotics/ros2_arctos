@@ -27,6 +27,7 @@
   </xacro:macro>
 
   <!-- Define arctos_joint macro with a default value for axis_xyz -->
+  <!-- TODO: Add param for mechanicalReduction -->
   <xacro:macro name="arctos_joint"
     params="name type parent child origin_xyz origin_rpy axis_xyz='0 0 0' limit_u limit_l limit_e limit_v">
     <joint name="${name}" type="${type}">

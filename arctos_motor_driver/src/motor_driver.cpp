@@ -247,6 +247,7 @@ void MotorDriver::setJointVelocity(const std::string& joint_name, double velocit
     }
 
     // Check velocity limits
+    // TODO: clamp velocity to max velocity and support -max_velocity, max_velocity
     if (std::abs(velocity) > joint.velocity_max) {
         RCLCPP_WARN(node_->get_logger(), 
                     "Velocity %.2f for joint %s exceeds limit %.2f",
@@ -587,43 +588,44 @@ bool MotorDriver::isMotorReady(const std::string& joint_name) const {
 //     RCLCPP_INFO(node_->get_logger(), "updateJointStates is running...");
 // }
 void MotorDriver::updateJointStates() {
-    RCLCPP_WARN(node_->get_logger(), "[updateJointStates] Starting selective joint state update cycle");
+    RCLCPP_WARN(node_->get_logger(), "[updateJointStates] Starting joint state update cycle");
 
     auto current_time = node_->get_clock()->now();
     if (joints_.empty()) {
         RCLCPP_WARN(node_->get_logger(), "[updateJointStates] No joints registered for state updates");
-        return; 
+        return;
     }
 
     // Iterate through all joints
     for (auto& [joint_name, joint] : joints_) {
-        // Check if the joint has a recent command
         auto time_since_last_command = current_time - joint.last_command;
-        if (time_since_last_command.seconds() > 0.9) { // Adjust threshold as necessary
+        auto time_since_last_update = current_time - joint.last_update;
+
+        // Stop movement if no updates received in 2 seconds
+        if (joint.status.is_moving && time_since_last_update.seconds() > 2.0) {
             RCLCPP_DEBUG(node_->get_logger(),
-                         "[updateJointStates] Skipping update for joint '%s': no recent command within %.2f seconds",
-                         joint_name.c_str(), time_since_last_command.seconds());
-            continue; // Skip this joint
+                        "[updateJointStates] Joint '%s' hasn't updated for %.2f sec, forcing is_moving = false",
+                        joint_name.c_str(), time_since_last_update.seconds());
+            joint.status.is_moving = false;
+            joint.velocity = 0.0;  // Ensure velocity is reset
         }
 
-        // Proceed to update state for joints with recent commands
-        RCLCPP_INFO(node_->get_logger(),
-                    "[updateJointStates] Updating state for joint '%s' (motor_id: %d)",
+        // Set velocity to 0.0 if no recent commands (0.9 sec threshold)
+        if (time_since_last_command.seconds() > 0.9) {  
+            RCLCPP_DEBUG(node_->get_logger(),
+                         "[updateJointStates] No recent command for joint '%s' (%.2f seconds). Setting velocity to 0",
+                         joint_name.c_str(), time_since_last_command.seconds());
+            joint.velocity = 0.0;  
+            continue;  
+        }
+
+        // Request new state only if recent command exists
+        RCLCPP_DEBUG(node_->get_logger(),
+                    "[updateJointStates] Requesting new state for joint '%s' (motor_id: %d)",
                     joint_name.c_str(), joint.motor_id);
 
         try {
-            // Request encoder position
-            std::vector<uint8_t> position_request = {CANCommands::READ_ENCODER};
-            can_protocol_->sendFrame(joint.motor_id, position_request);
-
-            // Request velocity
-            std::vector<uint8_t> velocity_request = {CANCommands::READ_VELOCITY};
-            can_protocol_->sendFrame(joint.motor_id, velocity_request);
-
-            // Request IO status
-            std::vector<uint8_t> io_request = {CANCommands::READ_IO};
-            can_protocol_->sendFrame(joint.motor_id, io_request);
-
+            requestMotorData(joint.motor_id);
         } catch (const std::exception& e) {
             RCLCPP_ERROR(node_->get_logger(),
                          "[updateJointStates] Error updating state for joint '%s': %s",
@@ -631,8 +633,9 @@ void MotorDriver::updateJointStates() {
         }
     }
 
-    RCLCPP_WARN(node_->get_logger(), "[updateJointStates] Completed selective joint state update cycle");
+    RCLCPP_DEBUG(node_->get_logger(), "[updateJointStates] Completed joint state update cycle");
 }
+
 
 void MotorDriver::processCANMessage(const can_msgs::msg::Frame::SharedPtr msg) {
     canMessageCallback(msg);
@@ -721,34 +724,70 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
     std::vector<uint8_t> encoder_data(data.begin() + 1, data.begin() + 7);
 
     try {
-        // Decode motor angle in degrees using decodeInt48
-        double motor_angle_deg = CANProtocol::decodeInt48(encoder_data);
+        // **Log raw data for debugging**
+        RCLCPP_DEBUG(node_->get_logger(), "Raw Encoder Data for %s:", joint_name.c_str());
+        for (size_t i = 0; i < encoder_data.size(); i++) {
+            RCLCPP_DEBUG(node_->get_logger(), "Byte %zu: 0x%02X", i, encoder_data[i]);
+        }
 
-        // TODO: We need to ensure that the motor angle is within a reasonable range as sometimes the encoder returns absurd values (e.g. We send a goal to move from 0 to 0.20 radians, as we run READ_ENCODER, it will randomly return -3.4e38 radians). We need to check if the motor angle is within a reasonable range and discard it if it is not otherwise the goal will either never be reached or the goal will be reached instantly.
-        // TODO: Do the same above for the velocity response as well
-        // Sanity check for absurd values
-        // TODO: Change that MAX_MOTOR_DEGREES
-        constexpr double MAX_MOTOR_DEGREES = 360.0 * 1000;  // Example limit: 1000 revolutions
-        if (motor_angle_deg > MAX_MOTOR_DEGREES || motor_angle_deg < -MAX_MOTOR_DEGREES) {
-            RCLCPP_WARN(node_->get_logger(), "Discarding out-of-range motor angle: %.2f degrees for motor ID %d", motor_angle_deg, motor_id);
+        // **Decode motor angle**
+        double motor_angle_deg = CANProtocol::decodeInt48(encoder_data);
+        RCLCPP_DEBUG(node_->get_logger(), "Decoded motor angle (degrees): %.2f", motor_angle_deg);
+
+        // **Check for invalid values (NaN/Inf)**
+        if (!std::isfinite(motor_angle_deg)) {
+            RCLCPP_WARN(node_->get_logger(), "Invalid motor angle detected for joint %s. Skipping update.", joint_name.c_str());
             return;
         }
 
-        // Convert motor angle to joint angle
+        // **Sanity check for absurd values**
+        constexpr double MAX_MOTOR_DEGREES = 360.0 * 1000;  // 1000 revolutions
+        if (motor_angle_deg > MAX_MOTOR_DEGREES || motor_angle_deg < -MAX_MOTOR_DEGREES) {
+            RCLCPP_WARN(node_->get_logger(), "Discarding out-of-range motor angle: %.2f degrees for motor ID %d", 
+                        motor_angle_deg, motor_id);
+            return;
+        }
+
+        // **Convert motor angle to joint angle**
         double joint_angle_deg = motor_angle_deg / joint.gear_ratio;
         double joint_angle_rad = joint_angle_deg * MotorConstants::DEG_TO_RAD;
 
-        RCLCPP_DEBUG(node_->get_logger(), "Motor angle: %.2f degrees", motor_angle_deg);
-        RCLCPP_DEBUG(node_->get_logger(), "Joint angle: %.2f radians", joint_angle_rad);
+        // // **Adjust based on zero position**
+        // joint_angle_rad -= joint.zero_position;
+        // RCLCPP_DEBUG(node_->get_logger(), "Adjusted for zero_position: %.3f rad", joint_angle_rad);
 
+        // **Apply inversion BEFORE zero position offset**
         if (joint.inverted) {
             joint_angle_rad = -joint_angle_rad;
         }
 
-        // Update joint state
+        RCLCPP_DEBUG(node_->get_logger(), "Final computed joint angle: %.3f rad", joint_angle_rad);
+
+        // // **Filter sudden jumps using a moving average**
+        // constexpr double FILTER_ALPHA = 0.3;
+        // joint.position = FILTER_ALPHA * joint_angle_rad + (1.0 - FILTER_ALPHA) * joint.position;
+
+        // **Print Joint Limits for Debugging**
+        RCLCPP_DEBUG(node_->get_logger(), "Joint %s: Min = %.3f, Max = %.3f, Current = %.3f", 
+                    joint_name.c_str(), joint.position_min, joint.position_max, joint.position);
+
         joint.position = joint_angle_rad;
+        // **Check if joint limits are valid**
+        constexpr double TOLERANCE = 0.1;
+        if (joint.position < (joint.position_min - TOLERANCE) || joint.position > (joint.position_max + TOLERANCE)) {
+            RCLCPP_WARN(node_->get_logger(), "Ignoring out-of-bounds encoder value %.3f rad for joint %s (limits: %.3f to %.3f)",
+                        joint.position, joint_name.c_str(), joint.position_min, joint.position_max);
+            return;
+        }
+
+        // **Update Joint State**
         joint.position_error = joint.command_position - joint.position;
 
+        // **Apply Deadband Filtering (to remove tiny errors)**
+        constexpr double POSITION_DEADBAND = 0.0001;
+        if (std::abs(joint.position) < POSITION_DEADBAND) {
+            joint.position = 0.0;
+        }
         RCLCPP_INFO(node_->get_logger(), "Updated joint %s position: %.2f rad", 
                     joint_name.c_str(), joint.position);
 
@@ -757,6 +796,7 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
         RCLCPP_ERROR(node_->get_logger(), "Error processing encoder response: %s", e.what());
     }
 }
+
 
 
 /**
@@ -769,23 +809,41 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
  */
 void MotorDriver::processVelocityResponse(uint8_t motor_id, const std::vector<uint8_t>& data) {
     if (data.size() < 3) return;
-    
+
     auto it = motor_to_joint_map_.find(motor_id);
     if (it == motor_to_joint_map_.end()) return;
-    
+
     auto& joint = joints_[it->second];
-    
+
     // Extract velocity data (bytes 1-2)
     std::vector<uint8_t> velocity_data(data.begin() + 1, data.begin() + 3);
-    
+
     try {
         double rpm = CANProtocol::decodeVelocityToRPM(velocity_data);
+        
+        // Apply inversion if necessary
         if (joint.inverted) {
             rpm = -rpm;
         }
-        // Use exact conversion factor
-        joint.velocity = rpm * MotorConstants::RPM_TO_RADPS;
+
+        // Convert RPM to rad/s
+        double rad_per_sec = rpm * MotorConstants::RPM_TO_RADPS;
+
+        // **Clamp velocity within [-velocity_max, velocity_max]**
+        double max_velocity = joint.velocity_max;
+        if (std::abs(rad_per_sec) > max_velocity) {
+            RCLCPP_WARN(node_->get_logger(), 
+                        "Velocity out of range for joint %s: %.3f rad/s (clamped to %.3f rad/s)", 
+                        joint.joint_name.c_str(), rad_per_sec, std::copysign(max_velocity, rad_per_sec));
+        }
+
+        // Apply clamping
+        rad_per_sec = std::clamp(rad_per_sec, -max_velocity, max_velocity);
+
+        // Store the validated velocity
+        joint.velocity = rad_per_sec;
         joint.last_update = node_->get_clock()->now();
+
     } catch (const std::exception& e) {
         RCLCPP_ERROR(node_->get_logger(), "Error decoding velocity: %s", e.what());
     }
@@ -821,18 +879,22 @@ void MotorDriver::processIOResponse(uint8_t motor_id, const std::vector<uint8_t>
     // Extract IO status byte
     uint8_t io_status = data[1];
 
+    // Reset the limit switches before applying new state
+    // // TODO: Reset the joint status for both limit switches before setting them
+    joint.status.limit_switch_left = false;
+    joint.status.limit_switch_right = false;
+
     // Decode limit switch states based on hardware type
     // TODO: Fix the logic
     // TODO: When one home switch is used, set the other limit switch as the opposite of the home switch
-    // TODO: Reset the joint status for both limit switches before setting them
     if (joint.hardware_type == "MKS_42D") {
         // Remapped ports for MKS 42D
         joint.status.limit_switch_left = (io_status & (1 << 2)) != 0;  // IN_2 (Bit 2, Dir)
         joint.status.limit_switch_right = (io_status & (1 << 3)) != 0; // IN_1 (Bit 3, En)
     } else if (joint.hardware_type == "MKS_57D") {
-        // Default ports for MKS 57D
-        joint.status.limit_switch_left = (io_status & (1 << 3)) != 0;  // IN_1 (Bit 3)
-        joint.status.limit_switch_right = (io_status & (1 << 2)) != 0; // IN_2 (Bit 2)
+        // For MKS 57D (assuming active low: 0 means triggered)
+        joint.status.limit_switch_left = (io_status & (1 << 1)) == 0;  // IN_1 on Bit1
+        joint.status.limit_switch_right = (io_status & (1 << 0)) == 0; // IN_2 on Bit0
     } else {
         RCLCPP_WARN(node_->get_logger(), "Unknown hardware type for motor ID: %d", motor_id);
         return;
@@ -869,6 +931,7 @@ void MotorDriver::processIOResponse(uint8_t motor_id, const std::vector<uint8_t>
 void MotorDriver::processStatusResponse(uint8_t motor_id, const std::vector<uint8_t>& data) {
     RCLCPP_DEBUG(node_->get_logger(), "processStatusResponse - data size: %zu, data[0]: %d (0x%02X), data[1]: %d (0x%02X)", 
                  data.size(), data[0], data[0], data[1], data[1]);
+
     if (data.size() < 2) {
         RCLCPP_WARN(node_->get_logger(), "Status response too short: %zu bytes", data.size());
         return;
@@ -883,148 +946,62 @@ void MotorDriver::processStatusResponse(uint8_t motor_id, const std::vector<uint
     auto& joint = joints_[it->second];
     uint8_t cmd = data[0];
     uint8_t status = data[1];
-    
-    // Log raw data for debugging
-    // std::stringstream ss;
-    // ss << "Raw data: ";
-    // for (size_t i = 0; i < data.size(); i++) {
-    //     ss << std::hex << std::uppercase << std::setw(2) << std::setfill('0') 
-    //        << static_cast<int>(data[i]) << " ";
-    // }
 
     switch(cmd) {
         case CANCommands::GO_HOME:
-            RCLCPP_DEBUG(node_->get_logger(), "Inside GO_HOME case - About to switch on status: %d (0x%02X)", 
-                        data[1], data[1]);
-            
-            // Check for timeout
-            if (!joint.status.is_homed) {
-                auto elapsed_time = node_->get_clock()->now() - joint.last_command;
-                if (elapsed_time.seconds() > 120.0) {
-                    joint.status.is_error = true;
-                    joint.status.error_message = "Homing timeout after 120 seconds";
-                    RCLCPP_ERROR(node_->get_logger(), "Homing timeout for joint %s", joint.joint_name.c_str());
-                    return;
-                }
-            }
-            
+            RCLCPP_DEBUG(node_->get_logger(), "Inside GO_HOME case - Status: %d (0x%02X)", status, status);
             switch(status) {
                 case 0:  // Homing failed
                     joint.status.is_homed = false;
                     joint.status.is_error = true;
                     joint.status.error_message = "Homing failed";
-                    RCLCPP_INFO(node_->get_logger(), "Status 0: Homing failed");
                     break;
-                    
-                case 1:  // Homing started
+                case 1:  // Homing in progress
                     joint.status.is_homed = false;
                     joint.status.is_error = false;
                     joint.status.error_message.clear();
-                    RCLCPP_INFO(node_->get_logger(), "Status 1: Homing in progress");
                     joint.last_command = node_->get_clock()->now();
+                    joint.status.is_moving = true;  // ✅ Ensure moving state is set
                     break;
-                    
                 case 2:  // Homing successful
-                    RCLCPP_INFO(node_->get_logger(), "Status 2: Homing complete");
                     joint.status.is_homed = true;
                     joint.status.is_error = false;
                     joint.status.error_message.clear();
-                    // joint.position = 0.0;
                     joint.last_command = node_->get_clock()->now();
-                    updateJointStates();
+                    joint.status.is_moving = false;  // ✅ Ensure movement stops
                     break;
             }
             break;
             
         case CANCommands::ENABLE_MOTOR:
-            switch(status) {
-                case 0:  // Motor disabled
-                    joint.status.is_enabled = false;
-                    break;
-                    
-                case 1:  // Motor enabled
-                    joint.status.is_enabled = true;
-                    break;
-            }
+            joint.status.is_enabled = (status == 1);
             break;
-            
+
         case CANCommands::CALIBRATE:
             joint.status.is_calibrated = (status == 1);
             break;
 
-        case CANCommands::ENABLE_SHAFT_PROTECTION:
-            RCLCPP_DEBUG(node_->get_logger(), "Inside ENABLE_SHAFT_PROTECTION case - About to switch on status: %d (0x%02X)", 
-                        data[1], data[1]);
-            joint.status.is_protected = (status == 01);
-            RCLCPP_DEBUG(node_->get_logger(), "Status: %d (0x%02X)", data[1], data[1]);
-            break;
-
-        case CANCommands::SET_ZERO_POSITION:
-            // Status 0 indicates that the zero position command failed, and status 1 indicates success
-            switch (status) {
-                case 00:
-                    joint.status.is_error = true;
-                    joint.status.error_message = "Zero position command failed";
-                    RCLCPP_DEBUG(node_->get_logger(), "Status 0: Failed to set zero position");
-                    break;
-                case 01:
-                    joint.status.is_zeroed = true;
-                    joint.status.is_error = false;
-                    joint.status.error_message.clear();
-                    RCLCPP_INFO(node_->get_logger(), "Status 1: Zero position set");
-                    joint.last_command = node_->get_clock()->now();
-                    joint.position = 0.0;
-                    updateJointStates();
-                    break;
-            }
-            break;
-        
         case CANCommands::ABSOLUTE_POSITION:
-            RCLCPP_ERROR(node_->get_logger(), "Inside ABSOLUTE_POSITION case - About to switch on status: %d (0x%02X)", 
-                        data[1], data[1]);
-            
+            RCLCPP_INFO(node_->get_logger(), "Inside ABSOLUTE_POSITION case - Status: %d (0x%02X)", status, status);
             switch(status) {
-                // TODO: Prevent from processing commands that aren't responses
-                // case 0:  // Movement failed
-                //     joint.status.is_error = true;
-                //     joint.status.error_message = "Absolute position command failed";
-                //     RCLCPP_DEBUG(node_->get_logger(), "Status 0: Failed to move to absolute position");
-                //     break;
-                    
                 case 1:  // Movement started
                     joint.status.is_error = false;
+                    joint.status.is_moving = true;  // ✅ Set movement flag
                     joint.status.error_message.clear();
                     joint.last_command = node_->get_clock()->now();
-                    RCLCPP_INFO(node_->get_logger(), "Status 1: Move to absolute position started");
                     break;
-                    
                 case 2:  // Movement completed
-                    RCLCPP_INFO(node_->get_logger(), "Status 2: Move to absolute position completed");
-                    joint.last_command = node_->get_clock()->now();
-                    updateJointStates();
+                    RCLCPP_INFO(node_->get_logger(), "Move to absolute position completed");
+                    joint.status.is_moving = false;  // ✅ Ensure movement stops
                     break;
-                    
-                case 3:  // Movement partially completed
-                    /* 
-                    TODO: Validate if this is necessary as the drivers have way of detecting if endstops are triggered.
-                    
-                    NOTE: We must verify this is true for a all joints
-
-                    Based on Y:
-                    1. If the position is a positive value, the motor is moving towards the left endstop
-                        - joint.status.limit_switch_left = true
-                    2. If the position is a negative value, the motor is moving towards the right endstop
-                        - joint.status.limit_switch_right = true
-                    
-                    */
-                    joint.last_command = node_->get_clock()->now();
-                    updateJointStates();
-                    RCLCPP_INFO(node_->get_logger(), "Status 3: Move to absolute position partially completed (Endstop limit reached)");
+                case 3:  // Movement partially completed (Endstop reached)
+                    RCLCPP_INFO(node_->get_logger(), "Move to absolute position partially completed (Endstop limit reached)");
+                    joint.status.is_moving = false;  // ✅ Ensure movement stops
                     break;
             }
             break;
     }
-    
+
     joint.last_update = node_->get_clock()->now();
 }
 
@@ -1057,12 +1034,18 @@ void MotorDriver::setJointLimits(const std::string& joint_name,
         return;
     }
 
+    // Update joint limits
+    it->second.position_min = pos_min;
+    it->second.position_max = pos_max;
+
     if (vel_max < 0.0) {
         RCLCPP_ERROR(node_->get_logger(), 
                     "Invalid velocity limit for joint %s: %.2f",
                     joint_name.c_str(), vel_max);
         return;
     }
+
+    it->second.velocity_max = vel_max;
 
     if (acc_max < 0.0) {
         RCLCPP_ERROR(node_->get_logger(), 
@@ -1071,10 +1054,6 @@ void MotorDriver::setJointLimits(const std::string& joint_name,
         return;
     }
 
-    // Update joint limits
-    it->second.position_min = pos_min;
-    it->second.position_max = pos_max;
-    it->second.velocity_max = vel_max;
     it->second.acceleration_max = acc_max;
 
     RCLCPP_INFO(node_->get_logger(), 
@@ -1194,18 +1173,31 @@ MotorParameters MotorDriver::getMotorParameters(const std::string& joint_name) c
  * @param motor_id The ID of the motor to request data from.
  */
 void MotorDriver::requestMotorData(uint8_t motor_id) {
+    auto it = motor_to_joint_map_.find(motor_id);
+    if (it == motor_to_joint_map_.end()) {
+        RCLCPP_WARN(node_->get_logger(), "No joint found for motor ID: %d", motor_id);
+        return;
+    }
+
+    auto& joint = joints_[it->second];
+    RCLCPP_INFO(node_->get_logger(), "Joint %s (Motor ID: %d) is_moving: %s", 
+            joint.joint_name.c_str(), motor_id, joint.status.is_moving ? "true" : "false");
+
     // Request sequence of motor data
     std::vector<std::vector<uint8_t>> requests = {
-        {CANCommands::READ_ENCODER},    // Position
-        {CANCommands::READ_VELOCITY},   // Velocity
-        {CANCommands::READ_IO},         // IO Status
-        // {CANCommands::READ_ERROR}       // Error Status
+        {CANCommands::READ_ENCODER},  // Encoder position
+        {CANCommands::READ_IO}        // IO Status
     };
+
+    // ✅ Only add READ_VELOCITY if the joint is moving
+    if (joint.status.is_moving) {
+        requests.push_back({CANCommands::READ_VELOCITY});
+    }
 
     for (const auto& request : requests) {
         can_protocol_->sendFrame(motor_id, request);
         // Add small delay between requests to prevent flooding
-        std::this_thread::sleep_for(std::chrono::microseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 

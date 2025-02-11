@@ -15,7 +15,7 @@ from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
 def generate_launch_description():
     arctos_description_dir = get_package_share_directory('arctos_description')
     arctos_hardware_interface_dir = get_package_share_directory('arctos_hardware_interface')
-    arctos_moveit_dir = get_package_share_directory('arctos_moveit_config')
+    arctos_moveit_dir = get_package_share_directory('arctos_moveit_base_xyz')
 
     # # Launch RViz
     rviz_config_file = os.path.join(arctos_description_dir, 'rviz', 'arctos.rviz')
@@ -63,9 +63,12 @@ def generate_launch_description():
 
     robot_controllers = PathJoinSubstitution(
         [
-            FindPackageShare("arctos_description"),
+            # FindPackageShare("arctos_description"),
+            # "config",
+            # "arctos_controller.yaml",
+            FindPackageShare("arctos_moveit_base_xyz"),
             "config",
-            "arctos_controller.yaml",
+            "ros2_controller.yaml",
         ]
     )
 

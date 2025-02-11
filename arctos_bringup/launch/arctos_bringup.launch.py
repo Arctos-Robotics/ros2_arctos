@@ -56,9 +56,9 @@ def generate_launch_description():
         output={'stdout': 'screen', 'stderr': 'screen'},
         arguments=[
             '--ros-args',
-            '--log-level', 'debug',
+            # '--log-level', 'debug',
             '--log-level', 'arctos_hardware_interface:=debug',
-            '--log-level', 'controller_manager:=debug',
+            '--log-level', 'controller_manager:=debug'
         ],
     )
 

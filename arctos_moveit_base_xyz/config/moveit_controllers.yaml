@@ -14,9 +14,9 @@ moveit_simple_controller_manager:
       - X_joint
       - Y_joint
       - Z_joint
-    constraints:
-      goal_time: 5.0
-      stopped_velocity_tolerance: 0.05
-      X_joint: { trajectory: 0.10, goal: 0.05 }
-      Y_joint: { trajectory: 0.10, goal: 0.05 }
-      Z_joint: { trajectory: 0.10, goal: 0.05 }
+    # constraints:
+    #   stopped_velocity_tolerance: 0.10
+    #   goal_time: 10.0  # Allow more time to reach the goal
+    #   X_joint: { trajectory: 0.30, goal: 0.20 }
+    #   Y_joint: { trajectory: 0.30, goal: 0.20 }
+    #   Z_joint: { trajectory: 0.30, goal: 0.20 }
