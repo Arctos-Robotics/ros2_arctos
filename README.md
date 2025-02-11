@@ -66,17 +66,57 @@ source install/setup.bash
 
 Instructions to get started will be added soon. Stay tuned!
 
-<!--  
-TODO: Add instructions for setting up the CAN interface and use the set_zero_position.py script to set the zero position of the motors.
+#### Setup CAN Interface
 
-## Launching the System
-
-To launch the Arctos robot, run the following command:
+To setup the CAN interface, run the script `setup_canable.sh`:
 
 ```bash
-ros2 launch arctos_bringup bringup.launch.py
+sudo ./scripts/setup_canable.sh
 ```
--->
+
+#### Configure the joint limits and zero positions (First time only)
+
+**This only supports the joints XYZ at the moment.**
+
+To configure the joint limits and zero positions, run the script `set_zero_position.py`.
+
+Note: You need to run this script as root.
+
+You will also need ruamel.yaml, python-can and rich libraries. 
+You can install them using pip:
+
+```bash
+pip3 install ruamel.yaml python-can rich
+```
+
+Then run the script:
+
+```bash
+sudo -E python3 scripts/set_zero_position.py --init
+```
+
+Follow the instructions on the screen to set the zero positions and joint limits.
+
+#### Set the zero positions (Every time you power the robot)
+
+If this is the first time you are setting the zero positions, see the previous step and ignore this one.
+You only need to run this step if you have already set the zero positions and you have powered off the robot.
+
+To set the zero positions, run the script `set_zero_position.py`.
+
+Note: You need to run this script as root.
+
+```bash
+sudo -E python3 scripts/set_zero_position.py --set-zero
+```
+
+#### Launch the robot
+
+To launch the robot, run the launch file `arctos_bringup.launch.py`:
+
+```bash
+ros2 launch arctos_bringup arctos_bringup.launch.py
+```
 
 ## Individual Package READMEs
 
