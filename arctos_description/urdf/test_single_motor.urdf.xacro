@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="test_single_motor">
+
+  <link name="world"/>
+  
+  <link name="motor_link"/>
+
+  <joint name="test_joint" type="revolute">
+    <parent link="world"/>
+    <child link="motor_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" velocity="1.0" effort="1.0"/>
+  </joint>
+
+  <ros2_control name="SingleMotorTest" type="system">
+    <hardware>
+      <plugin>arctos_interface/ArctosInterface</plugin>
+    </hardware>
+    <joint name="test_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="joint_y">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
+</robot>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find arctos_description)/urdf/joint_link.xacro" />
+  <xacro:include filename="$(find arctos_description)/urdf/common/joint_link.xacro" />
 
   <!-- Arctos Simple Pinch Gripper -->
   <xacro:arctos_link
@@ -40,6 +40,7 @@
   />
 
   <!-- Left jaw joint, prismatic with axis directly defined -->
+  <!-- TODO: Movement inverted -->
   <xacro:arctos_joint
     name="Left_jaw_joint"
     type="prismatic"

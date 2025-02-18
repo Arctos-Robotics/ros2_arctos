@@ -4,7 +4,7 @@ controller_manager:
     update_rate: 100  # Hz
 
     arctos_controller:
-      type: arctos_controller/ArctosController
+      type: joint_trajectory_controller/JointTrajectoryController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster

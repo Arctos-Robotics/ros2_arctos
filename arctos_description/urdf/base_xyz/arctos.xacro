@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<robot name="arctos" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find arctos_description)/urdf/common/materials.xacro" />
+  <xacro:include filename="$(find arctos_description)/urdf/common/joint_link.xacro" />
+  <xacro:include filename="$(find arctos_description)/urdf/base_xyz/ros2_control.xacro" />
+
+  <link name="world" />
+  <joint name="world_joint" type="fixed">
+      <parent link="world"/>
+      <child link="base_link"/>
+  </joint>
+
+  <xacro:arctos_link
+    name="base_link"
+    origin_xyz="0 0 0" origin_rpy="0 0 0"
+    material_name="white"
+    inertia_origin_xyz="0.0009375030874740357 0.047087016508753216 0.06663230338123677"
+    inertia_origin_rpy="0 0 0"
+    mass="2.3"
+    ixx="0.0143" iyy="0.0055" izz="0.015" ixy="0.0" iyz="0.0" ixz="0.0"
+  />
+
+  <xacro:arctos_link
+    name="Link_1_1"
+    origin_xyz="-0.0 -0.000 -0.1126" origin_rpy="0 0 0"
+    material_name="white"
+    inertia_origin_xyz="-0.0088 -0.0005 ${0.2116-0.1126}" inertia_origin_rpy="0 0 0"
+    mass="3.0396"
+    ixx="0.0143" iyy="${0.0168*0.96536}" izz="${0.0084*0.96082}" ixy="${0.0143*-0.03956}"
+    ixz="${0.0143*-0.11546}" iyz="${0.0168*0.25198}"
+  />
+
+  <xacro:arctos_link
+    name="Link_2_1"
+    origin_xyz="0.0 0.020356 -0.2876" origin_rpy="0 0 0"
+    material_name="white"
+    inertia_origin_xyz="0.0042 ${-0.0098+0.020356} ${0.4174-0.2876}" inertia_origin_rpy="0 0 0"
+    mass="2.527"
+    ixx="${0.0282*0.99851}" iyy="${0.03*0.99865}" izz="${0.0063*0.99982}" ixy="${0.0282*0.05146}"
+    iyz="${0.03*-0.00591}" ixz="${0.0282*-0.01813}"
+  />
+
+  <xacro:arctos_link
+    name="Link_3_1"
+    origin_xyz="-0.0 0.019045 -0.54864" origin_rpy="0 0 0"
+    material_name="white"
+    inertia_origin_xyz="0.00158 -0.053 0.009" inertia_origin_rpy="0 0 0"
+    mass="0.87"
+    ixx="${0.0028*0.99944}" iyy="${0.0011*0.98426}" izz="${0.0027*0.98428}" ixy="${0.0028*-0.02203}"
+    iyz="${0.001*-0.17481}" ixz="${0.0028*0.02507}"
+  />
+
+  <xacro:arctos_joint
+    name="X_joint" type="revolute"
+    parent="base_link" child="Link_1_1"
+    origin_xyz="0.0 0.0 0.1126" origin_rpy="0 0 0"
+    axis_xyz="0.0 0.0 1.0"
+    limit_u="${pi}" limit_l="${-pi}" limit_e="24.3" limit_v="1.4"
+  />
+
+  <xacro:arctos_joint
+    name="Y_joint" type="revolute"
+    parent="Link_1_1" child="Link_2_1"
+    origin_xyz="0.0 -0.020356 ${0.2876-0.1126}" origin_rpy="0 0 0"
+    axis_xyz="-1.0 0.0 0.0"
+    limit_u="2.18" limit_l="-0.96" limit_e="270.0" limit_v="1.4"
+  />
+
+  <xacro:arctos_joint
+    name="Z_joint" type="revolute"
+    parent="Link_2_1" child="Link_3_1"
+    origin_xyz="0.0 0.001365 0.261035" origin_rpy="0 0 0"
+    axis_xyz="1.0 0.0 0.0"
+    limit_u="0.65" limit_l="-1.6" limit_e="97.0" limit_v="1.4"
+  />
+
+  <xacro:arctos_ros2_control name="arctos_interface" />
+</robot>
