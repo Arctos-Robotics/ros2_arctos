@@ -165,7 +165,7 @@ class EmergencyKeyWatcher:
         Returns:
             None
         """
-        console.print("[EmergencyKeyWatcher] Emergency key pressed!\n")
+        console.print("[red][EmergencyKeyWatcher] Emergency key pressed![/]\n")
         self.robot_controller.emergency_stop()
         self.running = False
         keyboard.unhook_all()
