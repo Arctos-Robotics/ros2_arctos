@@ -83,7 +83,7 @@ Create a ROS2 workspace and clone the ROS2 Arctos repository inside the `src/` d
 ```bash
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
-git clone [https://github.com/Arctos-Robotics/ros2_arctos.git](https://github.com/ngoccatt/ros2_arctos_HCMUT.git)
+git clone https://github.com/ngoccatt/ros2_arctos_HCMUT.git
 ```
 
 **Note**: If you are on a different branch, you need to checkout the branch you want to use.
