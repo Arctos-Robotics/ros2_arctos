@@ -29,39 +29,47 @@ import threading
 # serialObject.write(bytes(str("!Initon#"), encoding='utf-8'))
 # INitialize input values
 buffer = [0, 0, 0, 0, 0, 0]
+specialKey = [False, False, False, False]
 newValue = False
 
-def handle_button_release(button, buffer):
+def handle_button_release(button, buffer, specialKey):
     if button == 0:
-        print("Button A released")
-        buffer[5] = 0
-    elif button == 1:
-        print("Button B released")
-        buffer[4] = 0
-    elif button == 3:
         print("Button X released")
-        buffer[4] = 0
-    elif button == 4:
-        print("Button Y released")
-        buffer[5] = 0
+        specialKey[button] = False
+    elif button == 1:
+        print("Button O released")
+        specialKey[button] = False
+    elif button == 2:
+        print("Button ▢ released")
+        specialKey[button] = False
+    elif button == 3:
+        print("Button △ released")
+        specialKey[button] = False
     elif button == 6:
         print("Left bumper released")
     elif button == 7:
         print("Right bumper released")
     elif button == 10:
-        print("Back button released")
+        print("Right trigger (R1) released")
     elif button == 11:
-        print("Start button released")
+        print("Up dpad button released")
+        buffer[4] = 0
+    elif button == 12:
+        print("Down dpad button released")
+        buffer[4] = 0
     elif button == 13:
-        print("Left stick button released")
+        print("Left dpad button released")
+        buffer[5] = 0
     elif button == 14:
-        print("Right stick button released")
+        print("Right dpad button released")
+        buffer[5] = 0
     elif button == 8:
         print("Left trigger (L2) released")
+        debounce = -1
     elif button == 9:
-        print("Right trigger (R2) released")
+        print("Left trigger (L1) released")
     else: 
-        print("Helloooooo")
+        print(f"released {button}")
     
 def handle_axis_motion(axis, value, buffer):
     if axis == 0:  # X-axis of the left stick
@@ -92,49 +100,54 @@ def handle_axis_motion(axis, value, buffer):
         elif value > 0.9 and value <=1.1:
             buffer[2] = 1
         elif value >= -0.2 and value <= 0.2: buffer[2] = 0
-    elif axis == 5:  # Left trigger (L2)
+    elif axis == 4:  # Left trigger (L2)
         print(f"Left trigger (L2) value: {value}")
-    elif axis == 4:  # Right trigger (R2)
+    elif axis == 5:  # Right trigger (R2)
         print(f"Right trigger (R2) value: {value}")
     elif axis == 6:  # D-pad X-axis
         handle_dpad_x(value)
     elif axis == 7:  # D-pad Y-axis
         handle_dpad_y(value)
 
-def handle_button_press(button, buffer):
+def handle_button_press(button, buffer, specialKey):
     global debounce
     if button == 0:
-        print("Button A pressed")
-        buffer[5] = -1
-    elif button == 1:
-        print("Button B pressed")
-        buffer[4] = 1
-    elif button == 3:
         print("Button X pressed")
-        buffer[4] = -1
-    elif button == 4:
-        print("Button Y pressed")
-        buffer[5] = 1
+        specialKey[button] = True
+    elif button == 1:
+        print("Button O pressed")
+        specialKey[button] = True
+    elif button == 2:
+        print("Button ▢ pressed")
+        specialKey[button] = True
+    elif button == 3:
+        print("Button △ pressed")
+        specialKey[button] = True
     elif button == 6:
         print("Left bumper pressed")
     elif button == 7:
         print("Right bumper pressed")
-        buffer[5] = -1
     elif button == 10:
-        print("Back button pressed")
+        print("Right trigger (R1) pressed")
     elif button == 11:
-        print("Start button pressed")
+        print("Up dpad button pressed")
+        buffer[4] = 1
+    elif button == 12:
+        print("Down dpad button pressed")
+        buffer[4] = -1
     elif button == 13:
-        print("Left stick button pressed")
+        print("Left dpad button pressed")
+        buffer[5] = 1
     elif button == 14:
-        print("Right stick button pressed")
+        print("Right dpad button pressed")
+        buffer[5] = -1
     elif button == 8:
         print("Left trigger (L2) pressed")
         debounce = -1
     elif button == 9:
-        print("Right trigger (R2) pressed")
+        print("Left trigger (L1) pressed")
     else: 
-        print("Helloooooo")
+        print(f"pressed {button}")
     
 def handle_dpad_x(value):
     global debounce
