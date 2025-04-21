@@ -16,17 +16,16 @@ joystick = pygame.joystick.Joystick(0)
 joystick.init()
 print(f"Name of joystick: {joystick.get_name()}")
 
-axis_state = {0: 0, 1: 0}
-previous_axis_values = {0: 0, 1: 0}
-max_reached = {0: False, 1: False}
+axisEncodedValue = [0, 0, 0, 0, 0, 0]
 isStoppedBuffer = [False, False, False, False, False, False]
 
 goHome = False
+goHomeCounter = 0
 isStopped = False
 motorBusy = { i : {"busy": False, "rotating": False, "timeWaitedAck": 0} for i in range(1, 7)}
 speedConfig = [100, 250, 250, 200, 20, 20]
 accelarationConfig = [60, 60, 60, 60, 60, 60]
-commandQueue = Queue(maxsize=10)
+commandQueue = Queue(maxsize=20)
 
 def cyclicRead():
     if (not commandQueue.full()):
@@ -123,6 +122,7 @@ def initializeMotor(bus: can.interface.Bus, currentID: int, newID: int) -> None:
             canSendMessage(bus, [prepareCanMessage(currentID, messages[i])])
 
 def processReceivedMessage(buffReader: can.BufferedReader) -> None:
+    global axisEncodedValue, goHomeCounter, goHome
     while buffReader.buffer.qsize() > 0:
         receivedMsg = buffReader.get_message()
         if receivedMsg is not None:
@@ -144,15 +144,23 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
                         motorBusy[receivedMsg.arbitration_id]["rotating"] = False
                     else:
                         motorBusy[receivedMsg.arbitration_id]["busy"] = False
-                    motorBusy[receivedMsg.arbitration_id]["timeWaitedAck"] = time.time()
+                    # motorBusy[receivedMsg.arbitration_id]["timeWaitedAck"] = time.time()
                 elif receivedCommand in [0xf4, 0xf5]:
                     if value == 2:
                         motorBusy[receivedMsg.arbitration_id]["busy"] = False
+                        # counting number of joints gone home.
+                        if goHome == True:
+                            if goHomeCounter > 0:
+                                goHomeCounter -= 1
+                            else:
+                                goHome = False
                         print("Run axis completed")
                     elif value == 3:
                         motorBusy[receivedMsg.arbitration_id]["busy"] = False
                         print("Stopped due to end limit")
-                    motorBusy[receivedMsg.arbitration_id]["timeWaitedAck"] = time.time()
+                    # motorBusy[receivedMsg.arbitration_id]["timeWaitedAck"] = time.time()
+                elif receivedCommand == 0x31:
+                    axisEncodedValue[receivedMsg.arbitration_id-1] = value
             else:
                 received_data_bytes = ", ".join(
                 [f"0x{byte:02X}" for byte in receivedMsg.data]
@@ -179,7 +187,7 @@ def checkAckTimeout():
 
 
 def main() -> None:
-    global isStopped, goHome
+    global isStopped, goHome, goHomeCounter
     """
     Main function to read CAN messages from a .txt file, send them through a CAN bus, and adjust speeds within packets.
     """
@@ -214,25 +222,39 @@ def main() -> None:
 
         if specialKey[0] == True and goHome == False:
             goHome = True
+            # 7 because we have 5 normal motors + 2 motors for 6th joint
+            # TODO: change the number of counter here if we have less joints.
+            goHomeCounter = 7
             print("going home...")
+            # revert the 6th joint at axis X to 0:
+            # - given 6th motor has ran to axis 0 + X -> X
+            # - then 5th motor also ran to Y + X -> Z
+            # - reset the 6th motor to by X - X -> 0
+            # - rotate 5th motor by Z - X -> Y
+            commandQueue.put(prepareCanMessage(5+1, preparePositionModeAxisCommand(relative=False, speed = speedConfig[5], acceleration = accelarationConfig[5], axis = axisEncodedValue[5]-axisEncodedValue[5])))
+            commandQueue.put(prepareCanMessage(4+1, preparePositionModeAxisCommand(relative=False, speed = speedConfig[5], acceleration = accelarationConfig[5], axis = axisEncodedValue[4]-axisEncodedValue[5])))
+            # revert the rest 5 motors back to 0
             for i in range(0, 5):
                 commandQueue.put(prepareCanMessage(i+1, preparePositionModeAxisCommand(relative=False, speed = speedConfig[i], acceleration = accelarationConfig[i], axis = 0)))
-            #TODO: WHAT ABOUT THE LAST MOTOR? what if they roll (to 0) in the same direction?
-        elif specialKey[0] == False and goHome == True:
-            goHome = False
+        elif goHome == True:
+            # do nothing, as we're going home
+            print("going home...")
+            pass
         else:
             for i in range(len(buffer)):
                 if buffer[i] == -1:
                     if (not commandQueue.full()):
                         commandQueue.put(prepareCanMessage(i+1, prepareSpeedmodeCommand(run = True, direction = 0, speed = speedConfig[i], acceleration = accelarationConfig[i])))
+                        # given 2 motor facing opposite direction, to make them "rotate in different direction", 
+                        # means telling them to rotate in the same direction (relative to the motor)
                         if i == 5:
-                            commandQueue.put(prepareCanMessage(i, prepareSpeedmodeCommand(run = True, direction = 1, speed = speedConfig[i], acceleration = accelarationConfig[i])))
+                            commandQueue.put(prepareCanMessage(i, prepareSpeedmodeCommand(run = True, direction = 0, speed = speedConfig[i], acceleration = accelarationConfig[i])))
                         isStoppedBuffer[i] = False
                 elif buffer[i] == 1:
                     if (not commandQueue.full()):
                         commandQueue.put(prepareCanMessage(i+1, prepareSpeedmodeCommand(run = True, direction = 1, speed = speedConfig[i], acceleration = accelarationConfig[i])))
                         if i == 5:
-                            commandQueue.put(prepareCanMessage(i, prepareSpeedmodeCommand(run = True, direction = 0, speed = speedConfig[i], acceleration = accelarationConfig[i])))
+                            commandQueue.put(prepareCanMessage(i, prepareSpeedmodeCommand(run = True, direction = 1, speed = speedConfig[i], acceleration = accelarationConfig[i])))
                         isStoppedBuffer[i] = False
                 elif buffer[i] == 0:
                     if (isStoppedBuffer[i] == False and not commandQueue.full()):
@@ -245,11 +267,11 @@ def main() -> None:
 
 
         # a bunch of function that read the status of motors:
-        # if delay_100ms < 100:
-        #     delay_100ms += 1
-        # else:
-        #     cyclicRead()
-        #     delay_100ms = 0
+        if delay_100ms < 100:
+            delay_100ms += 1
+        else:
+            cyclicRead()
+            delay_100ms = 0
 
         
         processedMessage = processSendMessage(commandQueue, motorBusy)
