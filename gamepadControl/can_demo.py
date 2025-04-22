@@ -124,6 +124,7 @@ def initializeMotor(bus: can.interface.Bus, currentID: int, newID: int) -> None:
 def processReceivedMessage(buffReader: can.BufferedReader) -> None:
     global axisEncodedValue, goHomeCounter, goHome
     while buffReader.buffer.qsize() > 0:
+        allowPrint = True
         receivedMsg = buffReader.get_message()
         if receivedMsg is not None:
             receivedCommand = receivedMsg.data[0]
@@ -138,7 +139,7 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
                 # check if the MSB is 1 (negative)
                 if (value & (1 << (8 * (end-start+1) - 1))) != 0:
                     value = value - (1 << (8 * (end-start+1)))
-                print(f'Received: arbitration_id=0x{receivedMsg.arbitration_id:X}: {receivedCommand:X} {value}')
+                
                 if receivedCommand == 0xf6:
                     if value == 2:
                         motorBusy[receivedMsg.arbitration_id]["rotating"] = False
@@ -150,7 +151,7 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
                         motorBusy[receivedMsg.arbitration_id]["busy"] = False
                         # counting number of joints gone home.
                         if goHome == True:
-                            if goHomeCounter > 0:
+                            if goHomeCounter > 1:
                                 goHomeCounter -= 1
                             else:
                                 goHome = False
@@ -160,7 +161,10 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
                         print("Stopped due to end limit")
                     # motorBusy[receivedMsg.arbitration_id]["timeWaitedAck"] = time.time()
                 elif receivedCommand == 0x31:
+                    allowPrint = False
                     axisEncodedValue[receivedMsg.arbitration_id-1] = value
+                if allowPrint:
+                    print(f'Received: arbitration_id=0x{receivedMsg.arbitration_id:X}: {receivedCommand:X} {value}')
             else:
                 received_data_bytes = ", ".join(
                 [f"0x{byte:02X}" for byte in receivedMsg.data]
@@ -279,6 +283,7 @@ def main() -> None:
         time.sleep(0.01)
         processReceivedMessage(buffReader)
         checkAckTimeout()
+        print(f"Status: {axisEncodedValue}")
         if keyboard.is_pressed("esc"):
             break
     notifier.stop()
