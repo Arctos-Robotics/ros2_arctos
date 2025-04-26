@@ -7,6 +7,27 @@ from queue import Queue
 import pygame
 from mks_api import *
 from game_pad import *
+import asyncua
+from asyncua import ua, uamethod, Server
+import asyncio
+import traceback
+import netifaces as ni
+import logging
+import ast
+
+DURATION = 0.01
+
+interfaces = ni.interfaces()
+interface = None
+if "ap0" in interfaces:
+    interface = "ap0"
+elif "wlan0" in interfaces:
+    interface = "wlan0"
+else:
+    interface = "eth0"
+_logger = logging.getLogger(__name__)
+# IPAddr = ni.ifaddresses(interface)[ni.AF_INET][0]['addr']
+IPAddr = "localhost"
 
 pygame.init()
 pygame.joystick.init()
@@ -17,15 +38,49 @@ joystick.init()
 print(f"Name of joystick: {joystick.get_name()}")
 
 axisEncodedValue = [0, 0, 0, 0, 0, 0]
-isStoppedBuffer = [False, False, False, False, False, False]
+isStoppedBufferController = [True, True, True, True, True, True]
+isStoppedBufferOpcUA = [True, True, True, True, True, True]
+mustStoppedBuffer = [-1, -1, -1, -1, -1, -1]
 
 goHome = False
 goHomeCounter = 0
 isStopped = False
 motorBusy = { i : {"busy": False, "rotating": False, "timeWaitedAck": 0} for i in range(1, 7)}
-speedConfig = [100, 250, 250, 200, 20, 20]
+speedConfig = [80, 80, 80, 80, 800, 800]
 accelarationConfig = [60, 60, 60, 60, 60, 60]
 commandQueue = Queue(maxsize=20)
+
+speed = 20
+oldSpeed = speed
+
+axisChanged = False
+
+MIN_XAXISMOTOR = -60000
+MAX_XAXISMOTOR = 60000
+
+MIN_YAXISMOTOR = -500000
+MAX_YAXISMOTOR = 250000
+
+MIN_ZAXISMOTOR = -99999999
+MAX_ZAXISMOTOR = 9999999
+
+MIN_AAXISMOTOR = -99999999
+MAX_AAXISMOTOR = 9999999
+
+MIN_BAXISMOTOR = -99999999
+MAX_BAXISMOTOR = 9999999
+
+MIN_CAXISMOTOR = -99999999
+MAX_CAXISMOTOR = 9999999
+
+DIRECTION_INC = 1
+DIRECTION_DEC = 0
+
+DON_T_CARE = 0
+ZERO = 0
+#TODO: replace direction 1 and 0 with this for clear code.
+
+# -------------------------------------------CAN section -------------------------------------------------------
 
 def cyclicRead():
     if (not commandQueue.full()):
@@ -122,7 +177,7 @@ def initializeMotor(bus: can.interface.Bus, currentID: int, newID: int) -> None:
             canSendMessage(bus, [prepareCanMessage(currentID, messages[i])])
 
 def processReceivedMessage(buffReader: can.BufferedReader) -> None:
-    global axisEncodedValue, goHomeCounter, goHome
+    global axisEncodedValue, goHomeCounter, goHome, axisChanged
     while buffReader.buffer.qsize() > 0:
         allowPrint = True
         receivedMsg = buffReader.get_message()
@@ -131,14 +186,17 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
             if receivedCommand in commandAnswer.keys():
                 value = 0
                 start, end = commandAnswer[receivedCommand]
-                for i in range(start-1, end):
-                    value |= (receivedMsg.data[i])
-                    value = value << 8
-                value = (value >> 8)
-                # convert to negative value
-                # check if the MSB is 1 (negative)
-                if (value & (1 << (8 * (end-start+1) - 1))) != 0:
-                    value = value - (1 << (8 * (end-start+1)))
+                try:
+                    for i in range(start-1, end):
+                        value |= (receivedMsg.data[i])
+                        value = value << 8
+                    value = (value >> 8)
+                    # convert to negative value
+                    # check if the MSB is 1 (negative)
+                    if (value & (1 << (8 * (end-start+1) - 1))) != 0:
+                        value = value - (1 << (8 * (end-start+1)))
+                except Exception:
+                    value = -99
                 
                 if receivedCommand == 0xf6:
                     if value == 2:
@@ -160,11 +218,15 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
                         motorBusy[receivedMsg.arbitration_id]["busy"] = False
                         print("Stopped due to end limit")
                     # motorBusy[receivedMsg.arbitration_id]["timeWaitedAck"] = time.time()
+                # read encoder command
                 elif receivedCommand == 0x31:
                     allowPrint = False
-                    axisEncodedValue[receivedMsg.arbitration_id-1] = value
+                    if value != axisEncodedValue:
+                        axisEncodedValue[receivedMsg.arbitration_id-1] = value
+                        axisChanged = True
                 if allowPrint:
                     print(f'Received: arbitration_id=0x{receivedMsg.arbitration_id:X}: {receivedCommand:X} {value}')
+                    pass
             else:
                 received_data_bytes = ", ".join(
                 [f"0x{byte:02X}" for byte in receivedMsg.data]
@@ -175,12 +237,32 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
         else:
             break
 
-def checkAckTimeout():
+def rotateMotor(motorIndex: int, direction: int, stop: bool):
+        global mustStoppedBuffer, commandQueue, speedConfig, accelarationConfig, isStoppedBufferController
+        if stop:
+            if isStoppedBufferController[motorIndex] == False and not commandQueue.full():
+                commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
+                isStoppedBufferController[motorIndex] = True
+                if motorIndex == 5 and isStoppedBufferController[motorIndex-1] == False:
+                    commandQueue.put(prepareCanMessage(motorIndex, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
+                    isStoppedBufferController[motorIndex-1] = True
+        elif (not commandQueue.full() and mustStoppedBuffer[motorIndex] != direction):
+            commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = True, direction = direction, speed = speedConfig[motorIndex], acceleration = accelarationConfig[motorIndex])))
+            isStoppedBufferController[motorIndex] = False
+            # given 2 motor facing opposite direction, to make them "rotate in different direction", 
+            # means telling them to rotate in the same direction (relative to the motor)
+            if motorIndex == 5:
+                commandQueue.put(prepareCanMessage(motorIndex, prepareSpeedmodeCommand(run = True, direction = direction, speed = speedConfig[motorIndex], acceleration = accelarationConfig[motorIndex])))
+                isStoppedBufferController[motorIndex-1] = False
+        else:
+            print(f"Motor {motorIndex} go out of range! or queue full")
+
+def cylicCheck():
     """
     Check the ack timeout, if the motor take too long to answer, release the lock "busy" and "rotating" to allow 
     control.
     """
-    global motorBusy
+    global motorBusy, axisChanged
     for id, motor in motorBusy.items():
         if motor["busy"] or motor["rotating"]:
             duration = time.time() - motor["timeWaitedAck"]
@@ -188,33 +270,354 @@ def checkAckTimeout():
                 motor["busy"] = False
                 motor["rotating"] = False
                 print(f"motorID:{id} ack timeout" )
+    if axisChanged:
+        print(f"Status updated: {axisEncodedValue}")
+        axisChanged = False
 
-
-def main() -> None:
-    global isStopped, goHome, goHomeCounter
+def cyclicSafety():
     """
-    Main function to read CAN messages from a .txt file, send them through a CAN bus, and adjust speeds within packets.
+    Emergency stop the motor if it gone out of range.
+    #TODO: change the value of mustStoppedMotor based on the real direction of the motor!
     """
-    # real bus
-    bus = can.interface.Bus(interface="slcan", channel="COM3", bitrate=500000)  
-    # virtual bus
-    # bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
+    global mustStoppedBuffer
+    motor_limits = [
+        (MIN_XAXISMOTOR, MAX_XAXISMOTOR),
+        (MIN_YAXISMOTOR, MAX_YAXISMOTOR),
+        (MIN_ZAXISMOTOR, MAX_ZAXISMOTOR),
+        (MIN_AAXISMOTOR, MAX_AAXISMOTOR),
+        (MIN_BAXISMOTOR, MAX_BAXISMOTOR),
+        (MIN_CAXISMOTOR, MAX_CAXISMOTOR),
+    ]
 
-    print("Press arrow keys to call functions. Press ESC to exit.")
+    for i, (min_limit, max_limit) in enumerate(motor_limits):
+        # only Y motor has a very weird direction, why?
+        if min_limit == MIN_YAXISMOTOR:
+            if axisEncodedValue[i] < min_limit:
+                if mustStoppedBuffer[i] == -1:
+                    mustStoppedBuffer[i] = DIRECTION_INC
+                    rotateMotor(motorIndex=i, direction=DON_T_CARE, stop=True)
+            elif axisEncodedValue[i] > max_limit:
+                if mustStoppedBuffer[i] == -1:
+                    mustStoppedBuffer[i] = DIRECTION_DEC
+                    rotateMotor(motorIndex=i, direction=DON_T_CARE, stop=True)
+            else:
+                mustStoppedBuffer[i] = -1
+        else:
+            if axisEncodedValue[i] < min_limit:
+                if mustStoppedBuffer[i] == -1:
+                    mustStoppedBuffer[i] = DIRECTION_DEC
+                    rotateMotor(motorIndex=i, direction=DON_T_CARE, stop=True)
+            elif axisEncodedValue[i] > max_limit:
+                if mustStoppedBuffer[i] == -1:
+                    mustStoppedBuffer[i] = DIRECTION_INC
+                    rotateMotor(motorIndex=i, direction=DON_T_CARE, stop=True)
+            else:
+                mustStoppedBuffer[i] = -1
+        
 
-    buffReader = can.BufferedReader()
-    notifier = can.Notifier(bus, [buffReader])
 
-    delay_100ms = 0
+# ------------------------------------------- /CAN section -------------------------------------------------------
 
-    # initializeMotor(bus, currentID=0x01, newID=0x01)
-    # initializeMotor(bus, currentID=0x02, newID=0x02)
-    # initializeMotor(bus, currentID=0x03, newID=0x03)
-    # initializeMotor(bus, currentID=0x04, newID=0x04)
-    # initializeMotor(bus, currentID=0x05, newID=0x06)
-    # initializeMotor(bus, currentID=0x05, newID=0x06)
+# ------------------------------------------- OPCUA section -------------------------------------------------------
 
-    while (True):
+xAxisMotor = 0
+yAxisMotor = 0
+zAxisMotor = 0
+aAxisMotor = 0
+bAxisMotor = 0
+cAxisMotor = 0
+
+methodDict = {}
+subscriptionList = []
+
+# -1: decrease angle, 0: stop, 1: increase angle
+MOTOR_LOCK_AUTORUN = {
+    "xAxis": 0,
+    "yAxis": 0,
+    "zAxis": 0,
+    "aAxis": 0,
+    "bAxis": 0,
+    "cAxis": 0
+}
+
+def create_Ua_Argument(Name: str, Datatype: ua.NodeId, Description: str):
+    """
+    This function create an UA argument used to add more info to the method.
+    """
+    arg = ua.Argument()
+    arg.Name = Name
+    arg.DataType = Datatype
+    arg.ValueRank = -1
+    arg.ArrayDimensions = []
+    arg.Description = ua.LocalizedText(Description)
+    return arg
+
+
+def type_conversion(list_of_string: list) -> list:
+    """
+    This function convert a string object into python type (if possible)
+    """
+    result = []
+    for string in list_of_string:
+        try:
+            result.append(ast.literal_eval(string))
+        except:
+            result.append(string)
+    return result
+
+@uamethod
+def moveMotor(parent, motor_name: str, angle_increase: bool, stop: bool):
+    global xAxisMotor, yAxisMotor, zAxisMotor, aAxisMotor, bAxisMotor, speed, JetMaxControlList
+    # print(f'{motor_name}, {angle_increase}')
+    motor_limits = [
+        ("xAxis", MIN_XAXISMOTOR, MAX_XAXISMOTOR),
+        ("yAxis", MIN_YAXISMOTOR, MAX_YAXISMOTOR),
+        ("zAxis", MIN_ZAXISMOTOR, MAX_ZAXISMOTOR),
+        ("aAxis", MIN_AAXISMOTOR, MAX_AAXISMOTOR),
+        ("bAxis", MIN_BAXISMOTOR, MAX_BAXISMOTOR),
+        ("cAxis", MIN_CAXISMOTOR, MAX_CAXISMOTOR),
+    ]
+    motorFound = False
+    for i, (loop_motor_name, min_limit, max_limit) in enumerate(motor_limits):
+        if (loop_motor_name == motor_name):
+            motorFound = True
+            if loop_motor_name == "cAxis":
+                if stop:
+                    rotateMotor(motorIndex=i, direction = DON_T_CARE, stop = True)
+                    rotateMotor(motorIndex=i+1, direction = DON_T_CARE, stop = True)
+                elif not angle_increase and cAxisMotor > min_limit:
+                    rotateMotor(motorIndex=i, direction = DIRECTION_DEC, stop = False)
+                    rotateMotor(motorIndex=i+1, direction = DIRECTION_DEC, stop = False)
+                elif angle_increase and cAxisMotor < max_limit:
+                    rotateMotor(motorIndex=i, direction = DIRECTION_INC, stop = False)
+                    rotateMotor(motorIndex=i+1, direction = DIRECTION_INC, stop = False)
+            # why yAxis has this weird ass rotation rule?
+            elif loop_motor_name == "yAxis":
+                if stop:
+                    rotateMotor(motorIndex=i, direction = DON_T_CARE, stop = True)
+                elif not angle_increase and xAxisMotor > min_limit:
+                    rotateMotor(motorIndex=i, direction = DIRECTION_INC, stop = False)
+                elif angle_increase and xAxisMotor < max_limit:
+                    rotateMotor(motorIndex=i, direction = DIRECTION_DEC, stop = False)
+            else:
+                if stop:
+                    rotateMotor(motorIndex=i, direction = DON_T_CARE, stop = True)
+                elif not angle_increase and xAxisMotor > min_limit:
+                    rotateMotor(motorIndex=i, direction = DIRECTION_DEC, stop = False)
+                elif angle_increase and xAxisMotor < max_limit:
+                    rotateMotor(motorIndex=i, direction = DIRECTION_INC, stop = False)
+
+    if not motorFound:
+        print(f"NOTOK")
+        return f"NOTOK"    
+    else:
+        print(f"{motor_name};{angle_increase};OK")
+        return f"{motor_name};{angle_increase};OK"
+
+@uamethod
+def autoMotor(parent, motor_name: str, direction: int):
+    global MOTOR_LOCK_AUTORUN
+    if direction < -1 or direction > 1:
+        return "NOTOK"
+    if motor_name in MOTOR_LOCK_AUTORUN:
+        MOTOR_LOCK_AUTORUN[motor_name] = direction
+        return "OK"
+    else:
+        return "NOTOK"
+    
+
+
+# ------------------------------------------- /OPCUA section ------------------------------------------------------- 
+
+async def main() -> None:
+    global isStopped
+
+    # ------------------------------------------- OPCUA MAIN section ------------------------------------------------------- 
+    server = Server()
+
+    await server.init()
+    # endpoint: address to connect to
+    server.set_endpoint(f"opc.tcp://localhost:4841")
+    server.set_server_name("Robot Arm Server")
+
+    # setup our namespace. An endpoint can have multiple namespace!
+    uri = "http://robotarm.asyncua.io"
+    idx = await server.register_namespace(uri)
+
+     # add some nodes
+    rootFolder = await server.nodes.objects.add_folder(idx, "Robot Arm")
+
+    motor_folder = await rootFolder.add_folder(idx, "Motor")
+    xAxisMotorNode = await motor_folder.add_variable(idx, "xAxis", 0, varianttype=ua.VariantType.Double)
+    yAxisMotorNode = await motor_folder.add_variable(idx, "yAxis", 0, varianttype=ua.VariantType.Double)
+    zAxisMotorNode = await motor_folder.add_variable(idx, "zAxis", 0, varianttype=ua.VariantType.Double)
+    aAxisMotorNode = await motor_folder.add_variable(idx, "aAxis", 0, varianttype=ua.VariantType.Double)
+    bAxisMotorNode = await motor_folder.add_variable(idx, "bAxis", 0, varianttype=ua.VariantType.Double)
+    cAxisMotorNode = await motor_folder.add_variable(idx, "cAxis", 0, varianttype=ua.VariantType.Double)
+
+    speedNode = await rootFolder.add_variable(idx, "speed", 5)
+
+    imageFolder = await rootFolder.add_folder(idx, "Image")
+    imageJetmaxNode = await imageFolder.add_variable(idx, "imageJetmax", b"a", datatype=ua.ObjectIds.ImageJPG)
+
+    methodFolder = await rootFolder.add_folder(idx, "Method")
+
+    controlMethod = await methodFolder.add_folder(idx, "Control Method")
+
+    inargx = create_Ua_Argument(Name="Motor", Datatype=ua.NodeId(ua.ObjectIds.String),
+                                Description="Motor name: xAxis, yAxis, zAxis, aAxis, bAxis, cAxis")
+    inargy = create_Ua_Argument(Name="Increase angle", Datatype=ua.NodeId(ua.ObjectIds.Boolean),
+                                Description="Increase the angle of motor")
+    inargz = create_Ua_Argument(Name="STOP", Datatype=ua.NodeId(ua.ObjectIds.Boolean),
+                                Description="STOP THE MOTOR")
+    outarg = create_Ua_Argument(Name="Ack", Datatype=ua.NodeId(ua.ObjectIds.String),
+                                Description="Acknowledgement")
+
+    methodDict["moveMotor"] = await controlMethod.add_method(idx,
+                                                             "moveMotor",
+                                                             moveMotor,
+                                                             [inargx, inargy, inargz],
+                                                             [outarg])
+    
+    inargx = create_Ua_Argument(Name="Motor", Datatype=ua.NodeId(ua.ObjectIds.String),
+                                Description="Motor name: xAxis, yAxis, zAxis, aAxis, bAxis, cAxis")
+    inargy = create_Ua_Argument(Name="Direction", Datatype=ua.NodeId(ua.ObjectIds.Int16),
+                                Description="Direction of motor, -1 to decrease, 0 to stop and 1 to increase")
+
+    methodDict["autoMotor"] = await controlMethod.add_method(idx,
+                                                             "autoMotor",
+                                                             autoMotor,
+                                                             [inargx, inargy],
+                                                             [outarg])
+    
+    methodDict["goHome"] = await controlMethod.add_method(idx,
+                                                          "goHome",
+                                                          goHome,
+                                                          [],
+                                                          [outarg])
+    
+    async def autoRun():
+        global isStoppedBufferOpcUA
+        """
+        This function will run in a loop which control the arm to
+        move automatically. To do that, use call method [autoMotor]
+        to enable the lock.
+        :return: None
+        """
+        global MOTOR_LOCK_AUTORUN
+        while True:
+            # rospy is shutdown when ctrl - C is pressed!
+            # su dung rospy.is_shutdown() nham de stop script khi nhan ctrl - C. Neu
+            # khong xai dieu kien nay, script se khong bao gio dung khi bam ctrl - C
+            try:
+                motor_names = [
+                    ("xAxis"),
+                    ("yAxis"),
+                    ("zAxis"),
+                    ("aAxis"),
+                    ("bAxis"),
+                    ("cAxis"),
+                ]
+                for i, (motor_name) in enumerate(motor_names):
+                    if motor_name == "cAxis":
+                        if MOTOR_LOCK_AUTORUN[motor_name] != 0:
+                            moveMotor(idx, motor_name,
+                                        ua.Variant(True, ua.VariantType.Boolean) if MOTOR_LOCK_AUTORUN[motor_name] == 1 
+                                        else ua.Variant(False, ua.VariantType.Boolean), ua.Variant(False, ua.VariantType.Boolean))
+                            isStoppedBufferOpcUA[i-1] = False
+                            isStoppedBufferOpcUA[i] = False
+                        else:
+                            if isStoppedBufferOpcUA[i-1] == False and isStoppedBufferOpcUA[i] == False:
+                                moveMotor(idx, motor_name,
+                                            ua.Variant(True, ua.VariantType.Boolean), ua.Variant(True, ua.VariantType.Boolean))
+                                isStoppedBufferOpcUA[i-1] = True
+                                isStoppedBufferOpcUA[i] = True
+                    else:
+                        if MOTOR_LOCK_AUTORUN[motor_name] != 0:
+                            moveMotor(idx, motor_name,
+                                        ua.Variant(True, ua.VariantType.Boolean) if MOTOR_LOCK_AUTORUN[motor_name] == 1 
+                                        else ua.Variant(False, ua.VariantType.Boolean), ua.Variant(False, ua.VariantType.Boolean))
+                            isStoppedBufferOpcUA[i] = False
+                        else:
+                            if isStoppedBufferOpcUA[i] == False:
+                                moveMotor(idx, motor_name,
+                                            ua.Variant(True, ua.VariantType.Boolean), ua.Variant(True, ua.VariantType.Boolean))
+                                isStoppedBufferOpcUA[i] = True
+                await asyncio.sleep(DURATION)
+                # print("sleep 5 seconds")
+            except Exception:
+                traceback.print_exc()
+            if keyboard.is_pressed("esc"):
+                break
+        print("Exit autoRun")
+
+    async def updateSpeed():
+        global speed, oldSpeed
+        while True:
+            if speed != oldSpeed:
+                await speedNode.write_value(speed)
+            # more update ...
+            await asyncio.sleep(0.02)
+            if keyboard.is_pressed("esc"):
+                break
+        print("Exit updateSpeed")
+
+    async def updateOpcUA():
+        global axisEncodedValue, axisChanged
+        """
+        function to read Robot Arm angle data and update to asyncua object model (asyncua server)
+        """
+        global xAxisMotor, yAxisMotor, zAxisMotor, aAxisMotor, bAxisMotor, cAxisMotor
+        while True:
+            if not axisChanged:
+                pass
+            else:
+                xAxisMotor = axisEncodedValue[0]
+                yAxisMotor = axisEncodedValue[1]
+                zAxisMotor = axisEncodedValue[2]
+                aAxisMotor = axisEncodedValue[3]
+                bAxisMotor = axisEncodedValue[4]
+                cAxisMotor = axisEncodedValue[5]
+                asyncioLoop = asyncio.get_running_loop()
+                taskSet = set()
+                try:
+                    taskSet.add(asyncioLoop.create_task(xAxisMotorNode.write_value(float(xAxisMotor))))
+                    taskSet.add(asyncioLoop.create_task(yAxisMotorNode.write_value(float(yAxisMotor))))
+                    taskSet.add(asyncioLoop.create_task(zAxisMotorNode.write_value(float(zAxisMotor))))
+                    taskSet.add(asyncioLoop.create_task(aAxisMotorNode.write_value(float(aAxisMotor))))
+                    taskSet.add(asyncioLoop.create_task(bAxisMotorNode.write_value(float(bAxisMotor))))
+                    taskSet.add(asyncioLoop.create_task(cAxisMotorNode.write_value(float(cAxisMotor))))
+                    while len(taskSet) > 0:
+                        await taskSet.pop()
+                except Exception as e:
+                    traceback.print_exc()
+                print(f'Status: {axisEncodedValue}')
+            await asyncio.sleep(DURATION)
+            if keyboard.is_pressed("esc"):
+                break
+        print("Exit updateOpcUA")
+
+    async def serverStart():
+        print("serveropc", threading.current_thread().getName())
+        async with server:
+            print(f'OPC server running at {server.endpoint[0]}://{server.endpoint[1]}')
+            # subscrition chi chay duoc sau khi Server.start()
+            # handler = SubHandler()
+            # subscription = server.create_subscription(1, handler)
+            # subscriptionList.extend([unityNode])
+            # print(subscriptionList)
+            # subscription.subscribe_data_change(subscriptionList)
+            # asyncio.gather giup chay 2 ham async 1 cach "song song"
+            # await asyncio.gather(autoRun(), updateVideoJetMax())
+            await asyncio.gather(autoRun(), updateSpeed(), updateOpcUA())
+
+        print("Exit server")
+
+
+
+    # -------------------------------------------/OPCUA MAIN section ------------------------------------------------------- 
+    async def processGamePad():
+        global goHome, goHomeCounter
         pygame.event.pump()
         for event in pygame.event.get():
             if event.type == pygame.JOYBUTTONDOWN:
@@ -247,48 +650,73 @@ def main() -> None:
         else:
             for i in range(len(buffer)):
                 if buffer[i] == -1:
-                    if (not commandQueue.full()):
-                        commandQueue.put(prepareCanMessage(i+1, prepareSpeedmodeCommand(run = True, direction = 0, speed = speedConfig[i], acceleration = accelarationConfig[i])))
-                        # given 2 motor facing opposite direction, to make them "rotate in different direction", 
-                        # means telling them to rotate in the same direction (relative to the motor)
-                        if i == 5:
-                            commandQueue.put(prepareCanMessage(i, prepareSpeedmodeCommand(run = True, direction = 0, speed = speedConfig[i], acceleration = accelarationConfig[i])))
-                        isStoppedBuffer[i] = False
+                    # print(f"Buffer[{i}] = {buffer[i]}, direction = 0")
+                    rotateMotor(motorIndex=i, direction=DIRECTION_DEC, stop=False)
                 elif buffer[i] == 1:
-                    if (not commandQueue.full()):
-                        commandQueue.put(prepareCanMessage(i+1, prepareSpeedmodeCommand(run = True, direction = 1, speed = speedConfig[i], acceleration = accelarationConfig[i])))
-                        if i == 5:
-                            commandQueue.put(prepareCanMessage(i, prepareSpeedmodeCommand(run = True, direction = 1, speed = speedConfig[i], acceleration = accelarationConfig[i])))
-                        isStoppedBuffer[i] = False
+                    # print(f"Buffer[{i}] = {buffer[i]}, direction = 1")
+                    rotateMotor(motorIndex=i, direction=DIRECTION_INC, stop=False)
                 elif buffer[i] == 0:
-                    if (isStoppedBuffer[i] == False and not commandQueue.full()):
-                        commandQueue.put(prepareCanMessage(i+1, prepareSpeedmodeCommand(run = False, direction = 0, speed = 0, acceleration = 200)))
-                        if i == 5:
-                            commandQueue.put(prepareCanMessage(i, prepareSpeedmodeCommand(run = False, direction = 0, speed = 0, acceleration = 200)))
-                        isStoppedBuffer[i] = True
+                    # if joint 6 is rolling (buffer[5] != 0, then we don't stop joint 5 (buffer[4]) from rolling.)
+                    if (i == 4 and buffer[5] != 0):
+                        pass
+                    else:
+                        rotateMotor(motorIndex=i, direction=DON_T_CARE, stop=True)
                 else:
                     raise ValueError("Wtf?")
+            
+    async def updateRobot():
+        global axisEncodedValue
+        # real bus
+        bus = can.interface.Bus(interface="slcan", channel="COM3", bitrate=500000)  
+        # virtual bus
+        # bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
 
+        print("Press arrow keys to call functions. Press ESC to exit.")
 
-        # a bunch of function that read the status of motors:
-        if delay_100ms < 100:
-            delay_100ms += 1
-        else:
-            cyclicRead()
-            delay_100ms = 0
+        buffReader = can.BufferedReader()
+        notifier = can.Notifier(bus, [buffReader])
 
-        
-        processedMessage = processSendMessage(commandQueue, motorBusy)
-        canSendMessage(bus, messages=processedMessage)
-        time.sleep(0.01)
-        processReceivedMessage(buffReader)
-        checkAckTimeout()
-        print(f"Status: {axisEncodedValue}")
-        if keyboard.is_pressed("esc"):
-            break
-    notifier.stop()
-    bus.shutdown()
+        delay_100ms = 0
+
+        # initializeMotor(bus, currentID=0x01, newID=0x01)
+        # initializeMotor(bus, currentID=0x02, newID=0x02)
+        # initializeMotor(bus, currentID=0x03, newID=0x03)
+        # initializeMotor(bus, currentID=0x04, newID=0x04)
+        # initializeMotor(bus, currentID=0x05, newID=0x06)
+        # initializeMotor(bus, currentID=0x05, newID=0x06)
+
+        while (True):
+            await processGamePad()
+            # a bunch of function that read the status of motors:
+            if delay_100ms < 100:
+                delay_100ms += 1
+            else:
+                cyclicRead()
+                delay_100ms = 0
+
+            
+            processedMessage = processSendMessage(commandQueue, motorBusy)
+            canSendMessage(bus, messages=processedMessage)
+            await asyncio.sleep(DURATION)
+            processReceivedMessage(buffReader)
+            cyclicSafety()
+            cylicCheck()
+            if keyboard.is_pressed("esc"):
+                break
+        notifier.stop()
+        bus.shutdown()
+        print("Exit updateRobot")
+    
+    await asyncio.gather(updateRobot())
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        logging.basicConfig(level=logging.ERROR)
+        # asyncioLoop = asyncio.get_event_loop()
+        print("main", threading.current_thread().name)
+        asyncio.run(main())
+    except Exception as e:
+        traceback.print_exc()
+    finally:
+        exit()

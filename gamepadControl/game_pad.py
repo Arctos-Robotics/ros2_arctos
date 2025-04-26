@@ -28,7 +28,7 @@ import threading
 # time.sleep(10)
 # serialObject.write(bytes(str("!Initon#"), encoding='utf-8'))
 # INitialize input values
-DEBUG = True
+DEBUG = False
 
 buffer = [0, 0, 0, 0, 0, 0]
 specialKey = [False, False, False, False]
@@ -82,23 +82,23 @@ def handle_axis_motion(axis, value, buffer):
     if axis == 0:  # X-axis of the left stick
         printDebugInput(f"Left stick X-axis moved to {value}")
         if value >= -1.1 and value < -0.9:
-            buffer[0] = -1
-        elif value > 0.9 and value <=1.1:
             buffer[0] = 1
+        elif value > 0.9 and value <=1.1:
+            buffer[0] = -1
         elif value >= -0.2 and value <= 0.2: buffer[0] = 0
     elif axis == 1:  # Y-axis of the left stick
         printDebugInput(f"Left stick Y-axis moved to {value}")
         if value >= -1.1 and value < -0.9:
-            buffer[1] = -1
-        elif value > 0.9 and value <=1.1:
             buffer[1] = 1
+        elif value > 0.9 and value <=1.1:
+            buffer[1] = -1
         elif value >= -0.2 and value <= 0.2: buffer[1] = 0
     elif axis == 2:  # X-axis of the right stick
         printDebugInput(f"Right stick X-axis moved to {value}")
         if value >= -1.1 and value < -0.9:
-            buffer[3] = -1
-        elif value > 0.9 and value <=1.1:
             buffer[3] = 1
+        elif value > 0.9 and value <=1.1:
+            buffer[3] = -1
         elif value >= -0.2 and value <= 0.2: buffer[3] = 0
     elif axis == 3:  # Y-axis of the right stick
         printDebugInput(f"Right stick Y-axis moved to {value}")
