@@ -103,9 +103,9 @@ def handle_axis_motion(axis, value, buffer):
     elif axis == 3:  # Y-axis of the right stick
         printDebugInput(f"Right stick Y-axis moved to {value}")
         if value >= -1.1 and value < -0.9:
-            buffer[2] = -1
-        elif value > 0.9 and value <=1.1:
             buffer[2] = 1
+        elif value > 0.9 and value <=1.1:
+            buffer[2] = -1
         elif value >= -0.2 and value <= 0.2: buffer[2] = 0
     elif axis == 4:  # Left trigger (L2)
         printDebugInput(f"Left trigger (L2) value: {value}")
