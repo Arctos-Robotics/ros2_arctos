@@ -21,12 +21,12 @@ DURATION = 0.01
 
 NUM_OF_MOTOR = 4
 
-X_MOTOR_ID = 1
-Y_MOTOR_ID = 2
-Z_MOTOR_ID = 3
-A_MOTOR_ID = 4
-B_MOTOR_ID = 5
-C_MOTOR_ID = 6
+X_MOTOR_ID = 0
+Y_MOTOR_ID = 1
+Z_MOTOR_ID = 2
+A_MOTOR_ID = 3
+B_MOTOR_ID = 4
+C_MOTOR_ID = 5
 
 MIN_XAXISMOTOR = -70000
 MAX_XAXISMOTOR = 70000
@@ -37,14 +37,14 @@ MAX_YAXISMOTOR = 301154
 MIN_ZAXISMOTOR = -416906
 MAX_ZAXISMOTOR = 196355
 
-MIN_AAXISMOTOR = -302684
-MAX_AAXISMOTOR = 302684
+MIN_AAXISMOTOR = -75000
+MAX_AAXISMOTOR = 75000
 
-MIN_BAXISMOTOR = -99999999
-MAX_BAXISMOTOR = 9999999
+MIN_BAXISMOTOR = -111000
+MAX_BAXISMOTOR = 111000
 
-MIN_CAXISMOTOR = -99999999
-MAX_CAXISMOTOR = 9999999
+MIN_CAXISMOTOR = -220000
+MAX_CAXISMOTOR = 220000
 
 DIRECTION_INC = 1
 DIRECTION_DEC = 0
@@ -67,7 +67,7 @@ goHomeCounter = 0
 # status of each motor. Busy indicate motor is working. Rotating only valid for mode F6 (SpeedMode), indicate motor is rolling towards a direction
 motorBusy = { i : {"busy": False, "rotating": False, "timeWaitedAck": 0} for i in range(1, 7)}
 # speed configration for each motor. the maximum speed should not greater than 1000.
-speedConfig = [80, 150, 150, 150, 800, 800]
+speedConfig = [80, 150, 100, 80, 150, 150]
 # accelaration config for each motor. faster the accelaration, the faster motor reaching its specified speed above. max acceleration is 254
 accelerationConfig = [60, 60, 60, 60, 60, 60]
 # a queue to hold the command that will be sent to Canable.
@@ -266,33 +266,41 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
         else:
             break
 
-def rotateMotor(motorIndex: int, direction: int, stop: bool):
+def rotateMotor(motorIndex: int, direction: bool, stop: bool):
         global mustStoppedBuffer, commandQueue, speedConfig, accelerationConfig, isStoppedBufferController
         if stop:
             if isStoppedBufferController[motorIndex] == False and not commandQueue.full():
                 commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
                 isStoppedBufferController[motorIndex] = True
                 # stop the 5th motor too if this motorIndex is 5 (motor 6)
-                if motorIndex == 5 and isStoppedBufferController[motorIndex-1] == False:
-                    commandQueue.put(prepareCanMessage(motorIndex, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
-                    isStoppedBufferController[motorIndex-1] = True
+                if motorIndex == B_MOTOR_ID and isStoppedBufferController[C_MOTOR_ID] == False:
+                    commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
+                    isStoppedBufferController[C_MOTOR_ID] = True
+                elif motorIndex == C_MOTOR_ID and isStoppedBufferController[B_MOTOR_ID] == False:
+                    commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
+                    isStoppedBufferController[B_MOTOR_ID] = True
         # if the direction that the motor is spinning is not blocked by mustStoppedBuffer[motorIndex], then allow rotate
         elif (not commandQueue.full() and mustStoppedBuffer[motorIndex] != direction):
             commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = True, direction = direction, speed = speedConfig[motorIndex], acceleration = accelerationConfig[motorIndex])))
             isStoppedBufferController[motorIndex] = False
             # given 2 motor facing opposite direction, to make them "rotate in different direction", 
             # means telling them to rotate in the same direction (relative to the motor)
-            if motorIndex == 5:
-                commandQueue.put(prepareCanMessage(motorIndex, prepareSpeedmodeCommand(run = True, direction = direction, speed = speedConfig[motorIndex], acceleration = accelerationConfig[motorIndex])))
-                isStoppedBufferController[motorIndex-1] = False
+            if motorIndex == B_MOTOR_ID:
+                commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, prepareSpeedmodeCommand(run = True, direction = not direction, speed = speedConfig[motorIndex], acceleration = accelerationConfig[motorIndex])))
+                isStoppedBufferController[C_MOTOR_ID] = False
+            elif motorIndex == C_MOTOR_ID:
+                commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, prepareSpeedmodeCommand(run = True, direction = direction, speed = speedConfig[motorIndex], acceleration = accelerationConfig[motorIndex])))
+                isStoppedBufferController[B_MOTOR_ID] = False
         else:
             print(f"Controller: Motor {motorIndex} go out of range! or queue full")
 
 def getProcessedAxisValue(axisEncodedArr: list):
     processedAxis = [0, 0, 0, 0, 0, 0]
     for i in range(len(processedAxis)):
-        if i == B_MOTOR_ID-1:
-            processedAxis[i] = axisEncodedArr[i] - axisEncodedArr[C_MOTOR_ID-1]
+        if i == B_MOTOR_ID:
+            processedAxis[i] = (axisEncodedArr[B_MOTOR_ID] - axisEncodedArr[C_MOTOR_ID])/2
+        elif i == C_MOTOR_ID:
+            processedAxis[i] = (processedAxis[B_MOTOR_ID] + axisEncodedArr[C_MOTOR_ID])
         else:
             processedAxis[i] = axisEncodedArr[i]
     return processedAxis
@@ -331,7 +339,7 @@ def cyclicSafety():
     axisEncodedArr = getProcessedAxisValue(axisEncodedValue)
     for i, (min_limit, max_limit) in enumerate(motor_limits):
         # only Y motor has a very weird direction, why?
-        if i == Y_MOTOR_ID-1:
+        if i == Y_MOTOR_ID:
             if axisEncodedArr[i] < min_limit:
                 if mustStoppedBuffer[i] == -1:
                     mustStoppedBuffer[i] = DIRECTION_INC
@@ -364,17 +372,34 @@ def goHomeService():
     if goHome == True and goHomeCounter == 0:
         # 7 because we have 5 normal motors + 2 motors for 6th joint
         # TODO: change the number of counter here if we have less joints.
+        processedAxisArr = getProcessedAxisValue(axisEncodedValue)
         goHomeCounter = NUM_OF_MOTOR
         print("going home...")
-        # revert the 6th joint at axis X to 0:
-        # - given 6th motor has ran to axis 0 + X -> X
-        # - then 5th motor also ran to Y + X -> Z
-        # - reset the 6th motor to by X - X -> 0
-        # - rotate 5th motor by Z - X -> Y
-        commandQueue.put(prepareCanMessage(5+1, preparePositionModeAxisCommand(relative=False, speed = speedConfig[5], acceleration = accelerationConfig[5], axis = axisEncodedValue[5]-axisEncodedValue[5])))
-        commandQueue.put(prepareCanMessage(4+1, preparePositionModeAxisCommand(relative=False, speed = speedConfig[5], acceleration = accelerationConfig[5], axis = axisEncodedValue[4]-axisEncodedValue[5])))
-        # revert the rest 5 motors back to 0
-        for i in range(0, 5):
+        #rotate C axis
+        commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, 
+                        preparePositionModeAxisCommand(relative=False, 
+                                                       speed = speedConfig[C_MOTOR_ID], 
+                                                       acceleration = accelerationConfig[C_MOTOR_ID], 
+                                                       axis = int(axisEncodedValue[C_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
+        commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, 
+                        preparePositionModeAxisCommand(relative=False, 
+                                                       speed = speedConfig[C_MOTOR_ID], 
+                                                       acceleration = accelerationConfig[C_MOTOR_ID], 
+                                                       axis = int(axisEncodedValue[B_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
+        time.sleep(5)
+        #rotate B axis
+        commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, 
+                        preparePositionModeAxisCommand(relative=False, 
+                                                       speed = speedConfig[B_MOTOR_ID], 
+                                                       acceleration = accelerationConfig[B_MOTOR_ID], 
+                                                       axis = 0)))
+        commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, 
+                        preparePositionModeAxisCommand(relative=False, 
+                                                       speed = speedConfig[B_MOTOR_ID], 
+                                                       acceleration = accelerationConfig[B_MOTOR_ID], 
+                                                       axis = 0)))
+        # revert the rest 4 motors back to 0
+        for i in range(0, 4):
             commandQueue.put(prepareCanMessage(i+1, preparePositionModeAxisCommand(relative=False, speed = speedConfig[i], acceleration = accelerationConfig[i], axis = 0)))
 
 # ------------------------------------------- /CAN section -------------------------------------------------------
@@ -427,29 +452,41 @@ def type_conversion(list_of_string: list) -> list:
     return result
 
 def rotateMotorOpcUA(motorIndex: int, direction: int, stop: bool):
+        """
+        Depend on the axis passed, it will handle the rest (motor 5 and motor 6)
+        """
         global mustStoppedBuffer, commandQueue, speedConfig, accelerationConfig, isStoppedBufferOpcUA
         if stop:
             if isStoppedBufferOpcUA[motorIndex] == False and not commandQueue.full():
                 commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
                 isStoppedBufferOpcUA[motorIndex] = True
                 # stop the 5th motor too if this motorIndex is 5 (motor 6)
-                if motorIndex == 5 and isStoppedBufferOpcUA[motorIndex-1] == False:
-                    commandQueue.put(prepareCanMessage(motorIndex, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
-                    isStoppedBufferOpcUA[motorIndex-1] = True
+                if motorIndex == B_MOTOR_ID and isStoppedBufferOpcUA[C_MOTOR_ID] == False:
+                    commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
+                    isStoppedBufferOpcUA[C_MOTOR_ID] = True
+                elif motorIndex == C_MOTOR_ID and isStoppedBufferOpcUA[B_MOTOR_ID] == False:
+                    commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
+                    isStoppedBufferOpcUA[B_MOTOR_ID] = True
         # if the direction that the motor is spinning is not blocked by mustStoppedBuffer[motorIndex], then allow rotate
         elif (not commandQueue.full() and mustStoppedBuffer[motorIndex] != direction):
             commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = True, direction = direction, speed = speedConfig[motorIndex], acceleration = accelerationConfig[motorIndex])))
             isStoppedBufferOpcUA[motorIndex] = False
             # given 2 motor facing opposite direction, to make them "rotate in different direction", 
             # means telling them to rotate in the same direction (relative to the motor)
-            if motorIndex == 5:
-                commandQueue.put(prepareCanMessage(motorIndex, prepareSpeedmodeCommand(run = True, direction = direction, speed = speedConfig[motorIndex], acceleration = accelerationConfig[motorIndex])))
-                isStoppedBufferOpcUA[motorIndex-1] = False
+            if motorIndex == B_MOTOR_ID:
+                commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, prepareSpeedmodeCommand(run = True, direction = not direction, speed = speedConfig[motorIndex], acceleration = accelerationConfig[motorIndex])))
+                isStoppedBufferOpcUA[C_MOTOR_ID] = False
+            elif motorIndex == C_MOTOR_ID:
+                commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, prepareSpeedmodeCommand(run = True, direction = direction, speed = speedConfig[motorIndex], acceleration = accelerationConfig[motorIndex])))
+                isStoppedBufferOpcUA[B_MOTOR_ID] = False
         else:
-            print(f"OPCUA: Motor {motorIndex} go out of range! or queue full")
+            print(f"Controller: Motor {motorIndex} go out of range! or queue full")
 
 @uamethod
 def moveMotor(parent, motor_name: str, angle_increase: bool, stop: bool):
+    """
+    Function that move entire axis.
+    """
     global xAxisMotor, yAxisMotor, zAxisMotor, aAxisMotor, bAxisMotor, speed, JetMaxControlList
     # print(f'{motor_name}, {angle_increase}')
     motor_limits = [
@@ -464,31 +501,13 @@ def moveMotor(parent, motor_name: str, angle_increase: bool, stop: bool):
     for i, (loop_motor_name, min_limit, max_limit) in enumerate(motor_limits):
         if (loop_motor_name == motor_name):
             motorFound = True
-            if loop_motor_name == "cAxis":
-                if stop:
-                    rotateMotorOpcUA(motorIndex=i, direction = DON_T_CARE, stop = True)
-                    rotateMotorOpcUA(motorIndex=i+1, direction = DON_T_CARE, stop = True)
-                elif not angle_increase:
-                    rotateMotorOpcUA(motorIndex=i, direction = DIRECTION_DEC, stop = False)
-                    rotateMotorOpcUA(motorIndex=i+1, direction = DIRECTION_DEC, stop = False)
-                elif angle_increase:
-                    rotateMotorOpcUA(motorIndex=i, direction = DIRECTION_INC, stop = False)
-                    rotateMotorOpcUA(motorIndex=i+1, direction = DIRECTION_INC, stop = False)
             # why yAxis has this weird ass rotation rule?
-            elif loop_motor_name == "yAxis":
-                if stop:
-                    rotateMotorOpcUA(motorIndex=i, direction = DON_T_CARE, stop = True)
-                elif not angle_increase:
-                    rotateMotorOpcUA(motorIndex=i, direction = DIRECTION_INC, stop = False)
-                elif angle_increase:
-                    rotateMotorOpcUA(motorIndex=i, direction = DIRECTION_DEC, stop = False)
-            else:
-                if stop:
-                    rotateMotorOpcUA(motorIndex=i, direction = DON_T_CARE, stop = True)
-                elif not angle_increase:
-                    rotateMotorOpcUA(motorIndex=i, direction = DIRECTION_DEC, stop = False)
-                elif angle_increase:
-                    rotateMotorOpcUA(motorIndex=i, direction = DIRECTION_INC, stop = False)
+            if stop:
+                rotateMotorOpcUA(motorIndex=i, direction = DON_T_CARE, stop = True)
+            elif not angle_increase:
+                rotateMotorOpcUA(motorIndex=i, direction = DIRECTION_DEC, stop = False)
+            elif angle_increase:
+                rotateMotorOpcUA(motorIndex=i, direction = DIRECTION_INC, stop = False)
 
     if not motorFound:
         print(f"NOTOK")
@@ -507,17 +526,7 @@ def autoMotor(parent, motor_name: str, direction: int):
         return "OK"
     else:
         return "NOTOK"
-    
-@uamethod
-def autoMotor(parent, motor_name: str, direction: int):
-    global MOTOR_LOCK_AUTORUN
-    if direction < -1 or direction > 1:
-        return "NOTOK"
-    if motor_name in MOTOR_LOCK_AUTORUN:
-        MOTOR_LOCK_AUTORUN[motor_name] = direction
-        return "OK"
-    else:
-        return "NOTOK"
+
     
 @uamethod
 def goHomeMethod(parent):
@@ -536,7 +545,7 @@ async def main() -> None:
 
     await server.init()
     # endpoint: address to connect to
-    server.set_endpoint(f"opc.tcp://172.28.182.93:4840")
+    server.set_endpoint(f"opc.tcp://{IPAddr}:4840")
     server.set_server_name("Robot Arm Server")
 
         # set all possible endpoint policies for client to connect through
@@ -630,30 +639,19 @@ async def main() -> None:
                     ("cAxis"),
                 ]
                 for i, (motor_name) in enumerate(motor_names):
-                    if motor_name == "cAxis":
-                        if MOTOR_LOCK_AUTORUN[motor_name] != 0:
-                            moveMotor(idx, motor_name,
-                                        ua.Variant(True, ua.VariantType.Boolean) if MOTOR_LOCK_AUTORUN[motor_name] == 1 
-                                        else ua.Variant(False, ua.VariantType.Boolean), ua.Variant(False, ua.VariantType.Boolean))
-                            isStoppedBufferOpcUA[i-1] = False
-                            isStoppedBufferOpcUA[i] = False
-                        else:
-                            if isStoppedBufferOpcUA[i-1] == False and isStoppedBufferOpcUA[i] == False:
-                                moveMotor(idx, motor_name,
-                                            ua.Variant(True, ua.VariantType.Boolean), ua.Variant(True, ua.VariantType.Boolean))
-                                isStoppedBufferOpcUA[i-1] = True
-                                isStoppedBufferOpcUA[i] = True
+                    if MOTOR_LOCK_AUTORUN[motor_name] != 0:
+                        moveMotor(idx, motor_name,
+                                    ua.Variant(True, ua.VariantType.Boolean) if MOTOR_LOCK_AUTORUN[motor_name] == 1 
+                                    else ua.Variant(False, ua.VariantType.Boolean), ua.Variant(False, ua.VariantType.Boolean))
                     else:
-                        if MOTOR_LOCK_AUTORUN[motor_name] != 0:
-                            moveMotor(idx, motor_name,
-                                        ua.Variant(True, ua.VariantType.Boolean) if MOTOR_LOCK_AUTORUN[motor_name] == 1 
-                                        else ua.Variant(False, ua.VariantType.Boolean), ua.Variant(False, ua.VariantType.Boolean))
-                            isStoppedBufferOpcUA[i] = False
-                        else:
-                            if isStoppedBufferOpcUA[i] == False:
+                        if isStoppedBufferOpcUA[i] == False:
+                            # if this is bAxis and cAxis is rolling, don't stop bAxis
+                            # if this is cAxis and bAxis is rolling, don't stop cAxis
+                            if (motor_name == "bAxis" and MOTOR_LOCK_AUTORUN["cAxis"] != 0) or (motor_name == "cAxis" and MOTOR_LOCK_AUTORUN["bAxis"] != 0):
+                                pass
+                            else:
                                 moveMotor(idx, motor_name,
                                             ua.Variant(True, ua.VariantType.Boolean), ua.Variant(True, ua.VariantType.Boolean))
-                                isStoppedBufferOpcUA[i] = True
                 await asyncio.sleep(DURATION*2)
                 # print("sleep 5 seconds")
             except Exception:
@@ -735,7 +733,7 @@ async def main() -> None:
             goHome = True
         elif goHome == True:
             # do nothing, as we're going home
-            print("going home...")
+            await asyncio.sleep(3)
             pass
         else:
             for i in range(len(buffer)):
@@ -746,8 +744,9 @@ async def main() -> None:
                     # print(f"Buffer[{i}] = {buffer[i]}, direction = 1")
                     rotateMotor(motorIndex=i, direction=DIRECTION_INC, stop=False)
                 elif buffer[i] == 0:
-                    # if joint 6 is rolling (buffer[5] != 0, then we don't stop joint 5 (buffer[4]) from rolling.)
-                    if (i == 4 and buffer[5] != 0):
+                    # if joint C_MOTOR_ID is rolling (buffer[C_MOTOR_ID] != 0, then we don't stop joint B_MOTOR_ID (buffer[B_MOTOR_ID]) from rolling.)
+                    # if joint B_MOTOR_ID is rolling (buffer[B_MOTOR_ID] != 0, then we don't stop joint C_MOTOR_ID (buffer[C_MOTOR_ID]) from rolling.)
+                    if (i == B_MOTOR_ID and buffer[C_MOTOR_ID] != 0) or (i == C_MOTOR_ID and buffer[B_MOTOR_ID] != 0):
                         pass
                     else:
                         rotateMotor(motorIndex=i, direction=DON_T_CARE, stop=True)
@@ -757,9 +756,9 @@ async def main() -> None:
     async def updateRobot():
         global axisEncodedValue
         # real bus
-        bus = can.interface.Bus(interface="slcan", channel="COM3", bitrate=500000)  
+        # bus = can.interface.Bus(interface="slcan", channel="COM3", bitrate=500000)  
         # virtual bus
-        # bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
+        bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
 
         print("Press arrow keys to call functions. Press ESC to exit.")
 
@@ -778,7 +777,7 @@ async def main() -> None:
         while (True):
             await processGamePad()
             # a bunch of function that read the status of motors:
-            if delay_100ms < 10:
+            if delay_100ms < 1000:
                 delay_100ms += 1
                 # print(delay_100ms, end=",")
             else:
@@ -799,6 +798,7 @@ async def main() -> None:
         print("Exit updateRobot")
     
     await asyncio.gather(updateRobot(), serverStart())
+    # await asyncio.gather(updateRobot())
 
 
 if __name__ == "__main__":

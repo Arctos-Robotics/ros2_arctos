@@ -81,29 +81,37 @@ def handle_button_release(button, buffer, specialKey):
 def handle_axis_motion(axis, value, buffer):
     if axis == 0:  # X-axis of the left stick
         printDebugInput(f"Left stick X-axis moved to {value}")
+        #left
         if value >= -1.1 and value < -0.9:
             buffer[0] = 1
+        #right
         elif value > 0.9 and value <=1.1:
             buffer[0] = -1
         elif value >= -0.2 and value <= 0.2: buffer[0] = 0
     elif axis == 1:  # Y-axis of the left stick
         printDebugInput(f"Left stick Y-axis moved to {value}")
+        # up
         if value >= -1.1 and value < -0.9:
             buffer[1] = 1
+        # down
         elif value > 0.9 and value <=1.1:
             buffer[1] = -1
         elif value >= -0.2 and value <= 0.2: buffer[1] = 0
     elif axis == 2:  # X-axis of the right stick
         printDebugInput(f"Right stick X-axis moved to {value}")
+        #left
         if value >= -1.1 and value < -0.9:
             buffer[3] = 1
+        #right
         elif value > 0.9 and value <=1.1:
             buffer[3] = -1
         elif value >= -0.2 and value <= 0.2: buffer[3] = 0
     elif axis == 3:  # Y-axis of the right stick
         printDebugInput(f"Right stick Y-axis moved to {value}")
+        # up
         if value >= -1.1 and value < -0.9:
             buffer[2] = 1
+        # down
         elif value > 0.9 and value <=1.1:
             buffer[2] = -1
         elif value >= -0.2 and value <= 0.2: buffer[2] = 0
