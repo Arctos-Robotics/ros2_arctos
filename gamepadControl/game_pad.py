@@ -130,7 +130,8 @@ def handle_button_press(button, buffer, specialKey):
         printDebugInput("Button X pressed")
         specialKey[button] = True
     elif button == 1:
-        printDebugInput("Button O pressed")
+        printDebugInput("Button O pressed. Stop all motors")
+        buffer = [0, 0, 0, 0, 0, 0]
         specialKey[button] = True
     elif button == 2:
         printDebugInput("Button ▢ pressed")

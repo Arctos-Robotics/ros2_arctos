@@ -373,7 +373,7 @@ def goHomeService():
         # 7 because we have 5 normal motors + 2 motors for 6th joint
         # TODO: change the number of counter here if we have less joints.
         processedAxisArr = getProcessedAxisValue(axisEncodedValue)
-        goHomeCounter = NUM_OF_MOTOR
+        
         print("going home...")
         #rotate C axis
         commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, 
@@ -388,6 +388,7 @@ def goHomeService():
                                                        axis = int(axisEncodedValue[B_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
         time.sleep(5)
         #rotate B axis
+        goHomeCounter = NUM_OF_MOTOR
         commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, 
                         preparePositionModeAxisCommand(relative=False, 
                                                        speed = speedConfig[B_MOTOR_ID], 
@@ -756,9 +757,9 @@ async def main() -> None:
     async def updateRobot():
         global axisEncodedValue
         # real bus
-        # bus = can.interface.Bus(interface="slcan", channel="COM3", bitrate=500000)  
+        bus = can.interface.Bus(interface="slcan", channel="COM3", bitrate=500000)  
         # virtual bus
-        bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
+        # bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
 
         print("Press arrow keys to call functions. Press ESC to exit.")
 
