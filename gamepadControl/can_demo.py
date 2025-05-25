@@ -64,10 +64,12 @@ mustStoppedBuffer = [-1, -1, -1, -1, -1, -1]
 goHome = False
 # counter the number of motors that has gone home.
 goHomeCounter = 0
+# go home step
+goHomeStep = 2
 # status of each motor. Busy indicate motor is working. Rotating only valid for mode F6 (SpeedMode), indicate motor is rolling towards a direction
 motorBusy = { i : {"busy": False, "rotating": False, "timeWaitedAck": 0} for i in range(1, 7)}
 # speed configration for each motor. the maximum speed should not greater than 1000.
-speedConfig = [80, 150, 100, 80, 150, 150]
+speedConfig = [40, 150, 100, 80, 150, 150]
 # accelaration config for each motor. faster the accelaration, the faster motor reaching its specified speed above. max acceleration is 254
 accelerationConfig = [60, 60, 60, 60, 60, 60]
 # a queue to hold the command that will be sent to Canable.
@@ -97,7 +99,7 @@ else:
     interface = "eth0"
 _logger = logging.getLogger(__name__)
 # IPAddr = ni.ifaddresses(interface)[ni.AF_INET][0]['addr']
-IPAddr = "localhost"
+IPAddr = "192.168.28.137"
 
 #initialize Joystick
 pygame.init()
@@ -205,7 +207,7 @@ def initializeMotor(bus: can.interface.Bus, currentID: int, newID: int) -> None:
             canSendMessage(bus, [prepareCanMessage(currentID, messages[i])])
 
 def processReceivedMessage(buffReader: can.BufferedReader) -> None:
-    global axisEncodedValue, goHomeCounter, goHome, axisChangedCommon, axisChangedOpcUA
+    global axisEncodedValue, goHomeCounter, goHome, axisChangedCommon, axisChangedOpcUA, goHomeStep
     while buffReader.buffer.qsize() > 0:
         allowPrint = True
         receivedMsg = buffReader.get_message()
@@ -239,7 +241,7 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
                         if goHome == True:
                             if goHomeCounter >= 1:
                                 goHomeCounter -= 1
-                                if goHomeCounter <= 0:
+                                if goHomeCounter <= 0 and goHomeStep <= 0:
                                     goHome = False
                         print("Run axis completed")
                     elif value == 3:
@@ -255,6 +257,12 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
                         axisChangedOpcUA = True
                 if allowPrint:
                     print(f'Received: arbitration_id=0x{receivedMsg.arbitration_id:X}: {receivedCommand:X} {value}')
+                    # received_data_bytes = ", ".join(
+                    # [f"0x{byte:02X}" for byte in receivedMsg.data]
+                    # )
+                    # print(
+                    #     f"Received: arbitration_id=0x{receivedMsg.arbitration_id:X}, data=[{received_data_bytes}], is_extended_id=False"
+                    # )
                     pass
             else:
                 received_data_bytes = ", ".join(
@@ -319,7 +327,9 @@ def cylicCheck():
                 motor["rotating"] = False
                 print(f"motorID:{id} ack timeout" )
     if axisChangedCommon:
+        axisProceesedValue = getProcessedAxisValue(axisEncodedValue)
         print(f"Status updated: {axisEncodedValue}")
+        print(f"Status updated processed: {axisProceesedValue}")
         axisChangedCommon = False
 
 def cyclicSafety():
@@ -338,8 +348,8 @@ def cyclicSafety():
     ]
     axisEncodedArr = getProcessedAxisValue(axisEncodedValue)
     for i, (min_limit, max_limit) in enumerate(motor_limits):
-        # only Y motor has a very weird direction, why?
-        if i == Y_MOTOR_ID:
+        # Y motor and C motor has a very weird direction, why?
+        if i == Y_MOTOR_ID or i == B_MOTOR_ID or i == C_MOTOR_ID:
             if axisEncodedArr[i] < min_limit:
                 if mustStoppedBuffer[i] == -1:
                     mustStoppedBuffer[i] = DIRECTION_INC
@@ -367,41 +377,67 @@ def cyclicSafety():
                 mustStoppedBuffer[i] = -1
         
 def goHomeService():
-    global goHomeCounter, goHome
+    global goHomeCounter, goHome, goHomeStep, axisEncodedValue
     # print(f'GohomeCounter = {goHomeCounter}')
     if goHome == True and goHomeCounter == 0:
         # 7 because we have 5 normal motors + 2 motors for 6th joint
         # TODO: change the number of counter here if we have less joints.
         processedAxisArr = getProcessedAxisValue(axisEncodedValue)
-        
+        print(f"Status updated: {axisEncodedValue}")
+        print(f"Status updated processed: {processedAxisArr}")
         print("going home...")
-        #rotate C axis
-        commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, 
-                        preparePositionModeAxisCommand(relative=False, 
-                                                       speed = speedConfig[C_MOTOR_ID], 
-                                                       acceleration = accelerationConfig[C_MOTOR_ID], 
-                                                       axis = int(axisEncodedValue[C_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
-        commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, 
-                        preparePositionModeAxisCommand(relative=False, 
-                                                       speed = speedConfig[C_MOTOR_ID], 
-                                                       acceleration = accelerationConfig[C_MOTOR_ID], 
-                                                       axis = int(axisEncodedValue[B_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
-        time.sleep(5)
-        #rotate B axis
-        goHomeCounter = NUM_OF_MOTOR
-        commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, 
-                        preparePositionModeAxisCommand(relative=False, 
-                                                       speed = speedConfig[B_MOTOR_ID], 
-                                                       acceleration = accelerationConfig[B_MOTOR_ID], 
-                                                       axis = 0)))
-        commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, 
-                        preparePositionModeAxisCommand(relative=False, 
-                                                       speed = speedConfig[B_MOTOR_ID], 
-                                                       acceleration = accelerationConfig[B_MOTOR_ID], 
-                                                       axis = 0)))
-        # revert the rest 4 motors back to 0
-        for i in range(0, 4):
-            commandQueue.put(prepareCanMessage(i+1, preparePositionModeAxisCommand(relative=False, speed = speedConfig[i], acceleration = accelerationConfig[i], axis = 0)))
+        if goHomeStep == 2:
+            print("go home step 2")
+            print(f'C motor: {axisEncodedValue[C_MOTOR_ID]} - {processedAxisArr[C_MOTOR_ID]} = {axisEncodedValue[C_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]}')
+            print(f'B motor: {axisEncodedValue[B_MOTOR_ID]} - {processedAxisArr[C_MOTOR_ID]} = {axisEncodedValue[B_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]}')
+            goHomeCounter = 2
+            # With the axis mode, the motor run weird af.
+            # motor 1 (X): request x, go to x
+            # motor 2 (Y): request x, go to -x
+            # motor 3 (Z): request x, go to x
+            # motor 4 (A): request x, go to x
+            # motor 5 (B): request x, go to -x
+            # motor 6 (C): request x, go to -x
+            #rotate C axis
+            commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, 
+                            preparePositionModeAxisCommand(relative=False, 
+                                                        speed = speedConfig[C_MOTOR_ID], 
+                                                        acceleration = accelerationConfig[C_MOTOR_ID], 
+                                                        axis = -int(axisEncodedValue[C_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
+            commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, 
+                            preparePositionModeAxisCommand(relative=False, 
+                                                        speed = speedConfig[C_MOTOR_ID], 
+                                                        acceleration = accelerationConfig[C_MOTOR_ID], 
+                                                        axis = -int(axisEncodedValue[B_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
+            # commandQueue.put(prepareCanMessage(Y_MOTOR_ID+1, 
+            #                 preparePositionModeAxisCommand(relative=False, 
+            #                                             speed = speedConfig[C_MOTOR_ID], 
+            #                                             acceleration = accelerationConfig[C_MOTOR_ID], 
+            #                                             axis = int(-10000))))
+            # commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, 
+            #                 preparePositionModeAxisCommand(relative=False, 
+            #                                             speed = speedConfig[C_MOTOR_ID], 
+            #                                             acceleration = accelerationConfig[C_MOTOR_ID], 
+            #                                             axis = int(-10000))))
+            goHomeStep = 1
+        elif goHomeStep == 1:
+            print("go home step 1")
+            #rotate B axis
+            goHomeCounter = NUM_OF_MOTOR
+            commandQueue.put(prepareCanMessage(C_MOTOR_ID+1, 
+                            preparePositionModeAxisCommand(relative=False, 
+                                                        speed = speedConfig[B_MOTOR_ID], 
+                                                        acceleration = accelerationConfig[B_MOTOR_ID], 
+                                                        axis = 0)))
+            commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, 
+                            preparePositionModeAxisCommand(relative=False, 
+                                                        speed = speedConfig[B_MOTOR_ID], 
+                                                        acceleration = accelerationConfig[B_MOTOR_ID], 
+                                                        axis = 0)))
+            # revert the rest 4 motors back to 0
+            for i in range(0, 4):
+                commandQueue.put(prepareCanMessage(i+1, preparePositionModeAxisCommand(relative=False, speed = speedConfig[i], acceleration = accelerationConfig[i], axis = 0)))
+            goHomeStep = 0
 
 # ------------------------------------------- /CAN section -------------------------------------------------------
 
@@ -531,9 +567,10 @@ def autoMotor(parent, motor_name: str, direction: int):
     
 @uamethod
 def goHomeMethod(parent):
-    global goHome
+    global goHome, goHomeStep
     if not goHome:
         goHome = True
+        goHomeStep = 2
         return "OK"
     return "NOTOK"
 
@@ -720,7 +757,7 @@ async def main() -> None:
 
     # -------------------------------------------/OPCUA MAIN section ------------------------------------------------------- 
     async def processGamePad():
-        global goHome, goHomeCounter
+        global goHome, goHomeCounter, goHomeStep
         pygame.event.pump()
         for event in pygame.event.get():
             if event.type == pygame.JOYBUTTONDOWN:
@@ -732,9 +769,10 @@ async def main() -> None:
 
         if specialKey[0] == True and goHome == False:
             goHome = True
+            goHomeStep = 2
         elif goHome == True:
             # do nothing, as we're going home
-            await asyncio.sleep(3)
+            # await asyncio.sleep(3)
             pass
         else:
             for i in range(len(buffer)):
@@ -768,17 +806,17 @@ async def main() -> None:
 
         delay_100ms = 0
 
-        # initializeMotor(bus, currentID=0x01, newID=0x01)
-        # initializeMotor(bus, currentID=0x02, newID=0x02)
-        # initializeMotor(bus, currentID=0x03, newID=0x03)
-        # initializeMotor(bus, currentID=0x04, newID=0x04)
-        # initializeMotor(bus, currentID=0x05, newID=0x06)
-        # initializeMotor(bus, currentID=0x05, newID=0x06)
+        # initializeMotor(bus, currentID=0x01, newID=0x01) # correct axis
+        # initializeMotor(bus, currentID=0x02, newID=0x02) # reverse axis ???
+        # initializeMotor(bus, currentID=0x03, newID=0x03) # correct axis
+        # initializeMotor(bus, currentID=0x04, newID=0x04) # correct axis
+        # initializeMotor(bus, currentID=0x05, newID=0x05) # reverse axis ???
+        # initializeMotor(bus, currentID=0x06, newID=0x06) # reverse axis ???
 
         while (True):
             await processGamePad()
             # a bunch of function that read the status of motors:
-            if delay_100ms < 1000:
+            if delay_100ms < 10:
                 delay_100ms += 1
                 # print(delay_100ms, end=",")
             else:
