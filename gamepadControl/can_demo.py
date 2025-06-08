@@ -23,13 +23,16 @@ isStoppedBuffer = [False, False, False, False, False, False]
 
 isStopped = False
 motorBusy = { i : {"busy": False, "rotating": False, "timeWaitedAck": 0} for i in range(1, 7)}
-speedConfig = [40, 100, 100, 1500, 20, 20]
+speedConfig = [40, 100, 100, 200, 20, 20]
+accelerationConfig = [60, 60, 60, 60, 60, 60]
 commandQueue = Queue(maxsize=10)
 
 def cyclicRead():
     if (not commandQueue.full()):
         commandQueue.put(prepareCanMessage(0x01, prepareReadEncoderValue()))
         commandQueue.put(prepareCanMessage(0x02, prepareReadEncoderValue()))
+        commandQueue.put(prepareCanMessage(0x03, prepareReadEncoderValue()))
+        commandQueue.put(prepareCanMessage(0x04, prepareReadEncoderValue()))
 
 def prepareCanMessage(arbitrationId: int, data: list[int]) -> can.Message:
     """
@@ -204,11 +207,11 @@ def main() -> None:
         for i in range(len(buffer)):
             if buffer[i] == -1:
                 if (not commandQueue.full()):
-                    commandQueue.put(prepareCanMessage(i+1, prepareSpeedmodeCommand(run = True, direction = 0, speed = speedConfig[i], acceleration = 60)))
+                    commandQueue.put(prepareCanMessage(i+1, prepareSpeedmodeCommand(run = True, direction = 0, speed = speedConfig[i], acceleration = accelerationConfig[i])))
                     isStoppedBuffer[i] = False
             elif buffer[i] == 1:
                 if (not commandQueue.full()):
-                    commandQueue.put(prepareCanMessage(i+1, prepareSpeedmodeCommand(run = True, direction = 1, speed = speedConfig[i], acceleration = 60)))
+                    commandQueue.put(prepareCanMessage(i+1, prepareSpeedmodeCommand(run = True, direction = 1, speed = speedConfig[i], acceleration = accelerationConfig[i])))
                     isStoppedBuffer[i] = False
             elif buffer[i] == 0:
                 if (isStoppedBuffer[i] == False and not commandQueue.full()):
@@ -219,11 +222,11 @@ def main() -> None:
 
 
         # a bunch of function that read the status of motors:
-        # if delay_100ms < 100:
-        #     delay_100ms += 1
-        # else:
-        #     cyclicRead()
-        #     delay_100ms = 0
+        if delay_100ms < 100:
+            delay_100ms += 1
+        else:
+            cyclicRead()
+            delay_100ms = 0
 
         
         processedMessage = processSendMessage(commandQueue, motorBusy)
