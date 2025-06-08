@@ -37,3 +37,4 @@ install
 log
 
 .catkin_workspace
+/gamepadControl/__pycache__

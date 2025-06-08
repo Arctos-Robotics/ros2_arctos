@@ -42,7 +42,7 @@ def prepareSpeedmodeCommand(run: bool, direction:int, speed: int, acceleration: 
     Prepare the data to spin the motor freely in direction, with speed and acceleration:\n
     run: True to run, False to stop\n
     Run the motor (True)
-        direction: True for clockwise, False for counterclockwise\n
+        direction: True for clockwise (+), False for counterclockwise (-)\n
         speed: The speed of the motor (0-3000) (4 low bit of byte 2 and full byte 3)\n
         acceleration: Acceleration of the motor (0-255) (1 byte [4])\n
     Stop the motor (False)
@@ -106,21 +106,24 @@ def prepareInitializeMotor(currentID: int, newID: int) -> list[int]:
     Conduct a list of steps to initialize the motor:\n
     """
 
-    # 2. Set working mode (SR_vFOC)
-    setWorkingMode = [0x82, 5]
-    # 3. Set Protection function (on)
-    setProtection = [0x88, 1]
-    # 4. Set subdivision interpolation to enable (255)
-    setMplyer = [0x89, 1]
-    # 5. Set home command
-    # 90 [homeTrigger (low)] [homeDirection (CW)] [homeSpeed 00 60 (dec)] [Endlimit (enabled)]
-    setHomeCommand = [90, 0, 0, 0, 60, 1]
-    # 5. enable limit port mapping (only for 42D motor, which has CanID > 2)
-    setLimitPortRemap = [0x9E, 1]
-    # 99. Set the new ID
-    setID = prepareSetCanID(newID)
-    if (newID > 2):
-        return [setWorkingMode, setProtection, setMplyer, setHomeCommand, setID]
-    else:
-        return [setWorkingMode, setProtection, setMplyer, setHomeCommand, setLimitPortRemap,setID]
+    # # 2. Set working mode (SR_vFOC)
+    # setWorkingMode = [0x82, 5]
+    # # 3. Set Protection function (on)
+    # setProtection = [0x88, 1]
+    # # 4. Set subdivision interpolation to enable (255)
+    # setMplyer = [0x89, 1]
+    # # 5. Set home command
+    # # 90 [homeTrigger (low)] [homeDirection (CW)] [homeSpeed 00 60 (dec)] [Endlimit (enabled)]
+    # setHomeCommand = [0x90, 0, 0, 0, 60, 1]
+    # # 5. enable limit port mapping (only for 42D motor, which has CanID > 2)
+    # setLimitPortRemap = [0x9E, 1]
+    # # 99. Set the new ID
+    # setID = prepareSetCanID(newID)
+    # if (newID > 2):
+    #     return [setWorkingMode, setProtection, setMplyer, setHomeCommand, setID]
+    # else:
+    #     return [setWorkingMode, setProtection, setMplyer, setHomeCommand, setLimitPortRemap,setID]
+    setDirection = [0x86, 0x00]
+    return [setDirection]
+
 
