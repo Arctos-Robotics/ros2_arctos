@@ -62,6 +62,7 @@ def prepareSpeedmodeCommand(run: bool, direction:int, speed: int, acceleration: 
     
 def prepareReadEncoderValue() -> list[int]:
     """
+    0x31 = 49
     Prepare the data to read the encoder value:\n
     Response:\n
     31 [value], with [value] (6 bytes), signed int.\n
@@ -70,6 +71,7 @@ def prepareReadEncoderValue() -> list[int]:
 
 def prepareReadMotorSpeed() -> list[int]:
     """
+    0x32 = 50
     Prepare the data to read the motor speed:\n
     Response:\n
     32 [value], with [value] (2 bytes), signed int.\n

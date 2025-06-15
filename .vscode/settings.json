@@ -124,5 +124,6 @@
         "xtr1common": "cpp",
         "xtree": "cpp",
         "xutility": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "E:/Github/Arctos_robot/ros2_arctos_HCMUT/arctos_bringup"
 }
