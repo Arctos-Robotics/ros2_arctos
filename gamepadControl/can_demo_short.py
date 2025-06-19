@@ -7,65 +7,20 @@ from queue import Queue
 import pygame
 from mks_api import *
 from game_pad import *
-import asyncua
-from asyncua import ua, uamethod, Server
+from utils import *
 import asyncio
 import traceback
 import netifaces as ni
 import logging
-import ast
 from pathlib import Path
+import ikpy.chain
+import numpy as np
+import ikpy.utils.plot as plot_utils
 
-# --------------------------------------------------------------------CONSTANTS--------------------------------------------------------------------
-DURATION = 0.01
 
-NUM_OF_MOTOR = 4
-
-X_MOTOR_ID = 0
-Y_MOTOR_ID = 1
-Z_MOTOR_ID = 2
-A_MOTOR_ID = 3
-B_MOTOR_ID = 4
-C_MOTOR_ID = 5
-
-MIN_XAXISMOTOR = -70000
-MAX_XAXISMOTOR = 70000
-
-MIN_YAXISMOTOR = -724748
-MAX_YAXISMOTOR = 301154
-
-MIN_ZAXISMOTOR = -416906
-MAX_ZAXISMOTOR = 196355
-
-MIN_AAXISMOTOR = -75000
-MAX_AAXISMOTOR = 75000
-
-MIN_BAXISMOTOR = -111000
-MAX_BAXISMOTOR = 111000
-
-MIN_CAXISMOTOR = -220000
-MAX_CAXISMOTOR = 220000
-
-# invert array (True if the control direction is "somehow" inverted, False if not)
-    # motor 1 (X): request x, go to x
-    # motor 2 (Y): request x, go to -x
-    # motor 3 (Z): request x, go to x
-    # motor 4 (A): request x, go to x
-    # motor 5 (B): request x, go to -x
-    # motor 6 (C): request x, go to -x
-AXIS_INVERTED = [False, True, False, False, True, True]
-
-DIRECTION_INC = 1
-DIRECTION_DEC = 0
-
-DON_T_CARE = 0
-ZERO = 0
-#TODO: replace direction 1 and 0 with this for clear code.
-
-# -------------------------------------------------------------------- COMMON GLOBAL VARIABLES--------------------------------------------------------------------
 
 # the exact encoded value read from encoder
-axisEncodedValue = [0, 0, 0, 0, 0, 0]
+rawAxisArr = [0, 0, 0, 0, 0, 0]
 # specify the direction that motor at index i must not rotate further.
 # direction can either be 0 (DEC) or 1 (INC). -1 indicate the motor is in the min and max range.
 mustStoppedBuffer = [-1, -1, -1, -1, -1, -1]
@@ -118,17 +73,21 @@ pygame.joystick.init()
 # joystick.init()
 # print(f"Name of joystick: {joystick.get_name()}")
 
+# invert kinematic using ikpy (such wow)
+myChain = ikpy.chain.Chain.from_urdf_file("arctos.urdf")
+
 
 # -------------------------------------------CAN section -------------------------------------------------------
 
 def cyclicRead():
+    global commandQueue
     if (not commandQueue.full()):
-        commandQueue.put(prepareCanMessage(0x01, prepareReadEncoderValue()))
-        commandQueue.put(prepareCanMessage(0x02, prepareReadEncoderValue()))
-        commandQueue.put(prepareCanMessage(0x03, prepareReadEncoderValue()))
-        commandQueue.put(prepareCanMessage(0x04, prepareReadEncoderValue()))
-        commandQueue.put(prepareCanMessage(0x05, prepareReadEncoderValue()))
-        commandQueue.put(prepareCanMessage(0x06, prepareReadEncoderValue()))
+        commandQueue.put(prepareCanMessage(X_MOTOR_ID + 1, prepareReadEncoderValue()))
+        commandQueue.put(prepareCanMessage(Y_MOTOR_ID + 1, prepareReadEncoderValue()))
+        commandQueue.put(prepareCanMessage(Z_MOTOR_ID + 1, prepareReadEncoderValue()))
+        commandQueue.put(prepareCanMessage(A_MOTOR_ID + 1, prepareReadEncoderValue()))
+        commandQueue.put(prepareCanMessage(B_MOTOR_ID + 1, prepareReadEncoderValue()))
+        commandQueue.put(prepareCanMessage(C_MOTOR_ID + 1, prepareReadEncoderValue()))
 
 def prepareCanMessage(arbitrationId: int, data: list[int]) -> can.Message:
     """
@@ -217,7 +176,7 @@ def initializeMotor(bus: can.interface.Bus, currentID: int, newID: int) -> None:
             canSendMessage(bus, [prepareCanMessage(currentID, messages[i])])
 
 def processReceivedMessage(buffReader: can.BufferedReader) -> None:
-    global axisEncodedValue, motorRunCounter, goHome, axisChangedCommon, goHomeStep, positionMove
+    global rawAxisArr, motorRunCounter, goHome, axisChangedCommon, goHomeStep, positionMove
     while buffReader.buffer.qsize() > 0:
         allowPrint = True
         receivedMsg = buffReader.get_message()
@@ -262,8 +221,8 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
                 # read encoder command
                 elif receivedCommand == 0x31:
                     allowPrint = False
-                    if value != axisEncodedValue[receivedMsg.arbitration_id-1]:
-                        axisEncodedValue[receivedMsg.arbitration_id-1] = value
+                    if value != rawAxisArr[receivedMsg.arbitration_id-1]:
+                        rawAxisArr[receivedMsg.arbitration_id-1] = value
                         axisChangedCommon = True
                 if allowPrint:
                     print(f'Received: arbitration_id=0x{receivedMsg.arbitration_id:X}: {receivedCommand:X} {value}')
@@ -312,17 +271,6 @@ def rotateMotor(motorIndex: int, direction: bool, stop: bool):
         else:
             print(f"Controller: Motor {motorIndex} go out of range! or queue full")
 
-def getProcessedAxisValue(axisEncodedArr: list):
-    processedAxis = [0, 0, 0, 0, 0, 0]
-    for i in range(len(processedAxis)):
-        if i == B_MOTOR_ID:
-            processedAxis[i] = (axisEncodedArr[B_MOTOR_ID] - axisEncodedArr[C_MOTOR_ID])/2
-        elif i == C_MOTOR_ID:
-            processedAxis[i] = (processedAxis[B_MOTOR_ID] + axisEncodedArr[C_MOTOR_ID])
-        else:
-            processedAxis[i] = axisEncodedArr[i]
-    return processedAxis
-
 def cylicCheck():
     """
     Check the ack timeout, if the motor take too long to answer, release the lock "busy" and "rotating" to allow 
@@ -337,9 +285,11 @@ def cylicCheck():
                 motor["rotating"] = False
                 print(f"motorID:{id} ack timeout" )
     if axisChangedCommon:
-        axisProceesedValue = getProcessedAxisValue(axisEncodedValue)
-        print(f"Status updated: {axisEncodedValue}")
+        axisProceesedValue = rawToProcessedAxisValue(rawAxisArr)
+        coordinate = getCoordinate(rawAxisArr)
+        print(f"Status updated: {rawAxisArr}")
         print(f"Status updated processed: {axisProceesedValue}")
+        print(f"Status updated coordinate: {coordinate}")
         axisChangedCommon = False
 
 def cyclicSafety():
@@ -356,7 +306,7 @@ def cyclicSafety():
         (MIN_BAXISMOTOR, MAX_BAXISMOTOR, AXIS_INVERTED[B_MOTOR_ID]),
         (MIN_CAXISMOTOR, MAX_CAXISMOTOR, AXIS_INVERTED[C_MOTOR_ID]),
     ]
-    axisEncodedArr = getProcessedAxisValue(axisEncodedValue)
+    axisEncodedArr = rawToProcessedAxisValue(rawAxisArr)
     for i, (min_limit, max_limit, inverted) in enumerate(motor_limits):
         # Y motor and C and B motor has a very weird direction, why?
         if inverted:
@@ -383,19 +333,19 @@ def cyclicSafety():
                 mustStoppedBuffer[i] = -1
         
 def goHomeService():
-    global motorRunCounter, goHome, goHomeStep, axisEncodedValue
+    global motorRunCounter, goHome, goHomeStep, rawAxisArr
     # print(f'motorRunCounter = {motorRunCounter}')
     if goHome == True and motorRunCounter == 0:
         # 7 because we have 5 normal motors + 2 motors for 6th joint
         # TODO: change the number of counter here if we have less joints.
-        processedAxisArr = getProcessedAxisValue(axisEncodedValue)
-        print(f"Status updated: {axisEncodedValue}")
+        processedAxisArr = rawToProcessedAxisValue(rawAxisArr)
+        print(f"Status updated: {rawAxisArr}")
         print(f"Status updated processed: {processedAxisArr}")
         print("going home...")
         if goHomeStep == 2:
             print("go home step 2")
-            print(f'C motor: {axisEncodedValue[C_MOTOR_ID]} - {processedAxisArr[C_MOTOR_ID]} = {axisEncodedValue[C_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]}')
-            print(f'B motor: {axisEncodedValue[B_MOTOR_ID]} - {processedAxisArr[C_MOTOR_ID]} = {axisEncodedValue[B_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]}')
+            print(f'C motor: {rawAxisArr[C_MOTOR_ID]} - {processedAxisArr[C_MOTOR_ID]} = {rawAxisArr[C_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]}')
+            print(f'B motor: {rawAxisArr[B_MOTOR_ID]} - {processedAxisArr[C_MOTOR_ID]} = {rawAxisArr[B_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]}')
             motorRunCounter = 2
             # With the axis mode, the motor run weird af.
             # motor 1 (X): request x, go to x
@@ -409,22 +359,12 @@ def goHomeService():
                             preparePositionModeAxisCommand(relative=False, 
                                                         speed = speedConfig[C_MOTOR_ID], 
                                                         acceleration = accelerationConfig[C_MOTOR_ID], 
-                                                        axis = -1 * int(axisEncodedValue[C_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
+                                                        axis = -1 * int(rawAxisArr[C_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
             commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, 
                             preparePositionModeAxisCommand(relative=False, 
                                                         speed = speedConfig[C_MOTOR_ID], 
                                                         acceleration = accelerationConfig[C_MOTOR_ID], 
-                                                        axis = -1 * int(axisEncodedValue[B_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
-            # commandQueue.put(prepareCanMessage(Y_MOTOR_ID+1, 
-            #                 preparePositionModeAxisCommand(relative=False, 
-            #                                             speed = speedConfig[C_MOTOR_ID], 
-            #                                             acceleration = accelerationConfig[C_MOTOR_ID], 
-            #                                             axis = int(-10000))))
-            # commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, 
-            #                 preparePositionModeAxisCommand(relative=False, 
-            #                                             speed = speedConfig[C_MOTOR_ID], 
-            #                                             acceleration = accelerationConfig[C_MOTOR_ID], 
-            #                                             axis = int(-10000))))
+                                                        axis = -1 * int(rawAxisArr[B_MOTOR_ID]-processedAxisArr[C_MOTOR_ID]))))
             goHomeStep = 1
         elif goHomeStep == 1:
             print("go home step 1")
@@ -444,6 +384,47 @@ def goHomeService():
             for i in range(0, 4):
                 commandQueue.put(prepareCanMessage(i+1, preparePositionModeAxisCommand(relative=False, speed = speedConfig[i], acceleration = accelerationConfig[i], axis = 0)))
             goHomeStep = 0
+
+
+def moveToCoordinate(x, y, z):
+    """
+    1. convert angle to processed Axis (for B and C axis), limit it if processed Axis go out of range
+    2. convert processed Axis to raw Axis (for B and C motor, which need control from Motor 5 and Motor 6)
+    3. add the raw Axis to the positionQueue for robot to move.
+    """
+    global myChain
+    # 1. 
+    targetPosition = [x,y,z]
+    jointsAngles = myChain.inverse_kinematics(targetPosition)
+    print("The angles of each joints are : ", jointsAngles)
+    # 2.
+    processedAxisArr = angleToProcessedAxis([jointsAngles[1], jointsAngles[2], jointsAngles[3], jointsAngles[4], jointsAngles[5], jointsAngles[6]])
+    print(f"Processed Axis for Robot to reach {targetPosition} is {processedAxisArr}")
+    # 3.
+    rawAxis = processeedAxisValueToRaw(processedAxisArr)
+    print(f"Raw Axis for Robot to reach {targetPosition} is {rawAxis}")
+
+    return rawAxis
+
+def getCoordinate(rawAxisArr):
+    """
+    rawAxisArr: array [6] of raw Axis Value
+    1. get the processedAxisValue
+    2. convert them to angle
+    3. Compute forward kinematics for coordinate
+    """
+    global myChain
+    # 1.
+    processedAxisArr = rawToProcessedAxisValue(rawAxisArr)
+    print(f"Processed Axis of Robot is {processedAxisArr}")
+    # 2.
+    jointAngles = processedAxisToAngle(processedAxisArr)
+    print(f"Angle of the Robot is {jointAngles}")
+    # 3.
+    realFrame = myChain.forward_kinematics([0, *jointAngles ,0, 0])
+    print("Computed position vector : %s" % (realFrame[:3, 3]))
+
+    return realFrame[:3, 3]
 
 def setJointsValue(): 
     # With the axis mode, the motor run weird af.
@@ -515,7 +496,7 @@ async def main() -> None:
                     raise ValueError("Wtf?")
             
     async def updateRobot():
-        global axisEncodedValue, positionQueue
+        global rawAxisArr, positionQueue
         # real bus
         bus = can.interface.Bus(interface="slcan", channel="COM3", bitrate=500000)  
         # virtual bus
@@ -535,15 +516,14 @@ async def main() -> None:
         # initializeMotor(bus, currentID=0x05, newID=0x05) # reverse axis ???
         # initializeMotor(bus, currentID=0x06, newID=0x06) # reverse axis ???
 
-        # positionQueue.put([0, 0, -300000, None, None, None])
-        positionQueue.put([20000, None, None, None, None, None])
-        positionQueue.put([None, -100000, 20000, None, None, None])
-        positionQueue.put([None, 0, 0, None, None, None])
-        positionQueue.put([-20000, None, None, None, None, None])
-        positionQueue.put([None, -100000, 20000, None, None, None])
-        positionQueue.put([None, 0, 0, None, None, None])
         # positionQueue.put([20000, None, None, None, None, None])
+        # positionQueue.put([None, -100000, 20000, None, None, None])
+        # positionQueue.put([None, 0, 0, None, None, None])
         # positionQueue.put([-20000, None, None, None, None, None])
+        # positionQueue.put([None, -100000, 20000, None, None, None])
+        # positionQueue.put([None, 0, 0, None, None, None])
+        # positionQueue.put([0, None, 0, None, None, None])
+
         positionQueue.put([0, None, 0, None, None, None])
 
         while (True):

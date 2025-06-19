@@ -19,7 +19,7 @@ from pathlib import Path
 # --------------------------------------------------------------------CONSTANTS--------------------------------------------------------------------
 DURATION = 0.01
 
-NUM_OF_MOTOR = 4
+NUM_OF_MOTOR = 6
 
 X_MOTOR_ID = 0
 Y_MOTOR_ID = 1
@@ -317,7 +317,7 @@ def rotateMotor(motorIndex: int, direction: bool, stop: bool):
         else:
             print(f"Controller: Motor {motorIndex} go out of range! or queue full")
 
-def getProcessedAxisValue(axisEncodedArr: list):
+def rawToProcessedAxisValue(axisEncodedArr: list):
     processedAxis = [0, 0, 0, 0, 0, 0]
     for i in range(len(processedAxis)):
         if i == B_MOTOR_ID:
@@ -342,7 +342,7 @@ def cylicCheck():
                 motor["rotating"] = False
                 print(f"motorID:{id} ack timeout" )
     if axisChangedCommon:
-        axisProceesedValue = getProcessedAxisValue(axisEncodedValue)
+        axisProceesedValue = rawToProcessedAxisValue(axisEncodedValue)
         print(f"Status updated: {axisEncodedValue}")
         print(f"Status updated processed: {axisProceesedValue}")
         axisChangedCommon = False
@@ -361,7 +361,7 @@ def cyclicSafety():
         (MIN_BAXISMOTOR, MAX_BAXISMOTOR, AXIS_INVERTED[B_MOTOR_ID]),
         (MIN_CAXISMOTOR, MAX_CAXISMOTOR, AXIS_INVERTED[C_MOTOR_ID]),
     ]
-    axisEncodedArr = getProcessedAxisValue(axisEncodedValue)
+    axisEncodedArr = rawToProcessedAxisValue(axisEncodedValue)
     for i, (min_limit, max_limit, inverted) in enumerate(motor_limits):
         # Y motor and C and B motor has a very weird direction, why?
         if inverted:
@@ -397,7 +397,7 @@ def goHomeService():
     if goHome == True and motorRunCounter == 0:
         # 7 because we have 5 normal motors + 2 motors for 6th joint
         # TODO: change the number of counter here if we have less joints.
-        processedAxisArr = getProcessedAxisValue(axisEncodedValue)
+        processedAxisArr = rawToProcessedAxisValue(axisEncodedValue)
         print(f"Status updated: {axisEncodedValue}")
         print(f"Status updated processed: {processedAxisArr}")
         print("going home...")
@@ -753,7 +753,7 @@ async def main() -> None:
             if not axisChangedOpcUA:
                 pass
             else:
-                axisEncodedArr = getProcessedAxisValue(axisEncodedValue)
+                axisEncodedArr = rawToProcessedAxisValue(axisEncodedValue)
                 # print(f"Arr = {axisEncodedArr}")
                 xAxisMotor = axisEncodedArr[0]
                 yAxisMotor = axisEncodedArr[1]
