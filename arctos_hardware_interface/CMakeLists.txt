@@ -19,7 +19,7 @@ find_package(pluginlib REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(std_msgs REQUIRED)
 
-# Add library for services
+# =====================================  Add library for services  ===================================== 
 add_library(arctos_services SHARED
   src/arctos_services.cpp
 )
@@ -37,7 +37,7 @@ ament_target_dependencies(arctos_services
   arctos_motor_driver
 )
 
-# Add library for hardware interface
+# ===================================== Add library for hardware interface  ===================================== 
 add_library(arctos_interface SHARED
   src/arctos_interface.cpp
 )

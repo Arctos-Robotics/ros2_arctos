@@ -46,7 +46,7 @@ double CANProtocol::decodeInt48(const std::vector<uint8_t>& data) {
                              static_cast<int64_t>(data[5]);
 
     // Apply two's complement to handle signed 48-bit values
-    if (addition_value & 0x800000000000) {  // Check if the 47th bit (sign bit) is set
+    if (addition_value &  0x800000000000) {  // Check if the 47th bit (sign bit) is set
         addition_value |= 0xFFFF000000000000;  // Sign-extend to 64 bits
     }
 

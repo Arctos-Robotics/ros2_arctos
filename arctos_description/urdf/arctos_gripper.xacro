@@ -4,6 +4,7 @@
   <xacro:include filename="$(find arctos_description)/urdf/common/joint_link.xacro" />
 
   <!-- Arctos Simple Pinch Gripper -->
+  <!-- this definition used the "macro" in urdf/common to quickly define all the attributes-->
   <xacro:arctos_link
     name="Gripper_1"
     origin_xyz="0.0 0.323 -0.5685" origin_rpy="0 0 0"

@@ -27,6 +27,8 @@ ArctosInterface::ArctosInterface()
 
 ArctosInterface::~ArctosInterface() = default;
 
+/* communication between the robot hardware needs to be setup and memory dynamic should be allocated */
+/* HardwareInfo info could be collected from xacro file, under tag hardware/parameters*/
 CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo & info)
 {
   if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS)
@@ -194,6 +196,8 @@ std::vector<hardware_interface::StateInterface> ArctosInterface::export_state_in
   std::vector<hardware_interface::StateInterface> state_interfaces;
 
   // Add joint state interfaces
+  /*The StateInterface objects are read only data handles. 
+  Their constructors require an (interface name, interface type, and a pointer to a double data value)*/
   for (size_t i = 0; i < info_.joints.size(); i++) {
     if (has_position_interface_) {
       state_interfaces.emplace_back(
@@ -227,6 +231,10 @@ std::vector<hardware_interface::CommandInterface> ArctosInterface::export_comman
   return command_interfaces;
 }
 
+/* core method in ros2_control loop
+During the main loop, ros2_control loops over all hardware components and calls the read method.
+-> responsible for updating the data values of the *state_interfaces*, by updating the *class member variable*
+*/
 return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Duration & /*period*/) {
   rclcpp::spin_some(node_);
 
@@ -275,6 +283,10 @@ return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Durat
   return return_type::OK;
 }
 
+/* The *write* method is another core method in the ros2_control loop. 
+It is called after *update* in the realtime loop.
+responsible for updating the data values of the *command_interfaces*
+*/
 return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/) {
   // Resize last command vectors if not already done
   if (last_position_command_.size() != info_.joints.size()) {
@@ -288,7 +300,7 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
       if (has_position_interface_) {
         // Only send if position has changed significantly
         if (std::abs(joint_position_command_[i] - last_position_command_[i]) > position_tolerance_) {
-          motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i]);
+          motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i], 60);
           RCLCPP_INFO(node_->get_logger(),
                       "Sent position command %.3f to joint %s. Last command: %.3f",
                       joint_position_command_[i], info_.joints[i].name.c_str(),
@@ -301,22 +313,22 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
         }
       }
 
-      if (has_velocity_interface_) {
-        // TODO: Ensure this works properly
-        // Only send if velocity has changed significantly
-        if (std::abs(joint_velocities_command_[i] - last_velocity_command_[i]) > velocity_tolerance_) {
-          motor_driver_->setJointVelocity(info_.joints[i].name, joint_velocities_command_[i]);
-          RCLCPP_INFO(node_->get_logger(),
-                      "Sent velocity command %.3f to joint %s. Last command: %.3f",
-                      joint_velocities_command_[i], info_.joints[i].name.c_str(),
-                      last_velocity_command_[i]);
-          last_velocity_command_[i] = joint_velocities_command_[i];
-        } else {
-          RCLCPP_DEBUG(node_->get_logger(),
-                       "Velocity command for joint %s unchanged: %.3f",
-                       info_.joints[i].name.c_str(), joint_velocities_command_[i]);
-        }
-      }
+      // if (has_velocity_interface_) {
+      //   // TODO: Ensure this works properly
+      //   // Only send if velocity has changed significantly
+      //   if (std::abs(joint_velocities_command_[i] - last_velocity_command_[i]) > velocity_tolerance_) {
+      //     motor_driver_->setJointVelocity(info_.joints[i].name, joint_velocities_command_[i]);
+      //     RCLCPP_INFO(node_->get_logger(),
+      //                 "Sent velocity command %.3f to joint %s. Last command: %.3f",
+      //                 joint_velocities_command_[i], info_.joints[i].name.c_str(),
+      //                 last_velocity_command_[i]);
+      //     last_velocity_command_[i] = joint_velocities_command_[i];
+      //   } else {
+      //     RCLCPP_DEBUG(node_->get_logger(),
+      //                  "Velocity command for joint %s unchanged: %.3f",
+      //                  info_.joints[i].name.c_str(), joint_velocities_command_[i]);
+      //   }
+      // }
     } catch (const std::exception& e) {
       RCLCPP_ERROR(node_->get_logger(),
                    "Failed to write command to joint %s: %s",
@@ -355,6 +367,7 @@ void ArctosInterface::initializeMotors() {
       }
 
       // Add joint to motor driver with gear ratio
+      // TODO: lack attributes for some motors?
       motor_driver_->addJoint(joint.name, motor_id, hardware_type, gear_ratio);
 
       // Configure motor parameters
@@ -410,8 +423,8 @@ bool ArctosInterface::setupMotorParameters(
     // Set joint limits using home position and opposite limit
     motor_driver_->setJointLimits(joint_info.name, home_position, opposite_limit, max_velocity, 255.0);
 
-    RCLCPP_INFO(node_->get_logger(), "Set joint limits for joint %s: pos=[%.2f, %.2f], vel=%.2f, acc=%.2f",
-                joint_info.name.c_str(), home_position, opposite_limit, max_velocity, 255.0);
+    RCLCPP_INFO(node_->get_logger(), "Set joint limits for joint %s of motor %d: pos=[%.2f, %.2f], vel=%.2f, acc=%.2f",
+                joint_info.name.c_str(), motor_id, home_position, opposite_limit, max_velocity, 255.0);
     
     // auto pos_min_param = joint_info.parameters.find("position_min");
     // auto pos_max_param = joint_info.parameters.find("position_max");
