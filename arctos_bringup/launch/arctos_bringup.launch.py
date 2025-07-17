@@ -26,6 +26,8 @@ def generate_launch_description():
     rviz_config_file = LaunchConfiguration("rviz_config_file")
 
     # Get URDF via xacro
+    # basically command to convert xacro to urdf using:
+    # xacro arctos.urdf.xacro
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
@@ -42,6 +44,7 @@ def generate_launch_description():
     )
 
     # Nodes
+    # publish the state of robot to TF (transform)
     robot_state_pub_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
@@ -57,8 +60,8 @@ def generate_launch_description():
         arguments=[
             '--ros-args',
             # '--log-level', 'debug',
-            '--log-level', 'arctos_hardware_interface:=debug',
-            '--log-level', 'controller_manager:=debug'
+            '--log-level', 'arctos_hardware_interface:=error',
+            '--log-level', 'controller_manager:=error'
         ],
     )
 

@@ -19,11 +19,11 @@
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 
+using hardware_interface::return_type;
+
 namespace arctos_interface
 {
-
 using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
-using hardware_interface::return_type;
 
 class HARDWARE_INTERFACE_PUBLIC ArctosInterface : public hardware_interface::SystemInterface
 {
@@ -32,6 +32,7 @@ public:
   ~ArctosInterface();
   
   // ROS 2 Control Interface
+  
   CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
   CallbackReturn on_configure(const rclcpp_lifecycle::State & previous_state) override;
   CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
@@ -41,8 +42,8 @@ public:
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
   
-  hardware_interface::return_type read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
-  hardware_interface::return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  return_type read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
 protected:
   // Tracking of last commanded positions and velocities

@@ -1,0 +1,35 @@
+digraph G {
+node [shape=box];
+"world" [label="world"];
+"base_link" [label="base_link"];
+"Link_1_1" [label="Link_1_1"];
+"Link_2_1" [label="Link_2_1"];
+"Link_3_1" [label="Link_3_1"];
+"Link_4_1" [label="Link_4_1"];
+"Link_5_1" [label="Link_5_1"];
+"Link_6_1" [label="Link_6_1"];
+"Gripper_1" [label="Gripper_1"];
+"Left_jaw_1" [label="Left_jaw_1"];
+"Right_jaw_1" [label="Right_jaw_1"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"world" -> "world_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"world_joint" -> "base_link"
+"base_link" -> "X_joint" [label="xyz: 0 0 0.1126 \nrpy: 0 -0 0"]
+"X_joint" -> "Link_1_1"
+"Link_1_1" -> "Y_joint" [label="xyz: 0 -0.020356 0.175 \nrpy: 0 -0 0"]
+"Y_joint" -> "Link_2_1"
+"Link_2_1" -> "Z_joint" [label="xyz: 0 0.001365 0.261035 \nrpy: 0 -0 0"]
+"Z_joint" -> "Link_3_1"
+"Link_3_1" -> "A_joint" [label="xyz: 0 -0.13881 0.0217651 \nrpy: 0 -0 0"]
+"A_joint" -> "Link_4_1"
+"Link_4_1" -> "B_joint" [label="xyz: 0 -0.12543 -0.00184 \nrpy: 0 -0 0"]
+"B_joint" -> "Link_5_1"
+"Link_5_1" -> "C_joint" [label="xyz: 0 -0.0398 0 \nrpy: 0 -0 0"]
+"C_joint" -> "Link_6_1"
+"Link_6_1" -> "Gripper_joint" [label="xyz: 0 -0 0 \nrpy: 0 -0 0"]
+"Gripper_joint" -> "Gripper_1"
+"Gripper_1" -> "Left_jaw_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"Left_jaw_joint" -> "Left_jaw_1"
+"Gripper_1" -> "Right_jaw_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"Right_jaw_joint" -> "Right_jaw_1"
+}

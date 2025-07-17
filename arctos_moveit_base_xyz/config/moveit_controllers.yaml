@@ -7,7 +7,9 @@ moveit_simple_controller_manager:
     - joint_trajectory_controller
 
   joint_trajectory_controller:
+    # The type of action being used (here FollowJointTrajectory).
     type: FollowJointTrajectory
+    # The action namespace for the controller
     action_ns: follow_joint_trajectory
     default: true
     joints:

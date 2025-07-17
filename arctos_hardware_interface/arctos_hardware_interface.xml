@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
+<!--Plugin description file: a required XML file that describes a plugin’s library name, class type, namespace, description, and interface type-->
+<!--https://control.ros.org/humble/doc/ros2_control_demos/example_7/doc/userdoc.html#:~:text=Plugin%20description%20file%20(hardware)-->
 <library path="arctos_interface">
   <class name="arctos_interface/ArctosInterface"
-         type="arctos_interface::ArctosInterface"
-         base_class_type="hardware_interface::SystemInterface">
+    type="arctos_interface::ArctosInterface"
+    base_class_type="hardware_interface::SystemInterface">
     <description>The Arctos hardware interface for ROS 2 Control</description>
   </class>
 </library>

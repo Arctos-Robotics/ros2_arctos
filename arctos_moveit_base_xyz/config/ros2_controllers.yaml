@@ -9,6 +9,7 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
+# controller has to "define" the interfaces that it will claim.
 joint_trajectory_controller:
   ros__parameters:
     joints:
