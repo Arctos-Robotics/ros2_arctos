@@ -37,9 +37,9 @@ goHomeStep = 2
 # status of each motor. Busy indicate motor is working. Rotating only valid for mode F6 (SpeedMode), indicate motor is rolling towards a direction
 motorBusy = { i : {"busy": False, "rotating": False, "timeWaitedAck": 0} for i in range(1, 7)}
 # speed configration for each motor. the maximum speed should not greater than 1000.
-speedConfig = [200, 150, 100, 80, 150, 150]
+speedConfig = [20, 150, 100, 80, 150, 150]
 # accelaration config for each motor. faster the accelaration, the faster motor reaching its specified speed above. max acceleration is 254
-accelerationConfig = [200, 60, 60, 60, 60, 60]
+accelerationConfig = [60, 60, 60, 60, 60, 60]
 # a queue to hold the command that will be sent to Canable.
 commandQueue = Queue(maxsize=20)
 # Axis has changed since the last update
@@ -69,9 +69,9 @@ IPAddr = "localhost"
 pygame.init()
 pygame.joystick.init()
 
-# joystick = pygame.joystick.Joystick(0)
-# joystick.init()
-# print(f"Name of joystick: {joystick.get_name()}")
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+print(f"Name of joystick: {joystick.get_name()}")
 
 # invert kinematic using ikpy (such wow)
 myChain = ikpy.chain.Chain.from_urdf_file("arctos.urdf")
@@ -247,7 +247,10 @@ def rotateMotor(motorIndex: int, direction: bool, stop: bool):
         global mustStoppedBuffer, commandQueue, speedConfig, accelerationConfig, isStoppedBufferController
         if stop:
             if isStoppedBufferController[motorIndex] == False and not commandQueue.full():
-                commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
+                if motorIndex == X_MOTOR_ID:
+                    commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 10)))
+                else:
+                    commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
                 isStoppedBufferController[motorIndex] = True
                 # stop the 5th motor too if this motorIndex is 5 (motor 6)
                 if motorIndex == B_MOTOR_ID and isStoppedBufferController[C_MOTOR_ID] == False:
@@ -393,6 +396,7 @@ def moveToCoordinate(x, y, z):
     3. add the raw Axis to the positionQueue for robot to move.
     """
     global myChain
+    print("======= coordinate -> raw =======")
     # 1. 
     targetPosition = [x,y,z]
     jointsAngles = myChain.inverse_kinematics(targetPosition)
@@ -414,6 +418,7 @@ def getCoordinate(rawAxisArr):
     3. Compute forward kinematics for coordinate
     """
     global myChain
+    print("======= raw -> coordinate =======")
     # 1.
     processedAxisArr = rawToProcessedAxisValue(rawAxisArr)
     print(f"Processed Axis of Robot is {processedAxisArr}")
@@ -498,9 +503,9 @@ async def main() -> None:
     async def updateRobot():
         global rawAxisArr, positionQueue
         # real bus
-        bus = can.interface.Bus(interface="slcan", channel="COM3", bitrate=500000)  
+        # bus = can.interface.Bus(interface="slcan", channel="COM4", bitrate=500000)  
         # virtual bus
-        # bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
+        bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
 
         print("Press arrow keys to call functions. Press ESC to exit.")
 
@@ -524,7 +529,8 @@ async def main() -> None:
         # positionQueue.put([None, 0, 0, None, None, None])
         # positionQueue.put([0, None, 0, None, None, None])
 
-        positionQueue.put([0, None, 0, None, None, None])
+        # joints = moveToCoordinate(    0 ,  -0.53031   , 0.2)
+        # positionQueue.put(joints)
 
         while (True):
             setJointsValue()
