@@ -28,7 +28,7 @@ import threading
 # time.sleep(10)
 # serialObject.write(bytes(str("!Initon#"), encoding='utf-8'))
 # INitialize input values
-DEBUG = False
+DEBUG = True
 
 buffer = [0, 0, 0, 0, 0, 0]
 specialKey = [False, False, False, False]
@@ -99,6 +99,9 @@ def handle_axis_motion(axis, value, buffer):
         elif value >= -0.2 and value <= 0.2: buffer[1] = 0
     elif axis == 2:  # X-axis of the right stick
         printDebugInput(f"Right stick X-axis moved to {value}")
+        
+    elif axis == 3:  # Y-axis of the right stick
+        printDebugInput(f"Right stick Y-axis moved to {value}")
         #left
         if value >= -1.1 and value < -0.9:
             buffer[3] = 1
@@ -106,17 +109,15 @@ def handle_axis_motion(axis, value, buffer):
         elif value > 0.9 and value <=1.1:
             buffer[3] = -1
         elif value >= -0.2 and value <= 0.2: buffer[3] = 0
-    elif axis == 3:  # Y-axis of the right stick
-        printDebugInput(f"Right stick Y-axis moved to {value}")
-        # up
-        if value >= -1.1 and value < -0.9:
-            buffer[2] = 1
-        # down
-        elif value > 0.9 and value <=1.1:
-            buffer[2] = -1
-        elif value >= -0.2 and value <= 0.2: buffer[2] = 0
     elif axis == 4:  # Left trigger (L2)
         printDebugInput(f"Left trigger (L2) value: {value}")
+        # up
+        if value >= -1.1 and value < -0.9:
+            buffer[2] = -1
+        # down
+        elif value > 0.9 and value <=1.1:
+            buffer[2] = 1
+        elif value >= -0.2 and value <= 0.2: buffer[2] = 0
     elif axis == 5:  # Right trigger (R2)
         printDebugInput(f"Right trigger (R2) value: {value}")
     elif axis == 6:  # D-pad X-axis
@@ -169,19 +170,24 @@ def handle_dpad_x(value):
     global debounce
     if value == 1.0:
         printDebugInput("D-pad right pressed")
+        buffer[5] = -1
     elif value == -1.0:
         printDebugInput("D-pad left pressed")
+        buffer[5] = 1
     else:
-        printDebugInput("D-pad X-axis released")
-        debounce = 0
+        printDebugInput(f"D-pad X-axis released for {value}")
+        buffer[5] = 0
 
 def handle_dpad_y(value):
     if value == 1.0:
-        printDebugInput("D-pad down pressed")
-    elif value == -1.0:
         printDebugInput("D-pad up pressed")
+        buffer[4] = 1
+    elif value == -1.0:
+        printDebugInput("D-pad down pressed")
+        buffer[4] = -1
     else:
-        printDebugInput("D-pad Y-axis released")
+        printDebugInput(f"D-pad Y-axis released for {value}")
+        buffer[4] = 0
 
 # if joystick_count > 0:
 #     joystick = pygame.joystick.Joystick(0)

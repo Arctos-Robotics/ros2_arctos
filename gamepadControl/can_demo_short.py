@@ -2,7 +2,7 @@ import os
 import time
 from typing import List
 import can
-import keyboard
+from pynput import keyboard
 from queue import Queue
 import pygame
 from mks_api import *
@@ -37,9 +37,9 @@ goHomeStep = 2
 # status of each motor. Busy indicate motor is working. Rotating only valid for mode F6 (SpeedMode), indicate motor is rolling towards a direction
 motorBusy = { i : {"busy": False, "rotating": False, "timeWaitedAck": 0} for i in range(1, 7)}
 # speed configration for each motor. the maximum speed should not greater than 1000.
-speedConfig = [200, 150, 100, 80, 150, 150]
+speedConfig = [50, 150, 100, 80, 150, 150]
 # accelaration config for each motor. faster the accelaration, the faster motor reaching its specified speed above. max acceleration is 254
-accelerationConfig = [200, 60, 60, 60, 60, 60]
+accelerationConfig = [60, 60, 60, 60, 60, 60]
 # a queue to hold the command that will be sent to Canable.
 commandQueue = Queue(maxsize=20)
 # Axis has changed since the last update
@@ -69,9 +69,9 @@ IPAddr = "localhost"
 pygame.init()
 pygame.joystick.init()
 
-# joystick = pygame.joystick.Joystick(0)
-# joystick.init()
-# print(f"Name of joystick: {joystick.get_name()}")
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+print(f"Name of joystick: {joystick.get_name()}")
 
 # invert kinematic using ikpy (such wow)
 myChain = ikpy.chain.Chain.from_urdf_file("arctos.urdf")
@@ -213,7 +213,7 @@ def processReceivedMessage(buffReader: can.BufferedReader) -> None:
                                 goHome = False
                             if positionMove == True and motorRunCounter <= 0:
                                 positionMove = False
-                        print("Run axis completed")
+                        print(f"Run axis completed {motorRunCounter}")
                     elif value == 3:
                         motorBusy[receivedMsg.arbitration_id]["busy"] = False
                         print("Stopped due to end limit")
@@ -269,7 +269,8 @@ def rotateMotor(motorIndex: int, direction: bool, stop: bool):
                 commandQueue.put(prepareCanMessage(B_MOTOR_ID+1, prepareSpeedmodeCommand(run = True, direction = direction, speed = speedConfig[motorIndex], acceleration = accelerationConfig[motorIndex])))
                 isStoppedBufferController[B_MOTOR_ID] = False
         else:
-            print(f"Controller: Motor {motorIndex} go out of range! or queue full")
+            # print(f"Controller: Motor {motorIndex} go out of range! or queue full")
+            pass
 
 def cylicCheck():
     """
@@ -286,7 +287,7 @@ def cylicCheck():
                 print(f"motorID:{id} ack timeout" )
     if axisChangedCommon:
         axisProceesedValue = rawToProcessedAxisValue(rawAxisArr)
-        coordinate = getCoordinate(rawAxisArr)
+        coordinate = rawAxisToCoordinate(rawAxisArr)
         print(f"Status updated: {rawAxisArr}")
         print(f"Status updated processed: {axisProceesedValue}")
         print(f"Status updated coordinate: {coordinate}")
@@ -386,27 +387,28 @@ def goHomeService():
             goHomeStep = 0
 
 
-def moveToCoordinate(x, y, z):
+def coordinateToRawAxis(x, y, z):
     """
+    0. convert coordinate x, y, z to angle using invert kinematics
     1. convert angle to processed Axis (for B and C axis), limit it if processed Axis go out of range
     2. convert processed Axis to raw Axis (for B and C motor, which need control from Motor 5 and Motor 6)
-    3. add the raw Axis to the positionQueue for robot to move.
     """
     global myChain
-    # 1. 
+    print("======== coordinate -> raw ==================")
+    # 0. 
     targetPosition = [x,y,z]
     jointsAngles = myChain.inverse_kinematics(targetPosition)
     print("The angles of each joints are : ", jointsAngles)
-    # 2.
+    # 1.
     processedAxisArr = angleToProcessedAxis([jointsAngles[1], jointsAngles[2], jointsAngles[3], jointsAngles[4], jointsAngles[5], jointsAngles[6]])
     print(f"Processed Axis for Robot to reach {targetPosition} is {processedAxisArr}")
-    # 3.
+    # 2.
     rawAxis = processeedAxisValueToRaw(processedAxisArr)
     print(f"Raw Axis for Robot to reach {targetPosition} is {rawAxis}")
 
     return rawAxis
 
-def getCoordinate(rawAxisArr):
+def rawAxisToCoordinate(rawAxisArr):
     """
     rawAxisArr: array [6] of raw Axis Value
     1. get the processedAxisValue
@@ -414,6 +416,7 @@ def getCoordinate(rawAxisArr):
     3. Compute forward kinematics for coordinate
     """
     global myChain
+    print("======== raw -> coordinate ==================")
     # 1.
     processedAxisArr = rawToProcessedAxisValue(rawAxisArr)
     print(f"Processed Axis of Robot is {processedAxisArr}")
@@ -443,6 +446,7 @@ def setJointsValue():
         if positionQueue.empty():
             return False
         else:
+            print("Yahallo!")
             axisArray = positionQueue.get()
             for index, jointVal in enumerate(axisArray):
                 if jointVal != None:
@@ -469,6 +473,10 @@ async def main() -> None:
                 handle_button_release(event.button, buffer, specialKey)
             if event.type == pygame.JOYAXISMOTION:
                 handle_axis_motion(event.axis, event.value, buffer)
+            if event.type == pygame.JOYHATMOTION:
+                xPad, yPad = event.value
+                handle_dpad_x(xPad)
+                handle_dpad_y(yPad)
 
         if specialKey[0] == True and goHome == False:
             goHome = True
@@ -498,7 +506,7 @@ async def main() -> None:
     async def updateRobot():
         global rawAxisArr, positionQueue
         # real bus
-        bus = can.interface.Bus(interface="slcan", channel="COM3", bitrate=500000)  
+        bus = can.interface.Bus(interface="slcan", channel="/dev/ttyACM0", bitrate=500000)
         # virtual bus
         # bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
 
@@ -524,32 +532,34 @@ async def main() -> None:
         # positionQueue.put([None, 0, 0, None, None, None])
         # positionQueue.put([0, None, 0, None, None, None])
 
-        positionQueue.put([0, None, 0, None, None, None])
+        rawData = coordinateToRawAxis( 0.18906131, -0.2039358 ,  0.293142)
+        positionQueue.put(rawData)
+        
+        try:
+            while (True):
+                setJointsValue()
+                await processGamePad()
+                # # a bunch of function that read the status of motors:
+                if delay_100ms < 10:
+                    delay_100ms += 1
+                    # print(delay_100ms, end=",")
+                else:
+                    cyclicRead()
+                    delay_100ms = 0
 
-        while (True):
-            setJointsValue()
-            await processGamePad()
-            # a bunch of function that read the status of motors:
-            if delay_100ms < 10:
-                delay_100ms += 1
-                # print(delay_100ms, end=",")
-            else:
-                cyclicRead()
-                delay_100ms = 0
-
-            goHomeService()
-            processedMessage = processSendMessage(commandQueue, motorBusy)
-            canSendMessage(bus, messages=processedMessage)
-            await asyncio.sleep(DURATION)
-            processReceivedMessage(buffReader)
-            cyclicSafety()
-            cylicCheck()
-            if keyboard.is_pressed("esc"):
-                break
-        notifier.stop()
-        bus.shutdown()
-        print("Exit updateRobot")
-    
+                goHomeService()
+                processedMessage = processSendMessage(commandQueue, motorBusy)
+                canSendMessage(bus, messages=processedMessage)
+                await asyncio.sleep(DURATION)
+                processReceivedMessage(buffReader)
+                # cyclicSafety()
+                cylicCheck()
+        except Exception as e:
+            print(f"Error: {e}")
+            notifier.stop()
+            bus.shutdown()
+            print("Exit updateRobot")
+        
     await asyncio.gather(updateRobot())
 
 

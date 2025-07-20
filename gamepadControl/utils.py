@@ -86,15 +86,15 @@ def angleToProcessedAxis(angleArr):
     axisValue = [0, 0, 0, 0, 0, 0]
     motor_limits = {
         X_MOTOR_ID: (MIN_XAXISMOTOR, MAX_XAXISMOTOR, 23093.57097),
-        Y_MOTOR_ID: (MIN_YAXISMOTOR, MAX_YAXISMOTOR, 349013.3758),
-        Z_MOTOR_ID: (MIN_ZAXISMOTOR, MAX_ZAXISMOTOR, 219570.7125),
-        A_MOTOR_ID: (MIN_AAXISMOTOR, MAX_AAXISMOTOR, 23870.1464),
-        B_MOTOR_ID: (MIN_BAXISMOTOR, MAX_BAXISMOTOR, 35327.81668),
+        Y_MOTOR_ID: (MIN_YAXISMOTOR, MAX_YAXISMOTOR, 342469.375),
+        Z_MOTOR_ID: (MIN_ZAXISMOTOR, MAX_ZAXISMOTOR, 246948.334),
+        A_MOTOR_ID: (MIN_AAXISMOTOR, MAX_AAXISMOTOR, 104974.1667),
+        B_MOTOR_ID: (MIN_BAXISMOTOR, MAX_BAXISMOTOR, 71612.90323),
         C_MOTOR_ID: (MIN_CAXISMOTOR, MAX_CAXISMOTOR, 70019.09612),
     }
     for id, limits in motor_limits.items():
         minLimit, maxLimit, factor = limits
-        axisValue[id] = clamp(angleArr[id] * factor, minLimit, maxLimit)
+        axisValue[id] = int(clamp(angleArr[id] * factor, minLimit, maxLimit))
         if axisValue[id] != (angleArr[id] * factor):
             print(f"axis {id} is limited from ({angleArr[id]  * factor}) due to out of limited range ({axisValue[id]})")
 
