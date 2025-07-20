@@ -247,7 +247,10 @@ def rotateMotor(motorIndex: int, direction: bool, stop: bool):
         global mustStoppedBuffer, commandQueue, speedConfig, accelerationConfig, isStoppedBufferController
         if stop:
             if isStoppedBufferController[motorIndex] == False and not commandQueue.full():
-                commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
+                if motorIndex == X_MOTOR_ID:
+                    commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 10)))
+                else:
+                    commandQueue.put(prepareCanMessage(motorIndex+1, prepareSpeedmodeCommand(run = False, direction = DON_T_CARE, speed = ZERO, acceleration = 240)))
                 isStoppedBufferController[motorIndex] = True
                 # stop the 5th motor too if this motorIndex is 5 (motor 6)
                 if motorIndex == B_MOTOR_ID and isStoppedBufferController[C_MOTOR_ID] == False:
@@ -508,7 +511,7 @@ async def main() -> None:
         # real bus
         bus = can.interface.Bus(interface="slcan", channel="/dev/ttyACM0", bitrate=500000)
         # virtual bus
-        # bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
+        bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
 
         print("Press arrow keys to call functions. Press ESC to exit.")
 

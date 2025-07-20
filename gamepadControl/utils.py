@@ -62,14 +62,20 @@ def rawToProcessedAxisValue(axisEncodedArr: list):
     return processedAxis
 
 def processeedAxisValueToRaw(axisProcessedArr: list):
+    """
+    TODO: C axis conversion is temporary disabled, we only need to rotate the B joint, FOR NOW
+    Need a way to calculate the/ or run joint movement in steps: complete B, then rotate C.
+    TODO: do we need to run in step? or it still work fine without extra calculation?
+    """
     rawAxis = [0, 0, 0, 0, 0, 0]
     for i in range(len(rawAxis)):
         if i == B_MOTOR_ID:
             rawAxis[B_MOTOR_ID] = (axisProcessedArr[B_MOTOR_ID])
             rawAxis[C_MOTOR_ID] = (-axisProcessedArr[B_MOTOR_ID])
         elif i == C_MOTOR_ID:
-            rawAxis[B_MOTOR_ID] = rawAxis[B_MOTOR_ID] + (axisProcessedArr[C_MOTOR_ID])
-            rawAxis[C_MOTOR_ID] = rawAxis[C_MOTOR_ID] + (axisProcessedArr[C_MOTOR_ID])
+            pass
+            # rawAxis[B_MOTOR_ID] = rawAxis[B_MOTOR_ID] + (axisProcessedArr[C_MOTOR_ID])
+            # rawAxis[C_MOTOR_ID] = rawAxis[C_MOTOR_ID] + (axisProcessedArr[C_MOTOR_ID])
         else:
             rawAxis[i] = axisProcessedArr[i]
     return rawAxis
@@ -85,12 +91,12 @@ def angleToProcessedAxis(angleArr):
     """
     axisValue = [0, 0, 0, 0, 0, 0]
     motor_limits = {
-        X_MOTOR_ID: (MIN_XAXISMOTOR, MAX_XAXISMOTOR, 23093.57097),
-        Y_MOTOR_ID: (MIN_YAXISMOTOR, MAX_YAXISMOTOR, 342469.375),
-        Z_MOTOR_ID: (MIN_ZAXISMOTOR, MAX_ZAXISMOTOR, 246948.334),
-        A_MOTOR_ID: (MIN_AAXISMOTOR, MAX_AAXISMOTOR, 104974.1667),
-        B_MOTOR_ID: (MIN_BAXISMOTOR, MAX_BAXISMOTOR, 71612.90323),
-        C_MOTOR_ID: (MIN_CAXISMOTOR, MAX_CAXISMOTOR, 70019.09612),
+        X_MOTOR_ID: (MIN_XAXISMOTOR, MAX_XAXISMOTOR, -23093.57097),
+        Y_MOTOR_ID: (MIN_YAXISMOTOR, MAX_YAXISMOTOR, -349013.3758),
+        Z_MOTOR_ID: (MIN_ZAXISMOTOR, MAX_ZAXISMOTOR, 219570.7125),
+        A_MOTOR_ID: (MIN_AAXISMOTOR, MAX_AAXISMOTOR, 62500),
+        B_MOTOR_ID: (MIN_BAXISMOTOR, MAX_BAXISMOTOR, -71612.90323),
+        C_MOTOR_ID: (MIN_CAXISMOTOR, MAX_CAXISMOTOR, -70019.09612),
     }
     for id, limits in motor_limits.items():
         minLimit, maxLimit, factor = limits
@@ -107,12 +113,12 @@ def processedAxisToAngle(processedAxisArr):
     """
     angleValue = [0, 0, 0, 0, 0, 0]
     motor_limits = {
-        X_MOTOR_ID: (MIN_XAXISMOTOR, MAX_XAXISMOTOR, 23093.57097),
-        Y_MOTOR_ID: (MIN_YAXISMOTOR, MAX_YAXISMOTOR, 349013.3758),
+        X_MOTOR_ID: (MIN_XAXISMOTOR, MAX_XAXISMOTOR, -23093.57097),
+        Y_MOTOR_ID: (MIN_YAXISMOTOR, MAX_YAXISMOTOR, -349013.3758),
         Z_MOTOR_ID: (MIN_ZAXISMOTOR, MAX_ZAXISMOTOR, 219570.7125),
-        A_MOTOR_ID: (MIN_AAXISMOTOR, MAX_AAXISMOTOR, 23870.1464),
-        B_MOTOR_ID: (MIN_BAXISMOTOR, MAX_BAXISMOTOR, 35327.81668),
-        C_MOTOR_ID: (MIN_CAXISMOTOR, MAX_CAXISMOTOR, 70019.09612),
+        A_MOTOR_ID: (MIN_AAXISMOTOR, MAX_AAXISMOTOR, 62500),
+        B_MOTOR_ID: (MIN_BAXISMOTOR, MAX_BAXISMOTOR, -71612.90323),
+        C_MOTOR_ID: (MIN_CAXISMOTOR, MAX_CAXISMOTOR, -70019.09612),
     }
     for id, limits in motor_limits.items():
         minLimit, maxLimit, factor = limits
