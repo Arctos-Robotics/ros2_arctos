@@ -59,8 +59,9 @@ public:
      * @brief Sets the position of a joint.
      * @param joint_name The name of the joint.
      * @param position The desired position.
+     * @param acceleration Acceleration of the motor movement, default to 20 (in range 0 - 255)
      */
-    void setJointPosition(const std::string& joint_name, double position, double acceleration = -1.0);
+    void setJointPosition(const std::string& joint_name, double position, double acceleration = 20);
 
     /**
      * @brief Sets the velocity of a joint.

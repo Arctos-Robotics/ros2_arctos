@@ -196,7 +196,7 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
 
     // Convert degrees to encoder counts
     int32_t encoder_counts = static_cast<int32_t>(
-        (motor_position_deg * MotorConstants::ENCODER_STEPS) / MotorConstants::DEGREES_PER_REVOLUTION
+        motor_position_deg * (MotorConstants::ENCODER_STEPS / MotorConstants::DEGREES_PER_REVOLUTION)
     );
 
     RCLCPP_INFO(node_->get_logger(), "Setting joint %s position to %.2f radians (%.2f degrees on motor protactor) with gear ratio %.2f:1",

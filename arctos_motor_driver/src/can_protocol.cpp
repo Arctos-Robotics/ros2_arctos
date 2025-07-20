@@ -51,7 +51,7 @@ double CANProtocol::decodeInt48(const std::vector<uint8_t>& data) {
     }
 
     // Convert addition value to degrees
-    double motor_angle_deg = (addition_value * MotorConstants::DEGREES_PER_REVOLUTION) / MotorConstants::ENCODER_STEPS;
+    double motor_angle_deg = addition_value * (MotorConstants::DEGREES_PER_REVOLUTION / MotorConstants::ENCODER_STEPS);
 
     return motor_angle_deg;
 }

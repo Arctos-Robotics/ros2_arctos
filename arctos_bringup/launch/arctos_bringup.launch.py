@@ -60,8 +60,8 @@ def generate_launch_description():
         arguments=[
             '--ros-args',
             # '--log-level', 'debug',
-            '--log-level', 'arctos_hardware_interface:=error',
-            '--log-level', 'controller_manager:=error'
+            '--log-level', 'arctos_hardware_interface:=info',
+            '--log-level', 'controller_manager:=info'
         ],
     )
 

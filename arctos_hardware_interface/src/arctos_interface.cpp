@@ -269,9 +269,7 @@ return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Durat
 
           rclcpp::Duration time_since_update = motor_driver_->getTimeSinceLastUpdate(joint_name);
           if (time_since_update.seconds() > 1.0) {
-              RCLCPP_WARN(node_->get_logger(),
-                          "Stale data for joint %s: %.3f seconds since last update",
-                          joint_name.c_str(), time_since_update.seconds());
+              // RCLCPP_WARN(node_->get_logger(),"Stale data for joint %s: %.3f seconds since last update",joint_name.c_str(), time_since_update.seconds());
           }
       } catch (const std::exception &e) {
           RCLCPP_ERROR(node_->get_logger(), "Failed to read state from joint %s: %s",
@@ -313,22 +311,23 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
         }
       }
 
-      // if (has_velocity_interface_) {
-      //   // TODO: Ensure this works properly
-      //   // Only send if velocity has changed significantly
-      //   if (std::abs(joint_velocities_command_[i] - last_velocity_command_[i]) > velocity_tolerance_) {
-      //     motor_driver_->setJointVelocity(info_.joints[i].name, joint_velocities_command_[i]);
-      //     RCLCPP_INFO(node_->get_logger(),
-      //                 "Sent velocity command %.3f to joint %s. Last command: %.3f",
-      //                 joint_velocities_command_[i], info_.joints[i].name.c_str(),
-      //                 last_velocity_command_[i]);
-      //     last_velocity_command_[i] = joint_velocities_command_[i];
-      //   } else {
-      //     RCLCPP_DEBUG(node_->get_logger(),
-      //                  "Velocity command for joint %s unchanged: %.3f",
-      //                  info_.joints[i].name.c_str(), joint_velocities_command_[i]);
-      //   }
-      // }
+      // this is a wrong design! who the fuck send velocity via speed control mode (F6??)
+      if (has_velocity_interface_) {
+        // TODO: Ensure this works properly
+        // Only send if velocity has changed significantly
+        // if (std::abs(joint_velocities_command_[i] - last_velocity_command_[i]) > velocity_tolerance_) {
+        //   motor_driver_->setJointVelocity(info_.joints[i].name, joint_velocities_command_[i]);
+        //   RCLCPP_INFO(node_->get_logger(),
+        //               "Sent velocity command %.3f to joint %s. Last command: %.3f",
+        //               joint_velocities_command_[i], info_.joints[i].name.c_str(),
+        //               last_velocity_command_[i]);
+        //   last_velocity_command_[i] = joint_velocities_command_[i];
+        // } else {
+        //   RCLCPP_DEBUG(node_->get_logger(),
+        //                "Velocity command for joint %s unchanged: %.3f",
+        //                info_.joints[i].name.c_str(), joint_velocities_command_[i]);
+        // }
+      }
     } catch (const std::exception& e) {
       RCLCPP_ERROR(node_->get_logger(),
                    "Failed to write command to joint %s: %s",
