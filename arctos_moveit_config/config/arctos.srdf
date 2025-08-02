@@ -17,7 +17,6 @@
         <link name="Link_2_1"/>
         <link name="Link_1_1"/>
         <link name="base_link"/>
-        <joint name="base_joint"/>
         <joint name="X_joint"/>
         <joint name="Y_joint"/>
         <joint name="Z_joint"/>
@@ -39,6 +38,7 @@
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="Gripper_1" link2="Left_jaw_1" reason="Adjacent"/>
     <disable_collisions link1="Gripper_1" link2="Link_3_1" reason="Never"/>
+    <disable_collisions link1="Gripper_1" link2="Link_4_1" reason="Never"/>
     <disable_collisions link1="Gripper_1" link2="Link_5_1" reason="Never"/>
     <disable_collisions link1="Gripper_1" link2="Link_6_1" reason="Adjacent"/>
     <disable_collisions link1="Gripper_1" link2="Right_jaw_1" reason="Adjacent"/>
@@ -46,8 +46,8 @@
     <disable_collisions link1="Left_jaw_1" link2="Link_5_1" reason="Never"/>
     <disable_collisions link1="Left_jaw_1" link2="Link_6_1" reason="Never"/>
     <disable_collisions link1="Left_jaw_1" link2="Right_jaw_1" reason="Never"/>
-    <disable_collisions link1="Link_1_1" link2="Link_2_1" reason="Adjacent"/>
     <disable_collisions link1="Link_1_1" link2="base_link" reason="Adjacent"/>
+    <disable_collisions link1="Link_1_1" link2="Link_2_1" reason="Adjacent"/>
     <disable_collisions link1="Link_2_1" link2="Link_3_1" reason="Adjacent"/>
     <disable_collisions link1="Link_3_1" link2="Link_4_1" reason="Adjacent"/>
     <disable_collisions link1="Link_3_1" link2="Link_5_1" reason="Never"/>

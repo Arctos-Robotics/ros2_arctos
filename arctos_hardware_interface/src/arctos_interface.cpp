@@ -242,7 +242,7 @@ return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Durat
   auto elapsed_time = time - last_update_time;
 
   // Limit CAN queries to once every 500ms
-  if (elapsed_time.seconds() > 0.5) {
+  if (elapsed_time.seconds() > 0.01) {
       motor_driver_->updateJointStates();  // Fetch fresh data from CAN bus
       last_update_time = time;  // ✅ Now correctly updated after each call
   }
@@ -259,12 +259,13 @@ return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Durat
               double pos = motor_driver_->getJointPosition(joint_name);
               joint_position_[i] = pos;
               RCLCPP_DEBUG(node_->get_logger(), "Updated position for joint %s: %.3f", joint_name.c_str(), pos);
+              
           }
 
           if (has_velocity_interface_) {
-              double vel = motor_driver_->getJointVelocity(joint_name);
-              joint_velocities_[i] = vel;
-              RCLCPP_DEBUG(node_->get_logger(), "Updated velocity for joint %s: %.3f", joint_name.c_str(), vel);
+              // double vel = motor_driver_->getJointVelocity(joint_name);
+              // joint_velocities_[i] = vel;
+              // RCLCPP_DEBUG(node_->get_logger(), "Updated velocity for joint %s: %.3f", joint_name.c_str(), vel);
           }
 
           rclcpp::Duration time_since_update = motor_driver_->getTimeSinceLastUpdate(joint_name);
@@ -366,7 +367,6 @@ void ArctosInterface::initializeMotors() {
       }
 
       // Add joint to motor driver with gear ratio
-      // TODO: lack attributes for some motors?
       motor_driver_->addJoint(joint.name, motor_id, hardware_type, gear_ratio);
 
       // Configure motor parameters

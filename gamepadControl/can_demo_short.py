@@ -511,7 +511,7 @@ async def main() -> None:
         # real bus
         bus = can.interface.Bus(interface="slcan", channel="/dev/ttyACM0", bitrate=500000)
         # virtual bus
-        bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
+        # bus = can.interface.Bus(interface="virtual", receive_own_messages=True)  
 
         print("Press arrow keys to call functions. Press ESC to exit.")
 

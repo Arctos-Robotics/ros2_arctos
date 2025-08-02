@@ -1,16 +1,16 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Hz
+    update_rate: 20  # Hz
 
-    arctos_controller:
+    joint_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-arctos_controller:
+joint_trajectory_controller:
   ros__parameters:
     joints:
       - X_joint
@@ -25,3 +25,67 @@ arctos_controller:
     state_interfaces:
       - position
       - velocity
+
+    state_publish_rate: 25.0
+    action_monitor_rate: 10.0
+
+    allow_partial_joints_goal: true
+    state_tolerance_check: false  # Disable tolerance checking for simplicity
+
+arctos_hardware_interface:
+  ros__parameters:
+    motors:
+      X_joint:
+        motor_id: 1
+        requires_homing: false
+        inverted: true
+        gear_ratio: 13.5
+        hardware_type: MKS_57D
+        zero_position: 3.0348389535736033
+        home_position: -3.028106482337883
+        opposite_limit: 2.7484106520134013
+      Y_joint:
+        motor_id: 2
+        requires_homing: false
+        inverted: true
+        gear_ratio: 150.0
+        hardware_type: MKS_57D
+        zero_position: 0.8549028328965467
+        home_position: -0.8539415382694717
+        opposite_limit: 2.0056236341982534
+      Z_joint:
+        motor_id: 3
+        requires_homing: false
+        inverted: true
+        gear_ratio: 150.0
+        hardware_type: MKS_42D
+        zero_position: 0.6805250101989999
+        home_position: -1.570796327
+        opposite_limit: 0.959931089
+      A_joint:
+        motor_id: 4
+        requires_homing: false
+        inverted: true
+        gear_ratio: 48.0
+        hardware_type: MKS_42D
+        zero_position: 0.6805250101989999
+        home_position: -1.570796327
+        opposite_limit: 1.570796327
+      B_joint:
+        motor_id: 5
+        requires_homing: false
+        inverted: true
+        gear_ratio: 67.82
+        hardware_type: MKS_42D
+        zero_position: -0.43627526433400465
+        home_position: -1.55
+        opposite_limit: 1.55
+      C_joint:
+        motor_id: 6
+        requires_homing: false
+        inverted: true
+        gear_ratio: 67.82
+        hardware_type: MKS_42D
+        zero_position: -0.3665992422596649
+        home_position: -3.141592654
+        opposite_limit: 3.141592654

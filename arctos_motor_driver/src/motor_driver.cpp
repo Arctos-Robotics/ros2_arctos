@@ -196,7 +196,7 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
 
     // Convert degrees to encoder counts
     int32_t encoder_counts = static_cast<int32_t>(
-        motor_position_deg * (MotorConstants::ENCODER_STEPS / MotorConstants::DEGREES_PER_REVOLUTION)
+        (motor_position_deg * MotorConstants::ENCODER_STEPS) / MotorConstants::DEGREES_PER_REVOLUTION
     );
 
     RCLCPP_INFO(node_->get_logger(), "Setting joint %s position to %.2f radians (%.2f degrees on motor protactor) with gear ratio %.2f:1",
@@ -588,7 +588,7 @@ bool MotorDriver::isMotorReady(const std::string& joint_name) const {
 //     RCLCPP_INFO(node_->get_logger(), "updateJointStates is running...");
 // }
 void MotorDriver::updateJointStates() {
-    RCLCPP_WARN(node_->get_logger(), "[updateJointStates] Starting joint state update cycle");
+    // RCLCPP_WARN(node_->get_logger(), "[updateJointStates] Starting joint state update cycle");
 
     auto current_time = node_->get_clock()->now();
     if (joints_.empty()) {
@@ -1191,7 +1191,7 @@ void MotorDriver::requestMotorData(uint8_t motor_id) {
 
     // ✅ Only add READ_VELOCITY if the joint is moving
     if (joint.status.is_moving) {
-        requests.push_back({CANCommands::READ_VELOCITY});
+        // requests.push_back({CANCommands::READ_VELOCITY});
     }
 
     for (const auto& request : requests) {
