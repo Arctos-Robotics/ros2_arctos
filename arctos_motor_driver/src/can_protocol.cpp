@@ -37,9 +37,9 @@ void CANProtocol::sendFrame(uint8_t motor_id, const std::vector<uint8_t>& data) 
         if (i == 0) {
             encoder_data << "[ ";
         } 
-        encoder_data << " 0x" << std::hex << static_cast<int>(msg->data[i]);
+        encoder_data << std::hex << static_cast<int>(msg->data[i]) << " ";
         if (i == msg->dlc-1) {
-            encoder_data << " ]"; 
+            encoder_data << "]"; 
         }
     }
     RCLCPP_INFO(node_->get_logger(), "Tx Data for %d: %s", msg->id, encoder_data.str().c_str());

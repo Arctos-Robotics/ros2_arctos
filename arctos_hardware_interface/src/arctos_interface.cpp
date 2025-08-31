@@ -239,6 +239,13 @@ return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Durat
   // spin_some is neccessary, if not used, hardware_interface won't catch any subscription event.
   rclcpp::spin_some(node_);
 
+  while (!can_message_queue_.empty()) {
+    // Process CAN messages
+    std::shared_ptr<can_msgs::msg::Frame> data = can_message_queue_.front();
+    motor_driver_->processCANMessage(data);
+    can_message_queue_.pop();
+  }
+
   static rclcpp::Time last_update_time = time;  // ✅ Static variable retains value between calls
   auto elapsed_time = time - last_update_time;
 
@@ -248,8 +255,7 @@ return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Durat
   //     last_update_time = time;  // ✅ Now correctly updated after each call
   // }
 
-  /* We don't need to put this here as the motors are not currently backdrivable, so we don't need to fetch the position from the motor at every cycle */
-  motor_driver_->updateJointStates(); 
+  motor_driver_->updateJointStates();
 
   for (size_t i = 0; i < info_.joints.size(); i++) {
       const std::string &joint_name = info_.joints[i].name;
@@ -297,22 +303,6 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
 
   for (size_t i = 0; i < info_.joints.size(); i++) {
     try {
-      if (has_position_interface_) {
-        // Only send if position has changed significantly
-        if (std::abs(joint_position_command_[i] - last_position_command_[i]) > position_tolerance_) {
-          motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i], 60);
-          RCLCPP_INFO(node_->get_logger(),
-                      "Sent position command %.3f to joint %s. Last command: %.3f",
-                      joint_position_command_[i], info_.joints[i].name.c_str(),
-                      last_position_command_[i]);
-          last_position_command_[i] = joint_position_command_[i];
-        } else {
-          RCLCPP_DEBUG(node_->get_logger(),
-                       "Position command for joint %s unchanged: %.3f",
-                       info_.joints[i].name.c_str(), joint_position_command_[i]);
-        }
-      }
-
       // this is a wrong design! who the fuck send velocity via speed control mode (F6??)
       if (has_velocity_interface_) {
         // TODO: Ensure this works properly
@@ -330,6 +320,23 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
                        info_.joints[i].name.c_str(), joint_velocities_command_[i]);
         }
       }
+
+      if (has_position_interface_) {
+        // Only send if position has changed significantly
+        if (std::abs(joint_position_command_[i] - last_position_command_[i]) > position_tolerance_) {
+          motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i], 200, joint_velocities_command_[i] * 500);
+          RCLCPP_INFO(node_->get_logger(),
+                      "Sent position command %.3f to joint %s. Last command: %.3f",
+                      joint_position_command_[i], info_.joints[i].name.c_str(),
+                      last_position_command_[i]);
+          last_position_command_[i] = joint_position_command_[i];
+        } else {
+          RCLCPP_DEBUG(node_->get_logger(),
+                       "Position command for joint %s unchanged: %.3f",
+                       info_.joints[i].name.c_str(), joint_position_command_[i]);
+        }
+      }
+
     } catch (const std::exception& e) {
       RCLCPP_ERROR(node_->get_logger(),
                    "Failed to write command to joint %s: %s",

@@ -82,6 +82,8 @@ void MotorDriver::addJoint(const std::string& joint_name, uint8_t motor_id, std:
     motor_to_joint_map_[motor_id] = joint_name;
 
     joints_[joint_name].last_update = node_->get_clock()->now();  // Initialize timestamp
+    // add a vector of 8 zero elements to the pre_encoder_data_ buffer
+    pre_encoder_data_.emplace_back(std::vector<uint8_t>(8, 0));
 
     RCLCPP_INFO(node_->get_logger(), "Added joint %s with motor ID %d and gear ratio %.2f:1", 
                 joint_name.c_str(), motor_id, gear_ratio);
@@ -126,7 +128,7 @@ void MotorDriver::removeJoint(const std::string& joint_name) {
  * @param position The desired position of the joint in radians.
  * @param acceleration The desired acceleration in degrees/s^2.
  */
-void MotorDriver::setJointPosition(const std::string& joint_name, double position, double acceleration) {
+void MotorDriver::setJointPosition(const std::string& joint_name, double position, double acceleration, double velocity) {
     auto it = joints_.find(joint_name);
     if (it == joints_.end()) {
         RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
@@ -207,7 +209,7 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
 
     // Prepare CAN command
     // TODO: Use parameters to set the speed and acceleration
-    uint16_t speed = 100;  // Default speed
+    uint16_t speed = static_cast<uint16_t>(velocity);  // Default speed
     uint8_t acc_value = static_cast<uint8_t>(std::clamp(acceleration, 0.0, 255.0));
 
     std::vector<uint8_t> data = {
@@ -597,19 +599,33 @@ void MotorDriver::updateJointStates() {
         RCLCPP_WARN(node_->get_logger(), "[updateJointStates] No joints registered for state updates");
         return;
     }
+    bool commandUpdate = false;
+    bool statusUpdate = false;
 
     // Iterate through all joints
     for (auto& [joint_name, joint] : joints_) {
+        // last_command is updated if we send any command to the bus
         auto time_since_last_command = current_time - joint.last_command;
+        // last_update is updated if we process and received data
         auto time_since_last_update = current_time - joint.last_update;
+        commandUpdate = true;
+        statusUpdate = true;
 
-        // Stop movement if no updates received in 2 seconds
+        // Stop movement if joint is still moving but no updates received in 2 seconds
         if (joint.status.is_moving && time_since_last_update.seconds() > 2.0) {
             RCLCPP_DEBUG(node_->get_logger(),
                         "[updateJointStates] Joint '%s' hasn't updated for %.2f sec, forcing is_moving = false",
                         joint_name.c_str(), time_since_last_update.seconds());
             joint.status.is_moving = false;
             joint.velocity = 0.0;  // Ensure velocity is reset
+            statusUpdate = false;
+        }
+
+        if (time_since_last_update.seconds() > 0.5) {
+            RCLCPP_DEBUG(node_->get_logger(),
+                        "[updateJointStates] No status update for joint '%s' (%.2f seconds). Stopping requests.",
+                        joint_name.c_str(), time_since_last_update.seconds());
+            statusUpdate = false;
         }
 
         // Set velocity to 0.0 if no recent commands (0.9 sec threshold)
@@ -618,21 +634,28 @@ void MotorDriver::updateJointStates() {
                          "[updateJointStates] No recent command for joint '%s' (%.2f seconds). Setting velocity to 0",
                          joint_name.c_str(), time_since_last_command.seconds());
             joint.velocity = 0.0;  
-            continue;  
+            commandUpdate = false;
+        }
+
+        /* if there's no status or command update for a long time, stop requesting data.*/
+        if (statusUpdate || commandUpdate) {
+            RCLCPP_DEBUG(node_->get_logger(),
+                        "[updateJointStates] Requesting new state since %s || %s for joint '%s' (motor_id: %d)",
+                        statusUpdate ? "status update" : "false",
+                        commandUpdate ? "command update" : "false",
+                        joint_name.c_str(), joint.motor_id);
+
+            try {
+                requestMotorData(joint.motor_id);
+            } catch (const std::exception& e) {
+                RCLCPP_ERROR(node_->get_logger(),
+                            "[updateJointStates] Error updating state for joint '%s': %s",
+                            joint_name.c_str(), e.what());
+            }
         }
 
         // Request new state only if recent command exists
-        RCLCPP_DEBUG(node_->get_logger(),
-                    "[updateJointStates] Requesting new state for joint '%s' (motor_id: %d)",
-                    joint_name.c_str(), joint.motor_id);
-
-        try {
-            requestMotorData(joint.motor_id);
-        } catch (const std::exception& e) {
-            RCLCPP_ERROR(node_->get_logger(),
-                         "[updateJointStates] Error updating state for joint '%s': %s",
-                         joint_name.c_str(), e.what());
-        }
+        
     }
 
     RCLCPP_DEBUG(node_->get_logger(), "[updateJointStates] Completed joint state update cycle");
@@ -644,10 +667,10 @@ void MotorDriver::processCANMessage(const can_msgs::msg::Frame::SharedPtr msg) {
     for (uint8_t i = 0; i < msg->dlc; i++) {
         if (i == 0) {
             encoder_data << "[ ";
-        } else if (i == msg->dlc-1) {
-            encoder_data << " ]"; 
-        } else {
-            encoder_data << " 0x" << std::hex << static_cast<int>(msg->data[i]);
+        } 
+        encoder_data << std::hex << static_cast<int>(msg->data[i]) << " ";
+        if (i == msg->dlc-1) {
+            encoder_data << "]"; 
         }
     }
     RCLCPP_INFO(node_->get_logger(), "Rx Data for %d: %s", msg->id, encoder_data.str().c_str());
@@ -742,6 +765,14 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
     // Extract encoder data (bytes 1-6)
     std::vector<uint8_t> encoder_data(data.begin() + 1, data.begin() + 7);
 
+    // if the encoder response is exactly the same or the last byte is different by 1 as previous encoder data, no need to process.
+    if (isEncoderDataChanged(encoder_data, motor_id) == false) {
+        RCLCPP_INFO(node_->get_logger(), "No new data for %d", motor_id);
+        return;
+    } else {
+        pre_encoder_data_[motor_id-1] = encoder_data;
+    }
+
     try {
         // **Log raw data for debugging**
         RCLCPP_DEBUG(node_->get_logger(), "Raw Encoder Data for %s:", joint_name.c_str());
@@ -816,6 +847,29 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
     }
 }
 
+/**
+ * @brief Checks if the encoder data has changed.
+ * @param encoder_data The current encoder data. expect a 6-byte vector
+ * @return True if the encoder data has changed, false otherwise.
+ */
+bool MotorDriver::isEncoderDataChanged(const std::vector<uint8_t>& encoder_data, const uint8_t motor_id) const {
+    if (motor_id < 1 || motor_id > pre_encoder_data_.size() || encoder_data.size() != 6) {
+        RCLCPP_WARN(node_->get_logger(), "Invalid motor ID or wrong encoder data size: %d", motor_id);
+        return false;
+    }
+    const uint8_t ENCODER_SIZE = 6;
+    // Compare first 5 bytes
+    for (uint8_t i = 0; i < ENCODER_SIZE-1; ++i) {
+        if (encoder_data[i] != pre_encoder_data_[motor_id - 1][i]) {
+            return true;
+        }
+    }
+    // For last byte, only consider change if difference > 1
+    if (std::abs(encoder_data[5] - pre_encoder_data_[motor_id - 1][5]) > 1) {
+        return true;
+    }
+    return false;
+}
 
 
 /**

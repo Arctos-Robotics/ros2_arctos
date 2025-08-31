@@ -61,7 +61,7 @@ public:
      * @param position The desired position.
      * @param acceleration Acceleration of the motor movement, default to 20 (in range 0 - 255)
      */
-    void setJointPosition(const std::string& joint_name, double position, double acceleration = 20);
+    void setJointPosition(const std::string& joint_name, double position, double acceleration = 20, double velocity = 100);
 
     /**
      * @brief Sets the velocity of a joint.
@@ -230,6 +230,8 @@ private:
     double position_tolerance_; /**< The position tolerance for joint control. */
     double velocity_tolerance_; /**< The velocity tolerance for joint control. */
     // Internal handlers
+    // old buffer
+    std::vector<std::vector<uint8_t>> pre_encoder_data_;
 
     /**
      * @brief Callback function for CAN messages.
@@ -277,6 +279,13 @@ private:
      * @param motor_id The ID of the motor.
      */
     void requestMotorData(uint8_t motor_id);
+
+    /**
+     * @brief Checks if the encoder data has changed.
+     * @param encoder_data The current encoder data.
+     * @return True if the encoder data has changed, false otherwise.
+     */
+    bool isEncoderDataChanged(const std::vector<uint8_t>& encoder_data, const uint8_t motor_id) const;
 };
 
 } // namespace arctos_motor_driver

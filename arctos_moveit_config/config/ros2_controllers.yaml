@@ -1,7 +1,7 @@
 # This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 20  # Hz
+    update_rate: 20  # Hz ([read -> update -> write] cycle is executed 20 times per second)
 
     joint_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
@@ -74,7 +74,7 @@ arctos_hardware_interface:
       B_joint:
         motor_id: 5
         requires_homing: false
-        inverted: true
+        inverted: false
         gear_ratio: 67.82
         hardware_type: MKS_42D
         zero_position: -0.43627526433400465
