@@ -39,7 +39,7 @@ def generate_launch_description():
     robot_description = {"robot_description": robot_description_content}
 
     # Parameters
-    motor_params = os.path.join(
+    robot_controllers = os.path.join(
         arctos_moveit_dir, 'config', 'ros2_controllers.yaml'
     )
 
@@ -55,7 +55,7 @@ def generate_launch_description():
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_description, motor_params],
+        parameters=[robot_controllers],
         output={'stdout': 'screen', 'stderr': 'screen'},
         arguments=[
             '--ros-args',
@@ -63,6 +63,9 @@ def generate_launch_description():
             '--log-level', 'arctos_hardware_interface:=info',
             '--log-level', 'controller_manager:=info'
         ],
+        remappings={
+            ('~/robot_description', '/robot_description')
+        }
     )
 
     joint_state_broadcaster_spawner = Node(

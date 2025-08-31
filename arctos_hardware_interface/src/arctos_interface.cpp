@@ -236,19 +236,20 @@ During the main loop, ros2_control loops over all hardware components and calls 
 -> responsible for updating the data values of the *state_interfaces*, by updating the *class member variable*
 */
 return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Duration & /*period*/) {
+  // spin_some is neccessary, if not used, hardware_interface won't catch any subscription event.
   rclcpp::spin_some(node_);
 
   static rclcpp::Time last_update_time = time;  // ✅ Static variable retains value between calls
   auto elapsed_time = time - last_update_time;
 
   // Limit CAN queries to once every 500ms
-  if (elapsed_time.seconds() > 0.01) {
-      motor_driver_->updateJointStates();  // Fetch fresh data from CAN bus
-      last_update_time = time;  // ✅ Now correctly updated after each call
-  }
+  // if (elapsed_time.seconds() > 0.01) {
+  //     motor_driver_->updateJointStates();  // Fetch fresh data from CAN bus
+  //     last_update_time = time;  // ✅ Now correctly updated after each call
+  // }
 
   /* We don't need to put this here as the motors are not currently backdrivable, so we don't need to fetch the position from the motor at every cycle */
-  // motor_driver_->updateJointStates(); 
+  motor_driver_->updateJointStates(); 
 
   for (size_t i = 0; i < info_.joints.size(); i++) {
       const std::string &joint_name = info_.joints[i].name;
@@ -316,18 +317,18 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
       if (has_velocity_interface_) {
         // TODO: Ensure this works properly
         // Only send if velocity has changed significantly
-        // if (std::abs(joint_velocities_command_[i] - last_velocity_command_[i]) > velocity_tolerance_) {
-        //   motor_driver_->setJointVelocity(info_.joints[i].name, joint_velocities_command_[i]);
-        //   RCLCPP_INFO(node_->get_logger(),
-        //               "Sent velocity command %.3f to joint %s. Last command: %.3f",
-        //               joint_velocities_command_[i], info_.joints[i].name.c_str(),
-        //               last_velocity_command_[i]);
-        //   last_velocity_command_[i] = joint_velocities_command_[i];
-        // } else {
-        //   RCLCPP_DEBUG(node_->get_logger(),
-        //                "Velocity command for joint %s unchanged: %.3f",
-        //                info_.joints[i].name.c_str(), joint_velocities_command_[i]);
-        // }
+        if (std::abs(joint_velocities_command_[i] - last_velocity_command_[i]) > velocity_tolerance_) {
+          // motor_driver_->setJointVelocity(info_.joints[i].name, joint_velocities_command_[i]);
+          RCLCPP_INFO(node_->get_logger(),
+                      "Sent velocity command %.3f to joint %s. Last command: %.3f",
+                      joint_velocities_command_[i], info_.joints[i].name.c_str(),
+                      last_velocity_command_[i]);
+          last_velocity_command_[i] = joint_velocities_command_[i];
+        } else {
+          RCLCPP_DEBUG(node_->get_logger(),
+                       "Velocity command for joint %s unchanged: %.3f",
+                       info_.joints[i].name.c_str(), joint_velocities_command_[i]);
+        }
       }
     } catch (const std::exception& e) {
       RCLCPP_ERROR(node_->get_logger(),
@@ -341,7 +342,10 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
 }
 
 void ArctosInterface::canCallback(const can_msgs::msg::Frame::SharedPtr msg) {
-    motor_driver_->processCANMessage(msg);
+    // push msg to the queue for fast callback.
+    can_message_queue_.push(msg);
+
+    // motor_driver_->processCANMessage(msg);
 }
 
 void ArctosInterface::initializeMotors() {

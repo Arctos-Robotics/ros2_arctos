@@ -1,5 +1,7 @@
 #include "arctos_motor_driver/motor_driver.hpp"
 #include <cmath>
+#include <string>
+#include <sstream>
 
 /**
  * @brief The MotorDriver class is responsible for controlling and managing multiple motors.
@@ -638,6 +640,18 @@ void MotorDriver::updateJointStates() {
 
 
 void MotorDriver::processCANMessage(const can_msgs::msg::Frame::SharedPtr msg) {
+    std::stringstream encoder_data;
+    for (uint8_t i = 0; i < msg->dlc; i++) {
+        if (i == 0) {
+            encoder_data << "[ ";
+        } else if (i == msg->dlc-1) {
+            encoder_data << " ]"; 
+        } else {
+            encoder_data << " 0x" << std::hex << static_cast<int>(msg->data[i]);
+        }
+    }
+    RCLCPP_INFO(node_->get_logger(), "Rx Data for %d: %s", msg->id, encoder_data.str().c_str());
+
     canMessageCallback(msg);
 }
 
@@ -666,8 +680,13 @@ void MotorDriver::canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg) 
 
     switch(data[0]) {
         case CANCommands::READ_ENCODER:
-            RCLCPP_INFO(node_->get_logger(), "Processing encoder response");
-            processEncoderResponse(msg->id, data);
+            if (msg->dlc < 8) {
+                RCLCPP_WARN(node_->get_logger(), "Invalid CAN message response length for READ_ENCODER");
+                return;
+            } else {
+                RCLCPP_INFO(node_->get_logger(), "Processing encoder response");
+                processEncoderResponse(msg->id, data);
+            }
             break;
             
         case CANCommands::READ_VELOCITY:
@@ -1180,13 +1199,13 @@ void MotorDriver::requestMotorData(uint8_t motor_id) {
     }
 
     auto& joint = joints_[it->second];
-    RCLCPP_INFO(node_->get_logger(), "Joint %s (Motor ID: %d) is_moving: %s", 
+    RCLCPP_DEBUG(node_->get_logger(), "Joint %s (Motor ID: %d) is_moving: %s", 
             joint.joint_name.c_str(), motor_id, joint.status.is_moving ? "true" : "false");
 
     // Request sequence of motor data
     std::vector<std::vector<uint8_t>> requests = {
         {CANCommands::READ_ENCODER},  // Encoder position
-        {CANCommands::READ_IO}        // IO Status
+        // {CANCommands::READ_IO}        // IO Status, probably needed when use the sensor
     };
 
     // ✅ Only add READ_VELOCITY if the joint is moving
@@ -1197,7 +1216,7 @@ void MotorDriver::requestMotorData(uint8_t motor_id) {
     for (const auto& request : requests) {
         can_protocol_->sendFrame(motor_id, request);
         // Add small delay between requests to prevent flooding
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
 

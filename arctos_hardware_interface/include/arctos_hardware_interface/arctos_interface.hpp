@@ -6,6 +6,7 @@
 #include <functional>
 #include <vector>
 #include <memory>
+#include <queue>
 
 #include "arctos_motor_driver/motor_driver.hpp"
 #include "arctos_motor_driver/can_protocol.hpp"
@@ -82,7 +83,9 @@ protected:
 private:
   rclcpp::Subscription<can_msgs::msg::Frame>::SharedPtr can_sub_;
   void canCallback(const can_msgs::msg::Frame::SharedPtr msg);
-  
+
+  std::queue<can_msgs::msg::Frame::SharedPtr> can_message_queue_;
+
   // Helper functions for motor initialization
   void initializeMotors();
   bool setupMotorParameters(const hardware_interface::ComponentInfo& joint_info, uint8_t motor_id);

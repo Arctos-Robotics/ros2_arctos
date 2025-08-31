@@ -19,32 +19,32 @@ joint_limits:
     has_acceleration_limits: false
     max_acceleration: 0
   X_joint:
-    has_velocity_limits: false
+    has_velocity_limits: true
     max_velocity: 2.0
     has_acceleration_limits: false
     max_acceleration: 0
   Y_joint:
-    has_velocity_limits: false
+    has_velocity_limits: true
     max_velocity: 2.0
     has_acceleration_limits: false
     max_acceleration: 0
   Z_joint:
-    has_velocity_limits: false
+    has_velocity_limits: true
     max_velocity: 2.0
     has_acceleration_limits: false
     max_acceleration: 0
   A_joint:
-    has_velocity_limits: false
+    has_velocity_limits: true
     max_velocity: 2.0
     has_acceleration_limits: false
     max_acceleration: 0
   B_joint:
-    has_velocity_limits: false
+    has_velocity_limits: true
     max_velocity: 2.0
     has_acceleration_limits: false
     max_acceleration: 0
   C_joint:
-    has_velocity_limits: false
+    has_velocity_limits: true
     max_velocity: 2.0
     has_acceleration_limits: false
     max_acceleration: 0

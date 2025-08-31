@@ -1,10 +1,13 @@
 #include "arctos_motor_driver/can_protocol.hpp"
 #include "arctos_motor_driver/motor_types.hpp"
 #include <cmath>
+#include <sstream>
 
 namespace arctos_motor_driver {
 
-CANProtocol::CANProtocol(rclcpp::Node::SharedPtr node) {
+CANProtocol::CANProtocol(rclcpp::Node::SharedPtr node) :
+    node_(node)
+{
     can_pub_ = node->create_publisher<can_msgs::msg::Frame>("/to_motor_can_bus", 10);
 }
 
@@ -28,6 +31,18 @@ void CANProtocol::sendFrame(uint8_t motor_id, const std::vector<uint8_t>& data) 
     
     // Add CRC as last byte
     msg->data[data.size()] = static_cast<uint8_t>(crc);
+
+    std::stringstream encoder_data;
+    for (uint8_t i = 0; i < msg->dlc; i++) {
+        if (i == 0) {
+            encoder_data << "[ ";
+        } 
+        encoder_data << " 0x" << std::hex << static_cast<int>(msg->data[i]);
+        if (i == msg->dlc-1) {
+            encoder_data << " ]"; 
+        }
+    }
+    RCLCPP_INFO(node_->get_logger(), "Tx Data for %d: %s", msg->id, encoder_data.str().c_str());
     
     can_pub_->publish(*msg);
 }

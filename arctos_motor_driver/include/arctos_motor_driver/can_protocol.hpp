@@ -31,6 +31,9 @@ public:
 
 protected:
     rclcpp::Publisher<can_msgs::msg::Frame>::SharedPtr can_pub_;
+
+private:
+    rclcpp::Node::SharedPtr node_; /**< A shared pointer to the ROS 2 node. */
 };
 
 } // namespace arctos_motor_driver
