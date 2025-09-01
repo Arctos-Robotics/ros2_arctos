@@ -129,5 +129,6 @@
         "rope": "cpp",
         "slist": "cpp"
     },
-    "cmake.sourceDirectory": "E:/Github/Arctos_robot/ros2_arctos_HCMUT/arctos_bringup"
+    "cmake.sourceDirectory": "E:/Github/Arctos_robot/ros2_arctos_HCMUT/arctos_bringup",
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true
 }

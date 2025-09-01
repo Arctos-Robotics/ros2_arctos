@@ -3,14 +3,18 @@ controller_manager:
   ros__parameters:
     update_rate: 10  # Hz ([read -> update -> write] cycle is executed 20 times per second)
 
-    joint_trajectory_controller:
+    arctos_arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
+
+
+    arctos_hand_controller:
+      type: position_controllers/GripperActionController
 
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-joint_trajectory_controller:
+arctos_arm_controller:
   ros__parameters:
     joints:
       - X_joint
@@ -18,7 +22,7 @@ joint_trajectory_controller:
       - Z_joint
       - A_joint
       - B_joint
-      - C_joint      
+      - C_joint
     command_interfaces:
       - position
       - velocity
