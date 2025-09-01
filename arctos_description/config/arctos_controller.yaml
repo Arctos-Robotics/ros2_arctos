@@ -74,7 +74,7 @@ arctos_hardware_interface:
       B_joint:
         motor_id: 5
         requires_homing: false
-        inverted: true
+        inverted: false
         gear_ratio: 67.82
         hardware_type: MKS_42D
         zero_position: -0.43627526433400465

@@ -51,7 +51,7 @@ void MotorDriver::setCAN(std::shared_ptr<CANProtocol> can_protocol) {
  * @param joint_name The name of the joint to be added.
  * @param motor_id The ID of the motor associated with the joint.
  */
-void MotorDriver::addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio, bool inverted, double zero_position, double home_position, double opposite_limit) {
+void MotorDriver::addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio, bool inverted,bool inverted_feedback, double zero_position, double home_position, double opposite_limit) {
     // Check if joint already exists
     if (joints_.find(joint_name) != joints_.end()) {
         RCLCPP_WARN(node_->get_logger(), "Joint %s already exists", joint_name.c_str());
@@ -76,6 +76,7 @@ void MotorDriver::addJoint(const std::string& joint_name, uint8_t motor_id, std:
     joints_[joint_name].hardware_type = hardware_type;
     joints_[joint_name].gear_ratio = gear_ratio;
     joints_[joint_name].inverted = inverted;
+    joints_[joint_name].inverted_feedback = inverted_feedback;
     joints_[joint_name].zero_position = zero_position;
     joints_[joint_name].home_position = home_position;
     joints_[joint_name].opposite_limit = opposite_limit;
@@ -203,13 +204,14 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
         (motor_position_deg * MotorConstants::ENCODER_STEPS) / MotorConstants::DEGREES_PER_REVOLUTION
     );
 
-    RCLCPP_INFO(node_->get_logger(), "Setting joint %s position to %.2f radians (%.2f degrees on motor protactor) with gear ratio %.2f:1",
-                joint_name.c_str(), position, motor_position_deg, joint.gear_ratio);
+    RCLCPP_INFO(node_->get_logger(), "Setting joint %s position to (%s) %.2f radians (%.2f degrees on motor protactor) with gear ratio %.2f:1",
+                joint_name.c_str(), joint.inverted ? "inverted" : "normal", position, motor_position_deg, joint.gear_ratio);
     RCLCPP_INFO(node_->get_logger(), "Calculated encoder counts: %d", encoder_counts);
 
     // Prepare CAN command
-    // TODO: Use parameters to set the speed and acceleration
-    uint16_t speed = static_cast<uint16_t>(velocity);  // Default speed
+
+    // minimum speed is 30 to prevent sending speed = 0, which will stop the motor!
+    uint16_t speed = static_cast<uint16_t>(std::clamp(velocity, 30.0, 3000.0));  
     uint8_t acc_value = static_cast<uint8_t>(std::clamp(acceleration, 0.0, 255.0));
 
     std::vector<uint8_t> data = {
@@ -806,8 +808,8 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
         // joint_angle_rad -= joint.zero_position;
         // RCLCPP_DEBUG(node_->get_logger(), "Adjusted for zero_position: %.3f rad", joint_angle_rad);
 
-        // **Apply inversion BEFORE zero position offset**
-        if (joint.inverted) {
+        // **Apply inversion_feedback BEFORE zero position offset**
+        if (joint.inverted_feedback) {
             joint_angle_rad = -joint_angle_rad;
         }
 
@@ -838,8 +840,8 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
         if (std::abs(joint.position) < POSITION_DEADBAND) {
             joint.position = 0.0;
         }
-        RCLCPP_INFO(node_->get_logger(), "Updated joint %s position: %.2f rad", 
-                    joint_name.c_str(), joint.position);
+        RCLCPP_INFO(node_->get_logger(), "Updated joint %s (%s) position: %.2f rad", 
+                    joint_name.c_str(), joint.inverted_feedback ? "inverted feedback" : "normal", joint.position);
 
         joint.last_update = node_->get_clock()->now();
     } catch (const std::exception& e) {

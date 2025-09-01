@@ -1,0 +1,1006 @@
+[INFO] [1756656952.217123135] [joint_trajectory_controller]: Received new action goal
+[INFO] [1756656952.217271134] [joint_trajectory_controller]: Accepted new action goal
+[move_group-8] [INFO] [1756656952.217720573] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: joint_trajectory_controller started execution
+[move_group-8] [INFO] [1756656952.217761800] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: Goal request accepted!
+[INFO] [1756656952.263629470]  Setting joint B_joint position to -0.31 radians (-1222.89 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.263749397]  Calculated encoder counts: -55655
+[INFO] [1756656952.263851940]  Tx Data for 5: [ f5 0 0 c8 ff 26 99 80 ]
+[INFO] [1756656952.263969733]  Sent position command -0.315 to joint B_joint. Last command: 0.000
+[INFO] [1756656952.313342710]  Rx Data for 5: [ f5 1 fb ]
+[INFO] [1756656952.313410418]  Processing status response
+[INFO] [1756656952.313447247]  Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[INFO] [1756656952.313505127]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.314783700]  Sent velocity command 0.055 to joint B_joint. Last command: 0.000
+[INFO] [1756656952.314850987]  Setting joint B_joint position to -0.31 radians (-1218.38 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.314880203]  Calculated encoder counts: -55449
+[INFO] [1756656952.314979250]  Tx Data for 5: [ f5 0 1b c8 ff 27 67 6a ]
+[INFO] [1756656952.315069600]  Sent position command -0.314 to joint B_joint. Last command: -0.315
+[INFO] [1756656952.363710235]  Rx Data for 5: [ f5 2 fc ]
+[INFO] [1756656952.363772142]  Processing status response
+[INFO] [1756656952.363792580]  Inside ABSOLUTE_POSITION case - Status: 2 (0x02)
+[INFO] [1756656952.363807859]  Move to absolute position completed
+[INFO] [1756656952.363847835]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.365064431]  Sent velocity command 0.102 to joint B_joint. Last command: 0.055
+[INFO] [1756656952.365106170]  Setting joint B_joint position to -0.31 radians (-1202.85 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.365127180]  Calculated encoder counts: -54743
+[INFO] [1756656952.365181563]  Tx Data for 5: [ f5 0 32 c8 ff 2a 29 46 ]
+[INFO] [1756656952.365239362]  Sent position command -0.310 to joint B_joint. Last command: -0.314
+[INFO] [1756656952.413729492]  Rx Data for 5: [ f5 2 fc ]
+[INFO] [1756656952.413900916]  Processing status response
+[INFO] [1756656952.413924340]  Inside ABSOLUTE_POSITION case - Status: 2 (0x02)
+[INFO] [1756656952.413939028]  Move to absolute position completed
+[INFO] [1756656952.413991868]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.415238291]  Sent velocity command 0.151 to joint B_joint. Last command: 0.102
+[INFO] [1756656952.415282073]  Setting joint B_joint position to -0.30 radians (-1178.46 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.415354600]  Calculated encoder counts: -53632
+[INFO] [1756656952.415406759]  Tx Data for 5: [ f5 0 4b c8 ff 2e 80 ba ]
+[INFO] [1756656952.415461182]  Sent position command -0.303 to joint B_joint. Last command: -0.310
+[INFO] [1756656952.463485894]  Rx Data for 5: [ 31 ff ff ff ff 26 9a f2 ]
+[INFO] [1756656952.463548171]  Processing encoder response
+[INFO] [1756656952.463567768]  No new data for 5
+[INFO] [1756656952.463603716]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.464842495]  Sent velocity command 0.200 to joint B_joint. Last command: 0.151
+[INFO] [1756656952.464893601]  Setting joint B_joint position to -0.29 radians (-1144.16 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.464914741]  Calculated encoder counts: -52071
+[INFO] [1756656952.464957702]  Tx Data for 5: [ f5 0 64 c8 ff 34 99 f2 ]
+[INFO] [1756656952.465005743]  Sent position command -0.294 to joint B_joint. Last command: -0.303
+[INFO] [1756656952.513622863]  Rx Data for 5: [ f5 1 fb ]
+[INFO] [1756656952.513689880]  Processing status response
+[INFO] [1756656952.513709056]  Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[INFO] [1756656952.513752388]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.515020442]  Sent velocity command 0.198 to joint B_joint. Last command: 0.200
+[INFO] [1756656952.515072750]  Setting joint B_joint position to -0.28 radians (-1104.87 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.515092868]  Calculated encoder counts: -50284
+[INFO] [1756656952.515145387]  Tx Data for 5: [ f5 0 63 c8 ff 3b 94 f3 ]
+[INFO] [1756656952.515236019]  Sent position command -0.284 to joint B_joint. Last command: -0.294
+[INFO] [1756656952.563374055]  Rx Data for 5: [ 31 ff ff ff ff 27 c5 1e ]
+[INFO] [1756656952.563441251]  Processing encoder response
+[INFO] [1756656952.563475115]  Updated joint B_joint position: -0.31 rad
+[INFO] [1756656952.563532403]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.564830053]  Sent velocity command 0.200 to joint B_joint. Last command: 0.198
+[INFO] [1756656952.564908361]  Setting joint B_joint position to -0.27 radians (-1066.47 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.564941614]  Calculated encoder counts: -48536
+[INFO] [1756656952.565009702]  Tx Data for 5: [ f5 0 63 c8 ff 42 68 ce ]
+[INFO] [1756656952.565095064]  Sent position command -0.274 to joint B_joint. Last command: -0.284
+[move_group-8] [WARN] [1756656952.564958796] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[INFO] [1756656952.613520242]  Rx Data for 5: [ f5 1 fb ]
+[INFO] [1756656952.613664995]  Processing status response
+[INFO] [1756656952.613697917]  Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[INFO] [1756656952.613786935]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.615629093]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656952.615763837]  Setting joint B_joint position to -0.26 radians (-1027.11 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.615789125]  Calculated encoder counts: -46744
+[INFO] [1756656952.615952964]  Tx Data for 5: [ f5 0 64 c8 ff 49 68 d6 ]
+[INFO] [1756656952.616025030]  Sent position command -0.264 to joint B_joint. Last command: -0.274
+[INFO] [1756656952.663373135]  Rx Data for 5: [ 31 ff ff ff ff 29 f0 4b ]
+[INFO] [1756656952.663445281]  Processing encoder response
+[INFO] [1756656952.663474085]  Updated joint B_joint position: -0.31 rad
+[INFO] [1756656952.663522787]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.664768599]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656952.664818784]  Setting joint B_joint position to -0.25 radians (-988.79 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.664839433]  Calculated encoder counts: -45000
+[INFO] [1756656952.664886752]  Tx Data for 5: [ f5 0 63 c8 ff 50 38 ac ]
+[INFO] [1756656952.664961333]  Sent position command -0.254 to joint B_joint. Last command: -0.264
+[INFO] [1756656952.713368958]  Rx Data for 5: [ 31 ff ff ff ff 2c e7 45 ]
+[INFO] [1756656952.713433961]  Processing encoder response
+[INFO] [1756656952.713460391]  Updated joint B_joint position: -0.31 rad
+[INFO] [1756656952.713505516]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.714725769]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656952.714760555]  Setting joint B_joint position to -0.24 radians (-949.96 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.714775343]  Calculated encoder counts: -43233
+[INFO] [1756656952.714807384]  Tx Data for 5: [ f5 0 64 c8 ff 57 1f 9b ]
+[INFO] [1756656952.714865443]  Sent position command -0.244 to joint B_joint. Last command: -0.254
+[INFO] [1756656952.763420096]  Rx Data for 5: [ 31 ff ff ff ff 30 df 41 ]
+[INFO] [1756656952.763502171]  Processing encoder response
+[INFO] [1756656952.763534762]  Updated joint B_joint position: -0.30 rad
+[INFO] [1756656952.763589055]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.764868881]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656952.764917583]  Setting joint B_joint position to -0.23 radians (-910.99 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.764938853]  Calculated encoder counts: -41460
+[INFO] [1756656952.764991202]  Tx Data for 5: [ f5 0 64 c8 ff 5e c 8f ]
+[INFO] [1756656952.765060022]  Sent position command -0.234 to joint B_joint. Last command: -0.244
+[INFO] [1756656952.813738568]  Rx Data for 5: [ 31 ff ff ff ff 35 d0 37 ]
+[INFO] [1756656952.813803150]  Processing encoder response
+[INFO] [1756656952.813829059]  Updated joint B_joint position: -0.29 rad
+[INFO] [1756656952.813873292]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.815094458]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656952.815127620]  Setting joint B_joint position to -0.22 radians (-871.95 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.815144873]  Calculated encoder counts: -39683
+[INFO] [1756656952.815189136]  Tx Data for 5: [ f5 0 63 c8 ff 64 fd 85 ]
+[INFO] [1756656952.815250933]  Sent position command -0.224 to joint B_joint. Last command: -0.234
+[INFO] [1756656952.863416421]  Rx Data for 5: [ 31 ff ff ff ff 3b 68 d5 ]
+[INFO] [1756656952.863544342]  Processing encoder response
+[INFO] [1756656952.863709925]  Updated joint B_joint position: -0.28 rad
+[INFO] [1756656952.863954547]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.865277845]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656952.865335143]  Setting joint B_joint position to -0.21 radians (-832.96 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.865360962]  Calculated encoder counts: -37909
+[INFO] [1756656952.865417278]  Tx Data for 5: [ f5 0 64 c8 ff 6b eb 7b ]
+[INFO] [1756656952.865500285]  Sent position command -0.214 to joint B_joint. Last command: -0.224
+[INFO] [1756656952.913353032]  Rx Data for 5: [ 31 ff ff ff ff 40 a1 13 ]
+[INFO] [1756656952.913417253]  Processing encoder response
+[INFO] [1756656952.913445958]  Updated joint B_joint position: -0.28 rad
+[INFO] [1756656952.913494730]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.914754057]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656952.914811315]  Setting joint B_joint position to -0.20 radians (-794.51 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.914836693]  Calculated encoder counts: -36158
+[INFO] [1756656952.914888210]  Tx Data for 5: [ f5 0 64 c8 ff 72 c2 59 ]
+[INFO] [1756656952.914954706]  Sent position command -0.204 to joint B_joint. Last command: -0.214
+[INFO] [1756656952.963351911]  Rx Data for 5: [ 31 ff ff ff ff 46 1f 97 ]
+[INFO] [1756656952.963468742]  Processing encoder response
+[INFO] [1756656952.963510941]  Updated joint B_joint position: -0.27 rad
+[INFO] [1756656952.963577567]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656952.965006404]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656952.965106694]  Setting joint B_joint position to -0.19 radians (-755.48 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656952.965145697]  Calculated encoder counts: -34382
+[INFO] [1756656952.965256897]  Tx Data for 5: [ f5 0 64 c8 ff 79 b2 50 ]
+[INFO] [1756656952.965354201]  Sent position command -0.194 to joint B_joint. Last command: -0.204
+[INFO] [1756656953.014288300]  Rx Data for 5: [ 31 ff ff ff ff 4b 63 e0 ]
+[INFO] [1756656953.014362149]  Processing encoder response
+[INFO] [1756656953.014391264]  Updated joint B_joint position: -0.26 rad
+[INFO] [1756656953.014435327]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.015666832]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.015705054]  Setting joint B_joint position to -0.18 radians (-716.08 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.015726665]  Calculated encoder counts: -32589
+[INFO] [1756656953.015766290]  Tx Data for 5: [ f5 0 63 c8 ff 80 b3 57 ]
+[INFO] [1756656953.015814381]  Sent position command -0.184 to joint B_joint. Last command: -0.194
+[INFO] [1756656953.063400314]  Rx Data for 5: [ 31 ff ff ff ff 50 b1 33 ]
+[INFO] [1756656953.063519048]  Processing encoder response
+[INFO] [1756656953.063557010]  Updated joint B_joint position: -0.25 rad
+[INFO] [1756656953.063617374]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.064887902]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.064934270]  Setting joint B_joint position to -0.17 radians (-677.84 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.064962543]  Calculated encoder counts: -30849
+[INFO] [1756656953.065012638]  Tx Data for 5: [ f5 0 63 c8 ff 87 7f 2a ]
+[INFO] [1756656953.065100413]  Sent position command -0.174 to joint B_joint. Last command: -0.184
+[INFO] [1756656953.113414081]  Rx Data for 5: [ 31 ff ff ff ff 56 38 c0 ]
+[INFO] [1756656953.113508799]  Processing encoder response
+[INFO] [1756656953.113545559]  Updated joint B_joint position: -0.25 rad
+[INFO] [1756656953.113594000]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.114911417]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.114990176]  Setting joint B_joint position to -0.16 radians (-638.98 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.115020664]  Calculated encoder counts: -29080
+[INFO] [1756656953.115089203]  Tx Data for 5: [ f5 0 64 c8 ff 8e 68 1b ]
+[INFO] [1756656953.115176097]  Sent position command -0.164 to joint B_joint. Last command: -0.174
+[INFO] [1756656953.163482881]  Rx Data for 5: [ 31 ff ff ff ff 5b 5f ec ]
+[INFO] [1756656953.163577019]  Processing encoder response
+[INFO] [1756656953.163611053]  Updated joint B_joint position: -0.24 rad
+[INFO] [1756656953.163681756]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.165051382]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.165104382]  Setting joint B_joint position to -0.15 radians (-599.99 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.165125592]  Calculated encoder counts: -27306
+[INFO] [1756656953.165183461]  Tx Data for 5: [ f5 0 63 c8 ff 95 56 f ]
+[INFO] [1756656953.165247092]  Sent position command -0.154 to joint B_joint. Last command: -0.164
+[INFO] [1756656953.213427828]  Rx Data for 5: [ 31 ff ff ff ff 60 b9 4b ]
+[INFO] [1756656953.213516806]  Processing encoder response
+[INFO] [1756656953.213547333]  Updated joint B_joint position: -0.23 rad
+[INFO] [1756656953.213598269]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.214860132]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.214904115]  Setting joint B_joint position to -0.14 radians (-561.27 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.214917921]  Calculated encoder counts: -25543
+[INFO] [1756656953.214956123]  Tx Data for 5: [ f5 0 64 c8 ff 9c 39 fa ]
+[INFO] [1756656953.215009514]  Sent position command -0.144 to joint B_joint. Last command: -0.154
+[INFO] [1756656953.263457204]  Rx Data for 5: [ 31 ff ff ff ff 66 1c b4 ]
+[INFO] [1756656953.263552514]  Processing encoder response
+[INFO] [1756656953.263652282]  Updated joint B_joint position: -0.22 rad
+[INFO] [1756656953.263721382]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.265049209]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.265111887]  Setting joint B_joint position to -0.13 radians (-522.29 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.265137145]  Calculated encoder counts: -23769
+[INFO] [1756656953.265206646]  Tx Data for 5: [ f5 0 63 c8 ff a3 27 ee ]
+[INFO] [1756656953.265286978]  Sent position command -0.134 to joint B_joint. Last command: -0.144
+[INFO] [1756656953.313469127]  Rx Data for 5: [ 31 ff ff ff ff 6b 55 f2 ]
+[INFO] [1756656953.313572532]  Processing encoder response
+[INFO] [1756656953.313614121]  Updated joint B_joint position: -0.22 rad
+[INFO] [1756656953.313687619]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.315230191]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.315316905]  Setting joint B_joint position to -0.12 radians (-483.31 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.315344036]  Calculated encoder counts: -21996
+[INFO] [1756656953.315407516]  Tx Data for 5: [ f5 0 64 c8 ff aa 14 e3 ]
+[INFO] [1756656953.315480574]  Sent position command -0.124 to joint B_joint. Last command: -0.134
+[INFO] [1756656953.363378085]  Rx Data for 5: [ 31 ff ff ff ff 70 9e 40 ]
+[INFO] [1756656953.363443329]  Processing encoder response
+[INFO] [1756656953.363471241]  Updated joint B_joint position: -0.21 rad
+[INFO] [1756656953.363514222]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.364779782]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.364845967]  Setting joint B_joint position to -0.11 radians (-444.77 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.364870824]  Calculated encoder counts: -20242
+[INFO] [1756656953.364933472]  Tx Data for 5: [ f5 0 63 c8 ff b0 ee c2 ]
+[INFO] [1756656953.365000599]  Sent position command -0.114 to joint B_joint. Last command: -0.124
+[INFO] [1756656953.413546945]  Rx Data for 5: [ 31 ff ff ff ff 76 22 ca ]
+[INFO] [1756656953.413701226]  Processing encoder response
+[INFO] [1756656953.413754587]  Updated joint B_joint position: -0.20 rad
+[INFO] [1756656953.413858122]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.415744584]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.415822090]  Setting joint B_joint position to -0.10 radians (-405.26 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.415848810]  Calculated encoder counts: -18443
+[INFO] [1756656953.415911559]  Tx Data for 5: [ f5 0 64 c8 ff b7 f5 d1 ]
+[INFO] [1756656953.415989366]  Sent position command -0.104 to joint B_joint. Last command: -0.114
+[INFO] [1756656953.463403184]  Rx Data for 5: [ 31 ff ff ff ff 7b 74 21 ]
+[INFO] [1756656953.463475250]  Processing encoder response
+[INFO] [1756656953.463504004]  Updated joint B_joint position: -0.19 rad
+[INFO] [1756656953.463553778]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.464874181]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.464938973]  Setting joint B_joint position to -0.09 radians (-366.99 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.464966656]  Calculated encoder counts: -16702
+[INFO] [1756656953.465030175]  Tx Data for 5: [ f5 0 63 c8 ff be c2 a4 ]
+[INFO] [1756656953.465096370]  Sent position command -0.094 to joint B_joint. Last command: -0.104
+[INFO] [1756656953.513383187]  Rx Data for 5: [ 31 ff ff ff ff 80 ea 9c ]
+[INFO] [1756656953.513446957]  Processing encoder response
+[INFO] [1756656953.513473367]  Updated joint B_joint position: -0.18 rad
+[INFO] [1756656953.513524023]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.514754415]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.514818136]  Setting joint B_joint position to -0.08 radians (-328.21 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.514846229]  Calculated encoder counts: -14937
+[INFO] [1756656953.514890192]  Tx Data for 5: [ f5 0 64 c8 ff c5 a7 91 ]
+[INFO] [1756656953.514939224]  Sent position command -0.084 to joint B_joint. Last command: -0.094
+[INFO] [1756656953.563464631]  Rx Data for 5: [ 31 ff ff ff ff 86 28 e0 ]
+[INFO] [1756656953.563548289]  Processing encoder response
+[INFO] [1756656953.563581291]  Updated joint B_joint position: -0.18 rad
+[INFO] [1756656953.563637898]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.565391689]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.565445250]  Setting joint B_joint position to -0.07 radians (-288.86 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.565467913]  Calculated encoder counts: -13146
+[INFO] [1756656953.565518949]  Tx Data for 5: [ f5 0 63 c8 ff cc a6 96 ]
+[INFO] [1756656953.565574745]  Sent position command -0.074 to joint B_joint. Last command: -0.084
+[move_group-8] [WARN] [1756656953.565524400] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[INFO] [1756656953.613363471]  Rx Data for 5: [ 31 ff ff ff ff 8b 7d 3a ]
+[INFO] [1756656953.613423214]  Processing encoder response
+[INFO] [1756656953.613450425]  Updated joint B_joint position: -0.17 rad
+[INFO] [1756656953.613495079]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.614712868]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.614753365]  Setting joint B_joint position to -0.06 radians (-250.52 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.614772441]  Calculated encoder counts: -11401
+[INFO] [1756656953.614812747]  Tx Data for 5: [ f5 0 64 c8 ff d3 77 6f ]
+[INFO] [1756656953.614893349]  Sent position command -0.064 to joint B_joint. Last command: -0.074
+[INFO] [1756656953.663340207]  Rx Data for 5: [ 31 ff ff ff ff 90 eb ad ]
+[INFO] [1756656953.663408586]  Processing encoder response
+[INFO] [1756656953.663434936]  Updated joint B_joint position: -0.16 rad
+[INFO] [1756656953.663490010]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.664782711]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.664893049]  Setting joint B_joint position to -0.05 radians (-211.63 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.664918597]  Calculated encoder counts: -9631
+[INFO] [1756656953.664971838]  Tx Data for 5: [ f5 0 63 c8 ff da 61 5f ]
+[INFO] [1756656953.665086073]  Sent position command -0.054 to joint B_joint. Last command: -0.064
+[INFO] [1756656953.713366488]  Rx Data for 5: [ 31 ff ff ff ff 96 3c 4 ]
+[INFO] [1756656953.713436590]  Processing encoder response
+[INFO] [1756656953.713471215]  Updated joint B_joint position: -0.15 rad
+[INFO] [1756656953.713534855]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.714825893]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.714889683]  Setting joint B_joint position to -0.04 radians (-172.73 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.714918047]  Calculated encoder counts: -7861
+[INFO] [1756656953.714974523]  Tx Data for 5: [ f5 0 64 c8 ff e1 4b 51 ]
+[INFO] [1756656953.715084791]  Sent position command -0.044 to joint B_joint. Last command: -0.054
+[INFO] [1756656953.763484521]  Rx Data for 5: [ 31 ff ff ff ff 9b 96 63 ]
+[INFO] [1756656953.763593597]  Processing encoder response
+[INFO] [1756656953.763632881]  Updated joint B_joint position: -0.15 rad
+[INFO] [1756656953.763696511]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.765127432]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.765258430]  Setting joint B_joint position to -0.03 radians (-133.69 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.765293205]  Calculated encoder counts: -6084
+[INFO] [1756656953.765391190]  Tx Data for 5: [ f5 0 63 c8 ff e8 3c 48 ]
+[INFO] [1756656953.765586078]  Sent position command -0.034 to joint B_joint. Last command: -0.044
+[INFO] [1756656953.813541900]  Rx Data for 5: [ 31 ff ff ff ff a0 f4 c6 ]
+[INFO] [1756656953.813662157]  Processing encoder response
+[INFO] [1756656953.813697884]  Updated joint B_joint position: -0.14 rad
+[INFO] [1756656953.813763869]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.815445023]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.815510506]  Setting joint B_joint position to -0.02 radians (-94.58 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.815534241]  Calculated encoder counts: -4304
+[INFO] [1756656953.815595527]  Tx Data for 5: [ f5 0 64 c8 ff ef 30 44 ]
+[INFO] [1756656953.815714331]  Sent position command -0.024 to joint B_joint. Last command: -0.034
+[INFO] [1756656953.863366780]  Rx Data for 5: [ 31 ff ff ff ff a6 21 f9 ]
+[INFO] [1756656953.863436321]  Processing encoder response
+[INFO] [1756656953.863461940]  Updated joint B_joint position: -0.13 rad
+[INFO] [1756656953.863506764]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.864742938]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.864783094]  Setting joint B_joint position to -0.01 radians (-56.21 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.864847495]  Calculated encoder counts: -2558
+[INFO] [1756656953.864918680]  Tx Data for 5: [ f5 0 63 c8 ff f6 2 1c ]
+[INFO] [1756656953.864967181]  Sent position command -0.014 to joint B_joint. Last command: -0.024
+[INFO] [1756656953.913393341]  Rx Data for 5: [ 31 ff ff ff ff ab 6c 49 ]
+[INFO] [1756656953.913464625]  Processing encoder response
+[INFO] [1756656953.913494141]  Updated joint B_joint position: -0.12 rad
+[INFO] [1756656953.913553523]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.914835413]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.914915845]  Setting joint B_joint position to -0.00 radians (-17.31 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.914941042]  Calculated encoder counts: -787
+[INFO] [1756656953.915011996]  Tx Data for 5: [ f5 0 64 c8 ff fc ed e ]
+[INFO] [1756656953.915100243]  Sent position command -0.004 to joint B_joint. Last command: -0.014
+[INFO] [1756656953.963860453]  Rx Data for 5: [ 31 ff ff ff ff b0 b4 96 ]
+[INFO] [1756656953.963933190]  Processing encoder response
+[INFO] [1756656953.963968848]  Updated joint B_joint position: -0.11 rad
+[INFO] [1756656953.964030173]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656953.965342811]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656953.965433342]  Setting joint B_joint position to 0.01 radians (21.94 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656953.965460263]  Calculated encoder counts: 998
+[INFO] [1756656953.965572164]  Tx Data for 5: [ f5 0 63 c8 0 3 e6 e ]
+[INFO] [1756656953.965646655]  Sent position command 0.006 to joint B_joint. Last command: -0.004
+[INFO] [1756656954.013458545]  Rx Data for 5: [ 31 ff ff ff ff b6 26 e ]
+[INFO] [1756656954.013556400]  Processing encoder response
+[INFO] [1756656954.013589302]  Updated joint B_joint position: -0.11 rad
+[INFO] [1756656954.013646810]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.015412704]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.015474591]  Setting joint B_joint position to 0.02 radians (60.87 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.015554552]  Calculated encoder counts: 2770
+[INFO] [1756656954.015609305]  Tx Data for 5: [ f5 0 64 c8 0 a d2 2 ]
+[INFO] [1756656954.015686471]  Sent position command 0.016 to joint B_joint. Last command: 0.006
+[INFO] [1756656954.063457703]  Rx Data for 5: [ 31 ff ff ff ff bb 95 82 ]
+[INFO] [1756656954.063564876]  Processing encoder response
+[INFO] [1756656954.063607837]  Updated joint B_joint position: -0.10 rad
+[INFO] [1756656954.063694049]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.065118288]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.065194722]  Setting joint B_joint position to 0.03 radians (99.48 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.065258242]  Calculated encoder counts: 4527
+[INFO] [1756656954.065317905]  Tx Data for 5: [ f5 0 63 c8 0 11 af e5 ]
+[INFO] [1756656954.065421010]  Sent position command 0.026 to joint B_joint. Last command: 0.016
+[INFO] [1756656954.113490355]  Rx Data for 5: [ 31 ff ff ff ff c0 ed df ]
+[INFO] [1756656954.113589171]  Processing encoder response
+[INFO] [1756656954.113629217]  Updated joint B_joint position: -0.09 rad
+[INFO] [1756656954.113694761]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.115153485]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.115310030]  Setting joint B_joint position to 0.04 radians (138.33 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.115396994]  Calculated encoder counts: 6295
+[INFO] [1756656954.115523353]  Tx Data for 5: [ f5 0 64 c8 0 18 97 d5 ]
+[INFO] [1756656954.115890696]  Sent position command 0.036 to joint B_joint. Last command: 0.026
+[INFO] [1756656954.163570787]  Rx Data for 5: [ 31 ff ff ff ff c6 34 2c ]
+[INFO] [1756656954.163677889]  Processing encoder response
+[INFO] [1756656954.163718456]  Updated joint B_joint position: -0.08 rad
+[INFO] [1756656954.163794219]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.165438914]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.165772363]  Setting joint B_joint position to 0.05 radians (177.22 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.165830663]  Calculated encoder counts: 8065
+[INFO] [1756656954.165996947]  Tx Data for 5: [ f5 0 63 c8 0 1f 81 c5 ]
+[INFO] [1756656954.166168471]  Sent position command 0.046 to joint B_joint. Last command: 0.036
+[INFO] [1756656954.213542844]  Rx Data for 5: [ 31 ff ff ff ff cb a8 a5 ]
+[INFO] [1756656954.213682017]  Processing encoder response
+[INFO] [1756656954.213727192]  Updated joint B_joint position: -0.08 rad
+[INFO] [1756656954.213826450]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.215797841]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.215936323]  Setting joint B_joint position to 0.06 radians (216.29 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.215965357]  Calculated encoder counts: 9843
+[INFO] [1756656954.216083070]  Tx Data for 5: [ f5 0 64 c8 0 26 73 bf ]
+[INFO] [1756656954.216177057]  Sent position command 0.056 to joint B_joint. Last command: 0.046
+[INFO] [1756656954.263404714]  Rx Data for 5: [ 31 ff ff ff ff d0 f5 f7 ]
+[INFO] [1756656954.263476519]  Processing encoder response
+[INFO] [1756656954.263504291]  Updated joint B_joint position: -0.07 rad
+[INFO] [1756656954.263553885]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.264820997]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.264871613]  Setting joint B_joint position to 0.07 radians (254.70 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.264894276]  Calculated encoder counts: 11591
+[INFO] [1756656954.264940513]  Tx Data for 5: [ f5 0 63 c8 0 2d 47 99 ]
+[INFO] [1756656954.264997531]  Sent position command 0.066 to joint B_joint. Last command: 0.056
+[INFO] [1756656954.313398442]  Rx Data for 5: [ 31 ff ff ff ff d6 5c 64 ]
+[INFO] [1756656954.313470598]  Processing encoder response
+[INFO] [1756656954.313507748]  Updated joint B_joint position: -0.06 rad
+[INFO] [1756656954.313571949]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.314828842]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.314878967]  Setting joint B_joint position to 0.08 radians (293.57 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.314901559]  Calculated encoder counts: 13360
+[INFO] [1756656954.314944881]  Tx Data for 5: [ f5 0 64 c8 0 34 30 8a ]
+[INFO] [1756656954.314998182]  Sent position command 0.076 to joint B_joint. Last command: 0.066
+[INFO] [1756656954.363481990]  Rx Data for 5: [ 31 ff ff ff ff db c7 d4 ]
+[INFO] [1756656954.363580586]  Processing encoder response
+[INFO] [1756656954.363619720]  Updated joint B_joint position: -0.05 rad
+[INFO] [1756656954.363692307]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.365424066]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.365485542]  Setting joint B_joint position to 0.09 radians (332.88 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.365510850]  Calculated encoder counts: 15149
+[INFO] [1756656954.365568759]  Tx Data for 5: [ f5 0 64 c8 0 3b 2d 8e ]
+[INFO] [1756656954.365643560]  Sent position command 0.086 to joint B_joint. Last command: 0.076
+[INFO] [1756656954.413466531]  Rx Data for 5: [ 31 ff ff ff ff e1 6 19 ]
+[INFO] [1756656954.413554567]  Processing encoder response
+[INFO] [1756656954.413594793]  Updated joint B_joint position: -0.04 rad
+[INFO] [1756656954.413665476]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.415148316]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.415302116]  Setting joint B_joint position to 0.10 radians (371.44 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.415348393]  Calculated encoder counts: 16904
+[INFO] [1756656954.415446849]  Tx Data for 5: [ f5 0 63 c8 0 42 8 6f ]
+[INFO] [1756656954.415554502]  Sent position command 0.096 to joint B_joint. Last command: 0.086
+[INFO] [1756656954.463512748]  Rx Data for 5: [ 31 ff ff ff ff e6 17 2f ]
+[INFO] [1756656954.463627304]  Processing encoder response
+[INFO] [1756656954.463677819]  Updated joint B_joint position: -0.04 rad
+[INFO] [1756656954.463750557]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.465454033]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.465583667]  Setting joint B_joint position to 0.11 radians (410.38 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.465611059]  Calculated encoder counts: 18676
+[INFO] [1756656954.465680711]  Tx Data for 5: [ f5 0 64 c8 0 48 f4 62 ]
+[INFO] [1756656954.465756504]  Sent position command 0.106 to joint B_joint. Last command: 0.096
+[INFO] [1756656954.513624659]  Rx Data for 5: [ 31 ff ff ff ff ea 48 64 ]
+[INFO] [1756656954.513743333]  Processing encoder response
+[INFO] [1756656954.513850706]  Updated joint B_joint position: -0.03 rad
+[INFO] [1756656954.513952989]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.515366718]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.515427132]  Setting joint B_joint position to 0.12 radians (449.39 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.515451708]  Calculated encoder counts: 20452
+[INFO] [1756656954.516007157]  Tx Data for 5: [ f5 0 63 c8 0 4f e4 58 ]
+[INFO] [1756656954.516194721]  Sent position command 0.116 to joint B_joint. Last command: 0.106
+[INFO] [1756656954.563442746]  Rx Data for 5: [ 31 ff ff ff ff ed 54 73 ]
+[INFO] [1756656954.563553425]  Processing encoder response
+[INFO] [1756656954.563599191]  Updated joint B_joint position: -0.03 rad
+[INFO] [1756656954.563668612]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.565017719]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.565114291]  Setting joint B_joint position to 0.13 radians (487.98 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.565147895]  Calculated encoder counts: 22208
+[INFO] [1756656954.565251871]  Tx Data for 5: [ f5 0 64 c8 0 56 c0 3c ]
+[INFO] [1756656954.565371417]  Sent position command 0.126 to joint B_joint. Last command: 0.116
+[INFO] [1756656954.613419763]  Rx Data for 5: [ 31 ff ff ff ff ef 98 b9 ]
+[INFO] [1756656954.613487310]  Processing encoder response
+[INFO] [1756656954.613511696]  Updated joint B_joint position: -0.02 rad
+[INFO] [1756656954.613554948]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.614784218]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.614828943]  Setting joint B_joint position to 0.14 radians (526.69 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.614854521]  Calculated encoder counts: 23970
+[INFO] [1756656954.614902462]  Tx Data for 5: [ f5 0 63 c8 0 5d a2 24 ]
+[INFO] [1756656954.614969067]  Sent position command 0.136 to joint B_joint. Last command: 0.126
+[move_group-8] [WARN] [1756656954.614921007] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[INFO] [1756656954.663387742]  Rx Data for 5: [ 31 ff ff ff ff ee 3a 5a ]
+[INFO] [1756656954.663451322]  Processing encoder response
+[INFO] [1756656954.663476730]  Updated joint B_joint position: -0.03 rad
+[INFO] [1756656954.663519731]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.664750916]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.664798005]  Setting joint B_joint position to 0.15 radians (565.53 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.664821319]  Calculated encoder counts: 25737
+[INFO] [1756656954.664866784]  Tx Data for 5: [ f5 0 64 c8 0 64 89 13 ]
+[INFO] [1756656954.664917911]  Sent position command 0.146 to joint B_joint. Last command: 0.136
+[INFO] [1756656954.713425884]  Rx Data for 5: [ 31 ff ff ff ff eb b1 ce ]
+[INFO] [1756656954.713497229]  Processing encoder response
+[INFO] [1756656954.713528658]  Updated joint B_joint position: -0.03 rad
+[INFO] [1756656954.713578302]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.714900097]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.714956875]  Setting joint B_joint position to 0.16 radians (604.48 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.714984737]  Calculated encoder counts: 27510
+[INFO] [1756656954.715043448]  Tx Data for 5: [ f5 0 63 c8 0 6b 76 6 ]
+[INFO] [1756656954.715118119]  Sent position command 0.156 to joint B_joint. Last command: 0.146
+[INFO] [1756656954.763473474]  Rx Data for 5: [ 31 ff ff ff ff e8 66 80 ]
+[INFO] [1756656954.763566149]  Processing encoder response
+[INFO] [1756656954.763599031]  Updated joint B_joint position: -0.03 rad
+[INFO] [1756656954.763659486]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.764992472]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.765125864]  Setting joint B_joint position to 0.17 radians (643.40 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.765288831]  Calculated encoder counts: 29281
+[INFO] [1756656954.765483709]  Tx Data for 5: [ f5 0 64 c8 0 72 61 f9 ]
+[INFO] [1756656954.765654592]  Sent position command 0.166 to joint B_joint. Last command: 0.156
+[INFO] [1756656954.813498211]  Rx Data for 5: [ 31 ff ff ff ff e4 1c 32 ]
+[INFO] [1756656954.813594593]  Processing encoder response
+[INFO] [1756656954.813635681]  Updated joint B_joint position: -0.04 rad
+[INFO] [1756656954.813706074]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.815028119]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.815085177]  Setting joint B_joint position to 0.18 radians (682.31 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.815107169]  Calculated encoder counts: 31052
+[INFO] [1756656954.815171821]  Tx Data for 5: [ f5 0 63 c8 0 79 4c ea ]
+[INFO] [1756656954.815257092]  Sent position command 0.176 to joint B_joint. Last command: 0.166
+[INFO] [1756656954.863457454]  Rx Data for 5: [ 31 ff ff ff ff de ef ff ]
+[INFO] [1756656954.863586388]  Processing encoder response
+[INFO] [1756656954.863619280]  Updated joint B_joint position: -0.05 rad
+[INFO] [1756656954.863665176]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.864913162]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.864970230]  Setting joint B_joint position to 0.19 radians (721.08 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.864993785]  Calculated encoder counts: 32817
+[INFO] [1756656954.865041575]  Tx Data for 5: [ f5 0 64 c8 0 80 31 d7 ]
+[INFO] [1756656954.865098552]  Sent position command 0.186 to joint B_joint. Last command: 0.176
+[INFO] [1756656954.913532757]  Rx Data for 5: [ 31 ff ff ff ff d9 9b a6 ]
+[INFO] [1756656954.913633657]  Processing encoder response
+[INFO] [1756656954.913669364]  Updated joint B_joint position: -0.06 rad
+[INFO] [1756656954.913728847]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.915121135]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.915267962]  Setting joint B_joint position to 0.20 radians (760.07 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.915302968]  Calculated encoder counts: 34591
+[INFO] [1756656954.915368702]  Tx Data for 5: [ f5 0 64 c8 0 87 1f cc ]
+[INFO] [1756656954.915464383]  Sent position command 0.196 to joint B_joint. Last command: 0.186
+[INFO] [1756656954.963449680]  Rx Data for 5: [ 31 ff ff ff ff d4 3e 44 ]
+[INFO] [1756656954.963561521]  Processing encoder response
+[INFO] [1756656954.963610043]  Updated joint B_joint position: -0.06 rad
+[INFO] [1756656954.963692238]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656954.964980500]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656954.965036385]  Setting joint B_joint position to 0.21 radians (798.83 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656954.965063076]  Calculated encoder counts: 36355
+[INFO] [1756656954.965118901]  Tx Data for 5: [ f5 0 64 c8 0 8e 3 b7 ]
+[INFO] [1756656954.965196978]  Sent position command 0.206 to joint B_joint. Last command: 0.196
+[INFO] [1756656955.013455641]  Rx Data for 5: [ 31 ff ff ff ff ce d3 d3 ]
+[INFO] [1756656955.013533598]  Processing encoder response
+[INFO] [1756656955.013567793]  Updated joint B_joint position: -0.07 rad
+[INFO] [1756656955.013625702]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.014873157]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.014920617]  Setting joint B_joint position to 0.22 radians (837.62 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.014944411]  Calculated encoder counts: 38121
+[INFO] [1756656955.014986631]  Tx Data for 5: [ f5 0 63 c8 0 94 e9 a2 ]
+[INFO] [1756656955.015038930]  Sent position command 0.216 to joint B_joint. Last command: 0.206
+[INFO] [1756656955.063424672]  Rx Data for 5: [ 31 ff ff ff ff c9 a3 9e ]
+[INFO] [1756656955.063500305]  Processing encoder response
+[INFO] [1756656955.063534890]  Updated joint B_joint position: -0.08 rad
+[INFO] [1756656955.063638676]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.064908584]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.064957055]  Setting joint B_joint position to 0.23 radians (876.50 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.064982413]  Calculated encoder counts: 39890
+[INFO] [1756656955.065028680]  Tx Data for 5: [ f5 0 64 c8 0 9b d2 93 ]
+[INFO] [1756656955.065086980]  Sent position command 0.226 to joint B_joint. Last command: 0.216
+[INFO] [1756656955.113385638]  Rx Data for 5: [ 31 ff ff ff ff c4 30 26 ]
+[INFO] [1756656955.113454067]  Processing encoder response
+[INFO] [1756656955.113482902]  Updated joint B_joint position: -0.09 rad
+[INFO] [1756656955.113532956]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.114809236]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.114857627]  Setting joint B_joint position to 0.24 radians (915.27 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.114911398]  Calculated encoder counts: 41654
+[INFO] [1756656955.114950472]  Tx Data for 5: [ f5 0 63 c8 0 a2 b6 7d ]
+[INFO] [1756656955.114995998]  Sent position command 0.236 to joint B_joint. Last command: 0.226
+[INFO] [1756656955.163360420]  Rx Data for 5: [ 31 ff ff ff ff be a6 96 ]
+[INFO] [1756656955.163422076]  Processing encoder response
+[INFO] [1756656955.163450520]  Updated joint B_joint position: -0.09 rad
+[INFO] [1756656955.163499152]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.164785560]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.164829594]  Setting joint B_joint position to 0.25 radians (954.13 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.164851655]  Calculated encoder counts: 43423
+[INFO] [1756656955.164897882]  Tx Data for 5: [ f5 0 64 c8 0 a9 9f 6e ]
+[INFO] [1756656955.164956473]  Sent position command 0.246 to joint B_joint. Last command: 0.236
+[INFO] [1756656955.213364968]  Rx Data for 5: [ 31 ff ff ff ff b9 59 44 ]
+[INFO] [1756656955.213426655]  Processing encoder response
+[INFO] [1756656955.213453435]  Updated joint B_joint position: -0.10 rad
+[INFO] [1756656955.213497569]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.214727931]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.214774329]  Setting joint B_joint position to 0.26 radians (992.94 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.214795940]  Calculated encoder counts: 45190
+[INFO] [1756656955.214840454]  Tx Data for 5: [ f5 0 64 c8 0 b0 86 5c ]
+[INFO] [1756656955.214926707]  Sent position command 0.256 to joint B_joint. Last command: 0.246
+[INFO] [1756656955.263369146]  Rx Data for 5: [ 31 ff ff ff ff b3 e4 c9 ]
+[INFO] [1756656955.263438547]  Processing encoder response
+[INFO] [1756656955.263468523]  Updated joint B_joint position: -0.11 rad
+[INFO] [1756656955.263519840]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.264882262]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.264978173]  Setting joint B_joint position to 0.27 radians (1031.88 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.265007368]  Calculated encoder counts: 46961
+[INFO] [1756656955.265105293]  Tx Data for 5: [ f5 0 64 c8 0 b7 71 4e ]
+[INFO] [1756656955.265307505]  Sent position command 0.266 to joint B_joint. Last command: 0.256
+[INFO] [1756656955.313379435]  Rx Data for 5: [ 31 ff ff ff ff ae 7d 5d ]
+[INFO] [1756656955.313447283]  Processing encoder response
+[INFO] [1756656955.313479484]  Updated joint B_joint position: -0.12 rad
+[INFO] [1756656955.313541000]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.314904564]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.315002399]  Setting joint B_joint position to 0.28 radians (1070.75 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.315033507]  Calculated encoder counts: 48730
+[INFO] [1756656955.315127164]  Tx Data for 5: [ f5 0 64 c8 0 be 5a 3e ]
+[INFO] [1756656955.315342080]  Sent position command 0.276 to joint B_joint. Last command: 0.266
+[INFO] [1756656955.363377872]  Rx Data for 5: [ 31 ff ff ff ff a9 4a 25 ]
+[INFO] [1756656955.363449046]  Processing encoder response
+[INFO] [1756656955.363480415]  Updated joint B_joint position: -0.13 rad
+[INFO] [1756656955.363531962]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.364802140]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.364861282]  Setting joint B_joint position to 0.29 radians (1109.57 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.364883504]  Calculated encoder counts: 50497
+[INFO] [1756656955.364934119]  Tx Data for 5: [ f5 0 64 c8 0 c5 41 2c ]
+[INFO] [1756656955.365044638]  Sent position command 0.286 to joint B_joint. Last command: 0.276
+[INFO] [1756656955.413403480]  Rx Data for 5: [ 31 ff ff ff ff a3 ff d4 ]
+[INFO] [1756656955.413482028]  Processing encoder response
+[INFO] [1756656955.413518437]  Updated joint B_joint position: -0.13 rad
+[INFO] [1756656955.413577258]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.414841494]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.414890827]  Setting joint B_joint position to 0.30 radians (1148.47 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.414907729]  Calculated encoder counts: 52267
+[INFO] [1756656955.414961701]  Tx Data for 5: [ f5 0 63 c8 0 cc 2b 1c ]
+[INFO] [1756656955.415079744]  Sent position command 0.296 to joint B_joint. Last command: 0.286
+[INFO] [1756656955.463334589]  Rx Data for 5: [ 31 ff ff ff ff 9e bf 8f ]
+[INFO] [1756656955.463394502]  Processing encoder response
+[INFO] [1756656955.463417135]  Updated joint B_joint position: -0.14 rad
+[INFO] [1756656955.463457501]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.464702281]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.464753277]  Setting joint B_joint position to 0.31 radians (1187.20 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.464774878]  Calculated encoder counts: 54030
+[INFO] [1756656955.464831094]  Tx Data for 5: [ f5 0 64 c8 0 d3 e 7 ]
+[INFO] [1756656955.464942925]  Sent position command 0.306 to joint B_joint. Last command: 0.296
+[INFO] [1756656955.513392969]  Rx Data for 5: [ 31 ff ff ff ff 99 7e 49 ]
+[INFO] [1756656955.513475154]  Processing encoder response
+[INFO] [1756656955.513505872]  Updated joint B_joint position: -0.15 rad
+[INFO] [1756656955.513558141]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.514829841]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.514884114]  Setting joint B_joint position to 0.32 radians (1226.17 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.514906256]  Calculated encoder counts: 55804
+[INFO] [1756656955.514960628]  Tx Data for 5: [ f5 0 64 c8 0 d9 fc fb ]
+[INFO] [1756656955.515090494]  Sent position command 0.316 to joint B_joint. Last command: 0.306
+[INFO] [1756656955.563345499]  Rx Data for 5: [ 31 ff ff ff ff 93 eb b0 ]
+[INFO] [1756656955.563439827]  Processing encoder response
+[INFO] [1756656955.563466097]  Updated joint B_joint position: -0.16 rad
+[INFO] [1756656955.563509378]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.564827256]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.564908339]  Setting joint B_joint position to 0.33 radians (1264.99 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.564936422]  Calculated encoder counts: 57571
+[INFO] [1756656955.565069964]  Tx Data for 5: [ f5 0 64 c8 0 e0 e3 e9 ]
+[INFO] [1756656955.565150386]  Sent position command 0.326 to joint B_joint. Last command: 0.316
+[INFO] [1756656955.613351830]  Rx Data for 5: [ 31 ff ff ff ff 8e b6 76 ]
+[INFO] [1756656955.613421392]  Processing encoder response
+[INFO] [1756656955.613448753]  Updated joint B_joint position: -0.16 rad
+[INFO] [1756656955.613497796]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.614797289]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.614876208]  Setting joint B_joint position to 0.34 radians (1303.83 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.614904782]  Calculated encoder counts: 59338
+[move_group-8] [WARN] [1756656955.615001715] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[INFO] [1756656955.615043965]  Tx Data for 5: [ f5 0 63 c8 0 e7 ca d6 ]
+[INFO] [1756656955.615140798]  Sent position command 0.336 to joint B_joint. Last command: 0.326
+[INFO] [1756656955.663351550]  Rx Data for 5: [ 31 ff ff ff ff 89 53 e ]
+[INFO] [1756656955.663413637]  Processing encoder response
+[INFO] [1756656955.663439245]  Updated joint B_joint position: -0.17 rad
+[INFO] [1756656955.663481164]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.664816806]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.664923908]  Setting joint B_joint position to 0.35 radians (1342.69 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.665044295]  Calculated encoder counts: 61107
+[INFO] [1756656955.665149744]  Tx Data for 5: [ f5 0 64 c8 0 ee b3 c7 ]
+[INFO] [1756656955.665282485]  Sent position command 0.346 to joint B_joint. Last command: 0.336
+[INFO] [1756656955.713524245]  Rx Data for 5: [ 31 ff ff ff ff 83 f9 ae ]
+[INFO] [1756656955.713605449]  Processing encoder response
+[INFO] [1756656955.713672736]  Updated joint B_joint position: -0.18 rad
+[INFO] [1756656955.713780519]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.715262978]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.715312822]  Setting joint B_joint position to 0.36 radians (1381.92 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.715395638]  Calculated encoder counts: 62892
+[INFO] [1756656955.715550340]  Tx Data for 5: [ f5 0 64 c8 0 f5 ac c7 ]
+[INFO] [1756656955.715796284]  Sent position command 0.356 to joint B_joint. Last command: 0.346
+[INFO] [1756656955.763433053]  Rx Data for 5: [ 31 ff ff ff ff 7e 81 31 ]
+[INFO] [1756656955.763495861]  Processing encoder response
+[INFO] [1756656955.763550324]  Updated joint B_joint position: -0.19 rad
+[INFO] [1756656955.763597924]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.764859415]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.764909560]  Setting joint B_joint position to 0.37 radians (1420.48 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.764925160]  Calculated encoder counts: 64647
+[INFO] [1756656955.764976787]  Tx Data for 5: [ f5 0 64 c8 0 fc 87 a9 ]
+[INFO] [1756656955.765027723]  Sent position command 0.366 to joint B_joint. Last command: 0.356
+[INFO] [1756656955.813431790]  Rx Data for 5: [ 31 ff ff ff ff 79 1e c9 ]
+[INFO] [1756656955.813502343]  Processing encoder response
+[INFO] [1756656955.813527571]  Updated joint B_joint position: -0.20 rad
+[INFO] [1756656955.813577174]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.814855107]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.814910622]  Setting joint B_joint position to 0.38 radians (1459.33 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.814938624]  Calculated encoder counts: 66415
+[INFO] [1756656955.814995041]  Tx Data for 5: [ f5 0 63 c8 1 3 6f 98 ]
+[INFO] [1756656955.815072297]  Sent position command 0.376 to joint B_joint. Last command: 0.366
+[INFO] [1756656955.863391083]  Rx Data for 5: [ 31 ff ff ff ff 73 be 63 ]
+[INFO] [1756656955.863455925]  Processing encoder response
+[INFO] [1756656955.863480271]  Updated joint B_joint position: -0.20 rad
+[INFO] [1756656955.863520828]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.864754296]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.864785736]  Setting joint B_joint position to 0.39 radians (1498.12 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.864803589]  Calculated encoder counts: 68181
+[INFO] [1756656955.864838054]  Tx Data for 5: [ f5 0 64 c8 1 a 55 86 ]
+[INFO] [1756656955.864891175]  Sent position command 0.386 to joint B_joint. Last command: 0.376
+[INFO] [1756656955.913395491]  Rx Data for 5: [ 31 ff ff ff ff 6e 61 1 ]
+[INFO] [1756656955.913465753]  Processing encoder response
+[INFO] [1756656955.913496020]  Updated joint B_joint position: -0.21 rad
+[INFO] [1756656955.913547037]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.914877318]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.914986314]  Setting joint B_joint position to 0.40 radians (1537.02 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.915016210]  Calculated encoder counts: 69951
+[INFO] [1756656955.915108474]  Tx Data for 5: [ f5 0 63 c8 1 11 3f 76 ]
+[INFO] [1756656955.915180550]  Sent position command 0.396 to joint B_joint. Last command: 0.386
+[INFO] [1756656955.963386092]  Rx Data for 5: [ 31 ff ff ff ff 69 6 a1 ]
+[INFO] [1756656955.963460824]  Processing encoder response
+[INFO] [1756656955.963496351]  Updated joint B_joint position: -0.22 rad
+[INFO] [1756656955.963546415]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656955.964893699]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656955.964978459]  Setting joint B_joint position to 0.41 radians (1575.92 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656955.965002344]  Calculated encoder counts: 71721
+[INFO] [1756656955.965069991]  Tx Data for 5: [ f5 0 64 c8 1 18 29 68 ]
+[INFO] [1756656955.965145053]  Sent position command 0.406 to joint B_joint. Last command: 0.396
+[INFO] [1756656956.013345666]  Rx Data for 5: [ 31 ff ff ff ff 63 bc 51 ]
+[INFO] [1756656956.013401812]  Processing encoder response
+[INFO] [1756656956.013423162]  Updated joint B_joint position: -0.23 rad
+[INFO] [1756656956.013459120]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.014721804]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.014784051]  Setting joint B_joint position to 0.42 radians (1614.66 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.014805532]  Calculated encoder counts: 73484
+[INFO] [1756656956.014873279]  Tx Data for 5: [ f5 0 64 c8 1 1f c 52 ]
+[INFO] [1756656956.014948481]  Sent position command 0.416 to joint B_joint. Last command: 0.406
+[INFO] [1756656956.063352388]  Rx Data for 5: [ 31 ff ff ff ff 5e 84 14 ]
+[INFO] [1756656956.063409706]  Processing encoder response
+[INFO] [1756656956.063433300]  Updated joint B_joint position: -0.23 rad
+[INFO] [1756656956.063473065]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.064794129]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.064920919]  Setting joint B_joint position to 0.43 radians (1653.54 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.064951747]  Calculated encoder counts: 75254
+[INFO] [1756656956.065022911]  Tx Data for 5: [ f5 0 64 c8 1 25 f6 42 ]
+[INFO] [1756656956.065134782]  Sent position command 0.426 to joint B_joint. Last command: 0.416
+[INFO] [1756656956.113400327]  Rx Data for 5: [ 31 ff ff ff ff 59 18 a3 ]
+[INFO] [1756656956.113465641]  Processing encoder response
+[INFO] [1756656956.113492982]  Updated joint B_joint position: -0.24 rad
+[INFO] [1756656956.113538919]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.114874620]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.114958128]  Setting joint B_joint position to 0.44 radians (1692.45 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.114993976]  Calculated encoder counts: 77025
+[INFO] [1756656956.115092181]  Tx Data for 5: [ f5 0 64 c8 1 2c e1 34 ]
+[INFO] [1756656956.115249999]  Sent position command 0.436 to joint B_joint. Last command: 0.426
+[INFO] [1756656956.163448036]  Rx Data for 5: [ 31 ff ff ff ff 53 ea 6f ]
+[INFO] [1756656956.163526334]  Processing encoder response
+[INFO] [1756656956.163570397]  Updated joint B_joint position: -0.25 rad
+[INFO] [1756656956.163642233]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.164964840]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.165039381]  Setting joint B_joint position to 0.45 radians (1731.42 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.165141333]  Calculated encoder counts: 78798
+[INFO] [1756656956.165240931]  Tx Data for 5: [ f5 0 64 c8 1 33 ce 28 ]
+[INFO] [1756656956.165331702]  Sent position command 0.446 to joint B_joint. Last command: 0.436
+[INFO] [1756656956.213431665]  Rx Data for 5: [ 31 ff ff ff ff 4e 4c cc ]
+[INFO] [1756656956.213508039]  Processing encoder response
+[INFO] [1756656956.213541823]  Updated joint B_joint position: -0.26 rad
+[INFO] [1756656956.213597478]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.214875691]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.214934181]  Setting joint B_joint position to 0.46 radians (1770.21 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.214956814]  Calculated encoder counts: 80564
+[INFO] [1756656956.215018069]  Tx Data for 5: [ f5 0 64 c8 1 3a b4 15 ]
+[INFO] [1756656956.215079465]  Sent position command 0.456 to joint B_joint. Last command: 0.446
+[INFO] [1756656956.263425733]  Rx Data for 5: [ 31 ff ff ff ff 49 38 b3 ]
+[INFO] [1756656956.263499933]  Processing encoder response
+[INFO] [1756656956.263533296]  Updated joint B_joint position: -0.26 rad
+[INFO] [1756656956.263591806]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.264889095]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.264963826]  Setting joint B_joint position to 0.47 radians (1809.07 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.265022988]  Calculated encoder counts: 82332
+[INFO] [1756656956.265101927]  Tx Data for 5: [ f5 0 64 c8 1 41 9c 4 ]
+[INFO] [1756656956.265209981]  Sent position command 0.466 to joint B_joint. Last command: 0.456
+[INFO] [1756656956.313401907]  Rx Data for 5: [ 31 ff ff ff ff 43 ba 2f ]
+[INFO] [1756656956.313473552]  Processing encoder response
+[INFO] [1756656956.313503859]  Updated joint B_joint position: -0.27 rad
+[INFO] [1756656956.313551670]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.314857394]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.314947224]  Setting joint B_joint position to 0.48 radians (1847.90 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.314975908]  Calculated encoder counts: 84099
+[INFO] [1756656956.315040600]  Tx Data for 5: [ f5 0 63 c8 1 48 83 f1 ]
+[INFO] [1756656956.315109841]  Sent position command 0.476 to joint B_joint. Last command: 0.466
+[INFO] [1756656956.363367972]  Rx Data for 5: [ 31 ff ff ff ff 3e 37 a7 ]
+[INFO] [1756656956.363426893]  Processing encoder response
+[INFO] [1756656956.363452051]  Updated joint B_joint position: -0.28 rad
+[INFO] [1756656956.363495954]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.364771702]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.364831024]  Setting joint B_joint position to 0.49 radians (1886.71 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.364853446]  Calculated encoder counts: 85866
+[INFO] [1756656956.364962412]  Tx Data for 5: [ f5 0 64 c8 1 4f 6a e0 ]
+[INFO] [1756656956.365052622]  Sent position command 0.486 to joint B_joint. Last command: 0.476
+[INFO] [1756656956.413323677]  Rx Data for 5: [ 31 ff ff ff ff 38 f6 60 ]
+[INFO] [1756656956.413376437]  Processing encoder response
+[INFO] [1756656956.413397006]  Updated joint B_joint position: -0.29 rad
+[INFO] [1756656956.413433084]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.414669398]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.414740282]  Setting joint B_joint position to 0.50 radians (1925.48 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.414765349]  Calculated encoder counts: 87630
+[INFO] [1756656956.414840150]  Tx Data for 5: [ f5 0 63 c8 1 56 4e ca ]
+[INFO] [1756656956.414909581]  Sent position command 0.496 to joint B_joint. Last command: 0.486
+[INFO] [1756656956.463348834]  Rx Data for 5: [ 31 ff ff ff ff 33 4d b2 ]
+[INFO] [1756656956.463416772]  Processing encoder response
+[INFO] [1756656956.463446288]  Updated joint B_joint position: -0.30 rad
+[INFO] [1756656956.463490952]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.464798972]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.464876248]  Setting joint B_joint position to 0.51 radians (1964.42 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.464904030]  Calculated encoder counts: 89403
+[INFO] [1756656956.464996965]  Tx Data for 5: [ f5 0 64 c8 1 5d 3b bf ]
+[INFO] [1756656956.465143622]  Sent position command 0.506 to joint B_joint. Last command: 0.496
+[INFO] [1756656956.513341199]  Rx Data for 5: [ 31 ff ff ff ff 2d f2 51 ]
+[INFO] [1756656956.513413044]  Processing encoder response
+[INFO] [1756656956.513446157]  Updated joint B_joint position: -0.30 rad
+[INFO] [1756656956.513508314]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.514877178]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.514953643]  Setting joint B_joint position to 0.52 radians (2003.33 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.514981606]  Calculated encoder counts: 91173
+[INFO] [1756656956.515047570]  Tx Data for 5: [ f5 0 64 c8 1 64 25 b0 ]
+[INFO] [1756656956.515208584]  Sent position command 0.516 to joint B_joint. Last command: 0.506
+[INFO] [1756656956.563414867]  Rx Data for 5: [ 31 ff ff ff ff 28 c0 1a ]
+[INFO] [1756656956.563501390]  Processing encoder response
+[INFO] [1756656956.563543740]  Updated joint B_joint position: -0.31 rad
+[INFO] [1756656956.563614724]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.564932372]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.565022993]  Setting joint B_joint position to 0.53 radians (2042.26 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.565049062]  Calculated encoder counts: 92945
+[INFO] [1756656956.565190239]  Tx Data for 5: [ f5 0 64 c8 1 6b 11 a3 ]
+[INFO] [1756656956.565301909]  Sent position command 0.526 to joint B_joint. Last command: 0.516
+[INFO] [1756656956.613356967]  Rx Data for 5: [ 31 ff ff ff ff 23 84 d9 ]
+[INFO] [1756656956.613423442]  Processing encoder response
+[INFO] [1756656956.613448239]  Updated joint B_joint position: -0.32 rad
+[INFO] [1756656956.613495518]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.614740839]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.614797156]  Setting joint B_joint position to 0.54 radians (2080.98 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.614818656]  Calculated encoder counts: 94707
+[INFO] [1756656956.614902865]  Tx Data for 5: [ f5 0 63 c8 1 71 f3 8a ]
+[INFO] [1756656956.614955715]  Sent position command 0.536 to joint B_joint. Last command: 0.526
+[INFO] [1756656956.663370031]  Rx Data for 5: [ 31 ff ff ff ff 1e 41 91 ]
+[INFO] [1756656956.663454500]  Processing encoder response
+[INFO] [1756656956.663486520]  Updated joint B_joint position: -0.33 rad
+[INFO] [1756656956.663541364]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.664815319]  Sent velocity command 0.200 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.664881374]  Setting joint B_joint position to 0.55 radians (2119.88 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.664966294]  Calculated encoder counts: 96478
+[move_group-8] [WARN] [1756656956.665039122] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[INFO] [1756656956.665048940]  Tx Data for 5: [ f5 0 64 c8 1 78 de 7d ]
+[INFO] [1756656956.665144601]  Sent position command 0.546 to joint B_joint. Last command: 0.536
+[INFO] [1756656956.713400487]  Rx Data for 5: [ 31 ff ff ff ff 18 e3 2d ]
+[INFO] [1756656956.713485738]  Processing encoder response
+[INFO] [1756656956.713522027]  Updated joint B_joint position: -0.33 rad
+[INFO] [1756656956.713569396]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.714828834]  Sent velocity command 0.202 to joint B_joint. Last command: 0.200
+[INFO] [1756656956.714898074]  Setting joint B_joint position to 0.56 radians (2159.04 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.714979508]  Calculated encoder counts: 98260
+[INFO] [1756656956.715049450]  Tx Data for 5: [ f5 0 64 c8 1 7f d4 7a ]
+[INFO] [1756656956.715126656]  Sent position command 0.556 to joint B_joint. Last command: 0.546
+[INFO] [1756656956.763358156]  Rx Data for 5: [ 31 ff ff ff ff 13 7c c1 ]
+[INFO] [1756656956.763414934]  Processing encoder response
+[INFO] [1756656956.763438107]  Updated joint B_joint position: -0.34 rad
+[INFO] [1756656956.763476400]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.764696533]  Sent velocity command 0.175 to joint B_joint. Last command: 0.202
+[INFO] [1756656956.764740706]  Setting joint B_joint position to 0.57 radians (2196.32 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.764759772]  Calculated encoder counts: 99956
+[INFO] [1756656956.764802603]  Tx Data for 5: [ f5 0 57 c8 1 86 74 14 ]
+[INFO] [1756656956.764860232]  Sent position command 0.565 to joint B_joint. Last command: 0.556
+[INFO] [1756656956.813357865]  Rx Data for 5: [ 31 ff ff ff ff e 49 89 ]
+[INFO] [1756656956.813445911]  Processing encoder response
+[INFO] [1756656956.813476399]  Updated joint B_joint position: -0.35 rad
+[INFO] [1756656956.813529138]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.814854190]  Sent velocity command 0.125 to joint B_joint. Last command: 0.175
+[INFO] [1756656956.814914985]  Setting joint B_joint position to 0.57 radians (2225.53 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.814934902]  Calculated encoder counts: 101286
+[INFO] [1756656956.814979426]  Tx Data for 5: [ f5 0 3e c8 1 8b a6 32 ]
+[INFO] [1756656956.815034630]  Sent position command 0.573 to joint B_joint. Last command: 0.565
+[INFO] [1756656956.863719787]  Rx Data for 5: [ 31 ff ff ff ff 8 d4 e ]
+[INFO] [1756656956.863842469]  Processing encoder response
+[INFO] [1756656956.863874950]  Updated joint B_joint position: -0.36 rad
+[INFO] [1756656956.863941306]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.865337291]  Sent velocity command 0.074 to joint B_joint. Last command: 0.125
+[INFO] [1756656956.865413164]  Setting joint B_joint position to 0.58 radians (2245.10 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.865441488]  Calculated encoder counts: 102177
+[INFO] [1756656956.865513383]  Tx Data for 5: [ f5 0 25 c8 1 8f 21 98 ]
+[INFO] [1756656956.865605958]  Sent position command 0.578 to joint B_joint. Last command: 0.573
+[INFO] [1756656956.913419610]  Rx Data for 5: [ 31 ff ff ff ff 3 73 a8 ]
+[INFO] [1756656956.913493680]  Processing encoder response
+[INFO] [1756656956.913525109]  Updated joint B_joint position: -0.37 rad
+[INFO] [1756656956.913577358]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.914877853]  Sent velocity command 0.025 to joint B_joint. Last command: 0.074
+[INFO] [1756656956.914965889]  Setting joint B_joint position to 0.58 radians (2254.67 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.915001176]  Calculated encoder counts: 102612
+[INFO] [1756656956.915080676]  Tx Data for 5: [ f5 0 c c8 1 90 d4 33 ]
+[INFO] [1756656956.915231991]  Sent position command 0.580 to joint B_joint. Last command: 0.578
+[INFO] [1756656956.963484512]  Rx Data for 5: [ 31 ff ff ff fe fe 2c 5b ]
+[INFO] [1756656956.963555736]  Processing encoder response
+[INFO] [1756656956.963590662]  Updated joint B_joint position: -0.37 rad
+[INFO] [1756656956.963650836]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656956.964931974] [joint_trajectory_controller]: Goal reached, success!
+[INFO] [1756656956.965047793]  Sent velocity command 0.000 to joint B_joint. Last command: 0.025
+[INFO] [1756656956.965095723]  Setting joint B_joint position to 0.58 radians (2255.88 degrees on motor protactor) with gear ratio 67.82:1
+[INFO] [1756656956.965126541]  Calculated encoder counts: 102667
+[INFO] [1756656956.965213876]  Tx Data for 5: [ f5 0 0 c8 1 91 b 5f ]
+[INFO] [1756656956.965320488]  Sent position command 0.581 to joint B_joint. Last command: 0.580
+[INFO] [1756656957.013378200]  Rx Data for 5: [ f5 1 fb ]
+[INFO] [1756656957.013451108]  Processing status response
+[INFO] [1756656957.013512083]  Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[INFO] [1756656957.013568740]  Tx Data for 5: [ 31 36 ]
+[move_group-8] [INFO] [1756656957.017949930] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: Controller 'joint_trajectory_controller' successfully finished
+[INFO] [1756656957.063351288]  Rx Data for 5: [ 31 ff ff ff fe f3 7e a2 ]
+[INFO] [1756656957.063414116]  Processing encoder response
+[INFO] [1756656957.063437811]  Updated joint B_joint position: -0.39 rad
+[INFO] [1756656957.063477676]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.113377436]  Rx Data for 5: [ f5 1 fb ]
+[INFO] [1756656957.113444873]  Processing status response
+[INFO] [1756656957.113464440]  Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[INFO] [1756656957.113506459]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.163328252]  Rx Data for 5: [ 31 ff ff ff fe ee e2 1 ]
+[INFO] [1756656957.163381783]  Processing encoder response
+[INFO] [1756656957.163401841]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.163438209]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.213380790]  Rx Data for 5: [ f5 1 fb ]
+[INFO] [1756656957.213440632]  Processing status response
+[INFO] [1756656957.213459107]  Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[INFO] [1756656957.213502630]  Tx Data for 5: [ 31 36 ]
+[move_group-8] [INFO] [1756656957.214852207] [moveit_ros.trajectory_execution_manager]: Completed trajectory execution with status SUCCEEDED ...
+[move_group-8] [INFO] [1756656957.215010536] [moveit_move_group_default_capabilities.execute_trajectory_action_capability]: Execution completed: SUCCEEDED
+[rviz2-7] [INFO] [1756656957.215216685] [move_group_interface]: Execute request success!
+[INFO] [1756656957.263471870]  Rx Data for 5: [ 31 ff ff ff fe eb a7 c3 ]
+[INFO] [1756656957.263573402]  Processing encoder response
+[INFO] [1756656957.263619759]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.263697506]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.313377972]  Rx Data for 5: [ f5 1 fb ]
+[INFO] [1756656957.313445319]  Processing status response
+[INFO] [1756656957.313468472]  Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[INFO] [1756656957.313522645]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.363372249]  Rx Data for 5: [ 31 ff ff ff fe e9 20 3a ]
+[INFO] [1756656957.363443013]  Processing encoder response
+[INFO] [1756656957.363476045]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.363531670]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.413403367]  Rx Data for 5: [ f5 1 fb ]
+[INFO] [1756656957.413482055]  Processing status response
+[INFO] [1756656957.413515418]  Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[INFO] [1756656957.413591462]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.463388467]  Rx Data for 5: [ f5 2 fc ]
+[INFO] [1756656957.463463048]  Processing status response
+[INFO] [1756656957.463495770]  Inside ABSOLUTE_POSITION case - Status: 2 (0x02)
+[INFO] [1756656957.463516760]  Move to absolute position completed
+[INFO] [1756656957.463567836]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.513391933]  Rx Data for 5: [ 31 ff ff ff fe e8 dd f6 ]
+[INFO] [1756656957.513464149]  Processing encoder response
+[INFO] [1756656957.513502241]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.513562825]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.563334803]  Rx Data for 5: [ 31 ff ff ff fe e8 e6 ff ]
+[INFO] [1756656957.563439822]  Processing encoder response
+[INFO] [1756656957.563476842]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.563536304]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.613371952]  Rx Data for 5: [ 31 ff ff ff fe e8 ef 8 ]
+[INFO] [1756656957.613436133]  Processing encoder response
+[INFO] [1756656957.613470669]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.613527766]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.663343657]  Rx Data for 5: [ 31 ff ff ff fe e8 f5 e ]
+[INFO] [1756656957.663407488]  Processing encoder response
+[INFO] [1756656957.663442203]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.663501085]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.713364456]  Rx Data for 5: [ 31 ff ff ff fe e8 f9 12 ]
+[INFO] [1756656957.713431021]  Processing encoder response
+[INFO] [1756656957.713464955]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.713518336]  Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756656957.714944218] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[INFO] [1756656957.763459904]  Rx Data for 5: [ 31 ff ff ff fe e8 fb 14 ]
+[INFO] [1756656957.763549333]  Processing encoder response
+[INFO] [1756656957.763585261]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.763647378]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.813423925]  Rx Data for 5: [ 31 ff ff ff fe e8 fd 16 ]
+[INFO] [1756656957.813517261]  Processing encoder response
+[INFO] [1756656957.813556385]  Updated joint B_joint position: -0.40 rad
+[INFO] [1756656957.813618923]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.863399007]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656957.863468548]  Processing encoder response
+[INFO] [1756656957.863491010]  No new data for 5
+[INFO] [1756656957.863532799]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.913377344]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656957.913453979]  Processing encoder response
+[INFO] [1756656957.913476191]  No new data for 5
+[INFO] [1756656957.913517990]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656957.963346244]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656957.963401589]  Processing encoder response
+[INFO] [1756656957.963419162]  No new data for 5
+[INFO] [1756656957.963452936]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656958.013344860]  Rx Data for 5: [ 31 ff ff ff fe e8 fd 16 ]
+[INFO] [1756656958.013405044]  Processing encoder response
+[INFO] [1756656958.013424421]  No new data for 5
+[INFO] [1756656958.013461661]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656958.063366790]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656958.063425180]  Processing encoder response
+[INFO] [1756656958.063445218]  No new data for 5
+[INFO] [1756656958.063482529]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656958.113404590]  Rx Data for 5: [ 31 ff ff ff fe e8 fd 16 ]
+[INFO] [1756656958.113471466]  Processing encoder response
+[INFO] [1756656958.113552098]  No new data for 5
+[INFO] [1756656958.113608815]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656958.163413294]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656958.163503294]  Processing encoder response
+[INFO] [1756656958.163536727]  No new data for 5
+[INFO] [1756656958.163608132]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656958.213401741]  Rx Data for 5: [ 31 ff ff ff fe e8 fd 16 ]
+[INFO] [1756656958.213469949]  Processing encoder response
+[INFO] [1756656958.213492602]  No new data for 5
+[INFO] [1756656958.213536856]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656958.263404113]  Rx Data for 5: [ 31 ff ff ff fe e8 fd 16 ]
+[INFO] [1756656958.263542685]  Processing encoder response
+[INFO] [1756656958.263566209]  No new data for 5
+[INFO] [1756656958.263607577]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656958.313355329]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656958.313425642]  Processing encoder response
+[INFO] [1756656958.313446852]  No new data for 5
+[INFO] [1756656958.313487258]  Tx Data for 5: [ 31 36 ]
+[INFO] [1756656958.363334318]  Rx Data for 5: [ 31 ff ff ff fe e8 fd 16 ]
+[INFO] [1756656958.363388580]  Processing encoder response
+[INFO] [1756656958.363408488]  No new data for 5
+[INFO] [1756656958.413353612]  Rx Data for 5: [ 31 ff ff ff fe e8 fd 16 ]
+[INFO] [1756656958.413414998]  Processing encoder response
+[INFO] [1756656958.413434185]  No new data for 5
+[INFO] [1756656958.463364611]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656958.463431167]  Processing encoder response
+[INFO] [1756656958.463456685]  No new data for 5
+[INFO] [1756656958.513379017]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656958.513442687]  Processing encoder response
+[INFO] [1756656958.513465600]  No new data for 5
+[INFO] [1756656958.563355270]  Rx Data for 5: [ 31 ff ff ff fe e8 fd 16 ]
+[INFO] [1756656958.563419902]  Processing encoder response
+[INFO] [1756656958.563442044]  No new data for 5
+[INFO] [1756656958.613408759]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656958.613486226]  Processing encoder response
+[INFO] [1756656958.613514960]  No new data for 5
+[INFO] [1756656958.663407746]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656958.663477938]  Processing encoder response
+[INFO] [1756656958.663500871]  No new data for 5
+[INFO] [1756656958.713375182]  Rx Data for 5: [ 31 ff ff ff fe e8 fd 16 ]
+[INFO] [1756656958.713437360]  Processing encoder response
+[INFO] [1756656958.713456145]  No new data for 5
+[INFO] [1756656958.763324886]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656958.763381883]  Processing encoder response
+[INFO] [1756656958.763398204]  No new data for 5
+[INFO] [1756656958.813371442]  Rx Data for 5: [ 31 ff ff ff fe e8 fe 17 ]
+[INFO] [1756656958.813482551]  Processing encoder response
+[INFO] [1756656958.813507719]  No new data for 5

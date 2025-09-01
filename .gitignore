@@ -32,10 +32,6 @@
 *.app
 
 # colcon/CMake output
-build
-install
-log
-
 .catkin_workspace
 /gamepadControl/__pycache__
 gamepadControl/can_demo_asyncua

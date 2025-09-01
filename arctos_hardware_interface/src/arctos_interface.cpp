@@ -70,6 +70,8 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
     // node_->declare_parameter(param_prefix + "home_current", 800);     // Default 0.8A for homing
     node_->declare_parameter(param_prefix + "hardware_type", "MKS_42D"); // Default MKS Servo
     node_->declare_parameter(param_prefix + "gear_ratio", 1.0);          // Default 1:1 gear ratio
+    node_->declare_parameter(param_prefix + "inverted", false);          // Default no inverted in application side
+    node_->declare_parameter(param_prefix + "inverted_feedback", false); // Default no inverted in physical side
     node_->declare_parameter(param_prefix + "requires_homing", false);   // Default no homing needed
     node_->declare_parameter(param_prefix + "home_position", 0.0);
     node_->declare_parameter(param_prefix + "opposite_limit", 0.0);
@@ -98,6 +100,8 @@ CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &
       if (interface.name == "velocity") has_velocity_interface_ = true;
     }
   }
+
+ 
 
   return CallbackReturn::SUCCESS;
 }
@@ -143,23 +147,23 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & prev
         // uint16_t original_current = current_status.params.working_current;
         // motor_driver_->setWorkingCurrent(joint_name, static_cast<uint16_t>(home_current));
         
-        // Start homing
-        motor_driver_->homeMotor(joint_name);
+        // Start homing (this function is not verified)
+        // motor_driver_->homeMotor(joint_name);
         
-        // Wait for homing to complete (with timeout)
-        rclcpp::Time start_time = node_->now();
-        while (!motor_driver_->getMotorStatus(joint_name).is_homed) {
-          if ((node_->now() - start_time).seconds() > 30.0) {  // 30 second timeout
-            RCLCPP_ERROR(node_->get_logger(), "Homing timeout for joint %s", joint_name.c_str());
-            return CallbackReturn::ERROR;
-          }
-          if (motor_driver_->getMotorStatus(joint_name).is_error) {
-            RCLCPP_ERROR(node_->get_logger(), "Homing error for joint %s", joint_name.c_str());
-            return CallbackReturn::ERROR;
-          }
-          rclcpp::spin_some(node_);
-          rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 100ms
-        }
+        // // Wait for homing to complete (with timeout)
+        // rclcpp::Time start_time = node_->now();
+        // while (!motor_driver_->getMotorStatus(joint_name).is_homed) {
+        //   if ((node_->now() - start_time).seconds() > 30.0) {  // 30 second timeout
+        //     RCLCPP_ERROR(node_->get_logger(), "Homing timeout for joint %s", joint_name.c_str());
+        //     return CallbackReturn::ERROR;
+        //   }
+        //   if (motor_driver_->getMotorStatus(joint_name).is_error) {
+        //     RCLCPP_ERROR(node_->get_logger(), "Homing error for joint %s", joint_name.c_str());
+        //     return CallbackReturn::ERROR;
+        //   }
+        //   rclcpp::spin_some(node_);
+        //   rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 100ms
+        // }
         
         // Restore original current
         // motor_driver_->setWorkingCurrent(joint_name, original_current);
@@ -172,6 +176,11 @@ CallbackReturn ArctosInterface::on_activate(const rclcpp_lifecycle::State & prev
       return CallbackReturn::ERROR;
     }
   }
+
+  spinThread = std::thread(
+    [&]() {
+        rclcpp::spin(node_);
+    });
 
   return CallbackReturn::SUCCESS;
 }
@@ -188,6 +197,7 @@ CallbackReturn ArctosInterface::on_deactivate(const rclcpp_lifecycle::State & pr
                    info_.joints[i].name.c_str(), e.what());
     }
   }
+  spinThread.join();
   return CallbackReturn::SUCCESS;
 }
 
@@ -237,7 +247,8 @@ During the main loop, ros2_control loops over all hardware components and calls 
 */
 return_type ArctosInterface::read(const rclcpp::Time & time, const rclcpp::Duration & /*period*/) {
   // spin_some is neccessary, if not used, hardware_interface won't catch any subscription event.
-  rclcpp::spin_some(node_);
+  // rclcpp::spin_some(node_);
+  // created a thread that "spin()" for event already, hence spin_some here is not needed. :o
 
   while (!can_message_queue_.empty()) {
     // Process CAN messages
@@ -324,7 +335,7 @@ return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::
       if (has_position_interface_) {
         // Only send if position has changed significantly
         if (std::abs(joint_position_command_[i] - last_position_command_[i]) > position_tolerance_) {
-          motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i], 200, joint_velocities_command_[i] * 500);
+          motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i], 200, abs(joint_velocities_command_[i] * 1000));
           RCLCPP_INFO(node_->get_logger(),
                       "Sent position command %.3f to joint %s. Last command: %.3f",
                       joint_position_command_[i], info_.joints[i].name.c_str(),
@@ -377,8 +388,22 @@ void ArctosInterface::initializeMotors() {
           gear_ratio = 1.0;
       }
 
+      bool inverted;
+      if (!node_->get_parameter(param_prefix + "inverted", inverted)) {
+          RCLCPP_WARN(node_->get_logger(), "No inverted specified for joint %s, using false", 
+                      joint.name.c_str());
+          inverted = false;
+      }
+
+      bool inverted_feedback;
+      if (!node_->get_parameter(param_prefix + "inverted_feedback", inverted_feedback)) {
+          RCLCPP_WARN(node_->get_logger(), "No inverted_feedback specified for joint %s, using false", 
+                      joint.name.c_str());
+          inverted_feedback = false;
+      }
+
       // Add joint to motor driver with gear ratio
-      motor_driver_->addJoint(joint.name, motor_id, hardware_type, gear_ratio);
+      motor_driver_->addJoint(joint.name, motor_id, hardware_type, gear_ratio, inverted, inverted_feedback);
 
       // Configure motor parameters
       if (!setupMotorParameters(joint, motor_id)) {

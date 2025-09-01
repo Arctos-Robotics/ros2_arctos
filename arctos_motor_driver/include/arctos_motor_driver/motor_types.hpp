@@ -57,6 +57,8 @@ struct JointConfig {
     // Motor direction
     bool inverted = false; /**< Flag indicating if the position of the motor is inverted. */
 
+    bool inverted_feedback = false;  /**< Flag indicating if the feedback of the motor is inverted: request raw to 1000, but motor go to -1000 */
+
     double zero_position{0.0}; /**< Zero position of the joint. */
     double home_position{0.0}; /**< Home position of the joint. */
     double opposite_limit{0.0}; /**< Opposite limit position of the joint. */

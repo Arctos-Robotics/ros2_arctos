@@ -45,7 +45,7 @@ public:
      * @param joint_name The name of the joint.
      * @param motor_id The ID of the motor.
      */
-    void addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio = 1.0, bool inverted = false, double zero_position = 0.0, double home_position = 0.0, double opposite_limit = 0.0);
+    void addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio = 1.0, bool inverted = false, bool inverted_feedback = false, double zero_position = 0.0, double home_position = 0.0, double opposite_limit = 0.0);
 
     /**
      * @brief Removes a joint from the motor driver.

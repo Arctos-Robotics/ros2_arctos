@@ -56,6 +56,18 @@ It is recommended to follow the official installation guides for ROS2 and MoveIt
     - Install `ros-humble-desktop` for the full desktop installation.
     - Install `ros-dev-tools` for the development tools.
 - [MoveIt! 2 Installation](https://moveit.ai/install-moveit2/binary/)
+    - After installing MoveIt! 2, you might install also `CycloneDDS`. if you accidently config firewall which block UDP 7400, 7600, ros2 won't work. For convenient, consider disable your firewall:
+
+        ```bash
+        sudo ufw disable
+        ```
+
+    - or if you don't want to disable the firewall, then allow the ports. But I'm not sure if there're other ports need to enable for ROS to be stable.
+
+        ```bash
+        sudo ufw allow 7400
+        sudo ufw allow 7600
+        ```
 
 ### Setting Up the Workspace
 
@@ -75,10 +87,35 @@ sudo apt install can-utils python3-rosdep ros-humble-can-msgs ros-humble-ros2-co
 Install the Python dependencies:
 
 ```bash
-pip3 install python-can ruamel.yaml rich keyboard -y
+pip install python-can ruamel.yaml rich keyboard -y
 ```
 
-Create a ROS2 workspace and clone the ROS2 Arctos repository inside the `src/` directory:
+Clone the latest `ros2_socketcan` (the current ros2_socketcan for humble is having issue that the receive topic `\from_can_bus` also receive its own transmit message, which complicate the processing of receive messsage).
+
+The downside of this new version of `ros2_socketcan` is that the **transmit message won't appear** on `candump`. But the message still got transmitted anyway.
+
+```bash
+mkdir -p ~/ros2_ulti/src
+cd ~/ros2_ulti/src
+git clone https://github.com/autowarefoundation/ros2_socketcan.git
+git checkout 822ca033c8ce934dc5a622d7bb80adb575522b33
+```
+
+Build ros2_socketcan with colcon:
+
+```bash
+source /opt/ros/humble/setup.bash
+cd ~/ros2_ulti
+colcon build --mixin release
+```
+
+Then add the install directory of ros2_socketcan to bashrc.
+
+```bash
+echo "source ~/ros2_ulti/install/setup.bash" >> ~/.bashrc
+```
+
+**Open new terminal**, then create a ROS2 workspace and clone the ROS2 Arctos repository inside the `src/` directory:
 
 ```bash
 mkdir -p ~/ros2_ws/src
@@ -122,6 +159,12 @@ rosdep install --from-paths src -y --ignore-src
 ```
 
 **Note**: You may encounter an error with the package `ros-humble-warehouse-ros-mongo`. You can ignore this package for now.
+
+If this command install the ros2_socketcan from humble, remove it via:
+
+```bash
+Sudo apt remove ros-humble-ros2-socketcan
+```
 
 Build the workspace using `colcon`:
 
