@@ -1,13 +1,13 @@
 moveit_setup_assistant_config:
   urdf:
     package: arctos_description
-    relative_path: urdf/arctos.urdf
+    relative_path: urdf/arctos.xacro
   srdf:
     relative_path: config/arctos.srdf
   package_settings:
-    author_name: TranNgocCat
+    author_name: Tran Ngoc Cat
     author_email: ngoccatt@gmail.com
-    generated_timestamp: 1756740705
+    generated_timestamp: 1757151083
   control_xacro:
     command:
       - position

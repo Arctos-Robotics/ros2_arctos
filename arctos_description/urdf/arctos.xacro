@@ -3,7 +3,6 @@
 
   <xacro:include filename="$(find arctos_description)/urdf/common/materials.xacro" />
   <xacro:include filename="$(find arctos_description)/urdf/common/joint_link.xacro" />
-  <xacro:include filename="$(find arctos_description)/urdf/arctos_ros2_control.xacro" />
   <xacro:include filename="$(find arctos_description)/urdf/arctos_gripper.xacro" />
 
   <link name="world" />
@@ -88,7 +87,7 @@
     parent="base_link" child="Link_1_1"
     origin_xyz="0.0 0.0 0.1126" origin_rpy="0 0 0"
     axis_xyz="0.0 0.0 1.0"
-    limit_u="${pi}" limit_l="${-pi}" limit_e="24.3" limit_v="15.0"
+    limit_u="${pi}" limit_l="${-pi}" limit_e="24.3" limit_v="15.0" mimic=""
   />
 
   <xacro:arctos_joint
@@ -96,7 +95,7 @@
     parent="Link_1_1" child="Link_2_1"
     origin_xyz="0.0 -0.020356 ${0.2876-0.1126}" origin_rpy="0 0 0"
     axis_xyz="1.0 -0.0 -0.0"
-    limit_u="2.18" limit_l="-0.96" limit_e="270.0" limit_v="1.4"
+    limit_u="2.18" limit_l="-0.96" limit_e="270.0" limit_v="1.4" mimic=""
   />
 
   <xacro:arctos_joint
@@ -104,7 +103,7 @@
     parent="Link_2_1" child="Link_3_1"
     origin_xyz="0.0 0.001365 0.261035" origin_rpy="0 0 0"
     axis_xyz="1.0 -0.0 0.0"
-    limit_u="${55/180*pi}" limit_l="${-pi/2}" limit_e="97.0" limit_v="1.4"
+    limit_u="${55/180*pi}" limit_l="${-pi/2}" limit_e="97.0" limit_v="1.4" mimic=""
   />
 
   <xacro:arctos_joint
@@ -112,7 +111,7 @@
     parent="Link_3_1" child="Link_4_1"
     origin_xyz="0 -0.13881 0.0217651" origin_rpy="0 0 0"
     axis_xyz="0.0 1.0 0.0"
-    limit_u="${pi/2}" limit_l="${-pi/2}" limit_e="22.0" limit_v="4.4"
+    limit_u="${pi/2}" limit_l="${-pi/2}" limit_e="22.0" limit_v="4.4" mimic=""
   />
 
   <xacro:arctos_joint
@@ -120,7 +119,7 @@
     parent="Link_4_1" child="Link_5_1"
     origin_xyz="0.0 -0.12543 -0.00184" origin_rpy="0 0 0"
     axis_xyz="-1.0 0.0 0.0"
-    limit_u="1.55" limit_l="-1.55" limit_e="16.0" limit_v="3.0"
+    limit_u="1.55" limit_l="-1.55" limit_e="16.0" limit_v="3.0" mimic=""
   />
 
   <xacro:arctos_joint
@@ -128,8 +127,6 @@
     parent="Link_5_1" child="Link_6_1"
     origin_xyz="0.0 -0.0398 0.0" origin_rpy="0 0 0"
     axis_xyz="0.0 1.0 0.0"
-    limit_u="${pi}" limit_l="${-pi}" limit_e="16.0" limit_v="3.0"
+    limit_u="${pi}" limit_l="${-pi}" limit_e="16.0" limit_v="3.0" mimic=""
   />
-
-  <xacro:arctos_ros2_control name="arctos_interface" />
 </robot>

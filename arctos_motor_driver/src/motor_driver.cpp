@@ -25,12 +25,6 @@ MotorDriver::MotorDriver(rclcpp::Node::SharedPtr node)
     : node_(node),
       can_protocol_(std::make_shared<CANProtocol>(node)) {
     
-    node_->declare_parameter("position_tolerance", 0.001);
-    node_->declare_parameter("velocity_tolerance", 0.01);
-
-    // Get parameter values
-    node_->get_parameter("position_tolerance", position_tolerance_);
-    node_->get_parameter("velocity_tolerance", velocity_tolerance_);
 }
 
 MotorDriver::~MotorDriver() {
@@ -125,11 +119,15 @@ void MotorDriver::removeJoint(const std::string& joint_name) {
  * @brief Sets the position of the joint.
  *
  * This function sets the desired position of the joint.
+ * application only care about what joint. 
+ * the driver has to handle logic how to successfully rotate the joint.
  *
  * @param position The desired position of the joint in radians.
  * @param acceleration The desired acceleration in degrees/s^2.
  */
 void MotorDriver::setJointPosition(const std::string& joint_name, double position, double acceleration, double velocity) {
+    std::vector<uint8_t> data1;
+    std::vector<uint8_t> data2;
     auto it = joints_.find(joint_name);
     if (it == joints_.end()) {
         RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
@@ -142,57 +140,6 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
         position = -position;
     }
 
-    // if (joint_name == "C_joint") {
-    //     // Motor C moves forward
-    //     double motor_c_position = position * joint.gear_ratio;
-    //     // Motor B moves in reverse
-    //     double motor_b_position = -motor_c_position;
-
-    //     // Convert positions to encoder counts
-    //     int32_t encoder_counts_c = static_cast<int32_t>(
-    //         (motor_c_position * MotorConstants::ENCODER_STEPS) / MotorConstants::DEGREES_PER_REVOLUTION
-    //     );
-    //     int32_t encoder_counts_b = static_cast<int32_t>(
-    //         (motor_b_position * MotorConstants::ENCODER_STEPS) / MotorConstants::DEGREES_PER_REVOLUTION
-    //     );
-
-    //     uint8_t acc_value = static_cast<uint8_t>(std::clamp(acceleration, 0.0, 255.0));
-    //     uint16_t speed = 100;  // Default speed in RPM
-
-    //     // Prepare CAN command for motor C
-    //     std::vector<uint8_t> data_c = {
-    //         CANCommands::ABSOLUTE_POSITION,
-    //         static_cast<uint8_t>((speed >> 8) & 0xFF),  // Speed high byte
-    //         static_cast<uint8_t>(speed & 0xFF),         // Speed low byte
-    //         acc_value,                                  // Acceleration
-    //         static_cast<uint8_t>((encoder_counts_c >> 16) & 0xFF),  // Position high byte
-    //         static_cast<uint8_t>((encoder_counts_c >> 8) & 0xFF),   // Position middle byte
-    //         static_cast<uint8_t>(encoder_counts_c & 0xFF)           // Position low byte
-    //     };
-
-    //     // Prepare CAN command for motor B
-    //     std::vector<uint8_t> data_b = {
-    //         CANCommands::ABSOLUTE_POSITION,
-    //         static_cast<uint8_t>((speed >> 8) & 0xFF),  // Speed high byte
-    //         static_cast<uint8_t>(speed & 0xFF),         // Speed low byte
-    //         acc_value,                                  // Acceleration
-    //         static_cast<uint8_t>((encoder_counts_b >> 16) & 0xFF),  // Position high byte
-    //         static_cast<uint8_t>((encoder_counts_b >> 8) & 0xFF),   // Position middle byte
-    //         static_cast<uint8_t>(encoder_counts_b & 0xFF)           // Position low byte
-    //     };
-
-    //     // Send CAN commands
-    //     can_protocol_->sendFrame(6, data_c);  // Motor C (CAN ID 6)
-    //     can_protocol_->sendFrame(5, data_b);  // Motor B (CAN ID 5)
-
-    //     // Update joint state
-    //     joint.command_position = position;
-    //     joint.last_command = node_->get_clock()->now();
-
-    //     RCLCPP_INFO(node_->get_logger(), "Joint C: Motor C set to %.2f degrees, Motor B set to %.2f degrees",
-    //                 motor_c_position, motor_b_position);
-    //     return;
-    // }
     // Scale the position by the gear ratio
     double motor_position = position * joint.gear_ratio;
 
@@ -208,13 +155,60 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
                 joint_name.c_str(), joint.inverted ? "inverted" : "normal", position, motor_position_deg, joint.gear_ratio);
     RCLCPP_INFO(node_->get_logger(), "Calculated encoder counts: %d", encoder_counts);
 
-    // Prepare CAN command
-
     // minimum speed is 30 to prevent sending speed = 0, which will stop the motor!
     uint16_t speed = static_cast<uint16_t>(std::clamp(velocity, 30.0, 3000.0));  
-    uint8_t acc_value = static_cast<uint8_t>(std::clamp(acceleration, 0.0, 255.0));
+    uint8_t acc_value = static_cast<uint8_t>(std::clamp(acceleration, 10.0, 255.0));
 
-    std::vector<uint8_t> data = {
+    if (joint_name == "B_joint" || joint_name == "C_joint") {
+        // motor 5 and motor 6 is placed opposite to each other, 
+        // To rotate B_joint, 2 gears need to rotate in the same direction, mean that:
+        // motor 5 +
+        // motor 6 -
+        // To rotate C_joint, 2 gears need to rotate in opposite direction, mean that:
+        // motor 5 +
+        // motor 6 +
+
+        std::string joint_name2 = (joint_name == "B_joint") ? "C_joint" : "B_joint";
+
+        auto it2 = joints_.find(joint_name2);
+        if (it2 == joints_.end()) {
+            RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name2.c_str());
+            return;
+        }
+
+        auto& joint2 = it2->second;
+
+        double motor_position2 = (((joint_name == "B_joint") ? -position : position) * joint2.gear_ratio);
+
+        // Convert motor position from radians to degrees
+        double motor_position_deg2 = motor_position2 * MotorConstants::RAD_TO_DEG;
+
+        // Convert degrees to encoder counts
+        int32_t encoder_counts2 = static_cast<int32_t>(
+            (motor_position_deg2 * MotorConstants::ENCODER_STEPS) / MotorConstants::DEGREES_PER_REVOLUTION
+        );
+
+        RCLCPP_INFO(node_->get_logger(), "Setting joint2 %s position to (%s) %.2f radians (%.2f degrees on motor protactor) with gear ratio %.2f:1",
+                    joint_name2.c_str(), joint2.inverted ? "inverted" : "normal", position, motor_position_deg2, joint2.gear_ratio);
+        RCLCPP_INFO(node_->get_logger(), "Calculated encoder2 counts: %d", encoder_counts2);
+
+        data2 = {
+            CANCommands::ABSOLUTE_POSITION,  // 0xF5
+            static_cast<uint8_t>((speed >> 8) & 0xFF),  // Speed high byte
+            static_cast<uint8_t>(speed & 0xFF),         // Speed low byte
+            acc_value,                                  // Acceleration
+            static_cast<uint8_t>((encoder_counts2 >> 16) & 0xFF),  // Position high byte
+            static_cast<uint8_t>((encoder_counts2 >> 8) & 0xFF),   // Position middle byte
+            static_cast<uint8_t>(encoder_counts2 & 0xFF)           // Position low byte
+        };
+
+        // Store the commanded position2
+        joint2.command_position = ((joint_name == "B_joint") ? -position : position);
+        joint2.last_command = node_->get_clock()->now();
+    }
+
+    // Prepare CAN command
+    data1 = {
         CANCommands::ABSOLUTE_POSITION,  // 0xF5
         static_cast<uint8_t>((speed >> 8) & 0xFF),  // Speed high byte
         static_cast<uint8_t>(speed & 0xFF),         // Speed low byte
@@ -225,7 +219,17 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
     };
 
     // Send CAN command
-    can_protocol_->sendFrame(joint.motor_id, data);
+    can_protocol_->sendFrame(joint.motor_id, data1);
+    if (joint_name == "B_joint")        // motor_id == 5
+    {
+        // send command to motor 6
+        can_protocol_->sendFrame(joint.motor_id + 1, data2);
+    } 
+    else if (joint_name == "C_joint")   // motor_id == 6
+    {
+        // send command to motor 5
+        can_protocol_->sendFrame(joint.motor_id - 1, data2);
+    }
 
     // Store the commanded position
     joint.command_position = position;
@@ -325,8 +329,41 @@ double MotorDriver::getJointPosition(const std::string& joint_name) const {
         RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
         return 0.0;
     }
-    RCLCPP_DEBUG(node_->get_logger(), "Retrieved position for joint %s: %.3f", joint_name.c_str(), it->second.position);
-    return it->second.position;
+
+    if (joint_name == "B_joint" || joint_name == "C_joint") {
+        std::string joint_name2 = (joint_name == "B_joint") ? "C_joint" : "B_joint";
+
+        auto it2 = joints_.find(joint_name2);
+        if (it2 == joints_.end()) {
+            RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name2.c_str());
+            return 0.0;
+        }
+
+        double firstMotorPosition = it->second.position;
+        double secondMotorPosition = it2->second.position;
+
+        // if Motor 6 is not running, B_joint will only rotate haft of its intended position.
+        if (joint_name == "B_joint") {
+            // first    = Motor 5
+            // second   = Motor 6
+            // if B_joint, (Motor 5 - Motor 6) / 2
+            return (firstMotorPosition - secondMotorPosition) / 2.0;
+        } else if (joint_name == "C_joint") {
+            // first    = Motor 6
+            // second   = Motor 5
+            // if C_joint, (Motor 5 - Motor 6) / 2 + Motor 6
+            return (secondMotorPosition - firstMotorPosition) / 2.0 + firstMotorPosition;
+        }
+        else
+        {
+            return 0.0;
+        }
+    }
+    else
+    {
+        RCLCPP_DEBUG(node_->get_logger(), "Retrieved position for joint %s: %.3f", joint_name.c_str(), it->second.position);
+        return it->second.position;
+    }
 }
 
 /**

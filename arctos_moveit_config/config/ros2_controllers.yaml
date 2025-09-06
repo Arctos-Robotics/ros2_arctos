@@ -2,7 +2,6 @@
 controller_manager:
   ros__parameters:
     update_rate: 10  # Hz ([read -> update -> write] cycle is executed 20 times per second)
-
     arctos_arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
@@ -35,6 +34,10 @@ arctos_arm_controller:
 
     allow_partial_joints_goal: true
     state_tolerance_check: false  # Disable tolerance checking for simplicity
+
+arctos_hand_controller:
+  ros__parameters:
+    joint: Left_jaw_joint
 
 arctos_hardware_interface:
   ros__parameters:
@@ -99,3 +102,13 @@ arctos_hardware_interface:
         zero_position: -0.3665992422596649
         home_position: -3.141592654
         opposite_limit: 3.141592654
+      Left_jaw_joint:
+        motor_id: 7
+        requires_homing: false
+        inverted: false            # for application: app request go to 10 rad, but raw request to 10 rad
+        inverted_feedback: false  # for case of request go to 1000, but motor run to -1000
+        gear_ratio: 1.0
+        hardware_type: MKS_42D
+        zero_position: 0.0
+        home_position: 0.0
+        opposite_limit: 0.015

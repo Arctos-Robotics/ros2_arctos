@@ -33,10 +33,18 @@
         <joint name="Y_joint" value="0"/>
         <joint name="Z_joint" value="0"/>
     </group_state>
+    <group_state name="open" group="arctos_hand">
+        <joint name="Left_jaw_joint" value="0"/>
+    </group_state>
+    <group_state name="close" group="arctos_hand">
+        <joint name="Left_jaw_joint" value="0.015"/>
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="arctos_hand" parent_link="Link_6_1" group="arctos_hand"/>
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="base_link"/>
+    <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
+    <passive_joint name="Right_jaw_joint"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="Gripper_1" link2="Left_jaw_1" reason="Adjacent"/>
     <disable_collisions link1="Gripper_1" link2="Link_2_1" reason="Never"/>

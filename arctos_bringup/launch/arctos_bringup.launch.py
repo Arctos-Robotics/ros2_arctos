@@ -11,14 +11,13 @@ import os
 
 def generate_launch_description():
     # Get package paths
-    arctos_description_dir = get_package_share_directory('arctos_description')
     arctos_hardware_interface_dir = get_package_share_directory('arctos_hardware_interface')
     arctos_moveit_dir = get_package_share_directory('arctos_moveit_config')
 
     # Declare Launch Arguments
     declare_rviz_arg = DeclareLaunchArgument(
         "rviz_config_file",
-        default_value=PathJoinSubstitution([arctos_description_dir, "config", "moveit.rviz"]),
+        default_value=PathJoinSubstitution([arctos_moveit_dir, "config", "moveit.rviz"]),
         description="Path to RViz configuration file"
     )
 
@@ -74,10 +73,16 @@ def generate_launch_description():
         arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
     )
 
-    robot_controller_spawner = Node(
+    robot_arm_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["arctos_arm_controller", "--controller-manager", "/controller_manager"],
+    )
+
+    robot_hand_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["arctos_hand_controller", "--controller-manager", "/controller_manager"],
     )
 
     # Include CAN Launch
@@ -104,17 +109,17 @@ def generate_launch_description():
     )
 
     # Ensure joint state broadcaster starts before controllers
-    delay_robot_controller_spawner = RegisterEventHandler(
+    delay_robot_arm_controller_spawner = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=joint_state_broadcaster_spawner,
-            on_exit=[robot_controller_spawner],
+            on_exit=[robot_arm_controller_spawner, robot_hand_controller_spawner],
         )
     )
 
     # Delay rviz and moveit launch until controllers are ready
     delay_rviz_and_moveit_launch = RegisterEventHandler(
         event_handler=OnProcessExit(
-            target_action=robot_controller_spawner,
+            target_action=robot_arm_controller_spawner,
             on_exit=[rviz_node, move_group_launch]
         ))
     
@@ -124,7 +129,7 @@ def generate_launch_description():
         control_node,
         robot_state_pub_node,
         joint_state_broadcaster_spawner,
-        delay_robot_controller_spawner,
+        delay_robot_arm_controller_spawner,
         delay_rviz_and_moveit_launch,
         can_launch
     ])

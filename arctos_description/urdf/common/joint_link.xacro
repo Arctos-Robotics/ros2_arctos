@@ -29,13 +29,16 @@
   <!-- Define arctos_joint macro with a default value for axis_xyz -->
   <!-- TODO: Add param for mechanicalReduction -->
   <xacro:macro name="arctos_joint"
-    params="name type parent child origin_xyz origin_rpy axis_xyz='0 0 0' limit_u limit_l limit_e limit_v">
+    params="name type parent child origin_xyz origin_rpy axis_xyz='0 0 0' limit_u limit_l limit_e limit_v mimic">
     <joint name="${name}" type="${type}">
       <parent link="${parent}" />
       <child link="${child}" />
       <origin xyz="${origin_xyz}" rpy="${origin_rpy}" />
       <axis xyz="${axis_xyz}" />
       <limit upper="${limit_u}" lower="${limit_l}" effort="${limit_e}" velocity="${limit_v}" />
+      <xacro:if value="${mimic != ''}">
+          <mimic joint="${mimic}" />
+      </xacro:if>
     </joint>
 
     <!-- Add transmission element -->

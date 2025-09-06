@@ -37,7 +37,7 @@
     name="Gripper_joint" type="fixed"
     parent="Link_6_1" child="Gripper_1"
     origin_xyz="0.0 -0.006085 0.0" origin_rpy="0 0 0"
-    limit_u="0.0" limit_l="0.0" limit_e="0.0" limit_v="0.0"
+    limit_u="0.0" limit_l="0.0" limit_e="0.0" limit_v="0.0" mimic=""
   />
 
   <!-- Left jaw joint, prismatic with axis directly defined -->
@@ -46,14 +46,14 @@
     name="Left_jaw_joint" type="prismatic"
     parent="Gripper_1" child="Left_jaw_1"
     origin_xyz="0.007741 -0.039998 0.029551" origin_rpy="0 0 0" axis_xyz="-0.0 0.0 -1.0"
-    limit_u="0.015" limit_l="0.0" limit_e="100.0" limit_v="100.0"
+    limit_u="0.015" limit_l="0.0" limit_e="100.0" limit_v="100.0" mimic=""
   />
 
   <xacro:arctos_joint
     name="Right_jaw_joint" type="prismatic"
     parent="Gripper_1" child="Right_jaw_1"
     origin_xyz="0.007741 -0.039998 -0.030449" origin_rpy="0 0 0" axis_xyz="0.0 -0.0 1.0"  
-    limit_u="0.015" limit_l="0.0" limit_e="100.0" limit_v="100.0"
+    limit_u="0.015" limit_l="0.0" limit_e="100.0" limit_v="100.0" mimic="Left_jaw_joint"
   />
 
 </robot>

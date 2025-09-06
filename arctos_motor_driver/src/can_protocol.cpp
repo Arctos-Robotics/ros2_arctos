@@ -9,6 +9,17 @@ CANProtocol::CANProtocol(rclcpp::Node::SharedPtr node) :
     node_(node)
 {
     can_pub_ = node->create_publisher<can_msgs::msg::Frame>("/to_motor_can_bus", 10);
+    // *** IMPORTANT ***
+    // to catch subscription event, the owner of "node" has to spin the node from their side.
+    // we do not spin the node here.
+    can_sub_ = node_->create_subscription<can_msgs::msg::Frame>(
+      "/from_motor_can_bus", 10,
+      std::bind(&CANProtocol::canCallback, this, std::placeholders::_1));
+}
+
+void CANProtocol::canCallback(const can_msgs::msg::Frame::SharedPtr msg) {
+    // push msg to the queue for fast callback.
+    can_message_queue_.push(msg);
 }
 
 void CANProtocol::sendFrame(uint8_t motor_id, const std::vector<uint8_t>& data) {
@@ -45,6 +56,19 @@ void CANProtocol::sendFrame(uint8_t motor_id, const std::vector<uint8_t>& data) 
     RCLCPP_INFO(node_->get_logger(), "Tx Data for %d: %s", msg->id, encoder_data.str().c_str());
     
     can_pub_->publish(*msg);
+}
+
+bool CANProtocol::frameInQueue() {
+    return !can_message_queue_.empty();
+}
+
+bool CANProtocol::getFrame(can_msgs::msg::Frame::SharedPtr& data) {
+    if (!can_message_queue_.empty()) {
+        data = can_message_queue_.front();
+        can_message_queue_.pop();
+        return true;
+    }
+    return false;
 }
 
 double CANProtocol::decodeInt48(const std::vector<uint8_t>& data) {

@@ -82,11 +82,10 @@ protected:
   bool has_position_interface_{false};
 
 private:
-  rclcpp::Subscription<can_msgs::msg::Frame>::SharedPtr can_sub_;
-  void canCallback(const can_msgs::msg::Frame::SharedPtr msg);
 
-  std::queue<can_msgs::msg::Frame::SharedPtr> can_message_queue_;
+  // std::queue<can_msgs::msg::Frame::SharedPtr> can_message_queue_;
   std::thread spinThread;
+  bool allowSpin;
 
   // Helper functions for motor initialization
   void initializeMotors();
