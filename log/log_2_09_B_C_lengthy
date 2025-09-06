@@ -1,0 +1,1843 @@
+move_group-8] You can start planning now!
+[move_group-8] 
+[rviz2-7] [INFO] [1756803888.774012454] [interactive_marker_display_106420129850544]: Connected on namespace: /rviz_moveit_motion_planning_display/robot_interaction_interactive_marker_topic
+[rviz2-7] [INFO] [1756803888.793367182] [moveit_ros_robot_interaction.robot_interaction]: No active joints or end effectors found for group 'arctos_arm'. Make sure that kinematics.yaml is loaded in this node's namespace.
+[rviz2-7] [INFO] [1756803888.798920509] [moveit_ros_visualization.motion_planning_frame]: group arctos_arm
+[rviz2-7] [INFO] [1756803888.798966967] [moveit_ros_visualization.motion_planning_frame]: Constructing new MoveGroup connection for group 'arctos_arm' in namespace ''
+[rviz2-7] [INFO] [1756803888.813693693] [move_group_interface]: Ready to take commands for planning group arctos_arm.
+[rviz2-7] [INFO] [1756803888.823792957] [interactive_marker_display_106420129850544]: Sending request for interactive markers
+[rviz2-7] [INFO] [1756803888.840058504] [interactive_marker_display_106420129850544]: Service response received for initialization
+[move_group-8] [INFO] [1756803910.494813068] [moveit_move_group_default_capabilities.move_action_capability]: Received request
+[move_group-8] [INFO] [1756803910.495109146] [moveit_move_group_default_capabilities.move_action_capability]: executing..
+[rviz2-7] [INFO] [1756803910.495117802] [move_group_interface]: Plan and Execute request accepted
+[move_group-8] [INFO] [1756803910.501588698] [moveit_move_group_default_capabilities.move_action_capability]: Combined planning and execution request received for MoveGroup action. Forwarding to planning and execution pipeline.
+[move_group-8] [INFO] [1756803910.501730806] [moveit_ros.plan_execution]: Planning attempt 1 of at most 1
+[move_group-8] [INFO] [1756803910.501761383] [moveit_move_group_capabilities_base.move_group_capability]: Using planning pipeline 'chomp'
+[move_group-8] [INFO] [1756803917.192886951] [chomp_planner]: CHOMP trajectory initialized using method: quintic-spline 
+[move_group-8] [INFO] [1756803917.192976059] [chomp_optimizer]: Active collision detector is: HYBRID
+[move_group-8] [INFO] [1756803917.356459995] [chomp_optimizer]: First coll check took 0.163458 sec
+[move_group-8] [INFO] [1756803917.372464229] [chomp_optimizer]: Collision cost 0.000000, smoothness cost: 4.794478
+[move_group-8] [INFO] [1756803917.372667572] [chomp_optimizer]: iteration: 0
+[move_group-8] [INFO] [1756803917.374613870] [chomp_optimizer]: Chomp Got mesh to mesh safety at iter 0. Breaking out early.
+[move_group-8] [INFO] [1756803917.377269846] [chomp_optimizer]: Collision cost 0.000003, smoothness cost: 4.778214
+[move_group-8] [INFO] [1756803917.380251666] [chomp_optimizer]: Collision cost 0.000003, smoothness cost: 4.762015
+[move_group-8] [INFO] [1756803917.383180987] [chomp_optimizer]: Collision cost 0.000003, smoothness cost: 4.745881
+[move_group-8] [INFO] [1756803917.386709357] [chomp_optimizer]: Collision cost 0.000003, smoothness cost: 4.729811
+[move_group-8] [INFO] [1756803917.390508317] [chomp_optimizer]: Collision cost 0.000003, smoothness cost: 4.713805
+[move_group-8] [INFO] [1756803917.390715478] [chomp_optimizer]: Chomp path is collision free
+[move_group-8] [INFO] [1756803917.390723162] [chomp_optimizer]: Terminated after 12 iterations, using path from iteration 11
+[move_group-8] [INFO] [1756803917.390727801] [chomp_optimizer]: Optimization core finished in 0.022464 sec
+[move_group-8] [INFO] [1756803917.390732389] [chomp_optimizer]: Time per iteration 0.001872 sec
+[move_group-8] [INFO] [1756803917.390737629] [chomp_planner]: Planned with Chomp Parameters (learning_rate, ridge_factor, planning_time_limit, max_iterations), attempt: # 1 
+[move_group-8] [INFO] [1756803917.390742859] [chomp_planner]: Learning rate: 0.010000 ridge factor: 0.010000 planning time limit: 10.000000 max_iterations 200 
+[move_group-8] [WARN] [1756803917.391105974] [moveit_trajectory_processing.time_optimal_trajectory_generation]: Joint acceleration limits are not defined. Using the default 1 rad/s^2. You can define acceleration limits in the URDF or joint_limits.yaml.
+[move_group-8] [INFO] [1756803917.415935962] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-8] [INFO] [1756803917.415975166] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-8] [INFO] [1756803917.416049346] [moveit_ros.trajectory_execution_manager]: Validating trajectory with allowed_start_tolerance 0.01
+[move_group-8] [INFO] [1756803917.501912496] [moveit_ros.trajectory_execution_manager]: Starting trajectory execution ...
+[move_group-8] [INFO] [1756803917.502041409] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-8] [INFO] [1756803917.502070604] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-8] [INFO] [1756803917.502301449] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: sending trajectory to arctos_arm_controller
+[1756803917.502940082] [arctos_arm_controller]: Received new action goal
+[1756803917.503020253] [arctos_arm_controller]: Accepted new action goal
+[move_group-8] [INFO] [1756803917.503173893] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: arctos_arm_controller started execution
+[move_group-8] [INFO] [1756803917.503199421] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: Goal request accepted!
+[1756803917.601481608]: Setting joint B_joint position to (normal) -0.51 radians (-1970.98 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.601552241]: Calculated encoder counts: -89701
+[1756803917.601574754]: Setting joint2 C_joint position to (inverted) -0.51 radians (1970.98 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.601629517]: Calculated encoder2 counts: 89701
+[1756803917.601662950]: Tx Data for 5: [ f5 0 1e c8 fe a1 9b 1a ]
+[1756803917.601742269]: Tx Data for 6: [ f5 0 1e c8 1 5e 65 a5 ]
+[1756803917.601815427]: Sent position command -0.50723 to joint B_joint. Last command: 0.00000.
+[1756803917.601851034]: Setting joint C_joint position to (inverted) 0.51 radians (1970.98 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.601878997]: Calculated encoder counts: 89701
+[1756803917.601897141]: Setting joint2 B_joint position to (normal) 0.51 radians (1970.98 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.601919944]: Calculated encoder2 counts: 89701
+[1756803917.601942487]: Tx Data for 6: [ f5 0 1e c8 1 5e 65 a5 ]
+[1756803917.602044709]: Tx Data for 5: [ f5 0 1e c8 1 5e 65 a4 ]
+[1756803917.602101877]: Sent position command -0.50723 to joint C_joint. Last command: 0.00000.
+[1756803917.701368850]: Rx Data for 5: [ f5 1 fb ]
+[1756803917.701422501]: Processing status response
+[1756803917.701449913]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803917.701472726]: Rx Data for 5: [ f5 1 fb ]
+[1756803917.701487654]: Processing status response
+[1756803917.701502201]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803917.701523982]: Tx Data for 5: [ 31 36 ]
+[1756803917.702664121]: Tx Data for 6: [ 31 37 ]
+[1756803917.703862881]: Sent velocity command 0.043 to joint B_joint. Last command: 0.000
+[1756803917.703909599]: Setting joint B_joint position to (normal) -0.50 radians (-1954.18 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.703935167]: Calculated encoder counts: -88936
+[1756803917.703950806]: Setting joint2 C_joint position to (inverted) -0.50 radians (1954.18 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.703970243]: Calculated encoder2 counts: 88936
+[1756803917.703995340]: Tx Data for 5: [ f5 0 2b c8 fe a4 98 27 ]
+[1756803917.704054312]: Tx Data for 6: [ f5 0 2b c8 1 5b 68 b2 ]
+[1756803917.704128391]: Sent position command -0.50290 to joint B_joint. Last command: -0.50723.
+[1756803917.704153508]: Sent velocity command 0.040 to joint C_joint. Last command: 0.000
+[1756803917.704173797]: Setting joint C_joint position to (inverted) 0.50 radians (1954.36 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.704193324]: Calculated encoder counts: 88944
+[1756803917.704208332]: Setting joint2 B_joint position to (normal) 0.50 radians (1954.36 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.704227308]: Calculated encoder2 counts: 88944
+[1756803917.704249610]: Tx Data for 6: [ f5 0 28 c8 1 5b 70 b7 ]
+[1756803917.704295546]: Tx Data for 5: [ f5 0 28 c8 1 5b 70 b6 ]
+[1756803917.704341964]: Sent position command -0.50295 to joint C_joint. Last command: -0.50723.
+[1756803917.801377491]: Rx Data for 5: [ 31 0 0 0 2 b9 bb ac ]
+[1756803917.801441271]: Processing encoder response
+[1756803917.801466288]: Updated joint B_joint (inverted feedback) position: -1.01 rad
+[1756803917.801494702]: Rx Data for 5: [ f5 1 fb ]
+[1756803917.801532884]: Processing status response
+[1756803917.801551679]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803917.801573240]: Rx Data for 5: [ f5 1 fb ]
+[1756803917.801589601]: Processing status response
+[1756803917.801605771]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803917.801631399]: Tx Data for 5: [ 31 36 ]
+[1756803917.802806835]: Tx Data for 6: [ 31 37 ]
+[1756803917.804099341]: Sent velocity command 0.095 to joint B_joint. Last command: 0.043
+[1756803917.804198227]: Setting joint B_joint position to (normal) -0.50 radians (-1933.18 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.804240547]: Calculated encoder counts: -87981
+[1756803917.804259813]: Setting joint2 C_joint position to (inverted) -0.50 radians (1933.18 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.804282376]: Calculated encoder2 counts: 87981
+[1756803917.804311210]: Tx Data for 5: [ f5 0 5e c8 fe a8 53 19 ]
+[1756803917.804390249]: Tx Data for 6: [ f5 0 5e c8 1 57 ad 26 ]
+[1756803917.804438390]: Sent position command -0.49750 to joint B_joint. Last command: -0.50290.
+[1756803917.804465701]: Sent velocity command 0.000 to joint C_joint. Last command: 0.040
+[move_group-8] [WARN] [1756803917.804215139] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803917.901390600]: Rx Data for 5: [ 31 0 0 0 2 b5 8a 77 ]
+[1756803917.901464630]: Processing encoder response
+[1756803917.901480870]: Updated joint B_joint (inverted feedback) position: -1.00 rad
+[1756803917.901497171]: Rx Data for 5: [ f5 1 fb ]
+[1756803917.901505637]: Processing status response
+[1756803917.901513372]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803917.901526707]: Tx Data for 5: [ 31 36 ]
+[1756803917.902662397]: Tx Data for 6: [ 31 37 ]
+[1756803917.903852039]: Sent velocity command 0.195 to joint B_joint. Last command: 0.095
+[1756803917.903914046]: Setting joint B_joint position to (normal) -0.48 radians (-1877.06 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.903937210]: Calculated encoder counts: -85426
+[1756803917.903951557]: Setting joint2 C_joint position to (inverted) -0.48 radians (1877.06 degrees on motor protactor) with gear ratio 67.82:1
+[1756803917.903966505]: Calculated encoder2 counts: 85426
+[1756803917.903992233]: Tx Data for 5: [ f5 0 c2 c8 fe b2 4e 82 ]
+[1756803917.904047277]: Tx Data for 6: [ f5 0 c2 c8 1 4d b2 85 ]
+[1756803917.904103874]: Sent position command -0.48306 to joint B_joint. Last command: -0.49750.
+[1756803918.001372941]: Rx Data for 5: [ 31 0 0 0 2 af 2c 13 ]
+[1756803918.001457350]: Processing encoder response
+[1756803918.001475224]: Updated joint B_joint (inverted feedback) position: -0.99 rad
+[1756803918.001496775]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.001508707]: Processing status response
+[1756803918.001519488]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.001538563]: Tx Data for 5: [ 31 36 ]
+[1756803918.002677931]: Tx Data for 6: [ 31 37 ]
+[1756803918.003868344]: Sent velocity command 0.294 to joint B_joint. Last command: 0.195
+[1756803918.003927296]: Setting joint B_joint position to (normal) -0.46 radians (-1781.97 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.003951451]: Calculated encoder counts: -81099
+[1756803918.003966339]: Setting joint2 C_joint position to (inverted) -0.46 radians (1781.97 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.004018347]: Calculated encoder2 counts: 81099
+[1756803918.004045208]: Tx Data for 5: [ f5 1 26 c8 fe c3 35 df ]
+[1756803918.004104870]: Tx Data for 6: [ f5 1 26 c8 1 3c cb f2 ]
+[1756803918.004157830]: Sent position command -0.45859 to joint B_joint. Last command: -0.48306.
+[1756803918.101378316]: Rx Data for 5: [ 31 0 0 0 2 a4 f0 cc ]
+[1756803918.101436636]: Processing encoder response
+[1756803918.101456133]: Updated joint B_joint (inverted feedback) position: -0.98 rad
+[1756803918.101484546]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.101503372]: Processing status response
+[1756803918.101526726]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.101548877]: Tx Data for 5: [ 31 36 ]
+[1756803918.102694356]: Tx Data for 6: [ 31 37 ]
+[1756803918.103918924]: Setting joint B_joint position to (normal) -0.43 radians (-1665.41 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.103961114]: Calculated encoder counts: -75794
+[1756803918.103976964]: Setting joint2 C_joint position to (inverted) -0.43 radians (1665.41 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.103997583]: Calculated encoder2 counts: 75794
+[1756803918.104020606]: Tx Data for 5: [ f5 1 2c c8 fe d7 ee b2 ]
+[1756803918.104072263]: Tx Data for 6: [ f5 1 2c c8 1 28 12 2b ]
+[1756803918.104117308]: Sent position command -0.42859 to joint B_joint. Last command: -0.45859.
+[1756803918.201388850]: Rx Data for 5: [ 31 0 0 0 2 96 c5 93 ]
+[1756803918.201454093]: Processing encoder response
+[1756803918.201476405]: Updated joint B_joint (inverted feedback) position: -0.96 rad
+[1756803918.201502995]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.201518495]: Processing status response
+[1756803918.201533463]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.201555945]: Tx Data for 5: [ 31 36 ]
+[1756803918.202721332]: Tx Data for 6: [ 31 37 ]
+[1756803918.204055316]: Setting joint B_joint position to (normal) -0.40 radians (-1548.74 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.204150696]: Calculated encoder counts: -70484
+[1756803918.204169721]: Setting joint2 C_joint position to (inverted) -0.40 radians (1548.74 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.204191783]: Calculated encoder2 counts: 70484
+[1756803918.204238421]: Tx Data for 5: [ f5 1 2b c8 fe ec ac 84 ]
+[1756803918.204315376]: Tx Data for 6: [ f5 1 2b c8 1 13 54 57 ]
+[1756803918.204372353]: Sent position command -0.39856 to joint B_joint. Last command: -0.42859.
+[1756803918.301377924]: Rx Data for 5: [ 31 0 0 0 2 84 a2 5e ]
+[1756803918.301461121]: Processing encoder response
+[1756803918.301481880]: Updated joint B_joint (inverted feedback) position: -0.93 rad
+[1756803918.301506216]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.301551591]: Processing status response
+[1756803918.301568684]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.301857999]: Tx Data for 5: [ 31 36 ]
+[1756803918.303090973]: Tx Data for 6: [ 31 37 ]
+[1756803918.304538301]: Setting joint B_joint position to (normal) -0.37 radians (-1431.65 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.304722979]: Calculated encoder counts: -65155
+[1756803918.304745822]: Setting joint2 C_joint position to (inverted) -0.37 radians (1431.65 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.304765208]: Calculated encoder2 counts: 65155
+[1756803918.304807879]: Tx Data for 5: [ f5 1 2c c8 ff 1 7d 6c ]
+[1756803918.304900493]: Tx Data for 6: [ f5 1 2c c8 0 fe 83 71 ]
+[1756803918.304947482]: Sent position command -0.36843 to joint B_joint. Last command: -0.39856.
+[1756803918.401378740]: Rx Data for 5: [ 31 0 0 0 2 6e 9e 44 ]
+[1756803918.401449704]: Processing encoder response
+[1756803918.401469211]: Updated joint B_joint (inverted feedback) position: -0.90 rad
+[1756803918.401493336]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.401505319]: Processing status response
+[1756803918.401517412]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.401535506]: Tx Data for 5: [ 31 36 ]
+[1756803918.402667649]: Tx Data for 6: [ 31 37 ]
+[1756803918.403875446]: Setting joint B_joint position to (normal) -0.34 radians (-1315.73 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.403934998]: Calculated encoder counts: -59880
+[1756803918.403953643]: Setting joint2 C_joint position to (inverted) -0.34 radians (1315.73 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.403973811]: Calculated encoder2 counts: 59880
+[1756803918.404002656]: Tx Data for 5: [ f5 1 2c c8 ff 16 18 1c ]
+[1756803918.404060615]: Tx Data for 6: [ f5 1 2c c8 0 e9 e8 c1 ]
+[1756803918.404143471]: Sent position command -0.33860 to joint B_joint. Last command: -0.36843.
+[1756803918.501377532]: Rx Data for 5: [ 31 0 0 0 2 55 31 be ]
+[1756803918.501437115]: Processing encoder response
+[1756803918.501454848]: Updated joint B_joint (inverted feedback) position: -0.86 rad
+[1756803918.501474726]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.501485857]: Processing status response
+[1756803918.501496557]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.501514931]: Tx Data for 5: [ 31 36 ]
+[1756803918.502656062]: Tx Data for 6: [ 31 37 ]
+[1756803918.503894035]: Setting joint B_joint position to (normal) -0.31 radians (-1199.14 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.503952636]: Calculated encoder counts: -54574
+[1756803918.503972904]: Setting joint2 C_joint position to (inverted) -0.31 radians (1199.14 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.504038498]: Calculated encoder2 counts: 54574
+[1756803918.504069566]: Tx Data for 5: [ f5 1 2c c8 ff 2a d2 ea ]
+[1756803918.504148475]: Tx Data for 6: [ f5 1 2c c8 0 d5 2e f3 ]
+[1756803918.504212486]: Sent position command -0.30860 to joint B_joint. Last command: -0.33860.
+[1756803918.601385021]: Rx Data for 5: [ 31 0 0 0 2 37 74 e3 ]
+[1756803918.601449482]: Processing encoder response
+[1756803918.601471644]: Updated joint B_joint (inverted feedback) position: -0.82 rad
+[1756803918.601498605]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.601514325]: Processing status response
+[1756803918.601531016]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.601554911]: Tx Data for 5: [ 31 36 ]
+[1756803918.602715779]: Tx Data for 6: [ 31 37 ]
+[1756803918.603995782]: Setting joint B_joint position to (normal) -0.28 radians (-1082.45 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.604090510]: Calculated encoder counts: -49263
+[1756803918.604109767]: Setting joint2 C_joint position to (inverted) -0.28 radians (1082.45 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.604131477]: Calculated encoder2 counts: 49263
+[1756803918.604158278]: Tx Data for 5: [ f5 1 2b c8 ff 3f 91 bd ]
+[1756803918.604221968]: Tx Data for 6: [ f5 1 2b c8 0 c0 6f 1e ]
+[1756803918.604265480]: Sent position command -0.27856 to joint B_joint. Last command: -0.30860.
+[1756803918.701377511]: Rx Data for 5: [ 31 0 0 0 2 17 5f ae ]
+[1756803918.701433046]: Processing encoder response
+[1756803918.701448796]: Updated joint B_joint (inverted feedback) position: -0.77 rad
+[1756803918.701467301]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.701477229]: Processing status response
+[1756803918.701486607]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.701502106]: Tx Data for 5: [ 31 36 ]
+[1756803918.702648216]: Tx Data for 6: [ 31 37 ]
+[1756803918.703824684]: Setting joint B_joint position to (normal) -0.25 radians (-966.06 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.703899535]: Calculated encoder counts: -43966
+[1756803918.703915254]: Setting joint2 C_joint position to (inverted) -0.25 radians (966.06 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.703933619]: Calculated encoder2 counts: 43966
+[1756803918.703954398]: Tx Data for 5: [ f5 1 2c c8 ff 54 42 84 ]
+[1756803918.703998942]: Tx Data for 6: [ f5 1 2c c8 0 ab be 59 ]
+[1756803918.704032445]: Sent position command -0.24861 to joint B_joint. Last command: -0.27856.
+[1756803918.801393586]: Rx Data for 5: [ 31 0 0 0 1 f6 e9 16 ]
+[1756803918.801530224]: Processing encoder response
+[1756803918.801562555]: Updated joint B_joint (inverted feedback) position: -0.73 rad
+[1756803918.801599254]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.801671039]: Processing status response
+[1756803918.801703290]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.801734579]: Tx Data for 5: [ 31 36 ]
+[1756803918.802933148]: Tx Data for 6: [ 31 37 ]
+[1756803918.804170059]: Setting joint B_joint position to (normal) -0.22 radians (-849.10 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.804268294]: Calculated encoder counts: -38643
+[1756803918.804285376]: Setting joint2 C_joint position to (inverted) -0.22 radians (849.10 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.804303110]: Calculated encoder2 counts: 38643
+[1756803918.804325783]: Tx Data for 5: [ f5 1 2c c8 ff 69 d 64 ]
+[1756803918.804390374]: Tx Data for 6: [ f5 1 2c c8 0 96 f3 79 ]
+[1756803918.804431362]: Sent position command -0.21851 to joint B_joint. Last command: -0.24861.
+[move_group-8] [WARN] [1756803918.804304412] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803918.901372521]: Rx Data for 5: [ 31 0 0 0 1 d7 24 32 ]
+[1756803918.901422044]: Processing encoder response
+[1756803918.901471197]: Updated joint B_joint (inverted feedback) position: -0.68 rad
+[1756803918.901493038]: Rx Data for 5: [ f5 1 fb ]
+[1756803918.901502486]: Processing status response
+[1756803918.901511152]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803918.901525199]: Tx Data for 5: [ 31 36 ]
+[1756803918.902657232]: Tx Data for 6: [ 31 37 ]
+[1756803918.903842075]: Setting joint B_joint position to (normal) -0.19 radians (-732.89 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.903880648]: Calculated encoder counts: -33354
+[1756803918.903922888]: Setting joint2 C_joint position to (inverted) -0.19 radians (732.89 degrees on motor protactor) with gear ratio 67.82:1
+[1756803918.903938958]: Calculated encoder2 counts: 33354
+[1756803918.903959196]: Tx Data for 5: [ f5 1 2c c8 ff 7d b6 21 ]
+[1756803918.904001396]: Tx Data for 6: [ f5 1 2c c8 0 82 4a bc ]
+[1756803918.904030571]: Sent position command -0.18861 to joint B_joint. Last command: -0.21851.
+[1756803919.001384668]: Rx Data for 5: [ 31 0 0 0 1 b6 a1 8e ]
+[1756803919.001453969]: Processing encoder response
+[1756803919.001472945]: Updated joint B_joint (inverted feedback) position: -0.63 rad
+[1756803919.001530423]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.001543097]: Processing status response
+[1756803919.001554308]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.001572272]: Tx Data for 5: [ 31 36 ]
+[1756803919.002730926]: Tx Data for 6: [ 31 37 ]
+[1756803919.004009616]: Setting joint B_joint position to (normal) -0.16 radians (-616.14 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.004079027]: Calculated encoder counts: -28041
+[1756803919.004134411]: Setting joint2 C_joint position to (inverted) -0.16 radians (616.14 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.004163165]: Calculated encoder2 counts: 28041
+[1756803919.004233407]: Tx Data for 5: [ f5 1 2c c8 ff 92 77 f7 ]
+[1756803919.004309190]: Tx Data for 6: [ f5 1 2c c8 0 6d 89 e6 ]
+[1756803919.004372860]: Sent position command -0.15856 to joint B_joint. Last command: -0.18861.
+[1756803919.101376397]: Rx Data for 5: [ 31 0 0 0 1 96 ce 9b ]
+[1756803919.101431852]: Processing encoder response
+[1756803919.101446790]: Updated joint B_joint (inverted feedback) position: -0.59 rad
+[1756803919.101493959]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.101503888]: Processing status response
+[1756803919.101512794]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.101528103]: Tx Data for 5: [ 31 36 ]
+[1756803919.102665667]: Tx Data for 6: [ 31 37 ]
+[1756803919.103841233]: Setting joint B_joint position to (normal) -0.13 radians (-499.74 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.103881970]: Calculated encoder counts: -22743
+[1756803919.103914671]: Setting joint2 C_joint position to (inverted) -0.13 radians (499.74 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.103947964]: Calculated encoder2 counts: 22743
+[1756803919.103968523]: Tx Data for 5: [ f5 1 2c c8 ff a7 29 be ]
+[1756803919.104020060]: Tx Data for 6: [ f5 1 2c c8 0 58 d7 1f ]
+[1756803919.104051189]: Sent position command -0.12861 to joint B_joint. Last command: -0.15856.
+[1756803919.201380359]: Rx Data for 5: [ 31 0 0 0 1 76 62 f ]
+[1756803919.201443789]: Processing encoder response
+[1756803919.201513640]: Updated joint B_joint (inverted feedback) position: -0.54 rad
+[1756803919.201538177]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.201551382]: Processing status response
+[1756803919.201563785]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.201583442]: Tx Data for 5: [ 31 36 ]
+[1756803919.202744991]: Tx Data for 6: [ 31 37 ]
+[1756803919.203986481]: Setting joint B_joint position to (normal) -0.10 radians (-383.03 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.204054800]: Calculated encoder counts: -17432
+[1756803919.204125944]: Setting joint2 C_joint position to (inverted) -0.10 radians (383.03 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.204153706]: Calculated encoder2 counts: 17432
+[1756803919.204197218]: Tx Data for 5: [ f5 1 2c c8 ff bb e8 91 ]
+[1756803919.204274774]: Tx Data for 6: [ f5 1 2c c8 0 44 18 4c ]
+[1756803919.204333475]: Sent position command -0.09857 to joint B_joint. Last command: -0.12861.
+[1756803919.301377418]: Rx Data for 5: [ 31 0 0 0 1 56 87 14 ]
+[1756803919.301432993]: Processing encoder response
+[1756803919.301451027]: Updated joint B_joint (inverted feedback) position: -0.50 rad
+[1756803919.301501572]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.301517242]: Processing status response
+[1756803919.301558740]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.301580301]: Tx Data for 5: [ 31 36 ]
+[1756803919.302722954]: Tx Data for 6: [ 31 37 ]
+[1756803919.303925971]: Setting joint B_joint position to (normal) -0.07 radians (-266.50 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.303977869]: Calculated encoder counts: -12128
+[1756803919.303997306]: Setting joint2 C_joint position to (inverted) -0.07 radians (266.50 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.304054854]: Calculated encoder2 counts: 12128
+[1756803919.304078769]: Tx Data for 5: [ f5 1 2c c8 ff d0 a0 5e ]
+[1756803919.304132431]: Tx Data for 6: [ f5 1 2c c8 0 2f 60 7f ]
+[1756803919.304185811]: Sent position command -0.06858 to joint B_joint. Last command: -0.09857.
+[1756803919.401383404]: Rx Data for 5: [ 31 0 0 0 1 35 cf 3b ]
+[1756803919.401454758]: Processing encoder response
+[1756803919.401477732]: Updated joint B_joint (inverted feedback) position: -0.45 rad
+[1756803919.401503891]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.401556410]: Processing status response
+[1756803919.401573101]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.401597057]: Tx Data for 5: [ 31 36 ]
+[1756803919.402755530]: Tx Data for 6: [ 31 37 ]
+[1756803919.404004865]: Setting joint B_joint position to (normal) -0.04 radians (-149.85 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.404094694]: Calculated encoder counts: -6820
+[1756803919.404116385]: Setting joint2 C_joint position to (inverted) -0.04 radians (149.85 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.404191907]: Calculated encoder2 counts: 6820
+[1756803919.404228386]: Tx Data for 5: [ f5 1 2c c8 ff e5 5c 2f ]
+[1756803919.404318476]: Tx Data for 6: [ f5 1 2c c8 0 1a a4 ae ]
+[1756803919.404393407]: Sent position command -0.03856 to joint B_joint. Last command: -0.06858.
+[1756803919.501390191]: Rx Data for 5: [ 31 0 0 0 1 16 27 74 ]
+[1756803919.501460955]: Processing encoder response
+[1756803919.501483778]: Updated joint B_joint (inverted feedback) position: -0.40 rad
+[1756803919.501514716]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.501564279]: Processing status response
+[1756803919.501580600]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.501603744]: Tx Data for 5: [ 31 36 ]
+[1756803919.502766375]: Tx Data for 6: [ 31 37 ]
+[1756803919.503985823]: Setting joint B_joint position to (normal) -0.01 radians (-33.27 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.504031119]: Calculated encoder counts: -1514
+[1756803919.504042981]: Setting joint2 C_joint position to (inverted) -0.01 radians (33.27 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.504058109]: Calculated encoder2 counts: 1514
+[1756803919.504143641]: Tx Data for 5: [ f5 1 2c c8 ff fa 16 fe ]
+[1756803919.504185720]: Tx Data for 6: [ f5 1 2c c8 0 5 ea df ]
+[1756803919.504210637]: Sent position command -0.00856 to joint B_joint. Last command: -0.03856.
+[1756803919.601374947]: Rx Data for 5: [ 31 0 0 0 0 f5 c7 f2 ]
+[1756803919.601430852]: Processing encoder response
+[1756803919.601446762]: Updated joint B_joint (inverted feedback) position: -0.36 rad
+[1756803919.601466209]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.601476348]: Processing status response
+[1756803919.601511394]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.601528697]: Tx Data for 5: [ 31 36 ]
+[1756803919.602680297]: Tx Data for 6: [ 31 37 ]
+[1756803919.603858317]: Setting joint B_joint position to (normal) 0.02 radians (83.15 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.603904645]: Calculated encoder counts: 3784
+[1756803919.603919032]: Setting joint2 C_joint position to (inverted) 0.02 radians (-83.15 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.603937156]: Calculated encoder2 counts: -3784
+[1756803919.603959749]: Tx Data for 5: [ f5 1 2b c8 0 e c8 c4 ]
+[1756803919.604036553]: Tx Data for 6: [ f5 1 2b c8 ff f1 38 17 ]
+[1756803919.604071499]: Sent position command 0.02140 to joint B_joint. Last command: -0.00856.
+[1756803919.701379971]: Rx Data for 5: [ 31 0 0 0 0 d5 d1 dc ]
+[1756803919.701438090]: Processing encoder response
+[1756803919.701455613]: Updated joint B_joint (inverted feedback) position: -0.31 rad
+[1756803919.701475852]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.701487403]: Processing status response
+[1756803919.701524784]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.701543559]: Tx Data for 5: [ 31 36 ]
+[1756803919.702694959]: Tx Data for 6: [ 31 37 ]
+[1756803919.704186000]: Setting joint B_joint position to (normal) 0.05 radians (199.86 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.704654242]: Calculated encoder counts: 9095
+[1756803919.704692184]: Setting joint2 C_joint position to (inverted) 0.05 radians (-199.86 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.704719615]: Calculated encoder2 counts: -9095
+[1756803919.704749552]: Tx Data for 5: [ f5 1 2b c8 0 23 87 98 ]
+[1756803919.704867204]: Tx Data for 6: [ f5 1 2b c8 ff dc 79 43 ]
+[1756803919.704924481]: Sent position command 0.05143 to joint B_joint. Last command: 0.02140.
+[1756803919.801382751]: Rx Data for 5: [ 31 0 0 0 0 b6 c6 b2 ]
+[1756803919.801448194]: Processing encoder response
+[1756803919.801469013]: Updated joint B_joint (inverted feedback) position: -0.26 rad
+[1756803919.801491415]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.801504410]: Processing status response
+[1756803919.801516683]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.801604118]: Tx Data for 5: [ 31 36 ]
+[1756803919.802765076]: Tx Data for 6: [ 31 37 ]
+[1756803919.804000525]: Setting joint B_joint position to (normal) 0.08 radians (316.46 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.804052943]: Calculated encoder counts: 14402
+[1756803919.804065547]: Setting joint2 C_joint position to (inverted) 0.08 radians (-316.46 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.804080706]: Calculated encoder2 counts: -14402
+[1756803919.804102567]: Tx Data for 5: [ f5 1 2b c8 0 38 42 68 ]
+[1756803919.804191865]: Tx Data for 6: [ f5 1 2b c8 ff c7 be 73 ]
+[1756803919.804231570]: Sent position command 0.08144 to joint B_joint. Last command: 0.05143.
+[1756803919.901380180]: Rx Data for 5: [ 31 0 0 0 0 9c 23 f5 ]
+[1756803919.901438881]: Processing encoder response
+[1756803919.901457125]: Updated joint B_joint (inverted feedback) position: -0.23 rad
+[1756803919.901479678]: Rx Data for 5: [ f5 1 fb ]
+[1756803919.901493083]: Processing status response
+[1756803919.901504745]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803919.901564347]: Tx Data for 5: [ 31 36 ]
+[1756803919.902725155]: Tx Data for 6: [ 31 37 ]
+[1756803919.903947870]: Setting joint B_joint position to (normal) 0.11 radians (432.96 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.903988877]: Calculated encoder counts: 19704
+[1756803919.904001230]: Setting joint2 C_joint position to (inverted) 0.11 radians (-432.96 degrees on motor protactor) with gear ratio 67.82:1
+[1756803919.904017261]: Calculated encoder2 counts: -19704
+[1756803919.904036567]: Tx Data for 5: [ f5 1 2b c8 0 4c f8 32 ]
+[move_group-8] [WARN] [1756803919.904055793] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803919.904119123]: Tx Data for 6: [ f5 1 2b c8 ff b3 8 a9 ]
+[1756803919.904154650]: Sent position command 0.11142 to joint B_joint. Last command: 0.08144.
+[1756803920.001378331]: Rx Data for 5: [ 31 0 0 0 0 85 45 0 ]
+[1756803920.001450487]: Processing encoder response
+[1756803920.001471807]: Updated joint B_joint (inverted feedback) position: -0.19 rad
+[1756803920.001494871]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.001507956]: Processing status response
+[1756803920.001520800]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.001574180]: Tx Data for 5: [ 31 36 ]
+[1756803920.002710873]: Tx Data for 6: [ 31 37 ]
+[1756803920.003900966]: Setting joint B_joint position to (normal) 0.14 radians (549.49 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.003945460]: Calculated encoder counts: 25008
+[1756803920.003959787]: Setting joint2 C_joint position to (inverted) 0.14 radians (-549.49 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.003977460]: Calculated encoder2 counts: -25008
+[1756803920.004000193]: Tx Data for 5: [ f5 1 2c c8 0 61 b0 0 ]
+[1756803920.004084562]: Tx Data for 6: [ f5 1 2c c8 ff 9e 50 dd ]
+[1756803920.004169592]: Sent position command 0.14141 to joint B_joint. Last command: 0.11142.
+[1756803920.101375871]: Rx Data for 5: [ 31 0 0 0 0 71 ce 75 ]
+[1756803920.101428190]: Processing encoder response
+[1756803920.101442507]: Updated joint B_joint (inverted feedback) position: -0.16 rad
+[1756803920.101461523]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.101471622]: Processing status response
+[1756803920.101480969]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.101495847]: Tx Data for 5: [ 31 36 ]
+[1756803920.102655112]: Tx Data for 6: [ 31 37 ]
+[1756803920.103840005]: Setting joint B_joint position to (normal) 0.17 radians (665.99 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.103884870]: Calculated encoder counts: 30309
+[1756803920.103899598]: Setting joint2 C_joint position to (inverted) 0.17 radians (-665.99 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.103917331]: Calculated encoder2 counts: -30309
+[1756803920.103939894]: Tx Data for 5: [ f5 1 2c c8 0 76 65 ca ]
+[1756803920.103995559]: Tx Data for 6: [ f5 1 2c c8 ff 89 9b 13 ]
+[1756803920.104075289]: Sent position command 0.17139 to joint B_joint. Last command: 0.14141.
+[1756803920.201412044]: Rx Data for 5: [ 31 0 0 0 0 62 cf 67 ]
+[1756803920.201484861]: Processing encoder response
+[1756803920.201505149]: Updated joint B_joint (inverted feedback) position: -0.14 rad
+[1756803920.201528904]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.201543211]: Processing status response
+[1756803920.201556316]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.201576925]: Tx Data for 5: [ 31 36 ]
+[1756803920.202816601]: Tx Data for 6: [ 31 37 ]
+[1756803920.204528838]: Setting joint B_joint position to (normal) 0.20 radians (783.19 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.204678500]: Calculated encoder counts: 35643
+[1756803920.204697286]: Setting joint2 C_joint position to (inverted) 0.20 radians (-783.19 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.204719077]: Calculated encoder2 counts: -35643
+[1756803920.204766186]: Tx Data for 5: [ f5 1 2b c8 0 8b 3b b4 ]
+[1756803920.204938240]: Tx Data for 6: [ f5 1 2b c8 ff 74 c5 27 ]
+[1756803920.205116315]: Sent position command 0.20155 to joint B_joint. Last command: 0.17139.
+[1756803920.301386670]: Rx Data for 5: [ 31 0 0 0 0 57 52 df ]
+[1756803920.301456732]: Processing encoder response
+[1756803920.301475187]: Updated joint B_joint (inverted feedback) position: -0.13 rad
+[1756803920.301496748]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.301509512]: Processing status response
+[1756803920.301519330]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.301569866]: Tx Data for 5: [ 31 36 ]
+[1756803920.302735172]: Tx Data for 6: [ 31 37 ]
+[1756803920.303925786]: Setting joint B_joint position to (normal) 0.23 radians (899.23 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.303973476]: Calculated encoder counts: 40925
+[1756803920.303990278]: Setting joint2 C_joint position to (inverted) 0.23 radians (-899.23 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.304006328]: Calculated encoder2 counts: -40925
+[1756803920.304026346]: Tx Data for 5: [ f5 1 2b c8 0 9f dd 6a ]
+[1756803920.304078334]: Tx Data for 6: [ f5 1 2b c8 ff 60 23 71 ]
+[1756803920.304174735]: Sent position command 0.23141 to joint B_joint. Last command: 0.20155.
+[1756803920.401382527]: Rx Data for 5: [ 31 0 0 0 0 4f ee 73 ]
+[1756803920.401445806]: Processing encoder response
+[1756803920.401464011]: Updated joint B_joint (inverted feedback) position: -0.12 rad
+[1756803920.401486964]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.401498957]: Processing status response
+[1756803920.401509737]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.401527019]: Tx Data for 5: [ 31 36 ]
+[1756803920.402686064]: Tx Data for 6: [ 31 37 ]
+[1756803920.403896275]: Setting joint B_joint position to (normal) 0.26 radians (1015.78 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.403948032]: Calculated encoder counts: 46229
+[1756803920.403967629]: Setting joint2 C_joint position to (inverted) 0.26 radians (-1015.78 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.403991454]: Calculated encoder2 counts: -46229
+[1756803920.404018175]: Tx Data for 5: [ f5 1 2b c8 0 b4 95 37 ]
+[1756803920.404080572]: Tx Data for 6: [ f5 1 2b c8 ff 4b 6b a4 ]
+[1756803920.404182314]: Sent position command 0.26141 to joint B_joint. Last command: 0.23141.
+[1756803920.501376610]: Rx Data for 5: [ 31 0 0 0 0 4b fc 7d ]
+[1756803920.501429560]: Processing encoder response
+[1756803920.501445610]: Updated joint B_joint (inverted feedback) position: -0.11 rad
+[1756803920.501463725]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.501473643]: Processing status response
+[1756803920.501482770]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.501497679]: Tx Data for 5: [ 31 36 ]
+[1756803920.502630764]: Tx Data for 6: [ 31 37 ]
+[1756803920.503841386]: Setting joint B_joint position to (normal) 0.29 radians (1132.30 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.503886762]: Calculated encoder counts: 51532
+[1756803920.503902952]: Setting joint2 C_joint position to (inverted) 0.29 radians (-1132.30 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.503922319]: Calculated encoder2 counts: -51532
+[1756803920.503947807]: Tx Data for 5: [ f5 1 2b c8 0 c9 4c 3 ]
+[1756803920.504001788]: Tx Data for 6: [ f5 1 2b c8 ff 36 b4 d8 ]
+[1756803920.504090425]: Sent position command 0.29139 to joint B_joint. Last command: 0.26141.
+[1756803920.601384840]: Rx Data for 5: [ 31 0 0 0 0 48 c2 40 ]
+[1756803920.601449592]: Processing encoder response
+[1756803920.601468658]: Updated joint B_joint (inverted feedback) position: -0.11 rad
+[1756803920.601491221]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.601504055]: Processing status response
+[1756803920.601516148]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.601535885]: Tx Data for 5: [ 31 36 ]
+[1756803920.602696423]: Tx Data for 6: [ 31 37 ]
+[1756803920.603972888]: Setting joint B_joint position to (normal) 0.32 radians (1249.02 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.604026910]: Calculated encoder counts: 56844
+[1756803920.604041417]: Setting joint2 C_joint position to (inverted) 0.32 radians (-1249.02 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.604056816]: Calculated encoder2 counts: -56844
+[1756803920.604079589]: Tx Data for 5: [ f5 1 2c c8 0 de c d9 ]
+[1756803920.604141135]: Tx Data for 6: [ f5 1 2c c8 ff 21 f4 4 ]
+[1756803920.604179768]: Sent position command 0.32143 to joint B_joint. Last command: 0.29139.
+[1756803920.701376058]: Rx Data for 5: [ 31 0 0 0 0 45 85 0 ]
+[1756803920.701439518]: Processing encoder response
+[1756803920.701463203]: Updated joint B_joint (inverted feedback) position: -0.10 rad
+[1756803920.701492668]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.701509079]: Processing status response
+[1756803920.701524839]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.701549746]: Tx Data for 5: [ 31 36 ]
+[1756803920.702725842]: Tx Data for 6: [ 31 37 ]
+[1756803920.704007769]: Setting joint B_joint position to (normal) 0.35 radians (1365.64 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.704061931]: Calculated encoder counts: 62151
+[1756803920.704075656]: Setting joint2 C_joint position to (inverted) 0.35 radians (-1365.64 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.704091356]: Calculated encoder2 counts: -62151
+[1756803920.704117355]: Tx Data for 5: [ f5 1 2b c8 0 f2 c7 a7 ]
+[1756803920.704163482]: Tx Data for 6: [ f5 1 2b c8 ff d 39 34 ]
+[1756803920.704190473]: Sent position command 0.35144 to joint B_joint. Last command: 0.32143.
+[1756803920.801376183]: Rx Data for 5: [ 31 0 0 0 0 42 38 b0 ]
+[1756803920.801430395]: Processing encoder response
+[1756803920.801445213]: Updated joint B_joint (inverted feedback) position: -0.10 rad
+[1756803920.801463608]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.801473096]: Processing status response
+[1756803920.801481151]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.801495598]: Tx Data for 5: [ 31 36 ]
+[1756803920.802666645]: Tx Data for 6: [ 31 37 ]
+[1756803920.803920208]: Setting joint B_joint position to (normal) 0.38 radians (1482.10 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.803976654]: Calculated encoder counts: 67451
+[1756803920.803993696]: Setting joint2 C_joint position to (inverted) 0.38 radians (-1482.10 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.804012833]: Calculated encoder2 counts: -67451
+[1756803920.804037429]: Tx Data for 5: [ f5 1 2c c8 1 7 7b 72 ]
+[1756803920.804094807]: Tx Data for 6: [ f5 1 2c c8 fe f8 85 6b ]
+[1756803920.804219191]: Sent position command 0.38141 to joint B_joint. Last command: 0.35144.
+[1756803920.901375867]: Rx Data for 5: [ 31 0 0 0 0 3f 1 76 ]
+[1756803920.901430931]: Processing encoder response
+[1756803920.901447532]: Updated joint B_joint (inverted feedback) position: -0.09 rad
+[1756803920.901469043]: Rx Data for 5: [ f5 1 fb ]
+[1756803920.901481456]: Processing status response
+[1756803920.901492497]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803920.901510100]: Tx Data for 5: [ 31 36 ]
+[1756803920.902637816]: Tx Data for 6: [ 31 37 ]
+[1756803920.903850471]: Setting joint B_joint position to (normal) 0.41 radians (1598.58 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.903910053]: Calculated encoder counts: 72753
+[1756803920.903929580]: Setting joint2 C_joint position to (inverted) 0.41 radians (-1598.58 degrees on motor protactor) with gear ratio 67.82:1
+[1756803920.903953896]: Calculated encoder2 counts: -72753
+[1756803920.903984103]: Tx Data for 5: [ f5 1 2b c8 1 1c 31 3c ]
+[1756803920.904041842]: Tx Data for 6: [ f5 1 2b c8 fe e3 cf 9f ]
+[1756803920.904093469]: Sent position command 0.41139 to joint B_joint. Last command: 0.38141.
+[1756803921.001370912]: Rx Data for 5: [ 31 0 0 0 0 3b cd 3e ]
+[1756803921.001428781]: Processing encoder response
+[1756803921.001444000]: Updated joint B_joint (inverted feedback) position: -0.09 rad
+[1756803921.001463366]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.001473466]: Processing status response
+[1756803921.001540923]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.001554899]: Tx Data for 5: [ 31 36 ]
+[1756803921.002704305]: Tx Data for 6: [ 31 37 ]
+[1756803921.003978928]: Setting joint B_joint position to (normal) 0.44 radians (1715.30 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.004045433]: Calculated encoder counts: 78065
+[1756803921.004067615]: Setting joint2 C_joint position to (inverted) 0.44 radians (-1715.30 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.004095277]: Calculated encoder2 counts: -78065
+[1756803921.004135092]: Tx Data for 5: [ f5 1 2b c8 1 30 f1 10 ]
+[1756803921.004209813]: Tx Data for 6: [ f5 1 2b c8 fe cf f cb ]
+[move_group-8] [WARN] [1756803921.004111778] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803921.004333105]: Sent position command 0.44143 to joint B_joint. Last command: 0.41139.
+[1756803921.101396074]: Rx Data for 5: [ 31 0 0 0 0 38 75 e3 ]
+[1756803921.101514537]: Processing encoder response
+[1756803921.101537591]: Updated joint B_joint (inverted feedback) position: -0.08 rad
+[1756803921.101567768]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.101585411]: Processing status response
+[1756803921.101603205]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.101625446]: Tx Data for 5: [ 31 36 ]
+[1756803921.102782167]: Tx Data for 6: [ 31 37 ]
+[1756803921.104036811]: Setting joint B_joint position to (normal) 0.47 radians (1831.95 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.104109628]: Calculated encoder counts: 83374
+[1756803921.104130307]: Setting joint2 C_joint position to (inverted) 0.47 radians (-1831.95 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.104151347]: Calculated encoder2 counts: -83374
+[1756803921.104180031]: Tx Data for 5: [ f5 1 2b c8 1 45 ae e2 ]
+[1756803921.104246887]: Tx Data for 6: [ f5 1 2b c8 fe ba 52 f9 ]
+[1756803921.104360080]: Sent position command 0.47145 to joint B_joint. Last command: 0.44143.
+[1756803921.201388685]: Rx Data for 5: [ 31 0 0 0 0 35 17 82 ]
+[1756803921.201454348]: Processing encoder response
+[1756803921.201479476]: Updated joint B_joint (inverted feedback) position: -0.08 rad
+[1756803921.201508530]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.201525492]: Processing status response
+[1756803921.201546031]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.201573292]: Tx Data for 5: [ 31 36 ]
+[1756803921.202743538]: Tx Data for 6: [ 31 37 ]
+[1756803921.203956675]: Setting joint B_joint position to (normal) 0.50 radians (1948.45 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.204005356]: Calculated encoder counts: 88675
+[1756803921.204025915]: Setting joint2 C_joint position to (inverted) 0.50 radians (-1948.45 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.204086068]: Calculated encoder2 counts: -88675
+[1756803921.204126555]: Tx Data for 5: [ f5 1 2b c8 1 5a 63 ac ]
+[1756803921.204203029]: Tx Data for 6: [ f5 1 2b c8 fe a5 9d 2f ]
+[1756803921.204256740]: Sent position command 0.50143 to joint B_joint. Last command: 0.47145.
+[1756803921.301379071]: Rx Data for 5: [ 31 0 0 0 0 32 d 75 ]
+[1756803921.301436519]: Processing encoder response
+[1756803921.301457118]: Updated joint B_joint (inverted feedback) position: -0.07 rad
+[1756803921.301482636]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.301496853]: Processing status response
+[1756803921.301512021]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.301535977]: Tx Data for 5: [ 31 36 ]
+[1756803921.302685273]: Tx Data for 6: [ 31 37 ]
+[1756803921.303931432]: Setting joint B_joint position to (normal) 0.53 radians (2064.99 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.304015961]: Calculated encoder counts: 93979
+[1756803921.304033794]: Setting joint2 C_joint position to (inverted) 0.53 radians (-2064.99 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.304053421]: Calculated encoder2 counts: -93979
+[1756803921.304076785]: Tx Data for 5: [ f5 1 2c c8 1 6f 1b 7a ]
+[1756803921.304138181]: Tx Data for 6: [ f5 1 2c c8 fe 90 e5 63 ]
+[1756803921.304191452]: Sent position command 0.53142 to joint B_joint. Last command: 0.50143.
+[1756803921.401380027]: Rx Data for 5: [ 31 0 0 0 0 2e c7 2b ]
+[1756803921.401448266]: Processing encoder response
+[1756803921.401471770]: Updated joint B_joint (inverted feedback) position: -0.07 rad
+[1756803921.401499623]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.401519079]: Processing status response
+[1756803921.401535981]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.401600192]: Tx Data for 5: [ 31 36 ]
+[1756803921.402780357]: Tx Data for 6: [ 31 37 ]
+[1756803921.404029691]: Setting joint B_joint position to (normal) 0.56 radians (2181.67 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.404090977]: Calculated encoder counts: 99290
+[1756803921.404109321]: Setting joint2 C_joint position to (inverted) 0.56 radians (-2181.67 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.404130752]: Calculated encoder2 counts: -99290
+[1756803921.404160047]: Tx Data for 5: [ f5 1 2b c8 1 83 da 4c ]
+[1756803921.404230610]: Tx Data for 6: [ f5 1 2b c8 fe 7c 26 8f ]
+[1756803921.404286044]: Sent position command 0.56145 to joint B_joint. Last command: 0.53142.
+[1756803921.501408666]: Rx Data for 5: [ 31 0 0 0 0 2b b2 13 ]
+[1756803921.501498094]: Processing encoder response
+[1756803921.501526718]: Updated joint B_joint (inverted feedback) position: -0.06 rad
+[1756803921.501604014]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.501620996]: Processing status response
+[1756803921.501635132]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.501656393]: Tx Data for 5: [ 31 36 ]
+[1756803921.502798034]: Tx Data for 6: [ 31 37 ]
+[1756803921.504011371]: Setting joint B_joint position to (normal) 0.59 radians (2298.21 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.504076764]: Calculated encoder counts: 104594
+[1756803921.504096101]: Setting joint2 C_joint position to (inverted) 0.59 radians (-2298.21 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.504118403]: Calculated encoder2 counts: -104594
+[1756803921.504148600]: Tx Data for 5: [ f5 1 2b c8 1 98 92 19 ]
+[1756803921.504208092]: Tx Data for 6: [ f5 1 2b c8 fe 67 6e c2 ]
+[1756803921.504247426]: Sent position command 0.59144 to joint B_joint. Last command: 0.56145.
+[1756803921.601379074]: Rx Data for 5: [ 31 0 0 0 0 28 62 c0 ]
+[1756803921.601442314]: Processing encoder response
+[1756803921.601460939]: Updated joint B_joint (inverted feedback) position: -0.06 rad
+[1756803921.601482900]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.601495614]: Processing status response
+[1756803921.601506725]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.601525160]: Tx Data for 5: [ 31 36 ]
+[1756803921.602668034]: Tx Data for 6: [ 31 37 ]
+[1756803921.603854039]: Setting joint B_joint position to (normal) 0.62 radians (2414.62 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.603896780]: Calculated encoder counts: 109892
+[1756803921.603910916]: Setting joint2 C_joint position to (inverted) 0.62 radians (-2414.62 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.603928509]: Calculated encoder2 counts: -109892
+[1756803921.603983633]: Tx Data for 5: [ f5 1 2c c8 1 ad 44 e1 ]
+[1756803921.604029991]: Tx Data for 6: [ f5 1 2c c8 fe 52 bc fc ]
+[1756803921.604073523]: Sent position command 0.62140 to joint B_joint. Last command: 0.59144.
+[1756803921.701378778]: Rx Data for 5: [ 31 0 0 0 0 25 5e b9 ]
+[1756803921.701431989]: Processing encoder response
+[1756803921.701448890]: Updated joint B_joint (inverted feedback) position: -0.05 rad
+[1756803921.701469990]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.701481893]: Processing status response
+[1756803921.701493084]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.701512330]: Tx Data for 5: [ 31 36 ]
+[1756803921.702675733]: Tx Data for 6: [ 31 37 ]
+[1756803921.704000760]: Setting joint B_joint position to (normal) 0.65 radians (2531.34 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.704058920]: Calculated encoder counts: 115204
+[1756803921.704105908]: Setting joint2 C_joint position to (inverted) 0.65 radians (-2531.34 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.704123461]: Calculated encoder2 counts: -115204
+[1756803921.704146154]: Tx Data for 5: [ f5 1 2c c8 1 c2 4 b6 ]
+[1756803921.704239670]: Tx Data for 6: [ f5 1 2c c8 fe 3d fc 27 ]
+[1756803921.704290827]: Sent position command 0.65143 to joint B_joint. Last command: 0.62140.
+[1756803921.801383462]: Rx Data for 5: [ 31 0 0 0 0 21 ff 56 ]
+[1756803921.801448424]: Processing encoder response
+[1756803921.801467690]: Updated joint B_joint (inverted feedback) position: -0.05 rad
+[1756803921.801490253]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.801503287]: Processing status response
+[1756803921.801518065]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.801542341]: Tx Data for 5: [ 31 36 ]
+[1756803921.802745709]: Tx Data for 6: [ 31 37 ]
+[1756803921.804055317]: Setting joint B_joint position to (normal) 0.68 radians (2647.96 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.804146389]: Calculated encoder counts: 120511
+[1756803921.804166156]: Setting joint2 C_joint position to (inverted) 0.68 radians (-2647.96 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.804189590]: Calculated encoder2 counts: -120511
+[1756803921.804225498]: Tx Data for 5: [ f5 1 2c c8 1 d6 bf 85 ]
+[1756803921.804306932]: Tx Data for 6: [ f5 1 2c c8 fe 29 41 58 ]
+[1756803921.804389878]: Sent position command 0.68145 to joint B_joint. Last command: 0.65143.
+[1756803921.901391251]: Rx Data for 5: [ 31 0 0 0 0 1e eb 3f ]
+[1756803921.901461072]: Processing encoder response
+[1756803921.901493664]: Updated joint B_joint (inverted feedback) position: -0.04 rad
+[1756803921.901528189]: Rx Data for 5: [ f5 1 fb ]
+[1756803921.901589134]: Processing status response
+[1756803921.901609121]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803921.901638136]: Tx Data for 5: [ 31 36 ]
+[1756803921.902845942]: Tx Data for 6: [ 31 37 ]
+[1756803921.904128911]: Setting joint B_joint position to (normal) 0.71 radians (2764.64 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.904201658]: Calculated encoder counts: 125821
+[1756803921.904221806]: Setting joint2 C_joint position to (inverted) 0.71 radians (-2764.64 degrees on motor protactor) with gear ratio 67.82:1
+[1756803921.904244148]: Calculated encoder2 counts: -125821
+[1756803921.904275777]: Tx Data for 5: [ f5 1 2c c8 1 eb 7d 58 ]
+[1756803921.904330491]: Tx Data for 6: [ f5 1 2c c8 fe 14 83 85 ]
+[1756803921.904384372]: Sent position command 0.71147 to joint B_joint. Last command: 0.68145.
+[1756803922.001381397]: Rx Data for 5: [ 31 0 0 0 0 1b 9d ee ]
+[1756803922.001479802]: Processing encoder response
+[1756803922.001500742]: Updated joint B_joint (inverted feedback) position: -0.04 rad
+[1756803922.001525458]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.001539424]: Processing status response
+[1756803922.001552219]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.001572076]: Tx Data for 5: [ 31 36 ]
+[1756803922.002711854]: Tx Data for 6: [ 31 37 ]
+[1756803922.003921514]: Setting joint B_joint position to (normal) 0.74 radians (2880.98 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.003973252]: Calculated encoder counts: 131116
+[1756803922.003994201]: Setting joint2 C_joint position to (inverted) 0.74 radians (-2880.98 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.004021422]: Calculated encoder2 counts: -131116
+[1756803922.004051078]: Tx Data for 5: [ f5 1 2c c8 2 0 2c 1d ]
+[1756803922.004111232]: Tx Data for 6: [ f5 1 2c c8 fd ff d4 c0 ]
+[1756803922.004214256]: Sent position command 0.74141 to joint B_joint. Last command: 0.71147.
+[1756803922.101378987]: Rx Data for 5: [ 31 0 0 0 0 18 94 e2 ]
+[1756803922.101434271]: Processing encoder response
+[1756803922.101452645]: Updated joint B_joint (inverted feedback) position: -0.04 rad
+[1756803922.101477793]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.101490998]: Processing status response
+[1756803922.101501748]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.101518820]: Tx Data for 5: [ 31 36 ]
+[1756803922.102654220]: Tx Data for 6: [ 31 37 ]
+[1756803922.103874310]: Setting joint B_joint position to (normal) 0.77 radians (2997.50 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.103926107]: Calculated encoder counts: 136419
+[1756803922.103944762]: Setting joint2 C_joint position to (inverted) 0.77 radians (-2997.50 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.104006589]: Calculated encoder2 counts: -136419
+[move_group-8] [WARN] [1756803922.103954531] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803922.104035053]: Tx Data for 5: [ f5 1 2c c8 2 14 e3 e8 ]
+[1756803922.104090768]: Tx Data for 6: [ f5 1 2c c8 fd eb 1d f5 ]
+[1756803922.104165108]: Sent position command 0.77140 to joint B_joint. Last command: 0.74141.
+[1756803922.201385072]: Rx Data for 5: [ 31 0 0 0 0 15 2a 75 ]
+[1756803922.201451037]: Processing encoder response
+[1756803922.201470393]: Updated joint B_joint (inverted feedback) position: -0.03 rad
+[1756803922.201493156]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.201506261]: Processing status response
+[1756803922.201518815]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.201538241]: Tx Data for 5: [ 31 36 ]
+[1756803922.202698859]: Tx Data for 6: [ 31 37 ]
+[1756803922.203990373]: Setting joint B_joint position to (normal) 0.80 radians (3114.17 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.204053392]: Calculated encoder counts: 141729
+[1756803922.204072157]: Setting joint2 C_joint position to (inverted) 0.80 radians (-3114.17 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.204095401]: Calculated encoder2 counts: -141729
+[1756803922.204124325]: Tx Data for 5: [ f5 1 2c c8 2 29 a1 bb ]
+[1756803922.204192063]: Tx Data for 6: [ f5 1 2c c8 fd d6 5f 22 ]
+[1756803922.204245874]: Sent position command 0.80142 to joint B_joint. Last command: 0.77140.
+[1756803922.301380458]: Rx Data for 5: [ 31 0 0 0 0 12 f 57 ]
+[1756803922.301471500]: Processing encoder response
+[1756803922.301508790]: Updated joint B_joint (inverted feedback) position: -0.03 rad
+[1756803922.301625961]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.301660336]: Processing status response
+[1756803922.301688799]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.301728705]: Tx Data for 5: [ 31 36 ]
+[1756803922.302924599]: Tx Data for 6: [ 31 37 ]
+[1756803922.304194632]: Setting joint B_joint position to (normal) 0.83 radians (3230.99 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.304311052]: Calculated encoder counts: 147046
+[1756803922.304387606]: Setting joint2 C_joint position to (inverted) 0.83 radians (-3230.99 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.304426690]: Calculated encoder2 counts: -147046
+[1756803922.304465733]: Tx Data for 5: [ f5 1 2c c8 2 3e 66 95 ]
+[1756803922.304568046]: Tx Data for 6: [ f5 1 2c c8 fd c1 9a 48 ]
+[1756803922.304631115]: Sent position command 0.83149 to joint B_joint. Last command: 0.80142.
+[1756803922.401380312]: Rx Data for 5: [ 31 0 0 0 0 e d2 16 ]
+[1756803922.401444714]: Processing encoder response
+[1756803922.401468038]: Updated joint B_joint (inverted feedback) position: -0.02 rad
+[1756803922.401530716]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.401548970]: Processing status response
+[1756803922.401565542]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.401590288]: Tx Data for 5: [ 31 36 ]
+[1756803922.402730167]: Tx Data for 6: [ 31 37 ]
+[1756803922.403932954]: Setting joint B_joint position to (normal) 0.86 radians (3347.30 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.403976295]: Calculated encoder counts: 152339
+[1756803922.403992325]: Setting joint2 C_joint position to (inverted) 0.86 radians (-3347.30 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.404039494]: Calculated encoder2 counts: -152339
+[1756803922.404064421]: Tx Data for 5: [ f5 1 2c c8 2 53 13 57 ]
+[1756803922.404113474]: Tx Data for 6: [ f5 1 2c c8 fd ac ed 86 ]
+[1756803922.404149492]: Sent position command 0.86142 to joint B_joint. Last command: 0.83149.
+[1756803922.501370579]: Rx Data for 5: [ 31 0 0 0 0 b a3 e4 ]
+[1756803922.501418208]: Processing encoder response
+[1756803922.501431664]: Updated joint B_joint (inverted feedback) position: -0.02 rad
+[1756803922.501472340]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.501483802]: Processing status response
+[1756803922.501492538]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.501506024]: Tx Data for 5: [ 31 36 ]
+[1756803922.502596168]: Tx Data for 6: [ 31 37 ]
+[1756803922.503771043]: Setting joint B_joint position to (normal) 0.89 radians (3463.70 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.503808423]: Calculated encoder counts: 157636
+[1756803922.503822420]: Setting joint2 C_joint position to (inverted) 0.89 radians (-3463.70 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.503868326]: Calculated encoder2 counts: -157636
+[1756803922.503892612]: Tx Data for 5: [ f5 1 2c c8 2 67 c4 1c ]
+[1756803922.503933208]: Tx Data for 6: [ f5 1 2c c8 fd 98 3c c1 ]
+[1756803922.503969697]: Sent position command 0.89137 to joint B_joint. Last command: 0.86142.
+[1756803922.601378979]: Rx Data for 5: [ 31 0 0 0 0 8 6a a8 ]
+[1756803922.601442178]: Processing encoder response
+[1756803922.601462657]: Updated joint B_joint (inverted feedback) position: -0.01 rad
+[1756803922.601488766]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.601550703]: Processing status response
+[1756803922.601571832]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.601595657]: Tx Data for 5: [ 31 36 ]
+[1756803922.602766654]: Tx Data for 6: [ 31 37 ]
+[1756803922.604048230]: Setting joint B_joint position to (normal) 0.92 radians (3580.57 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.604108193]: Calculated encoder counts: 162955
+[1756803922.604125916]: Setting joint2 C_joint position to (inverted) 0.92 radians (-3580.57 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.604183064]: Calculated encoder2 counts: -162955
+[1756803922.604211748]: Tx Data for 5: [ f5 1 2b c8 2 7c 8b f7 ]
+[1756803922.604283503]: Tx Data for 6: [ f5 1 2b c8 fd 83 75 e4 ]
+[1756803922.604341723]: Sent position command 0.92145 to joint B_joint. Last command: 0.89137.
+[1756803922.701370738]: Rx Data for 5: [ 31 0 0 0 0 5 29 64 ]
+[1756803922.701425331]: Processing encoder response
+[1756803922.701447172]: Updated joint B_joint (inverted feedback) position: -0.01 rad
+[1756803922.701473742]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.701518827]: Processing status response
+[1756803922.701536360]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.701556268]: Tx Data for 5: [ 31 36 ]
+[1756803922.702698741]: Tx Data for 6: [ 31 37 ]
+[1756803922.703933237]: Sent velocity command 0.214 to joint B_joint. Last command: 0.294
+[1756803922.703985446]: Setting joint B_joint position to (normal) 0.95 radians (3682.79 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.704011234]: Calculated encoder counts: 167608
+[1756803922.704062681]: Setting joint2 C_joint position to (inverted) 0.95 radians (-3682.79 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.704089803]: Calculated encoder2 counts: -167608
+[1756803922.704114319]: Tx Data for 5: [ f5 0 d6 c8 2 8e b8 e0 ]
+[1756803922.704167359]: Tx Data for 6: [ f5 0 d6 c8 fd 71 48 4f ]
+[1756803922.704213426]: Sent position command 0.94776 to joint B_joint. Last command: 0.92145.
+[1756803922.801382645]: Rx Data for 5: [ 31 0 0 0 0 1 e7 1e ]
+[1756803922.801447717]: Processing encoder response
+[1756803922.801468587]: Updated joint B_joint (inverted feedback) position: -0.00 rad
+[1756803922.801535022]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.801550030]: Processing status response
+[1756803922.801563526]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.801584886]: Tx Data for 5: [ 31 36 ]
+[1756803922.802741245]: Tx Data for 6: [ 31 37 ]
+[1756803922.804023632]: Sent velocity command 0.114 to joint B_joint. Last command: 0.214
+[1756803922.804074709]: Setting joint B_joint position to (normal) 0.96 radians (3746.73 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.804138980]: Calculated encoder counts: 170517
+[1756803922.804163245]: Setting joint2 C_joint position to (inverted) 0.96 radians (-3746.73 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.804190898]: Calculated encoder2 counts: -170517
+[1756803922.804219572]: Tx Data for 5: [ f5 0 72 c8 2 9a 15 e5 ]
+[1756803922.804298881]: Tx Data for 6: [ f5 0 72 c8 fd 65 eb 82 ]
+[1756803922.804375526]: Sent position command 0.96421 to joint B_joint. Last command: 0.94776.
+[1756803922.901375275]: Rx Data for 5: [ 31 ff ff ff ff fe b0 e0 ]
+[1756803922.901432383]: Processing encoder response
+[1756803922.901479552]: Updated joint B_joint (inverted feedback) position: 0.00 rad
+[1756803922.901503587]: Rx Data for 5: [ f5 1 fb ]
+[1756803922.901517103]: Processing status response
+[1756803922.901530237]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803922.901549794]: Tx Data for 5: [ 31 36 ]
+[1756803922.902692027]: Tx Data for 6: [ 31 37 ]
+[1756803922.903882781]: Sent velocity command 0.047 to joint B_joint. Last command: 0.114
+[1756803922.903920532]: Setting joint B_joint position to (normal) 0.97 radians (3773.39 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.903978131]: Calculated encoder counts: 171731
+[1756803922.903994642]: Setting joint2 C_joint position to (inverted) 0.97 radians (-3773.39 degrees on motor protactor) with gear ratio 67.82:1
+[1756803922.904009360]: Calculated encoder2 counts: -171731
+[1756803922.904028776]: Tx Data for 5: [ f5 0 2e c8 2 9e d3 63 ]
+[1756803922.904071527]: Tx Data for 6: [ f5 0 2e c8 fd 61 2d 7c ]
+[1756803922.904118806]: Sent position command 0.97107 to joint B_joint. Last command: 0.96421.
+[1756803922.904142731]: Sent velocity command -0.021 to joint C_joint. Last command: 0.000
+[1756803923.001386601]: Rx Data for 5: [ 31 ff ff ff ff fb 3b 68 ]
+[1756803923.001452946]: Processing encoder response
+[1756803923.001471501]: Updated joint B_joint (inverted feedback) position: 0.01 rad
+[1756803923.001493933]: Rx Data for 5: [ f5 1 fb ]
+[1756803923.001507098]: Processing status response
+[1756803923.001519602]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803923.001539319]: Tx Data for 5: [ 31 36 ]
+[1756803923.002694276]: Tx Data for 6: [ 31 37 ]
+[1756803923.004015736]: Sent velocity command 0.061 to joint B_joint. Last command: 0.047
+[1756803923.004081480]: Setting joint B_joint position to (normal) 0.98 radians (3803.76 degrees on motor protactor) with gear ratio 67.82:1
+[1756803923.004109353]: Calculated encoder counts: 173113
+[1756803923.004129180]: Setting joint2 C_joint position to (inverted) 0.98 radians (-3803.76 degrees on motor protactor) with gear ratio 67.82:1
+[1756803923.004188803]: Calculated encoder2 counts: -173113
+[1756803923.004221705]: Tx Data for 5: [ f5 0 3c c8 2 a4 39 dd ]
+[1756803923.004294412]: Tx Data for 6: [ f5 0 3c c8 fd 5b c7 1e ]
+[1756803923.004387788]: Sent position command 0.97889 to joint B_joint. Last command: 0.97107.
+[1756803923.004420950]: Sent velocity command -0.031 to joint C_joint. Last command: -0.021
+[1756803923.004502945]: Setting joint C_joint position to (inverted) 0.51 radians (1967.29 degrees on motor protactor) with gear ratio 67.82:1
+[1756803923.004531238]: Calculated encoder counts: 89533
+[1756803923.004561625]: Setting joint2 B_joint position to (normal) 0.51 radians (1967.29 degrees on motor protactor) with gear ratio 67.82:1
+[1756803923.004583847]: Calculated encoder2 counts: 89533
+[1756803923.004606470]: Tx Data for 6: [ f5 0 1f c8 1 5d bd fd ]
+[1756803923.004666192]: Tx Data for 5: [ f5 0 1f c8 1 5d bd fc ]
+[1756803923.004742626]: Sent position command -0.50628 to joint C_joint. Last command: -0.50295.
+[1756803923.101398558]: Rx Data for 5: [ 31 ff ff ff ff f8 30 5a ]
+[1756803923.101477537]: Processing encoder response
+[1756803923.101506983]: Updated joint B_joint (inverted feedback) position: 0.01 rad
+[1756803923.101542079]: Rx Data for 5: [ f5 1 fb ]
+[1756803923.101558580]: Processing status response
+[1756803923.101573778]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803923.101593065]: Rx Data for 5: [ f5 1 fb ]
+[1756803923.101643259]: Processing status response
+[1756803923.101658137]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803923.101679528]: Tx Data for 5: [ 31 36 ]
+[1756803923.102836939]: Tx Data for 6: [ 31 37 ]
+[1756803923.104063130] [arctos_arm_controller]: Goal reached, success!
+[1756803923.104137520]: Sent velocity command 0.000 to joint B_joint. Last command: 0.061
+[1756803923.104172877]: Setting joint B_joint position to (normal) 0.98 radians (3810.91 degrees on motor protactor) with gear ratio 67.82:1
+[1756803923.104201912]: Calculated encoder counts: 173438
+[1756803923.104250103]: Setting joint2 C_joint position to (inverted) 0.98 radians (-3810.91 degrees on motor protactor) with gear ratio 67.82:1
+[1756803923.104274629]: Calculated encoder2 counts: -173438
+[1756803923.104304846]: Tx Data for 5: [ f5 0 1e c8 2 a5 7e 5 ]
+[1756803923.104388002]: Tx Data for 6: [ f5 0 1e c8 fd 5a 82 ba ]
+[1756803923.104435883]: Sent position command 0.98073 to joint B_joint. Last command: 0.97889.
+[1756803923.104456171]: Sent velocity command -0.000 to joint C_joint. Last command: -0.031
+[move_group-8] [WARN] [1756803923.104171364] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803923.201415474]: Rx Data for 5: [ 31 ff ff ff ff f4 e1 7 ]
+[1756803923.201499042]: Processing encoder response
+[1756803923.201566008]: Updated joint B_joint (inverted feedback) position: 0.02 rad
+[1756803923.201638715]: Rx Data for 5: [ f5 1 fb ]
+[1756803923.201652281]: Processing status response
+[1756803923.201663352]: Inside ABSOLUTE_POSITION case - Status: 1 (0x01)
+[1756803923.201683840]: Tx Data for 5: [ 31 36 ]
+[1756803923.202887659]: Tx Data for 6: [ 31 37 ]
+[move_group-8] [INFO] [1756803923.204123939] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: Controller 'arctos_arm_controller' successfully finished
+[1756803923.301398116]: Rx Data for 5: [ 31 ff ff ff ff f1 b1 d4 ]
+[1756803923.301493085]: Processing encoder response
+[1756803923.301516269]: Updated joint B_joint (inverted feedback) position: 0.02 rad
+[1756803923.301600257]: Tx Data for 5: [ 31 36 ]
+[1756803923.302810067]: Tx Data for 6: [ 31 37 ]
+[1756803923.401389775]: Rx Data for 5: [ 31 ff ff ff ff ee 80 a0 ]
+[1756803923.401455228]: Processing encoder response
+[1756803923.401477510]: Updated joint B_joint (inverted feedback) position: 0.03 rad
+[1756803923.401509761]: Tx Data for 5: [ 31 36 ]
+[1756803923.402681530]: Tx Data for 6: [ 31 37 ]
+[1756803923.501384429]: Rx Data for 5: [ 31 ff ff ff ff eb 4d 6a ]
+[1756803923.501472896]: Processing encoder response
+[1756803923.501502422]: Updated joint B_joint (inverted feedback) position: 0.03 rad
+[1756803923.501543720]: Tx Data for 5: [ 31 36 ]
+[1756803923.502730566]: Tx Data for 6: [ 31 37 ]
+[move_group-8] [INFO] [1756803923.504139522] [moveit_ros.trajectory_execution_manager]: Completed trajectory execution with status SUCCEEDED ...
+[move_group-8] [INFO] [1756803923.512132016] [moveit_move_group_default_capabilities.move_action_capability]: Solution was found and executed.
+[rviz2-7] [INFO] [1756803923.513442456] [move_group_interface]: Plan and Execute request complete!
+[1756803923.601376739]: Rx Data for 5: [ 31 ff ff ff ff e8 3d 57 ]
+[1756803923.601439688]: Processing encoder response
+[1756803923.601458133]: Updated joint B_joint (inverted feedback) position: 0.03 rad
+[1756803923.601512856]: Tx Data for 5: [ 31 36 ]
+[1756803923.602649127]: Tx Data for 6: [ 31 37 ]
+[1756803923.701480449]: Rx Data for 5: [ 31 ff ff ff ff e5 e 25 ]
+[1756803923.701546955]: Processing encoder response
+[1756803923.701564989]: Updated joint B_joint (inverted feedback) position: 0.04 rad
+[1756803923.701589946]: Tx Data for 5: [ 31 36 ]
+[1756803923.703187977]: Tx Data for 6: [ 31 37 ]
+[1756803923.801415091]: Rx Data for 5: [ 31 ff ff ff ff e1 ca dd ]
+[1756803923.801588608]: Processing encoder response
+[1756803923.801641738]: Updated joint B_joint (inverted feedback) position: 0.04 rad
+[1756803923.801723382]: Tx Data for 5: [ 31 36 ]
+[1756803923.803038871]: Tx Data for 6: [ 31 37 ]
+[1756803923.901386832]: Rx Data for 5: [ 31 ff ff ff ff de 88 98 ]
+[1756803923.901456864]: Processing encoder response
+[1756803923.901484195]: Updated joint B_joint (inverted feedback) position: 0.05 rad
+[1756803923.901522668]: Tx Data for 5: [ 31 36 ]
+[1756803923.902711208]: Tx Data for 6: [ 31 37 ]
+[1756803924.001399620]: Rx Data for 5: [ 31 ff ff ff ff db 51 5e ]
+[1756803924.001475473]: Processing encoder response
+[1756803924.001500571]: Updated joint B_joint (inverted feedback) position: 0.05 rad
+[1756803924.001585190]: Tx Data for 5: [ 31 36 ]
+[1756803924.002781074]: Tx Data for 6: [ 31 37 ]
+[1756803924.101392040]: Rx Data for 5: [ 31 ff ff ff ff d8 33 3d ]
+[1756803924.101568984]: Processing encoder response
+[1756803924.101603098]: Updated joint B_joint (inverted feedback) position: 0.06 rad
+[1756803924.101642793]: Tx Data for 5: [ 31 36 ]
+[1756803924.201396042]: Rx Data for 5: [ 31 ff ff ff ff d4 e3 e9 ]
+[1756803924.201488436]: Processing encoder response
+[1756803924.201513253]: Updated joint B_joint (inverted feedback) position: 0.06 rad
+[1756803924.201557958]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803924.203393367] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803924.301384555]: Rx Data for 5: [ 31 ff ff ff ff d1 a8 ab ]
+[1756803924.301482620]: Processing encoder response
+[1756803924.301499412]: Updated joint B_joint (inverted feedback) position: 0.07 rad
+[1756803924.301524519]: Tx Data for 5: [ 31 36 ]
+[1756803924.401390220]: Rx Data for 5: [ 31 ff ff ff ff ce 8e 8e ]
+[1756803924.401447548]: Processing encoder response
+[1756803924.401466194]: Updated joint B_joint (inverted feedback) position: 0.07 rad
+[1756803924.401501260]: Tx Data for 5: [ 31 36 ]
+[1756803924.501378873]: Rx Data for 5: [ 31 ff ff ff ff cb 55 52 ]
+[1756803924.501459656]: Processing encoder response
+[1756803924.501476087]: Updated joint B_joint (inverted feedback) position: 0.08 rad
+[1756803924.501499401]: Tx Data for 5: [ 31 36 ]
+[1756803924.601385070]: Rx Data for 5: [ 31 ff ff ff ff c8 c 6 ]
+[1756803924.601456394]: Processing encoder response
+[1756803924.601481431]: Updated joint B_joint (inverted feedback) position: 0.08 rad
+[1756803924.601517038]: Tx Data for 5: [ 31 36 ]
+[1756803924.701382529]: Rx Data for 5: [ 31 ff ff ff ff c4 c7 bd ]
+[1756803924.701498508]: Processing encoder response
+[1756803924.701515289]: Updated joint B_joint (inverted feedback) position: 0.09 rad
+[1756803924.701538443]: Tx Data for 5: [ 31 36 ]
+[1756803924.801399886]: Rx Data for 5: [ 31 ff ff ff ff c1 94 87 ]
+[1756803924.801465550]: Processing encoder response
+[1756803924.801485367]: Updated joint B_joint (inverted feedback) position: 0.09 rad
+[1756803924.801514633]: Tx Data for 5: [ 31 36 ]
+[1756803924.901391084]: Rx Data for 5: [ 31 ff ff ff ff be 34 24 ]
+[1756803924.901511271]: Processing encoder response
+[1756803924.901529465]: Updated joint B_joint (inverted feedback) position: 0.10 rad
+[1756803924.901556616]: Tx Data for 5: [ 31 36 ]
+[1756803925.001390087]: Rx Data for 5: [ 31 ff ff ff ff ba e5 d1 ]
+[1756803925.001461461]: Processing encoder response
+[1756803925.001480367]: Updated joint B_joint (inverted feedback) position: 0.10 rad
+[1756803925.001507889]: Tx Data for 5: [ 31 36 ]
+[1756803925.101388458]: Rx Data for 5: [ 31 ff ff ff ff b7 b7 a0 ]
+[1756803925.101461536]: Processing encoder response
+[1756803925.101481133]: Updated joint B_joint (inverted feedback) position: 0.10 rad
+[1756803925.101510578]: Tx Data for 5: [ 31 36 ]
+[1756803925.201378875]: Rx Data for 5: [ 31 ff ff ff ff b4 81 67 ]
+[1756803925.201446041]: Processing encoder response
+[1756803925.201462673]: Updated joint B_joint (inverted feedback) position: 0.11 rad
+[1756803925.201488120]: Tx Data for 5: [ 31 36 ]
+[1756803925.301658035]: Rx Data for 5: [ 31 ff ff ff ff b1 49 2c ]
+[1756803925.301737255]: Processing encoder response
+[1756803925.301765217]: Updated joint B_joint (inverted feedback) position: 0.11 rad
+[1756803925.301804521]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803925.303153514] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803925.401376569]: Rx Data for 5: [ 31 ff ff ff ff ae 1c fc ]
+[1756803925.401432194]: Processing encoder response
+[1756803925.401447893]: Updated joint B_joint (inverted feedback) position: 0.12 rad
+[1756803925.401472289]: Tx Data for 5: [ 31 36 ]
+[1756803925.501378657]: Rx Data for 5: [ 31 ff ff ff ff aa e8 c4 ]
+[1756803925.501432218]: Processing encoder response
+[1756803925.501446636]: Updated joint B_joint (inverted feedback) position: 0.12 rad
+[1756803925.501468036]: Tx Data for 5: [ 31 36 ]
+[1756803925.601386517]: Rx Data for 5: [ 31 ff ff ff ff a7 eb c4 ]
+[1756803925.601451910]: Processing encoder response
+[1756803925.601470164]: Updated joint B_joint (inverted feedback) position: 0.13 rad
+[1756803925.601498017]: Tx Data for 5: [ 31 36 ]
+[1756803925.701389186]: Rx Data for 5: [ 31 ff ff ff ff a4 98 6e ]
+[1756803925.701471692]: Processing encoder response
+[1756803925.701492160]: Updated joint B_joint (inverted feedback) position: 0.13 rad
+[1756803925.701521656]: Tx Data for 5: [ 31 36 ]
+[1756803925.801331201]: Rx Data for 5: [ 31 ff ff ff ff a1 79 4c ]
+[1756803925.801410892]: Processing encoder response
+[1756803925.801435959]: Updated joint B_joint (inverted feedback) position: 0.14 rad
+[1756803925.801473981]: Tx Data for 5: [ 31 36 ]
+[1756803925.901644626]: Rx Data for 5: [ 31 ff ff ff ff 9e 1f ef ]
+[1756803925.901724387]: Processing encoder response
+[1756803925.901744344]: Updated joint B_joint (inverted feedback) position: 0.14 rad
+[1756803925.901771496]: Tx Data for 5: [ 31 36 ]
+[1756803926.001381184]: Rx Data for 5: [ 31 ff ff ff ff 9b 3 d0 ]
+[1756803926.001441258]: Processing encoder response
+[1756803926.001459993]: Updated joint B_joint (inverted feedback) position: 0.15 rad
+[1756803926.001488687]: Tx Data for 5: [ 31 36 ]
+[1756803926.101375578]: Rx Data for 5: [ 31 ff ff ff ff 97 bf 88 ]
+[1756803926.101428849]: Processing encoder response
+[1756803926.101476148]: Updated joint B_joint (inverted feedback) position: 0.15 rad
+[1756803926.101502107]: Tx Data for 5: [ 31 36 ]
+[1756803926.201384329]: Rx Data for 5: [ 31 ff ff ff ff 94 8a 50 ]
+[1756803926.201452067]: Processing encoder response
+[1756803926.201473127]: Updated joint B_joint (inverted feedback) position: 0.16 rad
+[1756803926.201500378]: Tx Data for 5: [ 31 36 ]
+[1756803926.301547351]: Rx Data for 5: [ 31 ff ff ff ff 91 59 1c ]
+[1756803926.301806660]: Processing encoder response
+[1756803926.301856554]: Updated joint B_joint (inverted feedback) position: 0.16 rad
+[1756803926.301922027]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803926.303490333] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803926.401383797]: Rx Data for 5: [ 31 ff ff ff ff 8e 2e ee ]
+[1756803926.401447547]: Processing encoder response
+[1756803926.401472564]: Updated joint B_joint (inverted feedback) position: 0.16 rad
+[1756803926.401504064]: Tx Data for 5: [ 31 36 ]
+[1756803926.501388891]: Rx Data for 5: [ 31 ff ff ff ff 8a f0 ac ]
+[1756803926.501462941]: Processing encoder response
+[1756803926.501480884]: Updated joint B_joint (inverted feedback) position: 0.17 rad
+[1756803926.501505932]: Tx Data for 5: [ 31 36 ]
+[1756803926.601374879]: Rx Data for 5: [ 31 ff ff ff ff 87 c4 7d ]
+[1756803926.601472413]: Processing encoder response
+[1756803926.601493703]: Updated joint B_joint (inverted feedback) position: 0.17 rad
+[1756803926.601521766]: Tx Data for 5: [ 31 36 ]
+[1756803926.701404890]: Rx Data for 5: [ 31 ff ff ff ff 84 73 29 ]
+[1756803926.701508886]: Processing encoder response
+[1756803926.701537380]: Updated joint B_joint (inverted feedback) position: 0.18 rad
+[1756803926.701577856]: Tx Data for 5: [ 31 36 ]
+[1756803926.801926999]: Rx Data for 5: [ 31 ff ff ff ff 81 31 e4 ]
+[1756803926.802013993]: Processing encoder response
+[1756803926.802039521]: Updated joint B_joint (inverted feedback) position: 0.18 rad
+[1756803926.802080788]: Tx Data for 5: [ 31 36 ]
+[1756803926.901410299]: Rx Data for 5: [ 31 ff ff ff ff 7d ee 9d ]
+[1756803926.901536347]: Processing encoder response
+[1756803926.901564340]: Updated joint B_joint (inverted feedback) position: 0.19 rad
+[1756803926.901605377]: Tx Data for 5: [ 31 36 ]
+[1756803927.001388463]: Rx Data for 5: [ 31 ff ff ff ff 7a b0 5c ]
+[1756803927.001456821]: Processing encoder response
+[1756803927.001475897]: Updated joint B_joint (inverted feedback) position: 0.19 rad
+[1756803927.001504641]: Tx Data for 5: [ 31 36 ]
+[1756803927.101385431]: Rx Data for 5: [ 31 ff ff ff ff 77 6f 18 ]
+[1756803927.101455674]: Processing encoder response
+[1756803927.101473247]: Updated joint B_joint (inverted feedback) position: 0.20 rad
+[1756803927.101540153]: Tx Data for 5: [ 31 36 ]
+[1756803927.201381678]: Rx Data for 5: [ 31 ff ff ff ff 74 37 dd ]
+[1756803927.201451179]: Processing encoder response
+[1756803927.201473802]: Updated joint B_joint (inverted feedback) position: 0.20 rad
+[1756803927.201510040]: Tx Data for 5: [ 31 36 ]
+[1756803927.301396140]: Rx Data for 5: [ 31 ff ff ff ff 70 fc 9e ]
+[1756803927.301496018]: Processing encoder response
+[1756803927.301522819]: Updated joint B_joint (inverted feedback) position: 0.21 rad
+[1756803927.301557615]: Tx Data for 5: [ 31 36 ]
+[1756803927.401949848]: Rx Data for 5: [ 31 ff ff ff ff 6d e6 85 ]
+[1756803927.402040810]: Processing encoder response
+[1756803927.402071528]: Updated joint B_joint (inverted feedback) position: 0.21 rad
+[1756803927.402106514]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803927.404144675] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803927.501419343]: Rx Data for 5: [ 31 ff ff ff ff 6a a3 3f ]
+[1756803927.501631473]: Processing encoder response
+[1756803927.501677249]: Updated joint B_joint (inverted feedback) position: 0.22 rad
+[1756803927.501745047]: Tx Data for 5: [ 31 36 ]
+[1756803927.601387868]: Rx Data for 5: [ 31 ff ff ff ff 67 89 22 ]
+[1756803927.601460355]: Processing encoder response
+[1756803927.601492004]: Updated joint B_joint (inverted feedback) position: 0.22 rad
+[1756803927.601530727]: Tx Data for 5: [ 31 36 ]
+[1756803927.701393773]: Rx Data for 5: [ 31 ff ff ff ff 64 64 fa ]
+[1756803927.701486558]: Processing encoder response
+[1756803927.701508029]: Updated joint B_joint (inverted feedback) position: 0.23 rad
+[1756803927.701539328]: Tx Data for 5: [ 31 36 ]
+[1756803927.801404528]: Rx Data for 5: [ 31 ff ff ff ff 61 3 96 ]
+[1756803927.801467938]: Processing encoder response
+[1756803927.801487374]: Updated joint B_joint (inverted feedback) position: 0.23 rad
+[1756803927.801512622]: Tx Data for 5: [ 31 36 ]
+[1756803927.901382962]: Rx Data for 5: [ 31 ff ff ff ff 5d db 6a ]
+[1756803927.901446682]: Processing encoder response
+[1756803927.901496977]: Updated joint B_joint (inverted feedback) position: 0.23 rad
+[1756803927.901524268]: Tx Data for 5: [ 31 36 ]
+[1756803928.002552661]: Rx Data for 5: [ 31 ff ff ff ff 5a a6 32 ]
+[1756803928.002664081]: Processing encoder response
+[1756803928.002692565]: Updated joint B_joint (inverted feedback) position: 0.24 rad
+[1756803928.002731899]: Tx Data for 5: [ 31 36 ]
+[1756803928.101394583]: Rx Data for 5: [ 31 ff ff ff ff 57 68 f1 ]
+[1756803928.101465286]: Processing encoder response
+[1756803928.101491826]: Updated joint B_joint (inverted feedback) position: 0.24 rad
+[1756803928.101539917]: Tx Data for 5: [ 31 36 ]
+[1756803928.201414825]: Rx Data for 5: [ 31 ff ff ff ff 54 32 b8 ]
+[1756803928.201532056]: Processing encoder response
+[1756803928.201557705]: Updated joint B_joint (inverted feedback) position: 0.25 rad
+[1756803928.201601908]: Tx Data for 5: [ 31 36 ]
+[1756803928.301405202]: Rx Data for 5: [ 31 ff ff ff ff 51 11 94 ]
+[1756803928.301494420]: Processing encoder response
+[1756803928.301531800]: Updated joint B_joint (inverted feedback) position: 0.25 rad
+[1756803928.301567067]: Tx Data for 5: [ 31 36 ]
+[1756803928.401378556]: Rx Data for 5: [ 31 ff ff ff ff 4d bf 3e ]
+[1756803928.401435864]: Processing encoder response
+[1756803928.401453216]: Updated joint B_joint (inverted feedback) position: 0.26 rad
+[1756803928.401480989]: Tx Data for 5: [ 31 36 ]
+[1756803928.501397105]: Rx Data for 5: [ 31 ff ff ff ff 4a ad 29 ]
+[1756803928.501479891]: Processing encoder response
+[1756803928.501525447]: Updated joint B_joint (inverted feedback) position: 0.26 rad
+[1756803928.501559060]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803928.502946806] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803928.601387021]: Rx Data for 5: [ 31 ff ff ff ff 47 46 bf ]
+[1756803928.601465178]: Processing encoder response
+[1756803928.601489484]: Updated joint B_joint (inverted feedback) position: 0.27 rad
+[1756803928.601525692]: Tx Data for 5: [ 31 36 ]
+[1756803928.701379351]: Rx Data for 5: [ 31 ff ff ff ff 44 1d 93 ]
+[1756803928.701439304]: Processing encoder response
+[1756803928.701457317]: Updated joint B_joint (inverted feedback) position: 0.27 rad
+[1756803928.701486563]: Tx Data for 5: [ 31 36 ]
+[1756803928.801379616]: Rx Data for 5: [ 31 ff ff ff ff 40 ca 3c ]
+[1756803928.801439569]: Processing encoder response
+[1756803928.801458664]: Updated joint B_joint (inverted feedback) position: 0.28 rad
+[1756803928.801483281]: Tx Data for 5: [ 31 36 ]
+[1756803928.901385311]: Rx Data for 5: [ 31 ff ff ff ff 3d 9b a ]
+[1756803928.901464870]: Processing encoder response
+[1756803928.901500538]: Updated joint B_joint (inverted feedback) position: 0.28 rad
+[1756803928.901529993]: Tx Data for 5: [ 31 36 ]
+[1756803929.001372661]: Rx Data for 5: [ 31 ff ff ff ff 3a 4f bb ]
+[1756803929.001427234]: Processing encoder response
+[1756803929.001441260]: Updated joint B_joint (inverted feedback) position: 0.29 rad
+[1756803929.001460918]: Tx Data for 5: [ 31 36 ]
+[1756803929.102468571]: Rx Data for 5: [ 31 ff ff ff ff 37 13 7c ]
+[1756803929.102559152]: Processing encoder response
+[1756803929.102586784]: Updated joint B_joint (inverted feedback) position: 0.29 rad
+[1756803929.102623984]: Tx Data for 5: [ 31 36 ]
+[1756803929.201656495]: Rx Data for 5: [ 31 ff ff ff ff 33 ba 1f ]
+[1756803929.201849208]: Processing encoder response
+[1756803929.201874987]: Updated joint B_joint (inverted feedback) position: 0.30 rad
+[1756803929.201976779]: Tx Data for 5: [ 31 36 ]
+[1756803929.301429351]: Rx Data for 5: [ 31 ff ff ff ff 30 a9 b ]
+[1756803929.301537255]: Processing encoder response
+[1756803929.301569606]: Updated joint B_joint (inverted feedback) position: 0.30 rad
+[1756803929.301608649]: Tx Data for 5: [ 31 36 ]
+[1756803929.401386445]: Rx Data for 5: [ 31 ff ff ff ff 2d 5f be ]
+[1756803929.401462949]: Processing encoder response
+[1756803929.401488738]: Updated joint B_joint (inverted feedback) position: 0.30 rad
+[1756803929.401523293]: Tx Data for 5: [ 31 36 ]
+[1756803929.501738623]: Rx Data for 5: [ 31 ff ff ff ff 2a 48 a4 ]
+[1756803929.501818143]: Processing encoder response
+[1756803929.501851295]: Updated joint B_joint (inverted feedback) position: 0.31 rad
+[1756803929.501898725]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803929.503367343] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803929.601396292]: Rx Data for 5: [ 31 ff ff ff ff 27 11 6a ]
+[1756803929.601467146]: Processing encoder response
+[1756803929.601487945]: Updated joint B_joint (inverted feedback) position: 0.31 rad
+[1756803929.601519134]: Tx Data for 5: [ 31 36 ]
+[1756803929.701389714]: Rx Data for 5: [ 31 ff ff ff ff 23 e9 3e ]
+[1756803929.701477950]: Processing encoder response
+[1756803929.701514610]: Updated joint B_joint (inverted feedback) position: 0.32 rad
+[1756803929.701544766]: Tx Data for 5: [ 31 36 ]
+[1756803929.801378778]: Rx Data for 5: [ 31 ff ff ff ff 20 b6 8 ]
+[1756803929.801436817]: Processing encoder response
+[1756803929.801453308]: Updated joint B_joint (inverted feedback) position: 0.32 rad
+[1756803929.801476332]: Tx Data for 5: [ 31 36 ]
+[1756803929.901378772]: Rx Data for 5: [ 31 ff ff ff ff 1d 8a d9 ]
+[1756803929.901436110]: Processing encoder response
+[1756803929.901457611]: Updated joint B_joint (inverted feedback) position: 0.33 rad
+[1756803929.901493739]: Tx Data for 5: [ 31 36 ]
+[1756803930.001371814]: Rx Data for 5: [ 31 ff ff ff ff 1a 46 92 ]
+[1756803930.001431045]: Processing encoder response
+[1756803930.001447166]: Updated joint B_joint (inverted feedback) position: 0.33 rad
+[1756803930.001477623]: Tx Data for 5: [ 31 36 ]
+[1756803930.101391866]: Rx Data for 5: [ 31 ff ff ff ff 17 16 5f ]
+[1756803930.101447561]: Processing encoder response
+[1756803930.101464984]: Updated joint B_joint (inverted feedback) position: 0.34 rad
+[1756803930.101503346]: Tx Data for 5: [ 31 36 ]
+[1756803930.201408111]: Rx Data for 5: [ 31 ff ff ff ff 13 e0 25 ]
+[1756803930.201528708]: Processing encoder response
+[1756803930.201561280]: Updated joint B_joint (inverted feedback) position: 0.34 rad
+[1756803930.201609310]: Tx Data for 5: [ 31 36 ]
+[1756803930.301381746]: Rx Data for 5: [ 31 ff ff ff ff 10 bb fd ]
+[1756803930.301484890]: Processing encoder response
+[1756803930.301511139]: Updated joint B_joint (inverted feedback) position: 0.35 rad
+[1756803930.301540695]: Tx Data for 5: [ 31 36 ]
+[1756803930.401378664]: Rx Data for 5: [ 31 ff ff ff ff d 69 a8 ]
+[1756803930.401436082]: Processing encoder response
+[1756803930.401457823]: Updated joint B_joint (inverted feedback) position: 0.35 rad
+[1756803930.401489002]: Tx Data for 5: [ 31 36 ]
+[1756803930.501389058]: Rx Data for 5: [ 31 ff ff ff ff a 59 95 ]
+[1756803930.501489297]: Processing encoder response
+[1756803930.501507511]: Updated joint B_joint (inverted feedback) position: 0.36 rad
+[1756803930.501536586]: Tx Data for 5: [ 31 36 ]
+[1756803930.602475150]: Rx Data for 5: [ 31 ff ff ff ff 7 d 46 ]
+[1756803930.602560711]: Processing encoder response
+[1756803930.602587652]: Updated joint B_joint (inverted feedback) position: 0.36 rad
+[1756803930.602625804]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803930.603984304] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803930.701381813]: Rx Data for 5: [ 31 ff ff ff ff 3 b7 ec ]
+[1756803930.701444562]: Processing encoder response
+[1756803930.701466623]: Updated joint B_joint (inverted feedback) position: 0.37 rad
+[1756803930.701521487]: Tx Data for 5: [ 31 36 ]
+[1756803930.801377079]: Rx Data for 5: [ 31 ff ff ff ff 0 85 b7 ]
+[1756803930.801441039]: Processing encoder response
+[1756803930.801457811]: Updated joint B_joint (inverted feedback) position: 0.37 rad
+[1756803930.801480654]: Tx Data for 5: [ 31 36 ]
+[1756803930.901365602]: Rx Data for 5: [ 31 ff ff ff fe fd 4c 7a ]
+[1756803930.901459889]: Processing encoder response
+[1756803930.901488113]: Updated joint B_joint (inverted feedback) position: 0.37 rad
+[1756803930.901524461]: Tx Data for 5: [ 31 36 ]
+[1756803931.001620657]: Rx Data for 5: [ 31 ff ff ff fe f9 dd 7 ]
+[1756803931.001760811]: Processing encoder response
+[1756803931.001785507]: Updated joint B_joint (inverted feedback) position: 0.38 rad
+[1756803931.001822647]: Tx Data for 5: [ 31 36 ]
+[1756803931.101390698]: Rx Data for 5: [ 31 ff ff ff fe f6 bb e2 ]
+[1756803931.101480427]: Processing encoder response
+[1756803931.101507788]: Updated joint B_joint (inverted feedback) position: 0.38 rad
+[1756803931.101545530]: Tx Data for 5: [ 31 36 ]
+[1756803931.201498786]: Rx Data for 5: [ 31 ff ff ff fe f3 78 9c ]
+[1756803931.201757233]: Processing encoder response
+[1756803931.201796357]: Updated joint B_joint (inverted feedback) position: 0.39 rad
+[1756803931.201833567]: Tx Data for 5: [ 31 36 ]
+[1756803931.301459987]: Rx Data for 5: [ 31 ff ff ff fe f0 59 7a ]
+[1756803931.301605491]: Processing encoder response
+[1756803931.301717122]: Updated joint B_joint (inverted feedback) position: 0.39 rad
+[1756803931.301757768]: Tx Data for 5: [ 31 36 ]
+[1756803931.401382075]: Rx Data for 5: [ 31 ff ff ff fe ed 11 2f ]
+[1756803931.401451756]: Processing encoder response
+[1756803931.401468077]: Updated joint B_joint (inverted feedback) position: 0.40 rad
+[1756803931.401498594]: Tx Data for 5: [ 31 36 ]
+[1756803931.501437283]: Rx Data for 5: [ 31 ff ff ff fe e9 e1 fb ]
+[1756803931.501587686]: Processing encoder response
+[1756803931.501618875]: Updated joint B_joint (inverted feedback) position: 0.40 rad
+[1756803931.501668649]: Tx Data for 5: [ 31 36 ]
+[1756803931.601384598]: Rx Data for 5: [ 31 ff ff ff fe e6 c8 df ]
+[1756803931.601457005]: Processing encoder response
+[1756803931.601482513]: Updated joint B_joint (inverted feedback) position: 0.41 rad
+[1756803931.601519883]: Tx Data for 5: [ 31 36 ]
+[1756803931.701329258]: Rx Data for 5: [ 31 ff ff ff fe e3 8e a2 ]
+[1756803931.701400583]: Processing encoder response
+[1756803931.701420931]: Updated joint B_joint (inverted feedback) position: 0.41 rad
+[1756803931.701447471]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803931.702891863] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803931.801386941]: Rx Data for 5: [ 31 ff ff ff fe e0 5b 6c ]
+[1756803931.801449129]: Processing encoder response
+[1756803931.801469186]: Updated joint B_joint (inverted feedback) position: 0.42 rad
+[1756803931.801499003]: Tx Data for 5: [ 31 36 ]
+[1756803931.901380213]: Rx Data for 5: [ 31 ff ff ff fe dd 2f 3d ]
+[1756803931.901441969]: Processing encoder response
+[1756803931.901462478]: Updated joint B_joint (inverted feedback) position: 0.42 rad
+[1756803931.901491383]: Tx Data for 5: [ 31 36 ]
+[1756803932.001382532]: Rx Data for 5: [ 31 ff ff ff fe d9 ff 9 ]
+[1756803932.001459337]: Processing encoder response
+[1756803932.001488562]: Updated joint B_joint (inverted feedback) position: 0.43 rad
+[1756803932.001530130]: Tx Data for 5: [ 31 36 ]
+[1756803932.101423233]: Rx Data for 5: [ 31 ff ff ff fe d6 98 9f ]
+[1756803932.101553068]: Processing encoder response
+[1756803932.101583705]: Updated joint B_joint (inverted feedback) position: 0.43 rad
+[1756803932.101615766]: Tx Data for 5: [ 31 36 ]
+[1756803932.201387219]: Rx Data for 5: [ 31 ff ff ff fe d3 98 9c ]
+[1756803932.201461690]: Processing encoder response
+[1756803932.201487248]: Updated joint B_joint (inverted feedback) position: 0.43 rad
+[1756803932.201532964]: Tx Data for 5: [ 31 36 ]
+[1756803932.301407091]: Rx Data for 5: [ 31 ff ff ff fe d0 3d 3e ]
+[1756803932.301581149]: Processing encoder response
+[1756803932.301625393]: Updated joint B_joint (inverted feedback) position: 0.44 rad
+[1756803932.301668344]: Tx Data for 5: [ 31 36 ]
+[1756803932.401382589]: Rx Data for 5: [ 31 ff ff ff fe cd 24 22 ]
+[1756803932.401446430]: Processing encoder response
+[1756803932.401465005]: Updated joint B_joint (inverted feedback) position: 0.44 rad
+[1756803932.401493068]: Tx Data for 5: [ 31 36 ]
+[1756803932.501388004]: Rx Data for 5: [ 31 ff ff ff fe c9 e4 de ]
+[1756803932.501469398]: Processing encoder response
+[1756803932.501496469]: Updated joint B_joint (inverted feedback) position: 0.45 rad
+[1756803932.501521836]: Tx Data for 5: [ 31 36 ]
+[1756803932.601712230]: Rx Data for 5: [ 31 ff ff ff fe c6 b2 a9 ]
+[1756803932.601791940]: Processing encoder response
+[1756803932.601812278]: Updated joint B_joint (inverted feedback) position: 0.45 rad
+[1756803932.601843307]: Tx Data for 5: [ 31 36 ]
+[1756803932.701376712]: Rx Data for 5: [ 31 ff ff ff fe c3 3f 33 ]
+[1756803932.701431906]: Processing encoder response
+[1756803932.701447134]: Updated joint B_joint (inverted feedback) position: 0.46 rad
+[1756803932.701469476]: Tx Data for 5: [ 31 36 ]
+[1756803932.801375965]: Rx Data for 5: [ 31 ff ff ff fe c0 36 27 ]
+[1756803932.801439013]: Processing encoder response
+[1756803932.801460113]: Updated joint B_joint (inverted feedback) position: 0.46 rad
+[1756803932.801492184]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803932.802878476] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803932.901370148]: Rx Data for 5: [ 31 ff ff ff fe bc c7 b4 ]
+[1756803932.901425562]: Processing encoder response
+[1756803932.901447113]: Updated joint B_joint (inverted feedback) position: 0.47 rad
+[1756803932.901477100]: Tx Data for 5: [ 31 36 ]
+[1756803933.001378779]: Rx Data for 5: [ 31 ff ff ff fe b9 8f 79 ]
+[1756803933.001449542]: Processing encoder response
+[1756803933.001472926]: Updated joint B_joint (inverted feedback) position: 0.47 rad
+[1756803933.001508183]: Tx Data for 5: [ 31 36 ]
+[1756803933.101378993]: Rx Data for 5: [ 31 ff ff ff fe b6 44 2b ]
+[1756803933.101448294]: Processing encoder response
+[1756803933.101472400]: Updated joint B_joint (inverted feedback) position: 0.48 rad
+[1756803933.101512876]: Tx Data for 5: [ 31 36 ]
+[1756803933.201380651]: Rx Data for 5: [ 31 ff ff ff fe b3 19 fd ]
+[1756803933.201439221]: Processing encoder response
+[1756803933.201461113]: Updated joint B_joint (inverted feedback) position: 0.48 rad
+[1756803933.201490368]: Tx Data for 5: [ 31 36 ]
+[1756803933.301396485]: Rx Data for 5: [ 31 ff ff ff fe af e9 c9 ]
+[1756803933.301487667]: Processing encoder response
+[1756803933.301507695]: Updated joint B_joint (inverted feedback) position: 0.49 rad
+[1756803933.301538413]: Tx Data for 5: [ 31 36 ]
+[1756803933.401786284]: Rx Data for 5: [ 31 ff ff ff fe ac c3 a0 ]
+[1756803933.401850335]: Processing encoder response
+[1756803933.401903064]: Updated joint B_joint (inverted feedback) position: 0.49 rad
+[1756803933.401926869]: Tx Data for 5: [ 31 36 ]
+[1756803933.501728890]: Rx Data for 5: [ 31 ff ff ff fe a9 91 6b ]
+[1756803933.501842314]: Processing encoder response
+[1756803933.501870167]: Updated joint B_joint (inverted feedback) position: 0.50 rad
+[1756803933.501909301]: Tx Data for 5: [ 31 36 ]
+[1756803933.601444288]: Rx Data for 5: [ 31 ff ff ff fe a6 76 4d ]
+[1756803933.601623676]: Processing encoder response
+[1756803933.601650537]: Updated joint B_joint (inverted feedback) position: 0.50 rad
+[1756803933.601686565]: Tx Data for 5: [ 31 36 ]
+[1756803933.701397334]: Rx Data for 5: [ 31 ff ff ff fe a3 36 a ]
+[1756803933.701489979]: Processing encoder response
+[1756803933.701516890]: Updated joint B_joint (inverted feedback) position: 0.50 rad
+[1756803933.701553338]: Tx Data for 5: [ 31 36 ]
+[1756803933.801383202]: Rx Data for 5: [ 31 ff ff ff fe a0 f e0 ]
+[1756803933.801445970]: Processing encoder response
+[1756803933.801463874]: Updated joint B_joint (inverted feedback) position: 0.51 rad
+[1756803933.801488661]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803933.802891064] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803933.901657804]: Rx Data for 5: [ 31 ff ff ff fe 9c cf 9c ]
+[1756803933.901728688]: Processing encoder response
+[1756803933.901747864]: Updated joint B_joint (inverted feedback) position: 0.51 rad
+[1756803933.901779834]: Tx Data for 5: [ 31 36 ]
+[1756803934.001429999]: Rx Data for 5: [ 31 ff ff ff fe 99 a8 72 ]
+[1756803934.001546148]: Processing encoder response
+[1756803934.001578459]: Updated joint B_joint (inverted feedback) position: 0.52 rad
+[1756803934.001621811]: Tx Data for 5: [ 31 36 ]
+[1756803934.101376633]: Rx Data for 5: [ 31 ff ff ff fe 96 6a 31 ]
+[1756803934.101430685]: Processing encoder response
+[1756803934.101446274]: Updated joint B_joint (inverted feedback) position: 0.52 rad
+[1756803934.101468406]: Tx Data for 5: [ 31 36 ]
+[1756803934.201375585]: Rx Data for 5: [ 31 ff ff ff fe 93 3b ff ]
+[1756803934.201435889]: Processing encoder response
+[1756803934.201453612]: Updated joint B_joint (inverted feedback) position: 0.53 rad
+[1756803934.201476736]: Tx Data for 5: [ 31 36 ]
+[1756803934.301719918]: Rx Data for 5: [ 31 ff ff ff fe 90 10 d1 ]
+[1756803934.301796873]: Processing encoder response
+[1756803934.301817192]: Updated joint B_joint (inverted feedback) position: 0.53 rad
+[1756803934.301844864]: Tx Data for 5: [ 31 36 ]
+[1756803934.401379992]: Rx Data for 5: [ 31 ff ff ff fe 8c db 98 ]
+[1756803934.401441027]: Processing encoder response
+[1756803934.401457118]: Updated joint B_joint (inverted feedback) position: 0.54 rad
+[1756803934.401529294]: Tx Data for 5: [ 31 36 ]
+[1756803934.501372442]: Rx Data for 5: [ 31 ff ff ff fe 89 a7 61 ]
+[1756803934.501421224]: Processing encoder response
+[1756803934.501435561]: Updated joint B_joint (inverted feedback) position: 0.54 rad
+[1756803934.501456932]: Tx Data for 5: [ 31 36 ]
+[1756803934.601397995]: Rx Data for 5: [ 31 ff ff ff fe 86 84 3b ]
+[1756803934.601469259]: Processing encoder response
+[1756803934.601491872]: Updated joint B_joint (inverted feedback) position: 0.55 rad
+[1756803934.601521999]: Tx Data for 5: [ 31 36 ]
+[1756803934.701396757]: Rx Data for 5: [ 31 ff ff ff fe 82 e5 98 ]
+[1756803934.701483721]: Processing encoder response
+[1756803934.701504600]: Updated joint B_joint (inverted feedback) position: 0.55 rad
+[1756803934.701553823]: Tx Data for 5: [ 31 36 ]
+[1756803934.801409054]: Rx Data for 5: [ 31 ff ff ff fe 7f d7 87 ]
+[1756803934.801508201]: Processing encoder response
+[1756803934.801535553]: Updated joint B_joint (inverted feedback) position: 0.56 rad
+[1756803934.802523976]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803934.804838558] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803934.901334298]: Rx Data for 5: [ 31 ff ff ff fe 7c 6e 1b ]
+[1756803934.901411333]: Processing encoder response
+[1756803934.901430890]: Updated joint B_joint (inverted feedback) position: 0.56 rad
+[1756803934.901458001]: Tx Data for 5: [ 31 36 ]
+[1756803935.001393003]: Rx Data for 5: [ 31 ff ff ff fe 79 32 dc ]
+[1756803935.001500485]: Processing encoder response
+[1756803935.001539950]: Updated joint B_joint (inverted feedback) position: 0.57 rad
+[1756803935.001579875]: Tx Data for 5: [ 31 36 ]
+[1756803935.101393458]: Rx Data for 5: [ 31 ff ff ff fe 75 ee 94 ]
+[1756803935.101459102]: Processing encoder response
+[1756803935.101477537]: Updated joint B_joint (inverted feedback) position: 0.57 rad
+[1756803935.101503335]: Tx Data for 5: [ 31 36 ]
+[1756803935.201932809]: Rx Data for 5: [ 31 ff ff ff fe 72 d0 73 ]
+[1756803935.202045331]: Processing encoder response
+[1756803935.202069336]: Updated joint B_joint (inverted feedback) position: 0.57 rad
+[1756803935.202101838]: Tx Data for 5: [ 31 36 ]
+[1756803935.301389309]: Rx Data for 5: [ 31 ff ff ff fe 6f 95 35 ]
+[1756803935.301477475]: Processing encoder response
+[1756803935.301497924]: Updated joint B_joint (inverted feedback) position: 0.58 rad
+[1756803935.301530685]: Tx Data for 5: [ 31 36 ]
+[1756803935.401383382]: Rx Data for 5: [ 31 ff ff ff fe 6c 60 fd ]
+[1756803935.401447153]: Processing encoder response
+[1756803935.401469134]: Updated joint B_joint (inverted feedback) position: 0.58 rad
+[1756803935.401521964]: Tx Data for 5: [ 31 36 ]
+[1756803935.501682160]: Rx Data for 5: [ 31 ff ff ff fe 69 3e d8 ]
+[1756803935.501831461]: Processing encoder response
+[1756803935.501855707]: Updated joint B_joint (inverted feedback) position: 0.59 rad
+[1756803935.501893438]: Tx Data for 5: [ 31 36 ]
+[1756803935.601392178]: Rx Data for 5: [ 31 ff ff ff fe 66 18 af ]
+[1756803935.601460206]: Processing encoder response
+[1756803935.601483269]: Updated joint B_joint (inverted feedback) position: 0.59 rad
+[1756803935.601512645]: Tx Data for 5: [ 31 36 ]
+[1756803935.701424323]: Rx Data for 5: [ 31 ff ff ff fe 62 ec 7f ]
+[1756803935.701555520]: Processing encoder response
+[1756803935.701582641]: Updated joint B_joint (inverted feedback) position: 0.60 rad
+[1756803935.701622125]: Tx Data for 5: [ 31 36 ]
+[1756803935.801379873]: Rx Data for 5: [ 31 ff ff ff fe 5f 99 29 ]
+[1756803935.801437351]: Processing encoder response
+[1756803935.801453141]: Updated joint B_joint (inverted feedback) position: 0.60 rad
+[1756803935.801480182]: Tx Data for 5: [ 31 36 ]
+[1756803935.901380499]: Rx Data for 5: [ 31 ff ff ff fe 5c 89 16 ]
+[1756803935.901443538]: Processing encoder response
+[1756803935.901464707]: Updated joint B_joint (inverted feedback) position: 0.61 rad
+[1756803935.901495916]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803935.902926302] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803936.001377337]: Rx Data for 5: [ 31 ff ff ff fe 59 31 bb ]
+[1756803936.001438863]: Processing encoder response
+[1756803936.001458720]: Updated joint B_joint (inverted feedback) position: 0.61 rad
+[1756803936.001486483]: Tx Data for 5: [ 31 36 ]
+[1756803936.101626441]: Rx Data for 5: [ 31 ff ff ff fe 56 1b a2 ]
+[1756803936.101730597]: Processing encoder response
+[1756803936.101750425]: Updated joint B_joint (inverted feedback) position: 0.62 rad
+[1756803936.101775732]: Tx Data for 5: [ 31 36 ]
+[1756803936.201384459]: Rx Data for 5: [ 31 ff ff ff fe 52 c5 48 ]
+[1756803936.201446676]: Processing encoder response
+[1756803936.201485409]: Updated joint B_joint (inverted feedback) position: 0.62 rad
+[1756803936.201521828]: Tx Data for 5: [ 31 36 ]
+[1756803936.301385385]: Rx Data for 5: [ 31 ff ff ff fe 4f c0 40 ]
+[1756803936.301448063]: Processing encoder response
+[1756803936.301467440]: Updated joint B_joint (inverted feedback) position: 0.63 rad
+[1756803936.301502506]: Tx Data for 5: [ 31 36 ]
+[1756803936.401387504]: Rx Data for 5: [ 31 ff ff ff fe 4c 58 d5 ]
+[1756803936.401456213]: Processing encoder response
+[1756803936.401487021]: Updated joint B_joint (inverted feedback) position: 0.63 rad
+[1756803936.401524041]: Tx Data for 5: [ 31 36 ]
+[1756803936.501379653]: Rx Data for 5: [ 31 ff ff ff fe 49 4a c4 ]
+[1756803936.501440418]: Processing encoder response
+[1756803936.501457049]: Updated joint B_joint (inverted feedback) position: 0.64 rad
+[1756803936.501528103]: Tx Data for 5: [ 31 36 ]
+[1756803936.601434821]: Rx Data for 5: [ 31 ff ff ff fe 45 e9 5f ]
+[1756803936.601532646]: Processing encoder response
+[1756803936.601558024]: Updated joint B_joint (inverted feedback) position: 0.64 rad
+[1756803936.601593481]: Tx Data for 5: [ 31 36 ]
+[1756803936.701387757]: Rx Data for 5: [ 31 ff ff ff fe 42 af 22 ]
+[1756803936.701452219]: Processing encoder response
+[1756803936.701472046]: Updated joint B_joint (inverted feedback) position: 0.64 rad
+[1756803936.701501041]: Tx Data for 5: [ 31 36 ]
+[1756803936.801385778]: Rx Data for 5: [ 31 ff ff ff fe 3f 5e ce ]
+[1756803936.801449147]: Processing encoder response
+[1756803936.801476288]: Updated joint B_joint (inverted feedback) position: 0.65 rad
+[1756803936.801503009]: Tx Data for 5: [ 31 36 ]
+[1756803936.901394799]: Rx Data for 5: [ 31 ff ff ff fe 3c 26 93 ]
+[1756803936.901482945]: Processing encoder response
+[1756803936.901504045]: Updated joint B_joint (inverted feedback) position: 0.65 rad
+[1756803936.901536376]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803936.902972873] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803937.001376679]: Rx Data for 5: [ 31 ff ff ff fe 38 d0 39 ]
+[1756803937.001438316]: Processing encoder response
+[1756803937.001454526]: Updated joint B_joint (inverted feedback) position: 0.66 rad
+[1756803937.001479002]: Tx Data for 5: [ 31 36 ]
+[1756803937.101397874]: Rx Data for 5: [ 31 ff ff ff fe 35 a2 8 ]
+[1756803937.101488374]: Processing encoder response
+[1756803937.101508973]: Updated joint B_joint (inverted feedback) position: 0.66 rad
+[1756803937.101537216]: Tx Data for 5: [ 31 36 ]
+[1756803937.201378171]: Rx Data for 5: [ 31 ff ff ff fe 32 66 c9 ]
+[1756803937.201436531]: Processing encoder response
+[1756803937.201454394]: Updated joint B_joint (inverted feedback) position: 0.67 rad
+[1756803937.201478440]: Tx Data for 5: [ 31 36 ]
+[1756803937.301374779]: Rx Data for 5: [ 31 ff ff ff fe 2f 4c ac ]
+[1756803937.301426086]: Processing encoder response
+[1756803937.301440994]: Updated joint B_joint (inverted feedback) position: 0.67 rad
+[1756803937.301463957]: Tx Data for 5: [ 31 36 ]
+[1756803937.401392416]: Rx Data for 5: [ 31 ff ff ff fe 2c 12 6f ]
+[1756803937.401460034]: Processing encoder response
+[1756803937.401481544]: Updated joint B_joint (inverted feedback) position: 0.68 rad
+[1756803937.401512423]: Tx Data for 5: [ 31 36 ]
+[1756803937.501384696]: Rx Data for 5: [ 31 ff ff ff fe 28 f0 49 ]
+[1756803937.501444439]: Processing encoder response
+[1756803937.501458696]: Updated joint B_joint (inverted feedback) position: 0.68 rad
+[1756803937.501480897]: Tx Data for 5: [ 31 36 ]
+[1756803937.601389339]: Rx Data for 5: [ 31 ff ff ff fe 25 c7 1d ]
+[1756803937.601495279]: Processing encoder response
+[1756803937.601522070]: Updated joint B_joint (inverted feedback) position: 0.69 rad
+[1756803937.601553489]: Tx Data for 5: [ 31 36 ]
+[1756803937.701372662]: Rx Data for 5: [ 31 ff ff ff fe 22 8e e1 ]
+[1756803937.701425171]: Processing encoder response
+[1756803937.701439518]: Updated joint B_joint (inverted feedback) position: 0.69 rad
+[1756803937.701460668]: Tx Data for 5: [ 31 36 ]
+[1756803937.801375031]: Rx Data for 5: [ 31 ff ff ff fe 1f 66 b6 ]
+[1756803937.801431267]: Processing encoder response
+[1756803937.801446706]: Updated joint B_joint (inverted feedback) position: 0.70 rad
+[1756803937.801466614]: Tx Data for 5: [ 31 36 ]
+[1756803937.901406174]: Rx Data for 5: [ 31 ff ff ff fe 1c 2f 7c ]
+[1756803937.901491835]: Processing encoder response
+[1756803937.901520790]: Updated joint B_joint (inverted feedback) position: 0.70 rad
+[1756803937.901554654]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803937.903000098] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803938.001384097]: Rx Data for 5: [ 31 ff ff ff fe 18 fb 44 ]
+[1756803938.001455682]: Processing encoder response
+[1756803938.001475890]: Updated joint B_joint (inverted feedback) position: 0.70 rad
+[1756803938.001505285]: Tx Data for 5: [ 31 36 ]
+[1756803938.101370195]: Rx Data for 5: [ 31 ff ff ff fe 15 bc 2 ]
+[1756803938.101420169]: Processing encoder response
+[1756803938.101434226]: Updated joint B_joint (inverted feedback) position: 0.71 rad
+[1756803938.101455886]: Tx Data for 5: [ 31 36 ]
+[1756803938.201375509]: Rx Data for 5: [ 31 ff ff ff fe 12 88 cb ]
+[1756803938.201429531]: Processing encoder response
+[1756803938.201443397]: Updated joint B_joint (inverted feedback) position: 0.71 rad
+[1756803938.201464236]: Tx Data for 5: [ 31 36 ]
+[1756803938.301415699]: Rx Data for 5: [ 31 ff ff ff fe f 70 b0 ]
+[1756803938.301532940]: Processing encoder response
+[1756803938.301579238]: Updated joint B_joint (inverted feedback) position: 0.72 rad
+[1756803938.301630003]: Tx Data for 5: [ 31 36 ]
+[1756803938.401385577]: Rx Data for 5: [ 31 ff ff ff fe c a 47 ]
+[1756803938.401455940]: Processing encoder response
+[1756803938.401479173]: Updated joint B_joint (inverted feedback) position: 0.72 rad
+[1756803938.401513899]: Tx Data for 5: [ 31 36 ]
+[1756803938.501390000]: Rx Data for 5: [ 31 ff ff ff fe 8 ec 25 ]
+[1756803938.501461464]: Processing encoder response
+[1756803938.501487443]: Updated joint B_joint (inverted feedback) position: 0.73 rad
+[1756803938.501532608]: Tx Data for 5: [ 31 36 ]
+[1756803938.601414600]: Rx Data for 5: [ 31 ff ff ff fe 5 9a d0 ]
+[1756803938.601504480]: Processing encoder response
+[1756803938.601577698]: Updated joint B_joint (inverted feedback) position: 0.73 rad
+[1756803938.601617012]: Tx Data for 5: [ 31 36 ]
+[1756803938.701395038]: Rx Data for 5: [ 31 ff ff ff fe 2 61 94 ]
+[1756803938.701475199]: Processing encoder response
+[1756803938.701520394]: Updated joint B_joint (inverted feedback) position: 0.74 rad
+[1756803938.701558466]: Tx Data for 5: [ 31 36 ]
+[1756803938.801466066]: Rx Data for 5: [ 31 ff ff ff fd ff d 3c ]
+[1756803938.801667255]: Processing encoder response
+[1756803938.801713853]: Updated joint B_joint (inverted feedback) position: 0.74 rad
+[1756803938.801779787]: Tx Data for 5: [ 31 36 ]
+[1756803938.901393323]: Rx Data for 5: [ 31 ff ff ff fd fb e3 e ]
+[1756803938.901456592]: Processing encoder response
+[1756803938.901477672]: Updated joint B_joint (inverted feedback) position: 0.75 rad
+[1756803938.901510574]: Tx Data for 5: [ 31 36 ]
+[1756803939.001392226]: Rx Data for 5: [ 31 ff ff ff fd f8 7d a5 ]
+[1756803939.001510088]: Processing encoder response
+[1756803939.001540094]: Updated joint B_joint (inverted feedback) position: 0.75 rad
+[1756803939.001580410]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803939.003440616] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803939.101404383]: Rx Data for 5: [ 31 ff ff ff fd f5 42 67 ]
+[1756803939.101498190]: Processing encoder response
+[1756803939.101523858]: Updated joint B_joint (inverted feedback) position: 0.76 rad
+[1756803939.101556910]: Tx Data for 5: [ 31 36 ]
+[1756803939.201323905]: Rx Data for 5: [ 31 ff ff ff fd f2 1c 3e ]
+[1756803939.201395741]: Processing encoder response
+[1756803939.201416580]: Updated joint B_joint (inverted feedback) position: 0.76 rad
+[1756803939.201448330]: Tx Data for 5: [ 31 36 ]
+[1756803939.301389493]: Rx Data for 5: [ 31 ff ff ff fd ee fa 18 ]
+[1756803939.301449346]: Processing encoder response
+[1756803939.301473031]: Updated joint B_joint (inverted feedback) position: 0.77 rad
+[1756803939.301503889]: Tx Data for 5: [ 31 36 ]
+[1756803939.401810832]: Rx Data for 5: [ 31 ff ff ff fd eb c3 de ]
+[1756803939.401931189]: Processing encoder response
+[1756803939.401952288]: Updated joint B_joint (inverted feedback) position: 0.77 rad
+[1756803939.401980502]: Tx Data for 5: [ 31 36 ]
+[1756803939.501424137]: Rx Data for 5: [ 31 ff ff ff fd e8 8a a2 ]
+[1756803939.501530558]: Processing encoder response
+[1756803939.501553862]: Updated joint B_joint (inverted feedback) position: 0.78 rad
+[1756803939.501590220]: Tx Data for 5: [ 31 36 ]
+[1756803939.601385409]: Rx Data for 5: [ 31 ff ff ff fd e5 73 88 ]
+[1756803939.601453748]: Processing encoder response
+[1756803939.601478705]: Updated joint B_joint (inverted feedback) position: 0.78 rad
+[1756803939.601516416]: Tx Data for 5: [ 31 36 ]
+[1756803939.701446759]: Rx Data for 5: [ 31 ff ff ff fd e2 1f 31 ]
+[1756803939.702276613]: Processing encoder response
+[1756803939.702331847]: Updated joint B_joint (inverted feedback) position: 0.78 rad
+[1756803939.702404283]: Tx Data for 5: [ 31 36 ]
+[1756803939.801386710]: Rx Data for 5: [ 31 ff ff ff fd df 2 11 ]
+[1756803939.801449538]: Processing encoder response
+[1756803939.801467472]: Updated joint B_joint (inverted feedback) position: 0.79 rad
+[1756803939.801494132]: Tx Data for 5: [ 31 36 ]
+[1756803939.901334356]: Rx Data for 5: [ 31 ff ff ff fd db b6 c1 ]
+[1756803939.901408405]: Processing encoder response
+[1756803939.901427381]: Updated joint B_joint (inverted feedback) position: 0.79 rad
+[1756803939.901454051]: Tx Data for 5: [ 31 36 ]
+[1756803940.001378283]: Rx Data for 5: [ 31 ff ff ff fd d8 a8 b0 ]
+[1756803940.001447343]: Processing encoder response
+[1756803940.001472350]: Updated joint B_joint (inverted feedback) position: 0.80 rad
+[1756803940.001506394]: Tx Data for 5: [ 31 36 ]
+[1756803940.101378718]: Rx Data for 5: [ 31 ff ff ff fd d5 3f 44 ]
+[1756803940.101442899]: Processing encoder response
+[1756803940.101466183]: Updated joint B_joint (inverted feedback) position: 0.80 rad
+[1756803940.101503443]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803940.102835002] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803940.201381347]: Rx Data for 5: [ 31 ff ff ff fd d2 43 45 ]
+[1756803940.201445578]: Processing encoder response
+[1756803940.201468832]: Updated joint B_joint (inverted feedback) position: 0.81 rad
+[1756803940.201502565]: Tx Data for 5: [ 31 36 ]
+[1756803940.301399596]: Rx Data for 5: [ 31 ff ff ff fd ce e5 e3 ]
+[1756803940.301470579]: Processing encoder response
+[1756803940.301497791]: Updated joint B_joint (inverted feedback) position: 0.81 rad
+[1756803940.301534209]: Tx Data for 5: [ 31 36 ]
+[1756803940.401388038]: Rx Data for 5: [ 31 ff ff ff fd cb c2 bd ]
+[1756803940.401455616]: Processing encoder response
+[1756803940.401483488]: Updated joint B_joint (inverted feedback) position: 0.82 rad
+[1756803940.401525628]: Tx Data for 5: [ 31 36 ]
+[1756803940.501384286]: Rx Data for 5: [ 31 ff ff ff fd c8 71 69 ]
+[1756803940.501476980]: Processing encoder response
+[1756803940.501502899]: Updated joint B_joint (inverted feedback) position: 0.82 rad
+[1756803940.501542764]: Tx Data for 5: [ 31 36 ]
+[1756803940.601389760]: Rx Data for 5: [ 31 ff ff ff fd c5 49 3e ]
+[1756803940.601453981]: Processing encoder response
+[1756803940.601472727]: Updated joint B_joint (inverted feedback) position: 0.83 rad
+[1756803940.601497483]: Tx Data for 5: [ 31 36 ]
+[1756803940.701392019]: Rx Data for 5: [ 31 ff ff ff fd c1 ec dd ]
+[1756803940.701460768]: Processing encoder response
+[1756803940.701546941]: Updated joint B_joint (inverted feedback) position: 0.83 rad
+[1756803940.701579692]: Tx Data for 5: [ 31 36 ]
+[1756803940.801393877]: Rx Data for 5: [ 31 ff ff ff fd be c2 b0 ]
+[1756803940.801472555]: Processing encoder response
+[1756803940.801494827]: Updated joint B_joint (inverted feedback) position: 0.84 rad
+[1756803940.801528751]: Tx Data for 5: [ 31 36 ]
+[1756803940.901906808]: Rx Data for 5: [ 31 ff ff ff fd bb 62 4d ]
+[1756803940.901980196]: Processing encoder response
+[1756803940.901999993]: Updated joint B_joint (inverted feedback) position: 0.84 rad
+[1756803940.902024510]: Tx Data for 5: [ 31 36 ]
+[1756803941.001383335]: Rx Data for 5: [ 31 ff ff ff fd b8 40 28 ]
+[1756803941.001447747]: Processing encoder response
+[1756803941.001466612]: Updated joint B_joint (inverted feedback) position: 0.85 rad
+[1756803941.001492321]: Tx Data for 5: [ 31 36 ]
+[1756803941.101382127]: Rx Data for 5: [ 31 ff ff ff fd b4 e7 cb ]
+[1756803941.101437903]: Processing encoder response
+[1756803941.101454223]: Updated joint B_joint (inverted feedback) position: 0.85 rad
+[1756803941.101479761]: Tx Data for 5: [ 31 36 ]
+[1756803941.201384707]: Rx Data for 5: [ 31 ff ff ff fd b1 c6 a7 ]
+[1756803941.201452424]: Processing encoder response
+[1756803941.201474275]: Updated joint B_joint (inverted feedback) position: 0.85 rad
+[1756803941.201504773]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803941.202917626] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803941.301766761]: Rx Data for 5: [ 31 ff ff ff fd ae a2 80 ]
+[1756803941.301839849]: Processing encoder response
+[1756803941.301862341]: Updated joint B_joint (inverted feedback) position: 0.86 rad
+[1756803941.301894552]: Tx Data for 5: [ 31 36 ]
+[1756803941.401402689]: Rx Data for 5: [ 31 ff ff ff fd ab 73 4e ]
+[1756803941.401468563]: Processing encoder response
+[1756803941.401489913]: Updated joint B_joint (inverted feedback) position: 0.86 rad
+[1756803941.401520952]: Tx Data for 5: [ 31 36 ]
+[1756803941.501378217]: Rx Data for 5: [ 31 ff ff ff fd a8 41 19 ]
+[1756803941.501432229]: Processing encoder response
+[1756803941.501448490]: Updated joint B_joint (inverted feedback) position: 0.87 rad
+[1756803941.501472525]: Tx Data for 5: [ 31 36 ]
+[1756803941.601377240]: Rx Data for 5: [ 31 ff ff ff fd a5 1f f4 ]
+[1756803941.601435520]: Processing encoder response
+[1756803941.601455237]: Updated joint B_joint (inverted feedback) position: 0.87 rad
+[1756803941.601483079]: Tx Data for 5: [ 31 36 ]
+[1756803941.701383666]: Rx Data for 5: [ 31 ff ff ff fd a1 f9 ca ]
+[1756803941.701448188]: Processing encoder response
+[1756803941.701471412]: Updated joint B_joint (inverted feedback) position: 0.88 rad
+[1756803941.701552264]: Tx Data for 5: [ 31 36 ]
+[1756803941.801435949]: Rx Data for 5: [ 31 ff ff ff fd 9e b0 7e ]
+[1756803941.801536749]: Processing encoder response
+[1756803941.801557398]: Updated joint B_joint (inverted feedback) position: 0.88 rad
+[1756803941.801585711]: Tx Data for 5: [ 31 36 ]
+[1756803941.901382282]: Rx Data for 5: [ 31 ff ff ff fd 9b 62 2d ]
+[1756803941.901451813]: Processing encoder response
+[1756803941.901473975]: Updated joint B_joint (inverted feedback) position: 0.89 rad
+[1756803941.901512498]: Tx Data for 5: [ 31 36 ]
+[1756803942.001386525]: Rx Data for 5: [ 31 ff ff ff fd 98 4c 14 ]
+[1756803942.001457949]: Processing encoder response
+[1756803942.001479710]: Updated joint B_joint (inverted feedback) position: 0.89 rad
+[1756803942.001513293]: Tx Data for 5: [ 31 36 ]
+[1756803942.101389324]: Rx Data for 5: [ 31 ff ff ff fd 94 fb bf ]
+[1756803942.101467181]: Processing encoder response
+[1756803942.101486397]: Updated joint B_joint (inverted feedback) position: 0.90 rad
+[1756803942.101516414]: Tx Data for 5: [ 31 36 ]
+[1756803942.201390931]: Rx Data for 5: [ 31 ff ff ff fd 91 e0 a1 ]
+[1756803942.201455934]: Processing encoder response
+[1756803942.201480300]: Updated joint B_joint (inverted feedback) position: 0.90 rad
+[1756803942.201509826]: Tx Data for 5: [ 31 36 ]
+[1756803942.301407657]: Rx Data for 5: [ 31 ff ff ff fd 8e 9d 5b ]
+[1756803942.301470576]: Processing encoder response
+[1756803942.301499631]: Updated joint B_joint (inverted feedback) position: 0.91 rad
+[1756803942.301534907]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803942.302923735] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803942.401381172]: Rx Data for 5: [ 31 ff ff ff fd 8b 6b 26 ]
+[1756803942.401441636]: Processing encoder response
+[1756803942.401461784]: Updated joint B_joint (inverted feedback) position: 0.91 rad
+[1756803942.401493083]: Tx Data for 5: [ 31 36 ]
+[1756803942.501387087]: Rx Data for 5: [ 31 ff ff ff fd 88 38 f0 ]
+[1756803942.501461968]: Processing encoder response
+[1756803942.501483900]: Updated joint B_joint (inverted feedback) position: 0.91 rad
+[1756803942.501510951]: Tx Data for 5: [ 31 36 ]
+[1756803942.601407780]: Rx Data for 5: [ 31 ff ff ff fd 84 f7 ab ]
+[1756803942.601476781]: Processing encoder response
+[1756803942.601496969]: Updated joint B_joint (inverted feedback) position: 0.92 rad
+[1756803942.601525342]: Tx Data for 5: [ 31 36 ]
+[1756803942.701386014]: Rx Data for 5: [ 31 ff ff ff fd 81 a1 52 ]
+[1756803942.701478037]: Processing encoder response
+[1756803942.701525186]: Updated joint B_joint (inverted feedback) position: 0.92 rad
+[1756803942.701567476]: Tx Data for 5: [ 31 36 ]
+[1756803942.801384575]: Rx Data for 5: [ 31 ff ff ff fd 7e 6a 18 ]
+[1756803942.801509902]: Processing encoder response
+[1756803942.801530500]: Updated joint B_joint (inverted feedback) position: 0.93 rad
+[1756803942.801555648]: Tx Data for 5: [ 31 36 ]
+[1756803942.901381093]: Rx Data for 5: [ 31 ff ff ff fd 7b 14 bf ]
+[1756803942.901444953]: Processing encoder response
+[1756803942.901466043]: Updated joint B_joint (inverted feedback) position: 0.93 rad
+[1756803942.901507742]: Tx Data for 5: [ 31 36 ]
+[1756803943.001390726]: Rx Data for 5: [ 31 ff ff ff fd 77 e4 8b ]
+[1756803943.001465587]: Processing encoder response
+[1756803943.001486326]: Updated joint B_joint (inverted feedback) position: 0.94 rad
+[1756803943.001518356]: Tx Data for 5: [ 31 36 ]
+[1756803943.101399967]: Rx Data for 5: [ 31 ff ff ff fd 74 99 3d ]
+[1756803943.101498753]: Processing encoder response
+[1756803943.101523290]: Updated joint B_joint (inverted feedback) position: 0.94 rad
+[1756803943.101558266]: Tx Data for 5: [ 31 36 ]
+[1756803943.201380655]: Rx Data for 5: [ 31 ff ff ff fd 71 5c fd ]
+[1756803943.201442532]: Processing encoder response
+[1756803943.201461628]: Updated joint B_joint (inverted feedback) position: 0.95 rad
+[1756803943.201492416]: Tx Data for 5: [ 31 36 ]
+[1756803943.301381271]: Rx Data for 5: [ 31 ff ff ff fd 6e 4d eb ]
+[1756803943.301440372]: Processing encoder response
+[1756803943.301460289]: Updated joint B_joint (inverted feedback) position: 0.95 rad
+[1756803943.301521685]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803943.303178167] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803943.401385723]: Rx Data for 5: [ 31 ff ff ff fd 6b 4 9f ]
+[1756803943.401446999]: Processing encoder response
+[1756803943.401463871]: Updated joint B_joint (inverted feedback) position: 0.96 rad
+[1756803943.401490110]: Tx Data for 5: [ 31 36 ]
+[1756803943.501382051]: Rx Data for 5: [ 31 ff ff ff fd 67 ea 81 ]
+[1756803943.501445300]: Processing encoder response
+[1756803943.501461701]: Updated joint B_joint (inverted feedback) position: 0.96 rad
+[1756803943.501490595]: Tx Data for 5: [ 31 36 ]
+[1756803943.601409797]: Rx Data for 5: [ 31 ff ff ff fd 64 b4 48 ]
+[1756803943.601515356]: Processing encoder response
+[1756803943.601540033]: Updated joint B_joint (inverted feedback) position: 0.97 rad
+[1756803943.601601168]: Tx Data for 5: [ 31 36 ]
+[1756803943.701383232]: Rx Data for 5: [ 31 ff ff ff fd 61 9f 30 ]
+[1756803943.701484833]: Processing encoder response
+[1756803943.701510702]: Updated joint B_joint (inverted feedback) position: 0.97 rad
+[1756803943.701558251]: Tx Data for 5: [ 31 36 ]
+[1756803943.801381693]: Rx Data for 5: [ 31 ff ff ff fd 5e 32 c0 ]
+[1756803943.801443299]: Processing encoder response
+[1756803943.801460612]: Updated joint B_joint (inverted feedback) position: 0.98 rad
+[1756803943.801523500]: Tx Data for 5: [ 31 36 ]
+[1756803943.901374935]: Rx Data for 5: [ 31 ff ff ff fd 5b 26 b1 ]
+[1756803943.901433365]: Processing encoder response
+[1756803943.901449505]: Updated joint B_joint (inverted feedback) position: 0.98 rad
+[1756803943.901471517]: Rx Data for 5: [ f5 2 fc ]
+[1756803943.901487126]: Processing status response
+[1756803943.901500030]: Inside ABSOLUTE_POSITION case - Status: 2 (0x02)
+[1756803943.901513055]: Move to absolute position completed
+[1756803943.901527873]: Tx Data for 5: [ 31 36 ]
+[1756803944.001384807]: Rx Data for 5: [ 31 ff ff ff fd 5a 73 fd ]
+[1756803944.001456102]: Processing encoder response
+[1756803944.001477692]: Updated joint B_joint (inverted feedback) position: 0.98 rad
+[1756803944.001508100]: Tx Data for 5: [ 31 36 ]
+[1756803944.101413376]: Rx Data for 5: [ 31 ff ff ff fd 5a 94 1e ]
+[1756803944.101485722]: Processing encoder response
+[1756803944.101502624]: Updated joint B_joint (inverted feedback) position: 0.98 rad
+[1756803944.101531248]: Tx Data for 5: [ 31 36 ]
+[1756803944.201399253]: Rx Data for 5: [ 31 ff ff ff fd 5a 94 1e ]
+[1756803944.201494603]: Processing encoder response
+[1756803944.201514571]: No new data for 5
+[1756803944.201544156]: Tx Data for 5: [ 31 36 ]
+[1756803944.301388738]: Rx Data for 5: [ 31 ff ff ff fd 5a 91 1b ]
+[1756803944.301497653]: Processing encoder response
+[1756803944.301523612]: Updated joint B_joint (inverted feedback) position: 0.98 rad
+[1756803944.301560772]: Tx Data for 5: [ 31 36 ]
+[move_group-8] [WARN] [1756803944.303229517] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: The complete state of the robot is not yet known.  Missing Left_jaw_joint, Right_jaw_joint
+[1756803944.401400715]: Rx Data for 5: [ 31 ff ff ff fd 5a 90 1a ]
+[1756803944.401476207]: Processing encoder response
+[1756803944.401518587]: No new data for 5
+[1756803944.401553252]: Tx Data for 5: [ 31 36 ]
+[1756803944.501525835]: Rx Data for 5: [ 31 ff ff ff fd 5a 8f 19 ]
+[1756803944.501743765]: Processing encoder response
+[1756803944.501784422]: Updated joint B_joint (inverted feedback) position: 0.98 rad
+[1756803944.501854083]: Tx Data for 5: [ 31 36 ]
+[1756803944.601389242]: Rx Data for 5: [ 31 ff ff ff fd 5a 8e 18 ]
+[1756803944.601455196]: Processing encoder response
+[1756803944.601472649]: No new data for 5
+[1756803944.601494580]: Tx Data for 5: [ 31 36 ]
+[1756803944.701409364]: Rx Data for 5: [ 31 ff ff ff fd 5a 8e 18 ]
+[1756803944.701486118]: Processing encoder response
+[1756803944.701508180]: No new data for 5
+[1756803944.701534399]: Tx Data for 5: [ 31 36 ]
+[1756803944.801766621]: Rx Data for 5: [ 31 ff ff ff fd 5a 8f 19 ]
+[1756803944.801856511]: Processing encoder response
+[1756803944.801876288]: No new data for 5
+[1756803944.801949085]: Tx Data for 5: [ 31 36 ]
+[1756803944.901376270]: Rx Data for 5: [ 31 ff ff ff fd 5a 8f 19 ]
+[1756803944.901432566]: Processing encoder response
+[1756803944.901447755]: No new data for 5
+[1756803944.901487530]: Tx Data for 5: [ 31 36 ]
+[1756803945.001374240]: Rx Data for 5: [ 31 ff ff ff fd 5a 8f 19 ]
+[1756803945.001433863]: Processing encoder response
+[1756803945.001448480]: No new data for 5
+[1756803945.001470552]: Tx Data for 5: [ 31 36 ]
+[1756803945.101373704]: Rx Data for 5: [ 31 ff ff ff fd 5a 8e 18 ]
+[1756803945.101547571]: Processing encoder response
+[1756803945.101583329]: No new data for 5

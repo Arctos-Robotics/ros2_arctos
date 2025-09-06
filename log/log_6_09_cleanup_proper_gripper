@@ -1,0 +1,1800 @@
+arctos@arctos-HP-EliteDesk-705-G4-DM-35W-TAA:~/ros2_ws$ ros2 launch arctos_bringup arctos_bringup.launch.py
+[INFO] [launch]: All log files can be found below /home/arctos/.ros/log/2025-09-06-17-17-47-957479-arctos-HP-EliteDesk-705-G4-DM-35W-TAA-116678
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Launching Arctos Bringup with RViz...
+[INFO] [ros2_control_node-1]: process started with pid [116689]
+[INFO] [robot_state_publisher-2]: process started with pid [116691]
+[INFO] [spawner-3]: process started with pid [116693]
+[INFO] [socket_can_receiver_node_exe-4]: process started with pid [116695]
+[INFO] [socket_can_sender_node_exe-5]: process started with pid [116697]
+[robot_state_publisher-2] [INFO] [1757153868.473866525] [robot_state_publisher]: got segment Gripper_1
+[robot_state_publisher-2] [INFO] [1757153868.474088082] [robot_state_publisher]: got segment Left_jaw_1
+[robot_state_publisher-2] [INFO] [1757153868.474108981] [robot_state_publisher]: got segment Link_1_1
+[robot_state_publisher-2] [INFO] [1757153868.474120723] [robot_state_publisher]: got segment Link_2_1
+[robot_state_publisher-2] [INFO] [1757153868.474130732] [robot_state_publisher]: got segment Link_3_1
+[robot_state_publisher-2] [INFO] [1757153868.474141472] [robot_state_publisher]: got segment Link_4_1
+[robot_state_publisher-2] [INFO] [1757153868.474151301] [robot_state_publisher]: got segment Link_5_1
+[robot_state_publisher-2] [INFO] [1757153868.474161129] [robot_state_publisher]: got segment Link_6_1
+[robot_state_publisher-2] [INFO] [1757153868.474171048] [robot_state_publisher]: got segment Right_jaw_1
+[robot_state_publisher-2] [INFO] [1757153868.474180656] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-2] [INFO] [1757153868.474190073] [robot_state_publisher]: got segment world
+[socket_can_sender_node_exe-5] [INFO] [1757153868.478033192] [motor_can_sender]: interface: can0
+[socket_can_sender_node_exe-5] [INFO] [1757153868.478201298] [motor_can_sender]: can fd enabled: false
+[socket_can_sender_node_exe-5] [INFO] [1757153868.478221115] [motor_can_sender]: timeout(s): 0.010000
+[1757153868.486775143] [controller_manager]: Subscribing to '~/robot_description' topic for robot description file.
+[1757153868.487849223] [controller_manager]: update rate is 10 Hz
+[1757153868.487911000] [controller_manager]: Spawning controller_manager RT thread with scheduler priority: 50
+[ros2_control_node-1] [WARN] [1757153868.488171329] [controller_manager]: No real-time kernel detected on this system. See [https://control.ros.org/master/doc/ros2_control/controller_manager/doc/userdoc.html] for details on how to enable realtime scheduling.
+[1757153868.489367188] [controller_manager]: Received robot description file.
+[1757153868.489843865] [resource_manager]: Loading hardware 'RealSystems' 
+[1757153868.501481313] [resource_manager]: Initialize hardware 'RealSystems' 
+[1757153868.503104085]Configured joint X_joint with motor_id 1
+[1757153868.504044383]Configured joint Y_joint with motor_id 2
+[1757153868.505543493]Configured joint Z_joint with motor_id 3
+[1757153868.506386749]Configured joint A_joint with motor_id 4
+[1757153868.507191322]Configured joint B_joint with motor_id 5
+[1757153868.508013308]Configured joint C_joint with motor_id 6
+[1757153868.508951502]Configured joint Left_jaw_joint with motor_id 7
+[1757153868.509236118] [resource_manager]: Successful initialization of hardware 'RealSystems'
+[1757153868.509598990] [resource_manager]: 'configure' hardware 'RealSystems' 
+[1757153868.509625831]Transitioning to CONFIGURE state from unconfigured
+[1757153868.510089994]Added joint X_joint with motor ID 1 and gear ratio 13.50:1
+[1757153868.510398484]Tx Data for 1: [ 82 5 88 ]
+[1757153868.510529270]Updated limits for joint X_joint: pos=[-3.03, 2.75], vel=23.27, acc=255.00
+[1757153868.510557814]Set joint limits for joint X_joint of motor 1: pos=[-3.03, 2.75], vel=23.27, acc=255.00
+[1757153868.510577270]Initialized motor for joint X_joint with ID 1 and gear ratio 13.50:1
+[1757153868.510649486]Added joint Y_joint with motor ID 2 and gear ratio 150.00:1
+[1757153868.510693188]Tx Data for 2: [ 82 5 89 ]
+[1757153868.510730649]Updated limits for joint Y_joint: pos=[-0.85, 2.01], vel=2.09, acc=255.00
+[1757153868.510752239]Set joint limits for joint Y_joint of motor 2: pos=[-0.85, 2.01], vel=2.09, acc=255.00
+[1757153868.510769592]Initialized motor for joint Y_joint with ID 2 and gear ratio 150.00:1
+[1757153868.510805569]Added joint Z_joint with motor ID 3 and gear ratio 150.00:1
+[1757153868.510835907]Tx Data for 3: [ 82 5 8a ]
+[1757153868.510867035]Updated limits for joint Z_joint: pos=[-1.57, 0.96], vel=2.09, acc=255.00
+[1757153868.510887834]Set joint limits for joint Z_joint of motor 3: pos=[-1.57, 0.96], vel=2.09, acc=255.00
+[1757153868.510904976]Initialized motor for joint Z_joint with ID 3 and gear ratio 150.00:1
+[1757153868.510938499]Added joint A_joint with motor ID 4 and gear ratio 48.00:1
+[1757153868.510969438]Tx Data for 4: [ 82 5 8b ]
+[1757153868.510999915]Updated limits for joint A_joint: pos=[-1.57, 1.57], vel=6.54, acc=255.00
+[1757153868.511019852]Set joint limits for joint A_joint of motor 4: pos=[-1.57, 1.57], vel=6.54, acc=255.00
+[1757153868.511112276]Initialized motor for joint A_joint with ID 4 and gear ratio 48.00:1
+[1757153868.511164454]Added joint B_joint with motor ID 5 and gear ratio 67.82:1
+[1757153868.511208587]Tx Data for 5: [ 82 5 8c ]
+[1757153868.511249274]Updated limits for joint B_joint: pos=[-1.55, 1.55], vel=4.63, acc=255.00
+[1757153868.511271606]Set joint limits for joint B_joint of motor 5: pos=[-1.55, 1.55], vel=4.63, acc=255.00
+[1757153868.511289480]Initialized motor for joint B_joint with ID 5 and gear ratio 67.82:1
+[1757153868.511345034]Added joint C_joint with motor ID 6 and gear ratio 67.82:1
+[1757153868.511380721]Tx Data for 6: [ 82 5 8d ]
+[1757153868.511415346]Updated limits for joint C_joint: pos=[-3.14, 3.14], vel=4.63, acc=255.00
+[1757153868.511436967]Set joint limits for joint C_joint of motor 6: pos=[-3.14, 3.14], vel=4.63, acc=255.00
+[1757153868.511454901]Initialized motor for joint C_joint with ID 6 and gear ratio 67.82:1
+[1757153868.511494235]Added joint Left_jaw_joint with motor ID 7 and gear ratio 1.00:1
+[1757153868.511531515]Tx Data for 7: [ 82 5 8e ]
+[1757153868.511568034]Updated limits for joint Left_jaw_joint: pos=[0.00, 0.01], vel=314.16, acc=255.00
+[1757153868.511594143]Set joint limits for joint Left_jaw_joint of motor 7: pos=[0.00, 0.01], vel=314.16, acc=255.00
+[1757153868.511619190]Initialized motor for joint Left_jaw_joint with ID 7 and gear ratio 1.00:1
+[1757153868.511649276] [resource_manager]: Successful 'configure' of hardware 'RealSystems'
+[1757153868.511672971] [resource_manager]: 'activate' hardware 'RealSystems' 
+[1757153868.511681727]Transitioning to ACTIVE state from inactive
+[1757153868.511698439]Enabling motor for joint X_joint
+[1757153868.511737092]Tx Data for 1: [ f3 1 f5 ]
+[1757153868.511773390]Enabling motor for joint Y_joint
+[1757153868.511811111]Tx Data for 2: [ f3 1 f6 ]
+[1757153868.511840646]Enabling motor for joint Z_joint
+[1757153868.511862888]Tx Data for 3: [ f3 1 f7 ]
+[1757153868.511887214]Enabling motor for joint A_joint
+[1757153868.511905398]Tx Data for 4: [ f3 1 f8 ]
+[1757153868.511926598]Enabling motor for joint B_joint
+[1757153868.511947618]Tx Data for 5: [ f3 1 f9 ]
+[1757153868.511974558]Enabling motor for joint C_joint
+[1757153868.511997822]Tx Data for 6: [ f3 1 fa ]
+[1757153868.512034862]Enabling motor for joint Left_jaw_joint
+[1757153868.512060109]Tx Data for 7: [ f3 1 fb ]
+[1757153868.512300511] [resource_manager]: Successful 'activate' of hardware 'RealSystems'
+[1757153868.588445734]Tx Data for 4: [ 31 35 ]
+[1757153868.589657343]Tx Data for 5: [ 31 36 ]
+[1757153868.590800503]Tx Data for 6: [ 31 37 ]
+[1757153868.591933725]Tx Data for 7: [ 31 38 ]
+[1757153868.593049794]Tx Data for 1: [ 31 32 ]
+[1757153868.594178998]Tx Data for 2: [ 31 33 ]
+[1757153868.595349769]Tx Data for 3: [ 31 34 ]
+[1757153868.596570045]Initialized last command vectors.
+[1757153868.688347499]Tx Data for 4: [ 31 35 ]
+[1757153868.689523691]Tx Data for 5: [ 31 36 ]
+[1757153868.690648567]Tx Data for 6: [ 31 37 ]
+[1757153868.691765507]Tx Data for 7: [ 31 38 ]
+[1757153868.692886125]Tx Data for 1: [ 31 32 ]
+[1757153868.694005901]Tx Data for 2: [ 31 33 ]
+[1757153868.695116560]Tx Data for 3: [ 31 34 ]
+[socket_can_receiver_node_exe-4] [ERROR] [1757153868.704883159] [motor_can_receiver]: Error opening CAN receiver: can0 - Failed to set CAN socket name via ioctl()
+[socket_can_sender_node_exe-5] [ERROR] [1757153868.705930358] [motor_can_sender]: Error opening CAN sender: can0 - Failed to set CAN socket name via ioctl()
+[ERROR] [launch_ros.actions.lifecycle_node]: Failed to make transition 'TRANSITION_CONFIGURE' for LifecycleNode '/motor_can_sender'
+[ERROR] [launch_ros.actions.lifecycle_node]: Failed to make transition 'TRANSITION_CONFIGURE' for LifecycleNode '/motor_can_receiver'
+[1757153868.788343981]Tx Data for 4: [ 31 35 ]
+[1757153868.789558526]Tx Data for 5: [ 31 36 ]
+[1757153868.790766738]Tx Data for 6: [ 31 37 ]
+[1757153868.791956305]Tx Data for 7: [ 31 38 ]
+[1757153868.793237194]Tx Data for 1: [ 31 32 ]
+[1757153868.794430338]Tx Data for 2: [ 31 33 ]
+[1757153868.795596852]Tx Data for 3: [ 31 34 ]
+[1757153868.833439827] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[1757153868.888423169]Tx Data for 4: [ 31 35 ]
+[1757153868.889690493]Tx Data for 5: [ 31 36 ]
+[1757153868.890917270]Tx Data for 6: [ 31 37 ]
+[1757153868.892353411]Tx Data for 7: [ 31 38 ]
+[1757153868.893565631]Tx Data for 1: [ 31 32 ]
+[1757153868.894760048]Tx Data for 2: [ 31 33 ]
+[1757153868.895922985]Tx Data for 3: [ 31 34 ]
+[spawner-3] [INFO] [1757153868.923579842] [spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[1757153868.934916113] [controller_manager]: Configuring controller 'joint_state_broadcaster'
+[1757153868.935064572] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[1757153868.988329011]Tx Data for 4: [ 31 35 ]
+[1757153868.989506877]Tx Data for 5: [ 31 36 ]
+[1757153868.990686806]Tx Data for 6: [ 31 37 ]
+[1757153868.991858059]Tx Data for 7: [ 31 38 ]
+[1757153868.993056964]Tx Data for 1: [ 31 32 ]
+[1757153868.994208620]Tx Data for 2: [ 31 33 ]
+[1757153868.995312476]Tx Data for 3: [ 31 34 ]
+[1757153869.088366522]Tx Data for 4: [ 31 35 ]
+[1757153869.089576087]Tx Data for 5: [ 31 36 ]
+[1757153869.090750996]Tx Data for 6: [ 31 37 ]
+[1757153869.091883366]Tx Data for 7: [ 31 38 ]
+[1757153869.093016347]Tx Data for 1: [ 31 32 ]
+[1757153869.094114092]Tx Data for 2: [ 31 33 ]
+[1757153869.095252323]Tx Data for 3: [ 31 34 ]
+[1757153869.188334241]Tx Data for 4: [ 31 35 ]
+[1757153869.189477942]Tx Data for 5: [ 31 36 ]
+[1757153869.190582179]Tx Data for 6: [ 31 37 ]
+[1757153869.191689081]Tx Data for 7: [ 31 38 ]
+[1757153869.192780904]Tx Data for 1: [ 31 32 ]
+[1757153869.193877867]Tx Data for 2: [ 31 33 ]
+[1757153869.194968198]Tx Data for 3: [ 31 34 ]
+[spawner-3] [INFO] [1757153869.197315984] [spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[1757153869.288337066]Tx Data for 4: [ 31 35 ]
+[1757153869.289481478]Tx Data for 5: [ 31 36 ]
+[1757153869.290578101]Tx Data for 6: [ 31 37 ]
+[1757153869.291674403]Tx Data for 7: [ 31 38 ]
+[1757153869.292774091]Tx Data for 1: [ 31 32 ]
+[1757153869.293891733]Tx Data for 2: [ 31 33 ]
+[1757153869.294992023]Tx Data for 3: [ 31 34 ]
+[1757153869.388333339]Tx Data for 4: [ 31 35 ]
+[1757153869.389477060]Tx Data for 5: [ 31 36 ]
+[1757153869.390586346]Tx Data for 6: [ 31 37 ]
+[1757153869.391680895]Tx Data for 7: [ 31 38 ]
+[1757153869.392774051]Tx Data for 1: [ 31 32 ]
+[1757153869.393871786]Tx Data for 2: [ 31 33 ]
+[1757153869.394986572]Tx Data for 3: [ 31 34 ]
+[INFO] [spawner-3]: process has finished cleanly [pid 116693]
+[INFO] [spawner-6]: process started with pid [116765]
+[INFO] [spawner-7]: process started with pid [116767]
+[1757153869.840556450] [controller_manager]: Loading controller 'arctos_arm_controller'
+[ros2_control_node-1] [WARN] [1757153869.855382254] [arctos_arm_controller]: [Deprecated]: "allow_nonzero_velocity_at_trajectory_end" is set to true. The default behavior will change to false.
+[1757153869.890925764] [controller_manager]: Loading controller 'arctos_hand_controller'
+[spawner-6] [INFO] [1757153869.915572870] [spawner_arctos_arm_controller]: Loaded arctos_arm_controller
+[1757153869.988665503] [controller_manager]: Configuring controller 'arctos_arm_controller'
+[1757153869.988937825] [arctos_arm_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[1757153869.988972310] [arctos_arm_controller]: Command interfaces are [position velocity] and state interfaces are [position velocity].
+[1757153869.989003859] [arctos_arm_controller]: Using 'splines' interpolation method.
+[1757153869.989552060] [arctos_arm_controller]: Controller state will be published at 25.00 Hz.
+[1757153869.992031003] [arctos_arm_controller]: Goals with partial set of joints are allowed
+[1757153869.992071038] [arctos_arm_controller]: Action status changes will be monitored at 10.00 Hz.
+[spawner-7] [INFO] [1757153870.015231909] [spawner_arctos_hand_controller]: Loaded arctos_hand_controller
+[1757153870.088914993] [controller_manager]: Configuring controller 'arctos_hand_controller'
+[1757153870.089071367] [arctos_hand_controller]: Action status changes will be monitored at 20.000000 Hz.
+[spawner-6] [INFO] [1757153870.389546823] [spawner_arctos_arm_controller]: Configured and activated arctos_arm_controller
+[spawner-7] [INFO] [1757153870.589563576] [spawner_arctos_hand_controller]: Configured and activated arctos_hand_controller
+[INFO] [spawner-6]: process has finished cleanly [pid 116765]
+[INFO] [spawner-7]: process has finished cleanly [pid 116767]
+[INFO] [rviz2-8]: process started with pid [116803]
+[INFO] [move_group-9]: process started with pid [116805]
+[move_group-9] [INFO] [1757153870.943382030] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0.00424384 seconds
+[move_group-9] [INFO] [1757153870.943467090] [moveit_robot_model.robot_model]: Loading robot model 'arctos'...
+[rviz2-8] [INFO] [1757153871.337342646] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-8] [INFO] [1757153871.337513317] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-8] [INFO] [1757153871.368493445] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-8] Warning: class_loader.impl: SEVERE WARNING!!! A namespace collision has occurred with plugin factory for class rviz_default_plugins::displays::InteractiveMarkerDisplay. New factory will OVERWRITE existing one. This situation occurs when libraries containing plugins are directly linked against an executable (the one running right now generating this message). Please separate plugins out into their own library or just don't link against the library and use either class_loader::ClassLoader/MultiLibraryClassLoader to open.
+[rviz2-8]          at line 253 in /opt/ros/humble/include/class_loader/class_loader/class_loader_core.hpp
+[move_group-9] [INFO] [1757153872.987646498] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Publishing maintained planning scene on 'monitored_planning_scene'
+[move_group-9] [INFO] [1757153872.987870809] [moveit.ros_planning_interface.moveit_cpp]: Listening to 'joint_states' for joint states
+[move_group-9] [INFO] [1757153872.988460639] [moveit_ros.current_state_monitor]: Listening to joint states on topic 'joint_states'
+[move_group-9] [INFO] [1757153872.989173169] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to '/attached_collision_object' for attached collision objects
+[move_group-9] [INFO] [1757153872.989209016] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Starting planning scene monitor
+[move_group-9] [INFO] [1757153872.990417109] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to '/planning_scene'
+[move_group-9] [INFO] [1757153872.990456212] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Starting world geometry update monitor for collision objects, attached objects, octomap updates.
+[move_group-9] [INFO] [1757153872.991040842] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to 'collision_object'
+[move_group-9] [INFO] [1757153872.991710601] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to 'planning_scene_world' for planning scene world geometry
+[move_group-9] [WARN] [1757153872.992093732] [moveit.ros.occupancy_map_monitor.middleware_handle]: Resolution not specified for Octomap. Assuming resolution = 0.1 instead
+[move_group-9] [ERROR] [1757153872.992122586] [moveit.ros.occupancy_map_monitor.middleware_handle]: No 3D sensor plugin(s) defined for octomap updates
+[rviz2-8] [ERROR] [1757153874.506157721] [moveit_ros_visualization.motion_planning_frame]: Action server: /recognize_objects not available
+[rviz2-8] [INFO] [1757153874.528543134] [moveit_ros_visualization.motion_planning_frame]: MoveGroup namespace changed: / -> . Reloading params.
+[rviz2-8] [WARN] [1757153874.586471458] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[rviz2-8] [INFO] [1757153875.010235549] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0.424597 seconds
+[rviz2-8] [INFO] [1757153875.010296604] [moveit_robot_model.robot_model]: Loading robot model 'arctos'...
+[rviz2-8] [WARN] [1757153875.695755405] [moveit_ros.robot_model_loader]: No kinematics plugins defined. Fill and load kinematics.yaml!
+[rviz2-8] [INFO] [1757153877.259641502] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Starting planning scene monitor
+[rviz2-8] [INFO] [1757153877.261711876] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to '/monitored_planning_scene'
+[move_group-9] [INFO] [1757153878.843737909] [moveit.ros_planning_interface.moveit_cpp]: Loading planning pipeline 'pilz_industrial_motion_planner'
+[move_group-9] [INFO] [1757153878.846948207] [moveit.pilz_industrial_motion_planner.joint_limits_aggregator]: Reading limits from namespace robot_description_planning
+[move_group-9] [INFO] [1757153878.858930234] [moveit.pilz_industrial_motion_planner]: Available plugins: pilz_industrial_motion_planner/PlanningContextLoaderCIRC pilz_industrial_motion_planner/PlanningContextLoaderLIN pilz_industrial_motion_planner/PlanningContextLoaderPTP 
+[move_group-9] [INFO] [1757153878.858961673] [moveit.pilz_industrial_motion_planner]: About to load: pilz_industrial_motion_planner/PlanningContextLoaderCIRC
+[move_group-9] [INFO] [1757153878.860945244] [moveit.pilz_industrial_motion_planner]: Registered Algorithm [CIRC]
+[move_group-9] [INFO] [1757153878.860971624] [moveit.pilz_industrial_motion_planner]: About to load: pilz_industrial_motion_planner/PlanningContextLoaderLIN
+[move_group-9] [INFO] [1757153878.862201206] [moveit.pilz_industrial_motion_planner]: Registered Algorithm [LIN]
+[move_group-9] [INFO] [1757153878.862226043] [moveit.pilz_industrial_motion_planner]: About to load: pilz_industrial_motion_planner/PlanningContextLoaderPTP
+[move_group-9] [INFO] [1757153878.863659068] [moveit.pilz_industrial_motion_planner]: Registered Algorithm [PTP]
+[move_group-9] [INFO] [1757153878.863704293] [moveit.ros_planning.planning_pipeline]: Using planning interface 'Pilz Industrial Motion Planner'
+[move_group-9] [INFO] [1757153878.867549355] [moveit.ros_planning_interface.moveit_cpp]: Loading planning pipeline 'chomp'
+[move_group-9] [INFO] [1757153878.872251109] [moveit.ros_planning.planning_pipeline]: Using planning interface 'CHOMP'
+[move_group-9] [INFO] [1757153878.875748076] [moveit_ros.add_time_optimal_parameterization]: Param 'chomp.path_tolerance' was not set. Using default value: 0.100000
+[move_group-9] [INFO] [1757153878.875774566] [moveit_ros.add_time_optimal_parameterization]: Param 'chomp.resample_dt' was not set. Using default value: 0.100000
+[move_group-9] [INFO] [1757153878.875781689] [moveit_ros.add_time_optimal_parameterization]: Param 'chomp.min_angle_change' was not set. Using default value: 0.001000
+[move_group-9] [INFO] [1757153878.875813549] [moveit_ros.fix_workspace_bounds]: Param 'chomp.default_workspace_bounds' was not set. Using default value: 10.000000
+[move_group-9] [INFO] [1757153878.875839408] [moveit_ros.fix_start_state_bounds]: Param 'chomp.start_state_max_bounds_error' was set to 0.100000
+[move_group-9] [INFO] [1757153878.875846461] [moveit_ros.fix_start_state_bounds]: Param 'chomp.start_state_max_dt' was not set. Using default value: 0.500000
+[move_group-9] [INFO] [1757153878.875906965] [moveit_ros.fix_start_state_collision]: Param 'chomp.start_state_max_dt' was not set. Using default value: 0.500000
+[move_group-9] [INFO] [1757153878.875919228] [moveit_ros.fix_start_state_collision]: Param 'chomp.jiggle_fraction' was set to 0.050000
+[move_group-9] [INFO] [1757153878.875926572] [moveit_ros.fix_start_state_collision]: Param 'chomp.max_sampling_attempts' was not set. Using default value: 100
+[move_group-9] [INFO] [1757153878.875944055] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Add Time Optimal Parameterization'
+[move_group-9] [INFO] [1757153878.875950026] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Resolve constraint frames to robot links'
+[move_group-9] [INFO] [1757153878.875956117] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Workspace Bounds'
+[move_group-9] [INFO] [1757153878.875961277] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Start State Bounds'
+[move_group-9] [INFO] [1757153878.875966787] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Start State In Collision'
+[move_group-9] [INFO] [1757153878.875971757] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Start State Path Constraints'
+[move_group-9] [INFO] [1757153878.877919931] [moveit.ros_planning_interface.moveit_cpp]: Loading planning pipeline 'ompl'
+[move_group-9] [INFO] [1757153878.897556966] [moveit.ros_planning.planning_pipeline]: Using planning interface 'OMPL'
+[move_group-9] [INFO] [1757153878.899340480] [moveit_ros.add_time_optimal_parameterization]: Param 'ompl.path_tolerance' was not set. Using default value: 0.100000
+[move_group-9] [INFO] [1757153878.899362472] [moveit_ros.add_time_optimal_parameterization]: Param 'ompl.resample_dt' was not set. Using default value: 0.100000
+[move_group-9] [INFO] [1757153878.899369585] [moveit_ros.add_time_optimal_parameterization]: Param 'ompl.min_angle_change' was not set. Using default value: 0.001000
+[move_group-9] [INFO] [1757153878.899406875] [moveit_ros.fix_workspace_bounds]: Param 'ompl.default_workspace_bounds' was not set. Using default value: 10.000000
+[move_group-9] [INFO] [1757153878.899430540] [moveit_ros.fix_start_state_bounds]: Param 'ompl.start_state_max_bounds_error' was set to 0.100000
+[move_group-9] [INFO] [1757153878.899438184] [moveit_ros.fix_start_state_bounds]: Param 'ompl.start_state_max_dt' was not set. Using default value: 0.500000
+[move_group-9] [INFO] [1757153878.899456999] [moveit_ros.fix_start_state_collision]: Param 'ompl.start_state_max_dt' was not set. Using default value: 0.500000
+[move_group-9] [INFO] [1757153878.899465906] [moveit_ros.fix_start_state_collision]: Param 'ompl.jiggle_fraction' was set to 0.050000
+[move_group-9] [INFO] [1757153878.899472278] [moveit_ros.fix_start_state_collision]: Param 'ompl.max_sampling_attempts' was not set. Using default value: 100
+[move_group-9] [INFO] [1757153878.899489941] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Add Time Optimal Parameterization'
+[move_group-9] [INFO] [1757153878.899496273] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Resolve constraint frames to robot links'
+[move_group-9] [INFO] [1757153878.899501774] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Workspace Bounds'
+[move_group-9] [INFO] [1757153878.899506913] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Start State Bounds'
+[move_group-9] [INFO] [1757153878.899512103] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Start State In Collision'
+[move_group-9] [INFO] [1757153878.899517493] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Start State Path Constraints'
+[move_group-9] [INFO] [1757153878.953887075] [moveit.plugins.moveit_simple_controller_manager]: Added FollowJointTrajectory controller for arctos_arm_controller
+[move_group-9] [INFO] [1757153878.953945866] [moveit.plugins.moveit_simple_controller_manager]: Max effort set to 0.0
+[move_group-9] [INFO] [1757153878.955996262] [moveit.plugins.moveit_simple_controller_manager]: Added GripperCommand controller for arctos_hand_controller
+[move_group-9] [INFO] [1757153878.956205235] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-9] [INFO] [1757153878.956283292] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-9] [INFO] [1757153878.956616158] [moveit_ros.trajectory_execution_manager]: Trajectory execution is managing controllers
+[move_group-9] [INFO] [1757153878.956636376] [move_group.move_group]: MoveGroup debug mode is ON
+[move_group-9] [INFO] [1757153878.982481117] [move_group.move_group]: 
+[move_group-9] 
+[move_group-9] ********************************************************
+[move_group-9] * MoveGroup using: 
+[move_group-9] *     - ApplyPlanningSceneService
+[move_group-9] *     - ClearOctomapService
+[move_group-9] *     - CartesianPathService
+[move_group-9] *     - ExecuteTrajectoryAction
+[move_group-9] *     - GetPlanningSceneService
+[move_group-9] *     - KinematicsService
+[move_group-9] *     - MoveAction
+[move_group-9] *     - MotionPlanService
+[move_group-9] *     - QueryPlannersService
+[move_group-9] *     - StateValidationService
+[move_group-9] ********************************************************
+[move_group-9] 
+[move_group-9] [INFO] [1757153878.982576546] [moveit_move_group_capabilities_base.move_group_context]: MoveGroup context using planning plugin ompl_interface/OMPLPlanner
+[move_group-9] [INFO] [1757153878.982600531] [moveit_move_group_capabilities_base.move_group_context]: MoveGroup context initialization complete
+[move_group-9] Loading 'move_group/ApplyPlanningSceneService'...
+[move_group-9] Loading 'move_group/ClearOctomapService'...
+[move_group-9] Loading 'move_group/MoveGroupCartesianPathService'...
+[move_group-9] Loading 'move_group/MoveGroupExecuteTrajectoryAction'...
+[move_group-9] Loading 'move_group/MoveGroupGetPlanningSceneService'...
+[move_group-9] Loading 'move_group/MoveGroupKinematicsService'...
+[move_group-9] Loading 'move_group/MoveGroupMoveAction'...
+[move_group-9] Loading 'move_group/MoveGroupPlanService'...
+[move_group-9] Loading 'move_group/MoveGroupQueryPlannersService'...
+[move_group-9] Loading 'move_group/MoveGroupStateValidationService'...
+[move_group-9] 
+[move_group-9] You can start planning now!
+[move_group-9] 
+[rviz2-8] [INFO] [1757153879.075472432] [interactive_marker_display_107976722708576]: Connected on namespace: /rviz_moveit_motion_planning_display/robot_interaction_interactive_marker_topic
+[rviz2-8] [INFO] [1757153879.096133492] [moveit_ros_robot_interaction.robot_interaction]: No active joints or end effectors found for group 'arctos_arm'. Make sure that kinematics.yaml is loaded in this node's namespace.
+[rviz2-8] [INFO] [1757153879.097966380] [moveit_ros_robot_interaction.robot_interaction]: No active joints or end effectors found for group 'arctos_arm'. Make sure that kinematics.yaml is loaded in this node's namespace.
+[rviz2-8] [INFO] [1757153879.118410282] [moveit_ros_visualization.motion_planning_frame]: group arctos_arm
+[rviz2-8] [INFO] [1757153879.118459304] [moveit_ros_visualization.motion_planning_frame]: Constructing new MoveGroup connection for group 'arctos_arm' in namespace ''
+[rviz2-8] [INFO] [1757153879.131451200] [interactive_marker_display_107976722708576]: Sending request for interactive markers
+[rviz2-8] [INFO] [1757153879.136025334] [move_group_interface]: Ready to take commands for planning group arctos_arm.
+[rviz2-8] [INFO] [1757153879.136821201] [moveit_ros_visualization.motion_planning_frame]: group arctos_arm
+[rviz2-8] [INFO] [1757153879.163823048] [interactive_marker_display_107976722708576]: Service response received for initialization
+[rviz2-8] [INFO] [1757153912.482032413] [moveit_ros_robot_interaction.robot_interaction]: No active joints or end effectors found for group 'arctos_hand'. Make sure that kinematics.yaml is loaded in this node's namespace.
+[rviz2-8] [INFO] [1757153912.483688589] [moveit_ros_visualization.motion_planning_frame]: group arctos_hand
+[rviz2-8] [INFO] [1757153912.483721741] [moveit_ros_visualization.motion_planning_frame]: Constructing new MoveGroup connection for group 'arctos_hand' in namespace ''
+[rviz2-8] [INFO] [1757153912.496747854] [move_group_interface]: Ready to take commands for planning group arctos_hand.
+[rviz2-8] [INFO] [1757154110.956790106] [moveit_ros_robot_interaction.robot_interaction]: No active joints or end effectors found for group 'arctos_arm'. Make sure that kinematics.yaml is loaded in this node's namespace.
+[rviz2-8] [INFO] [1757154110.958355622] [moveit_ros_visualization.motion_planning_frame]: group arctos_arm
+[rviz2-8] [INFO] [1757154110.958390127] [moveit_ros_visualization.motion_planning_frame]: Constructing new MoveGroup connection for group 'arctos_arm' in namespace ''
+[rviz2-8] [INFO] [1757154110.969801647] [move_group_interface]: Ready to take commands for planning group arctos_arm.
+[rviz2-8] [INFO] [1757154129.355833783] [move_group_interface]: MoveGroup action client/server ready
+[move_group-9] [INFO] [1757154129.356839216] [moveit_move_group_default_capabilities.move_action_capability]: Received request
+[move_group-9] [INFO] [1757154129.357102762] [moveit_move_group_default_capabilities.move_action_capability]: executing..
+[rviz2-8] [INFO] [1757154129.357103563] [move_group_interface]: Planning request accepted
+[move_group-9] [INFO] [1757154129.388727410] [moveit_move_group_default_capabilities.move_action_capability]: Planning request received for MoveGroup action. Forwarding to planning pipeline.
+[move_group-9] [INFO] [1757154129.388782313] [moveit_move_group_capabilities_base.move_group_capability]: Using planning pipeline 'chomp'
+[move_group-9] [INFO] [1757154135.888633529] [chomp_planner]: CHOMP trajectory initialized using method: quintic-spline 
+[move_group-9] [INFO] [1757154135.888722697] [chomp_optimizer]: Active collision detector is: HYBRID
+[move_group-9] [INFO] [1757154136.052981903] [chomp_optimizer]: First coll check took 0.164200 sec
+[move_group-9] [INFO] [1757154136.067651367] [chomp_optimizer]: Collision cost 0.077230, smoothness cost: 5.571525
+[move_group-9] [INFO] [1757154136.067855561] [chomp_optimizer]: iteration: 0
+[move_group-9] [INFO] [1757154136.069378167] [chomp_optimizer]: Chomp Got mesh to mesh safety at iter 0. Breaking out early.
+[move_group-9] [INFO] [1757154136.069395419] [chomp_optimizer]: cCost 0.077230 over threshold 0.070000
+[move_group-9] [INFO] [1757154136.069403755] [chomp_optimizer]: Chomp path is collision free
+[move_group-9] [INFO] [1757154136.069408574] [chomp_optimizer]: Terminated after 1 iterations, using path from iteration 0
+[move_group-9] [INFO] [1757154136.069412602] [chomp_optimizer]: Optimization core finished in 0.004535 sec
+[move_group-9] [INFO] [1757154136.069416890] [chomp_optimizer]: Time per iteration 0.004539 sec
+[move_group-9] [INFO] [1757154136.069421729] [chomp_planner]: Planned with Chomp Parameters (learning_rate, ridge_factor, planning_time_limit, max_iterations), attempt: # 1 
+[move_group-9] [INFO] [1757154136.069426718] [chomp_planner]: Learning rate: 0.010000 ridge factor: 0.010000 planning time limit: 10.000000 max_iterations 200 
+[move_group-9] [WARN] [1757154136.069688822] [moveit_trajectory_processing.time_optimal_trajectory_generation]: Joint acceleration limits are not defined. Using the default 1 rad/s^2. You can define acceleration limits in the URDF or joint_limits.yaml.
+[move_group-9] [INFO] [1757154136.099608412] [moveit_move_group_default_capabilities.move_action_capability]: Motion plan was computed successfully.
+[rviz2-8] [INFO] [1757154136.100882099] [move_group_interface]: Planning request complete!
+[rviz2-8] [INFO] [1757154136.101641899] [move_group_interface]: time taken to generate plan: 0.181032 seconds
+[move_group-9] [INFO] [1757154150.195762024] [moveit_move_group_default_capabilities.execute_trajectory_action_capability]: Received goal request
+[rviz2-8] [INFO] [1757154150.195921033] [move_group_interface]: Execute request accepted
+[move_group-9] [INFO] [1757154150.195940209] [moveit_move_group_default_capabilities.execute_trajectory_action_capability]: Execution request received
+[move_group-9] [INFO] [1757154150.195984442] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-9] [INFO] [1757154150.196014619] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-9] [INFO] [1757154150.196160844] [moveit_ros.trajectory_execution_manager]: Validating trajectory with allowed_start_tolerance 0.01
+[move_group-9] [INFO] [1757154150.288712006] [moveit_ros.trajectory_execution_manager]: Starting trajectory execution ...
+[move_group-9] [INFO] [1757154150.288809189] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-9] [INFO] [1757154150.288832142] [moveit.plugins.moveit_simple_controller_manager]: Returned 2 controllers in list
+[move_group-9] [INFO] [1757154150.288988316] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: sending trajectory to arctos_arm_controller
+[1757154150.289510429] [arctos_arm_controller]: Received new action goal
+[1757154150.289564791] [arctos_arm_controller]: Accepted new action goal
+[move_group-9] [INFO] [1757154150.289713882] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: arctos_arm_controller started execution
+[move_group-9] [INFO] [1757154150.289744129] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: Goal request accepted!
+[1757154150.488390848]Sent velocity command 0.096 to joint X_joint. Last command: 0.000
+[1757154150.488476359]Setting joint X_joint position to (inverted) -0.00 radians (-3.70 degrees on motor protactor) with gear ratio 13.50:1
+[1757154150.488509491]Calculated encoder counts: -168
+[1757154150.488584672]Tx Data for 1: [ f5 0 5f c8 ff ff 58 73 ]
+[1757154150.488622313]Sent position command 0.00479 to joint X_joint. Last command: 0.00000.
+[1757154150.488646309]Sent velocity command 0.100 to joint Y_joint. Last command: 0.000
+[1757154150.488669662]Setting joint Y_joint position to (inverted) -0.00 radians (-42.96 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.488697074]Calculated encoder counts: -1955
+[1757154150.488726159]Tx Data for 2: [ f5 0 63 c8 ff f8 5d 76 ]
+[1757154150.488755775]Sent position command 0.00500 to joint Y_joint. Last command: 0.00000.
+[1757154150.488773338]Sent velocity command 0.055 to joint A_joint. Last command: 0.000
+[1757154150.488833381]Setting joint A_joint position to (inverted) -0.00 radians (-7.61 degrees on motor protactor) with gear ratio 48.00:1
+[1757154150.488852958]Calculated encoder counts: -346
+[1757154150.488875460]Tx Data for 4: [ f5 0 37 c8 ff fe a6 9b ]
+[1757154150.488896860]Sent position command 0.00277 to joint A_joint. Last command: 0.00000.
+[1757154150.588337701]Tx Data for 4: [ 31 35 ]
+[1757154150.589533131]Tx Data for 1: [ 31 32 ]
+[1757154150.590733531]Tx Data for 2: [ 31 33 ]
+[1757154150.592025904]Sent velocity command 0.134 to joint X_joint. Last command: 0.096
+[1757154150.592110553]Setting joint X_joint position to (inverted) -0.02 radians (-13.86 degrees on motor protactor) with gear ratio 13.50:1
+[1757154150.592144417]Calculated encoder counts: -630
+[1757154150.592201925]Tx Data for 1: [ f5 0 86 c8 ff fd 8a ca ]
+[1757154150.592257560]Sent position command 0.01791 to joint X_joint. Last command: 0.00479.
+[1757154150.592278549]Sent velocity command 0.140 to joint Y_joint. Last command: 0.100
+[1757154150.592298036]Setting joint Y_joint position to (inverted) -0.02 radians (-160.73 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.592324105]Calculated encoder counts: -7314
+[1757154150.592355013]Tx Data for 2: [ f5 0 8b c8 ff e3 6e 9a ]
+[1757154150.592386843]Sent position command 0.01870 to joint Y_joint. Last command: 0.00500.
+[1757154150.592408754]Sent velocity command -0.010 to joint Z_joint. Last command: 0.000
+[1757154150.592425877]Setting joint Z_joint position to (inverted) 0.00 radians (11.58 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.592446465]Calculated encoder counts: 527
+[1757154150.592476712]Tx Data for 3: [ f5 0 1e c8 0 2 f ef ]
+[1757154150.592510556]Sent position command -0.00135 to joint Z_joint. Last command: 0.00000.
+[1757154150.592533439]Sent velocity command 0.078 to joint A_joint. Last command: 0.055
+[1757154150.592556222]Setting joint A_joint position to (inverted) -0.01 radians (-28.47 degrees on motor protactor) with gear ratio 48.00:1
+[1757154150.592580117]Calculated encoder counts: -1295
+[1757154150.592613380]Tx Data for 4: [ f5 0 4d c8 ff fa f1 f8 ]
+[1757154150.592641472]Sent position command 0.01035 to joint A_joint. Last command: 0.00277.
+[1757154150.688355267]Tx Data for 4: [ 31 35 ]
+[1757154150.689549395]Tx Data for 1: [ 31 32 ]
+[1757154150.690725048]Tx Data for 2: [ 31 33 ]
+[1757154150.691915149]Tx Data for 3: [ 31 34 ]
+[1757154150.693170572]Setting joint X_joint position to (inverted) -0.03 radians (-24.35 degrees on motor protactor) with gear ratio 13.50:1
+[1757154150.693225455]Calculated encoder counts: -1108
+[1757154150.693279407]Tx Data for 1: [ f5 0 86 c8 ff fb ac ea ]
+[1757154150.693315475]Sent position command 0.03148 to joint X_joint. Last command: 0.01791.
+[1757154150.693334110]Setting joint Y_joint position to (inverted) -0.03 radians (-282.44 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.693401537]Calculated encoder counts: -12854
+[1757154150.693430531]Tx Data for 2: [ f5 0 8b c8 ff cd ca e0 ]
+[1757154150.693502957]Sent position command 0.03286 to joint Y_joint. Last command: 0.01870.
+[1757154150.693530509]Setting joint Z_joint position to (inverted) 0.00 radians (20.35 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.693552681]Calculated encoder counts: 926
+[1757154150.693582547]Tx Data for 3: [ f5 0 1e c8 0 3 9e 7f ]
+[1757154150.693612263]Sent position command -0.00237 to joint Z_joint. Last command: -0.00135.
+[1757154150.693639495]Setting joint A_joint position to (inverted) -0.02 radians (-50.04 degrees on motor protactor) with gear ratio 48.00:1
+[1757154150.693660945]Calculated encoder counts: -2277
+[1757154150.693688567]Tx Data for 4: [ f5 0 4d c8 ff f7 1b 1f ]
+[1757154150.693720697]Sent position command 0.01819 to joint A_joint. Last command: 0.01035.
+[1757154150.788359248]Tx Data for 4: [ 31 35 ]
+[1757154150.789557965]Tx Data for 1: [ 31 32 ]
+[1757154150.790751381]Tx Data for 2: [ 31 33 ]
+[1757154150.791951510]Tx Data for 3: [ 31 34 ]
+[1757154150.793288206]Setting joint X_joint position to (inverted) -0.04 radians (-34.73 degrees on motor protactor) with gear ratio 13.50:1
+[1757154150.793375250]Calculated encoder counts: -1580
+[1757154150.793444952]Tx Data for 1: [ f5 0 86 c8 ff f9 d4 10 ]
+[1757154150.793506798]Sent position command 0.04490 to joint X_joint. Last command: 0.03148.
+[1757154150.793538688]Setting joint Y_joint position to (inverted) -0.05 radians (-402.86 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.793565619]Calculated encoder counts: -18334
+[1757154150.793597649]Tx Data for 2: [ f5 0 8c c8 ff b8 62 64 ]
+[1757154150.793636111]Sent position command 0.04687 to joint Y_joint. Last command: 0.03286.
+[1757154150.793665457]Setting joint Z_joint position to (inverted) 0.00 radians (29.03 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.793747231]Calculated encoder counts: 1321
+[1757154150.793790762]Tx Data for 3: [ f5 0 1e c8 0 5 29 c ]
+[1757154150.793830347]Sent position command -0.00338 to joint Z_joint. Last command: -0.00237.
+[1757154150.793861065]Setting joint A_joint position to (inverted) -0.03 radians (-71.37 degrees on motor protactor) with gear ratio 48.00:1
+[1757154150.793891763]Calculated encoder counts: -3248
+[1757154150.793921338]Tx Data for 4: [ f5 0 4d c8 ff f3 50 50 ]
+[1757154150.793945985]Sent position command 0.02595 to joint A_joint. Last command: 0.01819.
+[1757154150.888372817]Tx Data for 4: [ 31 35 ]
+[1757154150.889602752]Tx Data for 1: [ 31 32 ]
+[1757154150.890778425]Tx Data for 2: [ 31 33 ]
+[1757154150.891920605]Tx Data for 3: [ 31 34 ]
+[1757154150.893165048]Setting joint X_joint position to (inverted) -0.06 radians (-45.10 degrees on motor protactor) with gear ratio 13.50:1
+[1757154150.893214160]Calculated encoder counts: -2052
+[1757154150.893291235]Tx Data for 1: [ f5 0 86 c8 ff f7 fc 36 ]
+[1757154150.893332022]Sent position command 0.05830 to joint X_joint. Last command: 0.04490.
+[1757154150.893362840]Setting joint Y_joint position to (inverted) -0.06 radians (-523.09 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.893390091]Calculated encoder counts: -23806
+[1757154150.893421230]Tx Data for 2: [ f5 0 8c c8 ff a3 2 ef ]
+[1757154150.893452108]Sent position command 0.06086 to joint Y_joint. Last command: 0.04687.
+[1757154150.893476915]Setting joint Z_joint position to (inverted) 0.00 radians (37.69 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.893502613]Calculated encoder counts: 1715
+[1757154150.893533301]Tx Data for 3: [ f5 0 1e c8 0 6 b3 97 ]
+[1757154150.893563538]Sent position command -0.00439 to joint Z_joint. Last command: -0.00338.
+[1757154150.893589627]Setting joint A_joint position to (inverted) -0.03 radians (-92.67 degrees on motor protactor) with gear ratio 48.00:1
+[1757154150.893615275]Calculated encoder counts: -4217
+[1757154150.893643098]Tx Data for 4: [ f5 0 4d c8 ff ef 87 83 ]
+[1757154150.893704313]Sent position command 0.03369 to joint A_joint. Last command: 0.02595.
+[1757154150.988357231]Tx Data for 4: [ 31 35 ]
+[1757154150.989530399]Tx Data for 1: [ 31 32 ]
+[1757154150.990665927]Tx Data for 2: [ 31 33 ]
+[1757154150.991781697]Tx Data for 3: [ 31 34 ]
+[1757154150.992958863]Setting joint X_joint position to (inverted) -0.07 radians (-55.45 degrees on motor protactor) with gear ratio 13.50:1
+[1757154150.992998808]Calculated encoder counts: -2523
+[1757154150.993034886]Tx Data for 1: [ f5 0 86 c8 ff f6 25 5e ]
+[1757154150.993069762]Sent position command 0.07169 to joint X_joint. Last command: 0.05830.
+[1757154150.993105880]Setting joint Y_joint position to (inverted) -0.07 radians (-643.17 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.993133772]Calculated encoder counts: -29271
+[1757154150.993200618]Tx Data for 2: [ f5 0 8c c8 ff 8d a9 80 ]
+[1757154150.993234271]Sent position command 0.07484 to joint Y_joint. Last command: 0.06086.
+[1757154150.993261863]Setting joint Z_joint position to (inverted) 0.01 radians (46.34 degrees on motor protactor) with gear ratio 150.00:1
+[1757154150.993286309]Calculated encoder counts: 2109
+[1757154150.993314172]Tx Data for 3: [ f5 0 1e c8 0 8 3d 23 ]
+[1757154150.993345932]Sent position command -0.00539 to joint Z_joint. Last command: -0.00439.
+[1757154150.993371139]Setting joint A_joint position to (inverted) -0.04 radians (-113.94 degrees on motor protactor) with gear ratio 48.00:1
+[1757154150.993428397]Calculated encoder counts: -5185
+[1757154150.993465747]Tx Data for 4: [ f5 0 4d c8 ff eb bf b7 ]
+[1757154150.993497697]Sent position command 0.04143 to joint A_joint. Last command: 0.03369.
+[1757154151.088344110]Tx Data for 4: [ 31 35 ]
+[1757154151.089517469]Tx Data for 1: [ 31 32 ]
+[1757154151.090674777]Tx Data for 2: [ 31 33 ]
+[1757154151.091868324]Tx Data for 3: [ 31 34 ]
+[1757154151.093089563]Setting joint X_joint position to (inverted) -0.09 radians (-65.84 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.093137423]Calculated encoder counts: -2996
+[1757154151.093182668]Tx Data for 1: [ f5 0 86 c8 ff f4 4c 83 ]
+[1757154151.093223876]Sent position command 0.08511 to joint X_joint. Last command: 0.07169.
+[1757154151.093251648]Setting joint Y_joint position to (inverted) -0.09 radians (-763.64 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.093269892]Calculated encoder counts: -34754
+[1757154151.093294188]Tx Data for 2: [ f5 0 8b c8 ff 78 3e ff ]
+[1757154151.093369480]Sent position command 0.08885 to joint Y_joint. Last command: 0.07484.
+[1757154151.093396861]Setting joint Z_joint position to (inverted) 0.01 radians (55.02 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.093423802]Calculated encoder counts: 2504
+[1757154151.093456874]Tx Data for 3: [ f5 0 1e c8 0 9 c8 af ]
+[1757154151.093490948]Sent position command -0.00640 to joint Z_joint. Last command: -0.00539.
+[1757154151.093515565]Setting joint A_joint position to (inverted) -0.05 radians (-135.28 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.093537336]Calculated encoder counts: -6156
+[1757154151.093565679]Tx Data for 4: [ f5 0 4d c8 ff e7 f4 e8 ]
+[1757154151.093594503]Sent position command 0.04919 to joint A_joint. Last command: 0.04143.
+[1757154151.188340066]Tx Data for 4: [ 31 35 ]
+[1757154151.189529265]Tx Data for 1: [ 31 32 ]
+[1757154151.190647039]Tx Data for 2: [ 31 33 ]
+[1757154151.191777627]Tx Data for 3: [ 31 34 ]
+[1757154151.192999607]Setting joint X_joint position to (inverted) -0.10 radians (-76.20 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.193048660]Calculated encoder counts: -3467
+[1757154151.193098674]Tx Data for 1: [ f5 0 86 c8 ff f2 75 aa ]
+[1757154151.193134251]Sent position command 0.09851 to joint X_joint. Last command: 0.08511.
+[1757154151.193161181]Setting joint Y_joint position to (inverted) -0.10 radians (-883.85 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.193187471]Calculated encoder counts: -40224
+[1757154151.193216986]Tx Data for 2: [ f5 0 8b c8 ff 62 e0 8b ]
+[1757154151.193246963]Sent position command 0.10284 to joint Y_joint. Last command: 0.08885.
+[1757154151.193307096]Setting joint Z_joint position to (inverted) 0.01 radians (63.68 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.193373601]Calculated encoder counts: 2898
+[1757154151.193414138]Tx Data for 3: [ f5 0 1e c8 0 b 52 3b ]
+[1757154151.193438594]Sent position command -0.00741 to joint Z_joint. Last command: -0.00640.
+[1757154151.193459172]Setting joint A_joint position to (inverted) -0.06 radians (-156.58 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.193481394]Calculated encoder counts: -7125
+[1757154151.193511491]Tx Data for 4: [ f5 0 4d c8 ff e4 2b 1c ]
+[1757154151.193535466]Sent position command 0.05693 to joint A_joint. Last command: 0.04919.
+[1757154151.288335902]Tx Data for 4: [ 31 35 ]
+[1757154151.289476619]Tx Data for 1: [ 31 32 ]
+[1757154151.290593421]Tx Data for 2: [ 31 33 ]
+[1757154151.291697089]Tx Data for 3: [ 31 34 ]
+[1757154151.292924570]Setting joint X_joint position to (inverted) -0.11 radians (-86.56 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.292976197]Calculated encoder counts: -3939
+[1757154151.293017835]Tx Data for 1: [ f5 0 86 c8 ff f0 9d d0 ]
+[1757154151.293050226]Sent position command 0.11191 to joint X_joint. Last command: 0.09851.
+[1757154151.293068891]Setting joint Y_joint position to (inverted) -0.12 radians (-1004.04 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.293100000]Calculated encoder counts: -45694
+[1757154151.293121540]Tx Data for 2: [ f5 0 8b c8 ff 4d 82 18 ]
+[1757154151.293143402]Sent position command 0.11682 to joint Y_joint. Last command: 0.10284.
+[1757154151.293163229]Setting joint Z_joint position to (inverted) 0.01 radians (72.34 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.293180361]Calculated encoder counts: 3292
+[1757154151.293201260]Tx Data for 3: [ f5 0 1e c8 0 c dc c6 ]
+[1757154151.293224083]Sent position command -0.00842 to joint Z_joint. Last command: -0.00741.
+[1757154151.293242037]Setting joint A_joint position to (inverted) -0.06 radians (-177.87 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.293287403]Calculated encoder counts: -8094
+[1757154151.293311167]Tx Data for 4: [ f5 0 4d c8 ff e0 62 4f ]
+[1757154151.293335363]Sent position command 0.06467 to joint A_joint. Last command: 0.05693.
+[1757154151.388343480]Tx Data for 4: [ 31 35 ]
+[1757154151.389547156]Tx Data for 1: [ 31 32 ]
+[1757154151.390741744]Tx Data for 2: [ 31 33 ]
+[1757154151.391931394]Tx Data for 3: [ 31 34 ]
+[1757154151.393224989]Setting joint X_joint position to (inverted) -0.13 radians (-96.97 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.393306673]Calculated encoder counts: -4413
+[1757154151.393372607]Tx Data for 1: [ f5 0 86 c8 ff ee c3 f4 ]
+[1757154151.393424334]Sent position command 0.12536 to joint X_joint. Last command: 0.11191.
+[1757154151.393510617]Setting joint Y_joint position to (inverted) -0.13 radians (-1124.75 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.393583774]Calculated encoder counts: -51188
+[1757154151.393632426]Tx Data for 2: [ f5 0 8c c8 ff 38 c 8e ]
+[1757154151.393672962]Sent position command 0.13087 to joint Y_joint. Last command: 0.11682.
+[1757154151.393700755]Setting joint Z_joint position to (inverted) 0.01 radians (81.04 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.393727655]Calculated encoder counts: 3688
+[1757154151.393757091]Tx Data for 3: [ f5 0 1e c8 0 e 68 54 ]
+[1757154151.393788610]Sent position command -0.00943 to joint Z_joint. Last command: -0.00842.
+[1757154151.393815440]Setting joint A_joint position to (inverted) -0.07 radians (-199.25 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.393839596]Calculated encoder counts: -9068
+[1757154151.393870234]Tx Data for 4: [ f5 0 4d c8 ff dc 94 7d ]
+[1757154151.393901352]Sent position command 0.07245 to joint A_joint. Last command: 0.06467.
+[1757154151.488362850]Tx Data for 4: [ 31 35 ]
+[1757154151.489583478]Tx Data for 1: [ 31 32 ]
+[1757154151.490778768]Tx Data for 2: [ 31 33 ]
+[1757154151.491961163]Tx Data for 3: [ 31 34 ]
+[1757154151.493316094]Setting joint X_joint position to (inverted) -0.14 radians (-107.34 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.493417896]Calculated encoder counts: -4885
+[1757154151.493496794]Tx Data for 1: [ f5 0 86 c8 ff ec eb 1a ]
+[1757154151.493554042]Sent position command 0.13878 to joint X_joint. Last command: 0.12536.
+[1757154151.493622821]Setting joint Y_joint position to (inverted) -0.14 radians (-1245.12 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.493655733]Calculated encoder counts: -56666
+[1757154151.493692463]Tx Data for 2: [ f5 0 8b c8 ff 22 a6 11 ]
+[1757154151.493729452]Sent position command 0.14488 to joint Y_joint. Last command: 0.13087.
+[1757154151.493755832]Setting joint Z_joint position to (inverted) 0.01 radians (89.71 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.493781660]Calculated encoder counts: 4082
+[1757154151.493812939]Tx Data for 3: [ f5 0 1e c8 0 f f2 df ]
+[1757154151.493845340]Sent position command -0.01044 to joint Z_joint. Last command: -0.00943.
+[1757154151.493896957]Setting joint A_joint position to (inverted) -0.08 radians (-220.58 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.493925341]Calculated encoder counts: -10038
+[1757154151.493957732]Tx Data for 4: [ f5 0 4d c8 ff d8 ca af ]
+[1757154151.493987358]Sent position command 0.08020 to joint A_joint. Last command: 0.07245.
+[1757154151.588346683]Tx Data for 4: [ 31 35 ]
+[1757154151.589563724]Tx Data for 1: [ 31 32 ]
+[1757154151.590730380]Tx Data for 2: [ 31 33 ]
+[1757154151.591972649]Tx Data for 3: [ 31 34 ]
+[1757154151.593177918]Setting joint X_joint position to (inverted) -0.15 radians (-117.71 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.593212793]Calculated encoder counts: -5357
+[1757154151.593243631]Tx Data for 1: [ f5 0 86 c8 ff eb 13 41 ]
+[1757154151.593271804]Sent position command 0.15218 to joint X_joint. Last command: 0.13878.
+[1757154151.593291882]Setting joint Y_joint position to (inverted) -0.16 radians (-1365.33 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.593306189]Calculated encoder counts: -62137
+[1757154151.593323241]Tx Data for 2: [ f5 0 8b c8 ff d 47 9d ]
+[1757154151.593340343]Sent position command 0.15886 to joint Y_joint. Last command: 0.14488.
+[1757154151.593366402]Setting joint Z_joint position to (inverted) 0.01 radians (98.37 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.593390959]Calculated encoder counts: 4477
+[1757154151.593408782]Tx Data for 3: [ f5 0 1e c8 0 11 7d 6c ]
+[1757154151.593424702]Sent position command -0.01145 to joint Z_joint. Last command: -0.01044.
+[1757154151.593439239]Setting joint A_joint position to (inverted) -0.09 radians (-241.87 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.593455831]Calculated encoder counts: -11007
+[1757154151.593476790]Tx Data for 4: [ f5 0 4d c8 ff d5 1 e3 ]
+[1757154151.593496237]Sent position command 0.08795 to joint A_joint. Last command: 0.08020.
+[1757154151.688330847]Tx Data for 4: [ 31 35 ]
+[1757154151.689554050]Tx Data for 1: [ 31 32 ]
+[1757154151.690698494]Tx Data for 2: [ 31 33 ]
+[1757154151.691800849]Tx Data for 3: [ 31 34 ]
+[1757154151.692984467]Setting joint X_joint position to (inverted) -0.17 radians (-128.06 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.693019653]Calculated encoder counts: -5828
+[1757154151.693047085]Tx Data for 1: [ f5 0 86 c8 ff e9 3c 68 ]
+[1757154151.693071641]Sent position command 0.16556 to joint X_joint. Last command: 0.15218.
+[1757154151.693102760]Setting joint Y_joint position to (inverted) -0.17 radians (-1485.43 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.693153105]Calculated encoder counts: -67603
+[1757154151.693175898]Tx Data for 2: [ f5 0 8c c8 fe f7 ed 2d ]
+[1757154151.693193591]Sent position command 0.17284 to joint Y_joint. Last command: 0.15886.
+[1757154151.693207617]Setting joint Z_joint position to (inverted) 0.01 radians (107.03 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.693220702]Calculated encoder counts: 4870
+[1757154151.693236241]Tx Data for 3: [ f5 0 1e c8 0 13 6 f7 ]
+[1757154151.693253443]Sent position command -0.01245 to joint Z_joint. Last command: -0.01145.
+[1757154151.693271818]Setting joint A_joint position to (inverted) -0.10 radians (-263.15 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.693333484]Calculated encoder counts: -11976
+[1757154151.693364222]Tx Data for 4: [ f5 0 4d c8 ff d1 38 16 ]
+[1757154151.693417382]Sent position command 0.09568 to joint A_joint. Last command: 0.08795.
+[1757154151.788357571]Tx Data for 4: [ 31 35 ]
+[1757154151.789540678]Tx Data for 1: [ 31 32 ]
+[1757154151.790673571]Tx Data for 2: [ 31 33 ]
+[1757154151.791799280]Tx Data for 3: [ 31 34 ]
+[1757154151.792993347]Setting joint X_joint position to (inverted) -0.18 radians (-138.44 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.793038673]Calculated encoder counts: -6300
+[1757154151.793091132]Tx Data for 1: [ f5 0 86 c8 ff e7 64 8e ]
+[1757154151.793133782]Sent position command 0.17898 to joint X_joint. Last command: 0.16556.
+[1757154151.793166183]Setting joint Y_joint position to (inverted) -0.19 radians (-1605.78 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.793192753]Calculated encoder counts: -73080
+[1757154151.793220625]Tx Data for 2: [ f5 0 8c c8 fe e2 88 b3 ]
+[1757154151.793250682]Sent position command 0.18684 to joint Y_joint. Last command: 0.17284.
+[1757154151.793281119]Setting joint Z_joint position to (inverted) 0.01 radians (115.70 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.793351251]Calculated encoder counts: 5265
+[1757154151.793391637]Tx Data for 3: [ f5 0 1e c8 0 14 91 83 ]
+[1757154151.793428236]Sent position command -0.01346 to joint Z_joint. Last command: -0.01245.
+[1757154151.793451871]Setting joint A_joint position to (inverted) -0.10 radians (-284.47 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.793471187]Calculated encoder counts: -12946
+[1757154151.793495062]Tx Data for 4: [ f5 0 4d c8 ff cd 6e 48 ]
+[1757154151.793518757]Sent position command 0.10344 to joint A_joint. Last command: 0.09568.
+[1757154151.888316477]Tx Data for 4: [ 31 35 ]
+[1757154151.889496709]Tx Data for 1: [ 31 32 ]
+[1757154151.890613261]Tx Data for 2: [ 31 33 ]
+[1757154151.891732929]Tx Data for 3: [ 31 34 ]
+[1757154151.892906638]Setting joint X_joint position to (inverted) -0.19 radians (-148.80 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.892944369]Calculated encoder counts: -6772
+[1757154151.892974245]Tx Data for 1: [ f5 0 86 c8 ff e5 8c b4 ]
+[1757154151.893001386]Sent position command 0.19238 to joint X_joint. Last command: 0.17898.
+[1757154151.893020192]Setting joint Y_joint position to (inverted) -0.20 radians (-1726.00 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.893067481]Calculated encoder counts: -78552
+[1757154151.893099892]Tx Data for 2: [ f5 0 8c c8 fe cd 28 3e ]
+[1757154151.893121563]Sent position command 0.20083 to joint Y_joint. Last command: 0.18684.
+[1757154151.893137823]Setting joint Z_joint position to (inverted) 0.01 radians (124.36 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.893185804]Calculated encoder counts: 5659
+[1757154151.893214678]Tx Data for 3: [ f5 0 1e c8 0 16 1b f ]
+[1757154151.893241138]Sent position command -0.01447 to joint Z_joint. Last command: -0.01346.
+[1757154151.893264812]Setting joint A_joint position to (inverted) -0.11 radians (-305.76 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.893303525]Calculated encoder counts: -13915
+[1757154151.893330967]Tx Data for 4: [ f5 0 4d c8 ff c9 a5 7b ]
+[1757154151.893351115]Sent position command 0.11118 to joint A_joint. Last command: 0.10344.
+[1757154151.988356767]Tx Data for 4: [ 31 35 ]
+[1757154151.989552908]Tx Data for 1: [ 31 32 ]
+[1757154151.990700950]Tx Data for 2: [ 31 33 ]
+[1757154151.991823112]Tx Data for 3: [ 31 34 ]
+[1757154151.992998114]Setting joint X_joint position to (inverted) -0.21 radians (-159.19 degrees on motor protactor) with gear ratio 13.50:1
+[1757154151.993088003]Calculated encoder counts: -7244
+[1757154151.993140472]Tx Data for 1: [ f5 0 86 c8 ff e3 b4 da ]
+[1757154151.993179886]Sent position command 0.20580 to joint X_joint. Last command: 0.19238.
+[1757154151.993208360]Setting joint Y_joint position to (inverted) -0.21 radians (-1846.44 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.993235381]Calculated encoder counts: -84033
+[1757154151.993267301]Tx Data for 2: [ f5 0 8c c8 fe b7 bf bf ]
+[1757154151.993301054]Sent position command 0.21484 to joint Y_joint. Last command: 0.20083.
+[1757154151.993327143]Setting joint Z_joint position to (inverted) 0.02 radians (133.04 degrees on motor protactor) with gear ratio 150.00:1
+[1757154151.993378179]Calculated encoder counts: 6054
+[1757154151.993412744]Tx Data for 3: [ f5 0 1e c8 0 17 a6 9b ]
+[1757154151.993437311]Sent position command -0.01548 to joint Z_joint. Last command: -0.01447.
+[1757154151.993457980]Setting joint A_joint position to (inverted) -0.12 radians (-327.10 degrees on motor protactor) with gear ratio 48.00:1
+[1757154151.993475973]Calculated encoder counts: -14886
+[1757154151.993496732]Tx Data for 4: [ f5 0 4d c8 ff c5 da ac ]
+[1757154151.993517962]Sent position command 0.11894 to joint A_joint. Last command: 0.11118.
+[1757154152.088336593]Tx Data for 4: [ 31 35 ]
+[1757154152.089500464]Tx Data for 1: [ 31 32 ]
+[1757154152.090662161]Tx Data for 2: [ 31 33 ]
+[1757154152.091810312]Tx Data for 3: [ 31 34 ]
+[1757154152.093059203]Setting joint X_joint position to (inverted) -0.22 radians (-169.56 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.093139845]Calculated encoder counts: -7716
+[1757154152.093200800]Tx Data for 1: [ f5 0 86 c8 ff e1 dc 0 ]
+[1757154152.093246045]Sent position command 0.21921 to joint X_joint. Last command: 0.20580.
+[1757154152.093320014]Setting joint Y_joint position to (inverted) -0.23 radians (-1966.77 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.093352635]Calculated encoder counts: -89509
+[1757154152.093422146]Tx Data for 2: [ f5 0 8c c8 fe a2 5b 46 ]
+[1757154152.093464546]Sent position command 0.22884 to joint Y_joint. Last command: 0.21484.
+[1757154152.093492098]Setting joint Z_joint position to (inverted) 0.02 radians (141.71 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.093516935]Calculated encoder counts: 6449
+[1757154152.093548664]Tx Data for 3: [ f5 0 1e c8 0 19 31 28 ]
+[1757154152.093578921]Sent position command -0.01649 to joint Z_joint. Last command: -0.01548.
+[1757154152.093600402]Setting joint A_joint position to (inverted) -0.13 radians (-348.42 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.093617674]Calculated encoder counts: -15856
+[1757154152.093659192]Tx Data for 4: [ f5 0 4d c8 ff c2 10 df ]
+[1757154152.093686714]Sent position command 0.12669 to joint A_joint. Last command: 0.11894.
+[1757154152.188339262]Tx Data for 4: [ 31 35 ]
+[1757154152.189537838]Tx Data for 1: [ 31 32 ]
+[1757154152.190731676]Tx Data for 2: [ 31 33 ]
+[1757154152.191932546]Tx Data for 3: [ 31 34 ]
+[1757154152.193251900]Setting joint X_joint position to (inverted) -0.23 radians (-179.95 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.193323374]Calculated encoder counts: -8189
+[1757154152.193428252]Tx Data for 1: [ f5 0 86 c8 ff e0 3 26 ]
+[1757154152.193476282]Sent position command 0.23265 to joint X_joint. Last command: 0.21921.
+[1757154152.193504285]Setting joint Y_joint position to (inverted) -0.24 radians (-2087.31 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.193526978]Calculated encoder counts: -94995
+[1757154152.193555010]Tx Data for 2: [ f5 0 8c c8 fe 8c ed c2 ]
+[1757154152.193583474]Sent position command 0.24287 to joint Y_joint. Last command: 0.22884.
+[1757154152.193604904]Setting joint Z_joint position to (inverted) 0.02 radians (150.39 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.193628709]Calculated encoder counts: 6844
+[1757154152.193655279]Tx Data for 3: [ f5 0 1e c8 0 1a bc b4 ]
+[1757154152.193697599]Sent position command -0.01750 to joint Z_joint. Last command: -0.01649.
+[1757154152.193715032]Setting joint A_joint position to (inverted) -0.13 radians (-369.77 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.193730080]Calculated encoder counts: -16828
+[1757154152.193748174]Tx Data for 4: [ f5 0 4d c8 ff be 44 f ]
+[1757154152.193765577]Sent position command 0.13445 to joint A_joint. Last command: 0.12669.
+[1757154152.288358022]Tx Data for 4: [ 31 35 ]
+[1757154152.289582957]Tx Data for 1: [ 31 32 ]
+[1757154152.290766926]Tx Data for 2: [ 31 33 ]
+[1757154152.292023231]Tx Data for 3: [ 31 34 ]
+[1757154152.293330432]Setting joint X_joint position to (inverted) -0.25 radians (-190.34 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.293405162]Calculated encoder counts: -8662
+[1757154152.293473381]Tx Data for 1: [ f5 0 86 c8 ff de 2a 4b ]
+[1757154152.293526821]Sent position command 0.24607 to joint X_joint. Last command: 0.23265.
+[1757154152.293557850]Setting joint Y_joint position to (inverted) -0.26 radians (-2207.74 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.293584069]Calculated encoder counts: -100476
+[1757154152.293663419]Tx Data for 2: [ f5 0 8c c8 fe 77 84 44 ]
+[1757154152.293698925]Sent position command 0.25688 to joint Y_joint. Last command: 0.24287.
+[1757154152.293727810]Setting joint Z_joint position to (inverted) 0.02 radians (159.07 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.293752787]Calculated encoder counts: 7239
+[1757154152.293785709]Tx Data for 3: [ f5 0 1e c8 0 1c 47 41 ]
+[1757154152.293818731]Sent position command -0.01851 to joint Z_joint. Last command: -0.01750.
+[1757154152.293846012]Setting joint A_joint position to (inverted) -0.14 radians (-391.11 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.293871130]Calculated encoder counts: -17799
+[1757154152.293895405]Tx Data for 4: [ f5 0 4d c8 ff ba 79 40 ]
+[1757154152.293942845]Sent position command 0.14221 to joint A_joint. Last command: 0.13445.
+[1757154152.388350992]Tx Data for 4: [ 31 35 ]
+[1757154152.389586007]Tx Data for 1: [ 31 32 ]
+[1757154152.390830290]Tx Data for 2: [ 31 33 ]
+[1757154152.392047270]Tx Data for 3: [ 31 34 ]
+[1757154152.393329514]Setting joint X_joint position to (inverted) -0.26 radians (-200.71 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.393395258]Calculated encoder counts: -9134
+[1757154152.393449440]Tx Data for 1: [ f5 0 86 c8 ff dc 52 71 ]
+[1757154152.393534320]Sent position command 0.25949 to joint X_joint. Last command: 0.24607.
+[1757154152.393563164]Setting joint Y_joint position to (inverted) -0.27 radians (-2328.10 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.393589794]Calculated encoder counts: -105954
+[1757154152.393619430]Tx Data for 2: [ f5 0 8b c8 fe 62 1e c8 ]
+[1757154152.393650749]Sent position command 0.27089 to joint Y_joint. Last command: 0.25688.
+[1757154152.393676397]Setting joint Z_joint position to (inverted) 0.02 radians (167.74 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.393700953]Calculated encoder counts: 7634
+[1757154152.393731511]Tx Data for 3: [ f5 0 1e c8 0 1d d2 cd ]
+[1757154152.393795992]Sent position command -0.01952 to joint Z_joint. Last command: -0.01851.
+[1757154152.393828113]Setting joint A_joint position to (inverted) -0.15 radians (-412.43 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.393900559]Calculated encoder counts: -18770
+[1757154152.393945844]Tx Data for 4: [ f5 0 4d c8 ff b6 ae 71 ]
+[1757154152.393987292]Sent position command 0.14996 to joint A_joint. Last command: 0.14221.
+[1757154152.488349845]Tx Data for 4: [ 31 35 ]
+[1757154152.489525317]Tx Data for 1: [ 31 32 ]
+[1757154152.490666445]Tx Data for 2: [ 31 33 ]
+[1757154152.491808425]Tx Data for 3: [ 31 34 ]
+[1757154152.493059039]Setting joint X_joint position to (inverted) -0.27 radians (-211.06 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.493118932]Calculated encoder counts: -9605
+[1757154152.493162354]Tx Data for 1: [ f5 0 86 c8 ff da 7b 98 ]
+[1757154152.493198552]Sent position command 0.27286 to joint X_joint. Last command: 0.25949.
+[1757154152.493224651]Setting joint Y_joint position to (inverted) -0.28 radians (-2448.11 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.493248847]Calculated encoder counts: -111416
+[1757154152.493276328]Tx Data for 2: [ f5 0 8c c8 fe 4c c8 5d ]
+[1757154152.493335991]Sent position command 0.28485 to joint Y_joint. Last command: 0.27089.
+[1757154152.493360787]Setting joint Z_joint position to (inverted) 0.02 radians (176.39 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.493383550]Calculated encoder counts: 8027
+[1757154152.493412855]Tx Data for 3: [ f5 0 1e c8 0 1f 5b 58 ]
+[1757154152.493442641]Sent position command -0.02052 to joint Z_joint. Last command: -0.01952.
+[1757154152.493464663]Setting joint A_joint position to (inverted) -0.16 radians (-433.69 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.493483979]Calculated encoder counts: -19737
+[1757154152.493513004]Tx Data for 4: [ f5 0 4d c8 ff b2 e7 a6 ]
+[1757154152.493542339]Sent position command 0.15769 to joint A_joint. Last command: 0.14996.
+[1757154152.588347985]Tx Data for 4: [ 31 35 ]
+[1757154152.589537033]Tx Data for 1: [ 31 32 ]
+[1757154152.590693580]Tx Data for 2: [ 31 33 ]
+[1757154152.591820191]Tx Data for 3: [ 31 34 ]
+[1757154152.593003509]Setting joint X_joint position to (inverted) -0.29 radians (-221.42 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.593044736]Calculated encoder counts: -10077
+[1757154152.593090573]Tx Data for 1: [ f5 0 86 c8 ff d8 a3 be ]
+[1757154152.593123595]Sent position command 0.28627 to joint X_joint. Last command: 0.27286.
+[1757154152.593176484]Setting joint Y_joint position to (inverted) -0.30 radians (-2568.36 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.593193767]Calculated encoder counts: -116889
+[1757154152.593216560]Tx Data for 2: [ f5 0 8c c8 fe 37 67 e7 ]
+[1757154152.593245254]Sent position command 0.29884 to joint Y_joint. Last command: 0.28485.
+[1757154152.593268327]Setting joint Z_joint position to (inverted) 0.02 radians (185.05 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.593329502]Calculated encoder counts: 8421
+[1757154152.593366793]Tx Data for 3: [ f5 0 1e c8 0 20 e5 e3 ]
+[1757154152.593389044]Sent position command -0.02153 to joint Z_joint. Last command: -0.02052.
+[1757154152.593422307]Setting joint A_joint position to (inverted) -0.17 radians (-454.99 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.593439289]Calculated encoder counts: -20707
+[1757154152.593458886]Tx Data for 4: [ f5 0 4d c8 ff af 1d d9 ]
+[1757154152.593476209]Sent position command 0.16544 to joint A_joint. Last command: 0.15769.
+[1757154152.688337570]Tx Data for 4: [ 31 35 ]
+[1757154152.689481202]Tx Data for 1: [ 31 32 ]
+[1757154152.690599778]Tx Data for 2: [ 31 33 ]
+[1757154152.691709547]Tx Data for 3: [ 31 34 ]
+[1757154152.692905609]Setting joint X_joint position to (inverted) -0.30 radians (-231.79 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.692937298]Calculated encoder counts: -10548
+[1757154152.692966543]Tx Data for 1: [ f5 0 86 c8 ff d6 cc e5 ]
+[1757154152.692992021]Sent position command 0.29966 to joint X_joint. Last command: 0.28627.
+[1757154152.693012049]Setting joint Y_joint position to (inverted) -0.31 radians (-2688.57 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.693027468]Calculated encoder counts: -122359
+[1757154152.693045792]Tx Data for 2: [ f5 0 8c c8 fe 22 9 74 ]
+[1757154152.693061161]Sent position command 0.31283 to joint Y_joint. Last command: 0.29884.
+[1757154152.693104523]Setting joint Z_joint position to (inverted) 0.02 radians (193.71 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.693117748]Calculated encoder counts: 8816
+[1757154152.693135311]Tx Data for 3: [ f5 0 1e c8 0 22 70 70 ]
+[1757154152.693156130]Sent position command -0.02254 to joint Z_joint. Last command: -0.02153.
+[1757154152.693170678]Setting joint A_joint position to (inverted) -0.17 radians (-476.29 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.693185986]Calculated encoder counts: -21676
+[1757154152.693205683]Tx Data for 4: [ f5 0 4d c8 ff ab 54 c ]
+[1757154152.693227004]Sent position command 0.17318 to joint A_joint. Last command: 0.16544.
+[1757154152.788335780]Tx Data for 4: [ 31 35 ]
+[1757154152.789515271]Tx Data for 1: [ 31 32 ]
+[1757154152.790643444]Tx Data for 2: [ 31 33 ]
+[1757154152.791773472]Tx Data for 3: [ 31 34 ]
+[1757154152.792962320]Setting joint X_joint position to (inverted) -0.31 radians (-242.17 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.793002375]Calculated encoder counts: -11021
+[1757154152.793037130]Tx Data for 1: [ f5 0 86 c8 ff d4 f3 a ]
+[1757154152.793072487]Sent position command 0.31308 to joint X_joint. Last command: 0.29966.
+[1757154152.793155684]Setting joint Y_joint position to (inverted) -0.33 radians (-2808.96 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.793204546]Calculated encoder counts: -127839
+[1757154152.793234622]Tx Data for 2: [ f5 0 8c c8 fe c a1 f6 ]
+[1757154152.793266893]Sent position command 0.32684 to joint Y_joint. Last command: 0.31283.
+[1757154152.793292962]Setting joint Z_joint position to (inverted) 0.02 radians (202.39 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.793319292]Calculated encoder counts: 9210
+[1757154152.793352053]Tx Data for 3: [ f5 0 1e c8 0 23 fa fb ]
+[1757154152.793380096]Sent position command -0.02355 to joint Z_joint. Last command: -0.02254.
+[1757154152.793399252]Setting joint A_joint position to (inverted) -0.18 radians (-497.61 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.793434238]Calculated encoder counts: -22646
+[1757154152.793457321]Tx Data for 4: [ f5 0 4d c8 ff a7 8a 3e ]
+[1757154152.793478682]Sent position command 0.18094 to joint A_joint. Last command: 0.17318.
+[1757154152.888345192]Tx Data for 4: [ 31 35 ]
+[1757154152.889529491]Tx Data for 1: [ 31 32 ]
+[1757154152.890689565]Tx Data for 2: [ 31 33 ]
+[1757154152.891835843]Tx Data for 3: [ 31 34 ]
+[1757154152.893094943]Setting joint X_joint position to (inverted) -0.33 radians (-252.55 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.893207405]Calculated encoder counts: -11493
+[1757154152.893271646]Tx Data for 1: [ f5 0 86 c8 ff d3 1b 31 ]
+[1757154152.893322692]Sent position command 0.32651 to joint X_joint. Last command: 0.31308.
+[1757154152.893352288]Setting joint Y_joint position to (inverted) -0.34 radians (-2929.40 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.893380381]Calculated encoder counts: -133320
+[1757154152.893412391]Tx Data for 2: [ f5 0 8c c8 fd f7 38 77 ]
+[1757154152.893449130]Sent position command 0.34085 to joint Y_joint. Last command: 0.32684.
+[1757154152.893476682]Setting joint Z_joint position to (inverted) 0.02 radians (211.07 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.893535653]Calculated encoder counts: 9605
+[1757154152.893571721]Tx Data for 3: [ f5 0 1e c8 0 25 85 88 ]
+[1757154152.893604813]Sent position command -0.02456 to joint Z_joint. Last command: -0.02355.
+[1757154152.893630492]Setting joint A_joint position to (inverted) -0.19 radians (-518.95 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.893655799]Calculated encoder counts: -23617
+[1757154152.893688701]Tx Data for 4: [ f5 0 4d c8 ff a3 bf 6f ]
+[1757154152.893718838]Sent position command 0.18870 to joint A_joint. Last command: 0.18094.
+[1757154152.988376996]Tx Data for 4: [ 31 35 ]
+[1757154152.989593656]Tx Data for 1: [ 31 32 ]
+[1757154152.990847747]Tx Data for 2: [ 31 33 ]
+[1757154152.992036555]Tx Data for 3: [ 31 34 ]
+[1757154152.993320282]Setting joint X_joint position to (inverted) -0.34 radians (-262.95 degrees on motor protactor) with gear ratio 13.50:1
+[1757154152.993387678]Calculated encoder counts: -11967
+[1757154152.993444495]Tx Data for 1: [ f5 0 86 c8 ff d1 41 55 ]
+[1757154152.993492466]Sent position command 0.33995 to joint X_joint. Last command: 0.32651.
+[1757154152.993520919]Setting joint Y_joint position to (inverted) -0.35 radians (-3050.00 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.993582165]Calculated encoder counts: -138809
+[1757154152.993609025]Tx Data for 2: [ f5 0 8c c8 fd e1 c7 f0 ]
+[1757154152.993636156]Sent position command 0.35488 to joint Y_joint. Last command: 0.34085.
+[1757154152.993657096]Setting joint Z_joint position to (inverted) 0.03 radians (219.76 degrees on motor protactor) with gear ratio 150.00:1
+[1757154152.993676262]Calculated encoder counts: 10001
+[1757154152.993755681]Tx Data for 3: [ f5 0 1e c8 0 27 11 16 ]
+[1757154152.993782091]Sent position command -0.02557 to joint Z_joint. Last command: -0.02456.
+[1757154152.993808020]Setting joint A_joint position to (inverted) -0.20 radians (-540.32 degrees on motor protactor) with gear ratio 48.00:1
+[1757154152.993827076]Calculated encoder counts: -24590
+[1757154152.993850720]Tx Data for 4: [ f5 0 4d c8 ff 9f f2 9e ]
+[1757154152.993872982]Sent position command 0.19646 to joint A_joint. Last command: 0.18870.
+[1757154153.088362433]Tx Data for 4: [ 31 35 ]
+[1757154153.089583051]Tx Data for 1: [ 31 32 ]
+[1757154153.090819238]Tx Data for 2: [ 31 33 ]
+[1757154153.091995673]Tx Data for 3: [ 31 34 ]
+[1757154153.093323482]Setting joint X_joint position to (inverted) -0.35 radians (-273.32 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.093405677]Calculated encoder counts: -12439
+[1757154153.093467814]Tx Data for 1: [ f5 0 86 c8 ff cf 69 7b ]
+[1757154153.093507739]Sent position command 0.35336 to joint X_joint. Last command: 0.33995.
+[1757154153.093528478]Setting joint Y_joint position to (inverted) -0.37 radians (-3170.30 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.093546762]Calculated encoder counts: -144283
+[1757154153.093567471]Tx Data for 2: [ f5 0 8c c8 fd cc 65 79 ]
+[1757154153.093587699]Sent position command 0.36888 to joint Y_joint. Last command: 0.35488.
+[1757154153.093603860]Setting joint Z_joint position to (inverted) 0.03 radians (228.42 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.093629709]Calculated encoder counts: 10395
+[1757154153.093662861]Tx Data for 3: [ f5 0 1e c8 0 28 9b a1 ]
+[1757154153.093682688]Sent position command -0.02658 to joint Z_joint. Last command: -0.02557.
+[1757154153.093699710]Setting joint A_joint position to (inverted) -0.20 radians (-561.63 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.093747230]Calculated encoder counts: -25560
+[1757154153.093768951]Tx Data for 4: [ f5 0 4d c8 ff 9c 28 d1 ]
+[1757154153.093788467]Sent position command 0.20421 to joint A_joint. Last command: 0.19646.
+[1757154153.188351547]Tx Data for 4: [ 31 35 ]
+[1757154153.189542108]Tx Data for 1: [ 31 32 ]
+[1757154153.190754090]Tx Data for 2: [ 31 33 ]
+[1757154153.191922560]Tx Data for 3: [ 31 34 ]
+[1757154153.193206046]Setting joint X_joint position to (inverted) -0.37 radians (-283.68 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.193285134]Calculated encoder counts: -12910
+[1757154153.193357621]Tx Data for 1: [ f5 0 86 c8 ff cd 92 a2 ]
+[1757154153.193410500]Sent position command 0.36675 to joint X_joint. Last command: 0.35336.
+[1757154153.193438333]Setting joint Y_joint position to (inverted) -0.38 radians (-3290.49 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.193493777]Calculated encoder counts: -149754
+[1757154153.193520588]Tx Data for 2: [ f5 0 8c c8 fd b7 6 5 ]
+[1757154153.193548320]Sent position command 0.38287 to joint Y_joint. Last command: 0.36888.
+[1757154153.193569921]Setting joint Z_joint position to (inverted) 0.03 radians (237.08 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.193590730]Calculated encoder counts: 10789
+[1757154153.193616669]Tx Data for 3: [ f5 0 1e c8 0 2a 25 2d ]
+[1757154153.193643128]Sent position command -0.02759 to joint Z_joint. Last command: -0.02658.
+[1757154153.193664228]Setting joint A_joint position to (inverted) -0.21 radians (-582.92 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.193684075]Calculated encoder counts: -26529
+[1757154153.193734390]Tx Data for 4: [ f5 0 4d c8 ff 98 5f 4 ]
+[1757154153.193767633]Sent position command 0.21196 to joint A_joint. Last command: 0.20421.
+[1757154153.288355539]Tx Data for 4: [ 31 35 ]
+[1757154153.289527095]Tx Data for 1: [ 31 32 ]
+[1757154153.290685285]Tx Data for 2: [ 31 33 ]
+[1757154153.291791077]Tx Data for 3: [ 31 34 ]
+[1757154153.293022214]Setting joint X_joint position to (inverted) -0.38 radians (-294.04 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.293089300]Calculated encoder counts: -13381
+[1757154153.293205629]Tx Data for 1: [ f5 0 86 c8 ff cb bb c9 ]
+[1757154153.293255072]Sent position command 0.38014 to joint X_joint. Last command: 0.36675.
+[1757154153.293286391]Setting joint Y_joint position to (inverted) -0.40 radians (-3410.61 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.293314524]Calculated encoder counts: -155220
+[1757154153.293345873]Tx Data for 2: [ f5 0 8c c8 fd a1 ac 95 ]
+[1757154153.293375159]Sent position command 0.39684 to joint Y_joint. Last command: 0.38287.
+[1757154153.293454568]Setting joint Z_joint position to (inverted) 0.03 radians (245.74 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.293489183]Calculated encoder counts: 11183
+[1757154153.293548956]Tx Data for 3: [ f5 0 1e c8 0 2b af b8 ]
+[1757154153.293586346]Sent position command -0.02859 to joint Z_joint. Last command: -0.02759.
+[1757154153.293609630]Setting joint A_joint position to (inverted) -0.22 radians (-604.20 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.293633004]Calculated encoder counts: -27497
+[1757154153.293662399]Tx Data for 4: [ f5 0 4d c8 ff 94 97 38 ]
+[1757154153.293686996]Sent position command 0.21969 to joint A_joint. Last command: 0.21196.
+[1757154153.388388857]Tx Data for 4: [ 31 35 ]
+[1757154153.389640042]Tx Data for 1: [ 31 32 ]
+[1757154153.390831986]Tx Data for 2: [ 31 33 ]
+[1757154153.391986519]Tx Data for 3: [ 31 34 ]
+[1757154153.393191047]Setting joint X_joint position to (inverted) -0.39 radians (-304.43 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.393246781]Calculated encoder counts: -13854
+[1757154153.393295673]Tx Data for 1: [ f5 0 86 c8 ff c9 e2 ee ]
+[1757154153.393333565]Sent position command 0.39358 to joint X_joint. Last command: 0.38014.
+[1757154153.393361457]Setting joint Y_joint position to (inverted) -0.41 radians (-3531.14 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.393386474]Calculated encoder counts: -160706
+[1757154153.393450114]Tx Data for 2: [ f5 0 8c c8 fd 8c 3e 12 ]
+[1757154153.393487364]Sent position command 0.41087 to joint Y_joint. Last command: 0.39684.
+[1757154153.393515287]Setting joint Z_joint position to (inverted) 0.03 radians (254.42 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.393541015]Calculated encoder counts: 11579
+[1757154153.393576111]Tx Data for 3: [ f5 0 1e c8 0 2d 3b 46 ]
+[1757154153.393603713]Sent position command -0.02960 to joint Z_joint. Last command: -0.02859.
+[1757154153.393623390]Setting joint A_joint position to (inverted) -0.23 radians (-625.55 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.393641134]Calculated encoder counts: -28469
+[1757154153.393682111]Tx Data for 4: [ f5 0 4d c8 ff 90 cb 68 ]
+[1757154153.393705655]Sent position command 0.22746 to joint A_joint. Last command: 0.21969.
+[1757154153.488354266]Tx Data for 4: [ 31 35 ]
+[1757154153.489515252]Tx Data for 1: [ 31 32 ]
+[1757154153.490642724]Tx Data for 2: [ 31 33 ]
+[1757154153.491765998]Tx Data for 3: [ 31 34 ]
+[1757154153.492949977]Setting joint X_joint position to (inverted) -0.41 radians (-314.78 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.492991886]Calculated encoder counts: -14325
+[1757154153.493028545]Tx Data for 1: [ f5 0 86 c8 ff c8 b 16 ]
+[1757154153.493150244]Sent position command 0.40696 to joint X_joint. Last command: 0.39358.
+[1757154153.493187695]Setting joint Y_joint position to (inverted) -0.42 radians (-3651.19 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.493214365]Calculated encoder counts: -166169
+[1757154153.493250693]Tx Data for 2: [ f5 0 8c c8 fd 76 e7 a5 ]
+[1757154153.493282423]Sent position command 0.42483 to joint Y_joint. Last command: 0.41087.
+[1757154153.493307791]Setting joint Z_joint position to (inverted) 0.03 radians (263.07 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.493329211]Calculated encoder counts: 11972
+[1757154153.493379346]Tx Data for 3: [ f5 0 1e c8 0 2e c4 d0 ]
+[1757154153.493406246]Sent position command -0.03061 to joint Z_joint. Last command: -0.02960.
+[1757154153.493426144]Setting joint A_joint position to (inverted) -0.24 radians (-646.82 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.493443075]Calculated encoder counts: -29437
+[1757154153.493462592]Tx Data for 4: [ f5 0 4d c8 ff 8d 3 9d ]
+[1757154153.493482149]Sent position command 0.23519 to joint A_joint. Last command: 0.22746.
+[1757154153.588383265]Tx Data for 4: [ 31 35 ]
+[1757154153.589599024]Tx Data for 1: [ 31 32 ]
+[1757154153.590720265]Tx Data for 2: [ 31 33 ]
+[1757154153.591864398]Tx Data for 3: [ 31 34 ]
+[1757154153.593040983]Setting joint X_joint position to (inverted) -0.42 radians (-325.16 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.593087280]Calculated encoder counts: -14798
+[1757154153.593123378]Tx Data for 1: [ f5 0 86 c8 ff c6 32 3b ]
+[1757154153.593155188]Sent position command 0.42038 to joint X_joint. Last command: 0.40696.
+[1757154153.593180997]Setting joint Y_joint position to (inverted) -0.44 radians (-3771.62 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.593199792]Calculated encoder counts: -171650
+[1757154153.593220521]Tx Data for 2: [ f5 0 8c c8 fd 61 7e 27 ]
+[1757154153.593274052]Sent position command 0.43885 to joint Y_joint. Last command: 0.42483.
+[1757154153.593298067]Setting joint Z_joint position to (inverted) 0.03 radians (271.75 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.593318936]Calculated encoder counts: 12367
+[1757154153.593347139]Tx Data for 3: [ f5 0 1e c8 0 30 4f 5d ]
+[1757154153.593372357]Sent position command -0.03162 to joint Z_joint. Last command: -0.03061.
+[1757154153.593395691]Setting joint A_joint position to (inverted) -0.24 radians (-668.15 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.593417672]Calculated encoder counts: -30408
+[1757154153.593442900]Tx Data for 4: [ f5 0 4d c8 ff 89 38 ce ]
+[1757154153.593488155]Sent position command 0.24295 to joint A_joint. Last command: 0.23519.
+[1757154153.688333386]Tx Data for 4: [ 31 35 ]
+[1757154153.689492027]Tx Data for 1: [ 31 32 ]
+[1757154153.690622966]Tx Data for 2: [ 31 33 ]
+[1757154153.691753294]Tx Data for 3: [ 31 34 ]
+[1757154153.692991785]Setting joint X_joint position to (inverted) -0.43 radians (-335.53 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.693054323]Calculated encoder counts: -15270
+[1757154153.693108725]Tx Data for 1: [ f5 0 86 c8 ff c4 5a 61 ]
+[1757154153.693189217]Sent position command 0.43378 to joint X_joint. Last command: 0.42038.
+[1757154153.693210136]Setting joint Y_joint position to (inverted) -0.45 radians (-3891.86 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.693229042]Calculated encoder counts: -177122
+[1757154153.693249851]Tx Data for 2: [ f5 0 8c c8 fd 4c 1e b2 ]
+[1757154153.693271993]Sent position command 0.45284 to joint Y_joint. Last command: 0.43885.
+[1757154153.693288013]Setting joint Z_joint position to (inverted) 0.03 radians (280.41 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.693302801]Calculated encoder counts: 12761
+[1757154153.693319642]Tx Data for 3: [ f5 0 1e c8 0 31 d9 e8 ]
+[1757154153.693350460]Sent position command -0.03263 to joint Z_joint. Last command: -0.03162.
+[1757154153.693366601]Setting joint A_joint position to (inverted) -0.25 radians (-689.45 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.693382070]Calculated encoder counts: -31377
+[1757154153.693410624]Tx Data for 4: [ f5 0 4d c8 ff 85 6f 1 ]
+[1757154153.693427846]Sent position command 0.25069 to joint A_joint. Last command: 0.24295.
+[1757154153.788343880]Tx Data for 4: [ 31 35 ]
+[1757154153.789553988]Tx Data for 1: [ 31 32 ]
+[1757154153.790715555]Tx Data for 2: [ 31 33 ]
+[1757154153.791912007]Tx Data for 3: [ 31 34 ]
+[1757154153.793236661]Setting joint X_joint position to (inverted) -0.45 radians (-345.92 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.793310309]Calculated encoder counts: -15743
+[1757154153.793385942]Tx Data for 1: [ f5 0 86 c8 ff c2 81 86 ]
+[1757154153.793438130]Sent position command 0.44722 to joint X_joint. Last command: 0.43378.
+[1757154153.793466563]Setting joint Y_joint position to (inverted) -0.47 radians (-4012.46 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.793493173]Calculated encoder counts: -182611
+[1757154153.793521467]Tx Data for 2: [ f5 0 8c c8 fd 36 ad 2b ]
+[1757154153.793545712]Sent position command 0.46687 to joint Y_joint. Last command: 0.45284.
+[1757154153.793609142]Setting joint Z_joint position to (inverted) 0.03 radians (289.10 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.793639088]Calculated encoder counts: 13157
+[1757154153.793672160]Tx Data for 3: [ f5 0 1e c8 0 33 65 76 ]
+[1757154153.793705523]Sent position command -0.03364 to joint Z_joint. Last command: -0.03263.
+[1757154153.793769313]Setting joint A_joint position to (inverted) -0.26 radians (-710.82 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.793799660]Calculated encoder counts: -32350
+[1757154153.793830438]Tx Data for 4: [ f5 0 4d c8 ff 81 a2 30 ]
+[1757154153.793854734]Sent position command 0.25846 to joint A_joint. Last command: 0.25069.
+[1757154153.888372559]Tx Data for 4: [ 31 35 ]
+[1757154153.889611571]Tx Data for 1: [ 31 32 ]
+[1757154153.890829975]Tx Data for 2: [ 31 33 ]
+[1757154153.892008183]Tx Data for 3: [ 31 34 ]
+[1757154153.893217419]Setting joint X_joint position to (inverted) -0.46 radians (-356.30 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.893283944]Calculated encoder counts: -16215
+[1757154153.893349077]Tx Data for 1: [ f5 0 86 c8 ff c0 a9 ac ]
+[1757154153.893397368]Sent position command 0.46063 to joint X_joint. Last command: 0.44722.
+[1757154153.893489060]Setting joint Y_joint position to (inverted) -0.48 radians (-4132.76 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.893511803]Calculated encoder counts: -188086
+[1757154153.893540257]Tx Data for 2: [ f5 0 8c c8 fd 21 4a b3 ]
+[1757154153.893565494]Sent position command 0.48087 to joint Y_joint. Last command: 0.46687.
+[1757154153.893588337]Setting joint Z_joint position to (inverted) 0.03 radians (297.77 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.893612813]Calculated encoder counts: 13551
+[1757154153.893644072]Tx Data for 3: [ f5 0 1e c8 0 34 ef 1 ]
+[1757154153.893675261]Sent position command -0.03465 to joint Z_joint. Last command: -0.03364.
+[1757154153.893729252]Setting joint A_joint position to (inverted) -0.27 radians (-732.13 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.893759008]Calculated encoder counts: -33319
+[1757154153.893792021]Tx Data for 4: [ f5 0 4d c8 ff 7d d9 63 ]
+[1757154153.893817428]Sent position command 0.26621 to joint A_joint. Last command: 0.25846.
+[1757154153.988355732]Tx Data for 4: [ 31 35 ]
+[1757154153.989540482]Tx Data for 1: [ 31 32 ]
+[1757154153.990743517]Tx Data for 2: [ 31 33 ]
+[1757154153.991952482]Tx Data for 3: [ 31 34 ]
+[1757154153.993255124]Setting joint X_joint position to (inverted) -0.47 radians (-366.67 degrees on motor protactor) with gear ratio 13.50:1
+[1757154153.993320918]Calculated encoder counts: -16687
+[1757154153.993380781]Tx Data for 1: [ f5 0 86 c8 ff be d1 d2 ]
+[1757154153.993427399]Sent position command 0.47404 to joint X_joint. Last command: 0.46063.
+[1757154153.993455361]Setting joint Y_joint position to (inverted) -0.49 radians (-4253.09 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.993479006]Calculated encoder counts: -193562
+[1757154153.993509714]Tx Data for 2: [ f5 0 8c c8 fd b e6 39 ]
+[1757154153.993548016]Sent position command 0.49487 to joint Y_joint. Last command: 0.48087.
+[1757154153.993642163]Setting joint Z_joint position to (inverted) 0.04 radians (306.44 degrees on motor protactor) with gear ratio 150.00:1
+[1757154153.993672430]Calculated encoder counts: 13946
+[1757154153.993699832]Tx Data for 3: [ f5 0 1e c8 0 36 7a 8e ]
+[1757154153.993724628]Sent position command -0.03566 to joint Z_joint. Last command: -0.03465.
+[1757154153.993742863]Setting joint A_joint position to (inverted) -0.27 radians (-753.44 degrees on motor protactor) with gear ratio 48.00:1
+[1757154153.993759714]Calculated encoder counts: -34290
+[1757154153.993778840]Tx Data for 4: [ f5 0 4d c8 ff 7a e 95 ]
+[1757154153.993803477]Sent position command 0.27396 to joint A_joint. Last command: 0.26621.
+[1757154154.088344986]Tx Data for 4: [ 31 35 ]
+[1757154154.089502195]Tx Data for 1: [ 31 32 ]
+[1757154154.090633524]Tx Data for 2: [ 31 33 ]
+[1757154154.091719358]Tx Data for 3: [ 31 34 ]
+[1757154154.092911132]Setting joint X_joint position to (inverted) -0.49 radians (-377.01 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.092951628]Calculated encoder counts: -17158
+[1757154154.092987756]Tx Data for 1: [ f5 0 86 c8 ff bc fa f9 ]
+[1757154154.093017532]Sent position command 0.48742 to joint X_joint. Last command: 0.47404.
+[1757154154.093042369]Setting joint Y_joint position to (inverted) -0.51 radians (-4373.07 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.093102542]Calculated encoder counts: -199023
+[1757154154.093134643]Tx Data for 2: [ f5 0 8c c8 fc f6 91 ce ]
+[1757154154.093162265]Sent position command 0.50883 to joint Y_joint. Last command: 0.49487.
+[1757154154.093187582]Setting joint Z_joint position to (inverted) 0.04 radians (315.08 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.093210686]Calculated encoder counts: 14339
+[1757154154.093238909]Tx Data for 3: [ f5 0 1e c8 0 38 3 19 ]
+[1757154154.093267002]Sent position command -0.03666 to joint Z_joint. Last command: -0.03566.
+[1757154154.093292199]Setting joint A_joint position to (inverted) -0.28 radians (-774.70 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.093332866]Calculated encoder counts: -35257
+[1757154154.093357382]Tx Data for 4: [ f5 0 4d c8 ff 76 47 ca ]
+[1757154154.093377670]Sent position command 0.28169 to joint A_joint. Last command: 0.27396.
+[1757154154.188438928]Tx Data for 4: [ 31 35 ]
+[1757154154.189769172]Tx Data for 1: [ 31 32 ]
+[1757154154.190948883]Tx Data for 2: [ 31 33 ]
+[1757154154.192083719]Tx Data for 3: [ 31 34 ]
+[1757154154.193282827]Setting joint X_joint position to (inverted) -0.50 radians (-387.42 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.193362917]Calculated encoder counts: -17632
+[1757154154.193407030]Tx Data for 1: [ f5 0 86 c8 ff bb 20 1e ]
+[1757154154.193472965]Sent position command 0.50088 to joint X_joint. Last command: 0.48742.
+[1757154154.193500637]Setting joint Y_joint position to (inverted) -0.52 radians (-4493.83 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.193521716]Calculated encoder counts: -204519
+[1757154154.193550330]Tx Data for 2: [ f5 0 8c c8 fc e1 19 41 ]
+[1757154154.193581078]Sent position command 0.52288 to joint Y_joint. Last command: 0.50883.
+[1757154154.193606266]Setting joint Z_joint position to (inverted) 0.04 radians (323.79 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.193652222]Calculated encoder counts: 14735
+[1757154154.193681657]Tx Data for 3: [ f5 0 1e c8 0 39 8f a6 ]
+[1757154154.193704621]Sent position command -0.03767 to joint Z_joint. Last command: -0.03666.
+[1757154154.193725350]Setting joint A_joint position to (inverted) -0.29 radians (-796.09 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.193747111]Calculated encoder counts: -36231
+[1757154154.193772609]Tx Data for 4: [ f5 0 4d c8 ff 72 79 f8 ]
+[1757154154.193805100]Sent position command 0.28947 to joint A_joint. Last command: 0.28169.
+[1757154154.288334907]Tx Data for 4: [ 31 35 ]
+[1757154154.289556527]Tx Data for 1: [ 31 32 ]
+[1757154154.290749322]Tx Data for 2: [ 31 33 ]
+[1757154154.291858881]Tx Data for 3: [ 31 34 ]
+[1757154154.293019977]Setting joint X_joint position to (inverted) -0.51 radians (-397.77 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.293053219]Calculated encoder counts: -18103
+[1757154154.293090500]Tx Data for 1: [ f5 0 86 c8 ff b9 49 45 ]
+[1757154154.293118102]Sent position command 0.51425 to joint X_joint. Last command: 0.50088.
+[1757154154.293139883]Setting joint Y_joint position to (inverted) -0.54 radians (-4613.85 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.293186931]Calculated encoder counts: -209981
+[1757154154.293206879]Tx Data for 2: [ f5 0 8c c8 fc cb c3 d5 ]
+[1757154154.293224482]Sent position command 0.53685 to joint Y_joint. Last command: 0.52288.
+[1757154154.293241013]Setting joint Z_joint position to (inverted) 0.04 radians (332.43 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.293256342]Calculated encoder counts: 15129
+[1757154154.293278003]Tx Data for 3: [ f5 0 1e c8 0 3b 19 32 ]
+[1757154154.293297259]Sent position command -0.03868 to joint Z_joint. Last command: -0.03767.
+[1757154154.293316806]Setting joint A_joint position to (inverted) -0.30 radians (-817.35 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.293353815]Calculated encoder counts: -37198
+[1757154154.293379053]Tx Data for 4: [ f5 0 4d c8 ff 6e b2 2d ]
+[1757154154.293400944]Sent position command 0.29720 to joint A_joint. Last command: 0.28947.
+[1757154154.388339321]Tx Data for 4: [ 31 35 ]
+[1757154154.389597910]Tx Data for 1: [ 31 32 ]
+[1757154154.390748696]Tx Data for 2: [ 31 33 ]
+[1757154154.391877621]Tx Data for 3: [ 31 34 ]
+[1757154154.393071168]Setting joint X_joint position to (inverted) -0.53 radians (-408.15 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.393123547]Calculated encoder counts: -18575
+[1757154154.393196624]Tx Data for 1: [ f5 0 86 c8 ff b7 71 6b ]
+[1757154154.393236319]Sent position command 0.52767 to joint X_joint. Last command: 0.51425.
+[1757154154.393265985]Setting joint Y_joint position to (inverted) -0.55 radians (-4734.22 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.393286764]Calculated encoder counts: -215459
+[1757154154.393317291]Tx Data for 2: [ f5 0 8b c8 fc b6 5d 59 ]
+[1757154154.393350073]Sent position command 0.55085 to joint Y_joint. Last command: 0.53685.
+[1757154154.393377184]Setting joint Z_joint position to (inverted) 0.04 radians (341.11 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.393402552]Calculated encoder counts: 15524
+[1757154154.393455051]Tx Data for 3: [ f5 0 1e c8 0 3c a4 be ]
+[1757154154.393480889]Sent position command -0.03969 to joint Z_joint. Last command: -0.03868.
+[1757154154.393500306]Setting joint A_joint position to (inverted) -0.30 radians (-838.68 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.393517609]Calculated encoder counts: -38169
+[1757154154.393537155]Tx Data for 4: [ f5 0 4d c8 ff 6a e7 5e ]
+[1757154154.393557193]Sent position command 0.30495 to joint A_joint. Last command: 0.29720.
+[1757154154.488337011]Tx Data for 4: [ 31 35 ]
+[1757154154.489531019]Tx Data for 1: [ 31 32 ]
+[1757154154.490776093]Tx Data for 2: [ 31 33 ]
+[1757154154.491916419]Tx Data for 3: [ 31 34 ]
+[1757154154.493151434]Setting joint X_joint position to (inverted) -0.54 radians (-418.53 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.493206217]Calculated encoder counts: -19047
+[1757154154.493257524]Tx Data for 1: [ f5 0 86 c8 ff b5 99 91 ]
+[1757154154.493297900]Sent position command 0.54109 to joint X_joint. Last command: 0.52767.
+[1757154154.493325662]Setting joint Y_joint position to (inverted) -0.56 radians (-4854.61 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.493352413]Calculated encoder counts: -220938
+[1757154154.493422725]Tx Data for 2: [ f5 0 8b c8 fc a0 f6 dc ]
+[1757154154.493460125]Sent position command 0.56486 to joint Y_joint. Last command: 0.55085.
+[1757154154.493487457]Setting joint Z_joint position to (inverted) 0.04 radians (349.78 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.493512093]Calculated encoder counts: 15918
+[1757154154.493540757]Tx Data for 3: [ f5 0 1e c8 0 3e 2e 4a ]
+[1757154154.493567938]Sent position command -0.04070 to joint Z_joint. Last command: -0.03969.
+[1757154154.493634153]Setting joint A_joint position to (inverted) -0.31 radians (-860.01 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.493661775]Calculated encoder counts: -39139
+[1757154154.493721497]Tx Data for 4: [ f5 0 4d c8 ff 67 1d 91 ]
+[1757154154.493756934]Sent position command 0.31271 to joint A_joint. Last command: 0.30495.
+[1757154154.588351023]Tx Data for 4: [ 31 35 ]
+[1757154154.589567713]Tx Data for 1: [ 31 32 ]
+[1757154154.590778853]Tx Data for 2: [ 31 33 ]
+[1757154154.591975516]Tx Data for 3: [ 31 34 ]
+[1757154154.593227472]Setting joint X_joint position to (inverted) -0.55 radians (-428.91 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.593295340]Calculated encoder counts: -19520
+[1757154154.593404626]Tx Data for 1: [ f5 0 86 c8 ff b3 c0 b6 ]
+[1757154154.593452456]Sent position command 0.55451 to joint X_joint. Last command: 0.54109.
+[1757154154.593478435]Setting joint Y_joint position to (inverted) -0.58 radians (-4975.03 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.593497952]Calculated encoder counts: -226418
+[1757154154.593527908]Tx Data for 2: [ f5 0 8b c8 fc 8b 8e 5f ]
+[1757154154.593554879]Sent position command 0.57887 to joint Y_joint. Last command: 0.56486.
+[1757154154.593576620]Setting joint Z_joint position to (inverted) 0.04 radians (358.46 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.593597820]Calculated encoder counts: 16313
+[1757154154.593648796]Tx Data for 3: [ f5 0 1e c8 0 3f b9 d6 ]
+[1757154154.593678722]Sent position command -0.04171 to joint Z_joint. Last command: -0.04070.
+[1757154154.593701465]Setting joint A_joint position to (inverted) -0.32 radians (-881.34 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.593719779]Calculated encoder counts: -40110
+[1757154154.593742512]Tx Data for 4: [ f5 0 4d c8 ff 63 52 c2 ]
+[1757154154.593766918]Sent position command 0.32046 to joint A_joint. Last command: 0.31271.
+[1757154154.688349405]Tx Data for 4: [ 31 35 ]
+[1757154154.689580121]Tx Data for 1: [ 31 32 ]
+[1757154154.690813684]Tx Data for 2: [ 31 33 ]
+[1757154154.692056493]Tx Data for 3: [ 31 34 ]
+[1757154154.693321755]Setting joint X_joint position to (inverted) -0.57 radians (-439.29 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.693379904]Calculated encoder counts: -19992
+[1757154154.693433305]Tx Data for 1: [ f5 0 86 c8 ff b1 e8 dc ]
+[1757154154.693478119]Sent position command 0.56793 to joint X_joint. Last command: 0.55451.
+[1757154154.693507655]Setting joint Y_joint position to (inverted) -0.59 radians (-5095.46 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.693529927]Calculated encoder counts: -231899
+[1757154154.693581574]Tx Data for 2: [ f5 0 8b c8 fc 76 25 e1 ]
+[1757154154.693683125]Sent position command 0.59288 to joint Y_joint. Last command: 0.57887.
+[1757154154.693713653]Setting joint Z_joint position to (inverted) 0.04 radians (367.13 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.693735734]Calculated encoder counts: 16708
+[1757154154.693770780]Tx Data for 3: [ f5 0 1e c8 0 41 44 63 ]
+[1757154154.693793072]Sent position command -0.04272 to joint Z_joint. Last command: -0.04171.
+[1757154154.693810024]Setting joint A_joint position to (inverted) -0.33 radians (-902.67 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.693826204]Calculated encoder counts: -41081
+[1757154154.693856181]Tx Data for 4: [ f5 0 4d c8 ff 5f 87 f3 ]
+[1757154154.693887590]Sent position command 0.32822 to joint A_joint. Last command: 0.32046.
+[1757154154.788345763]Tx Data for 4: [ 31 35 ]
+[1757154154.789528239]Tx Data for 1: [ 31 32 ]
+[1757154154.790723920]Tx Data for 2: [ 31 33 ]
+[1757154154.791920953]Tx Data for 3: [ 31 34 ]
+[1757154154.793189150]Setting joint X_joint position to (inverted) -0.58 radians (-449.65 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.793261827]Calculated encoder counts: -20464
+[1757154154.793326719]Tx Data for 1: [ f5 0 86 c8 ff b0 10 3 ]
+[1757154154.793416258]Sent position command 0.58133 to joint X_joint. Last command: 0.56793.
+[1757154154.793442677]Setting joint Y_joint position to (inverted) -0.61 radians (-5215.62 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.793467584]Calculated encoder counts: -237368
+[1757154154.793501007]Tx Data for 2: [ f5 0 8b c8 fc 60 c8 6e ]
+[1757154154.793532857]Sent position command 0.60687 to joint Y_joint. Last command: 0.59288.
+[1757154154.793559608]Setting joint Z_joint position to (inverted) 0.04 radians (375.79 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.793579485]Calculated encoder counts: 17102
+[1757154154.793603771]Tx Data for 3: [ f5 0 1e c8 0 42 ce ee ]
+[1757154154.793649056]Sent position command -0.04373 to joint Z_joint. Last command: -0.04272.
+[1757154154.793670156]Setting joint A_joint position to (inverted) -0.34 radians (-923.96 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.793689402]Calculated encoder counts: -42050
+[1757154154.793711974]Tx Data for 4: [ f5 0 4d c8 ff 5b be 26 ]
+[1757154154.793732914]Sent position command 0.33596 to joint A_joint. Last command: 0.32822.
+[1757154154.888342021]Tx Data for 4: [ 31 35 ]
+[1757154154.889529015]Tx Data for 1: [ 31 32 ]
+[1757154154.890681545]Tx Data for 2: [ 31 33 ]
+[1757154154.891800581]Tx Data for 3: [ 31 34 ]
+[1757154154.892998987]Setting joint X_joint position to (inverted) -0.59 radians (-460.01 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.893036257]Calculated encoder counts: -20935
+[1757154154.893116609]Tx Data for 1: [ f5 0 86 c8 ff ae 39 2a ]
+[1757154154.893150733]Sent position command 0.59472 to joint X_joint. Last command: 0.58133.
+[1757154154.893171402]Setting joint Y_joint position to (inverted) -0.62 radians (-5335.75 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.893189095]Calculated encoder counts: -242835
+[1757154154.893210576]Tx Data for 2: [ f5 0 8b c8 fc 4b 6d fe ]
+[1757154154.893261652]Sent position command 0.62084 to joint Y_joint. Last command: 0.60687.
+[1757154154.893281209]Setting joint Z_joint position to (inverted) 0.04 radians (384.45 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.893299403]Calculated encoder counts: 17496
+[1757154154.893322336]Tx Data for 3: [ f5 0 1e c8 0 44 58 7a ]
+[1757154154.893343396]Sent position command -0.04473 to joint Z_joint. Last command: -0.04373.
+[1757154154.893356941]Setting joint A_joint position to (inverted) -0.34 radians (-945.24 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.893369344]Calculated encoder counts: -43018
+[1757154154.893383722]Tx Data for 4: [ f5 0 4d c8 ff 57 f6 5a ]
+[1757154154.893409851]Sent position command 0.34370 to joint A_joint. Last command: 0.33596.
+[1757154154.988722332]Tx Data for 4: [ 31 35 ]
+[1757154154.989994867]Tx Data for 1: [ 31 32 ]
+[1757154154.991243377]Tx Data for 2: [ 31 33 ]
+[1757154154.992437676]Tx Data for 3: [ 31 34 ]
+[1757154154.993734106]Setting joint X_joint position to (inverted) -0.61 radians (-470.45 degrees on motor protactor) with gear ratio 13.50:1
+[1757154154.993811933]Calculated encoder counts: -21410
+[1757154154.993877897]Tx Data for 1: [ f5 0 86 c8 ff ac 5e 4d ]
+[1757154154.993922992]Sent position command 0.60822 to joint X_joint. Last command: 0.59472.
+[1757154154.993989878]Setting joint Y_joint position to (inverted) -0.63 radians (-5456.92 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.994016428]Calculated encoder counts: -248350
+[1757154154.994049850]Tx Data for 2: [ f5 0 8b c8 fc 35 e2 5d ]
+[1757154154.994098211]Sent position command 0.63494 to joint Y_joint. Last command: 0.62084.
+[1757154154.994127627]Setting joint Z_joint position to (inverted) 0.05 radians (393.18 degrees on motor protactor) with gear ratio 150.00:1
+[1757154154.994154167]Calculated encoder counts: 17893
+[1757154154.994187009]Tx Data for 3: [ f5 0 1e c8 0 45 e5 8 ]
+[1757154154.994220993]Sent position command -0.04575 to joint Z_joint. Last command: -0.04473.
+[1757154154.994269714]Setting joint A_joint position to (inverted) -0.35 radians (-966.71 degrees on motor protactor) with gear ratio 48.00:1
+[1757154154.994289482]Calculated encoder counts: -43995
+[1757154154.994314970]Tx Data for 4: [ f5 0 4d c8 ff 54 25 86 ]
+[1757154154.994343473]Sent position command 0.35150 to joint A_joint. Last command: 0.34370.
+[1757154155.088349084]Tx Data for 4: [ 31 35 ]
+[1757154155.089508677]Tx Data for 1: [ 31 32 ]
+[1757154155.090662680]Tx Data for 2: [ 31 33 ]
+[1757154155.091794380]Tx Data for 3: [ 31 34 ]
+[1757154155.092990031]Setting joint X_joint position to (inverted) -0.62 radians (-480.75 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.093025538]Calculated encoder counts: -21879
+[1757154155.093057658]Tx Data for 1: [ f5 0 86 c8 ff aa 89 76 ]
+[1757154155.093094798]Sent position command 0.62154 to joint X_joint. Last command: 0.60822.
+[1757154155.093117501]Setting joint Y_joint position to (inverted) -0.65 radians (-5576.39 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.093137909]Calculated encoder counts: -253787
+[1757154155.093161403]Tx Data for 2: [ f5 0 8b c8 fc 20 a5 b ]
+[1757154155.093184347]Sent position command 0.64884 to joint Y_joint. Last command: 0.63494.
+[1757154155.093228790]Setting joint Z_joint position to (inverted) 0.05 radians (401.78 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.093248317]Calculated encoder counts: 18285
+[1757154155.093272322]Tx Data for 3: [ f5 0 1e c8 0 47 6d 92 ]
+[1757154155.093294885]Sent position command -0.04675 to joint Z_joint. Last command: -0.04575.
+[1757154155.093312888]Setting joint A_joint position to (inverted) -0.36 radians (-987.87 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.093330401]Calculated encoder counts: -44959
+[1757154155.093352523]Tx Data for 4: [ f5 0 4d c8 ff 50 61 be ]
+[1757154155.093376869]Sent position command 0.35920 to joint A_joint. Last command: 0.35150.
+[1757154155.188337027]Tx Data for 4: [ 31 35 ]
+[1757154155.189582762]Tx Data for 1: [ 31 32 ]
+[1757154155.190825612]Tx Data for 2: [ 31 33 ]
+[1757154155.191973813]Tx Data for 3: [ 31 34 ]
+[1757154155.193179864]Setting joint X_joint position to (inverted) -0.63 radians (-491.15 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.193222374]Calculated encoder counts: -22352
+[1757154155.193262960]Tx Data for 1: [ f5 0 86 c8 ff a8 b0 9b ]
+[1757154155.193300400]Sent position command 0.63497 to joint X_joint. Last command: 0.62154.
+[1757154155.193362407]Setting joint Y_joint position to (inverted) -0.66 radians (-5696.92 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.193390230]Calculated encoder counts: -259273
+[1757154155.193421649]Tx Data for 2: [ f5 0 8b c8 fc b 37 88 ]
+[1757154155.193454270]Sent position command 0.66287 to joint Y_joint. Last command: 0.64884.
+[1757154155.193478676]Setting joint Z_joint position to (inverted) 0.05 radians (410.47 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.193503302]Calculated encoder counts: 18680
+[1757154155.193532127]Tx Data for 3: [ f5 0 1e c8 0 48 f8 1e ]
+[1757154155.193560149]Sent position command -0.04776 to joint Z_joint. Last command: -0.04675.
+[1757154155.193669856]Setting joint A_joint position to (inverted) -0.37 radians (-1009.22 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.193708809]Calculated encoder counts: -45930
+[1757154155.193753624]Tx Data for 4: [ f5 0 4d c8 ff 4c 96 ef ]
+[1757154155.193793970]Sent position command 0.36696 to joint A_joint. Last command: 0.35920.
+[1757154155.288338295]Tx Data for 4: [ 31 35 ]
+[1757154155.289522184]Tx Data for 1: [ 31 32 ]
+[1757154155.290703638]Tx Data for 2: [ 31 33 ]
+[1757154155.291860405]Tx Data for 3: [ 31 34 ]
+[1757154155.293139563]Setting joint X_joint position to (inverted) -0.65 radians (-501.51 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.293256353]Calculated encoder counts: -22824
+[1757154155.293317368]Tx Data for 1: [ f5 0 86 c8 ff a6 d8 c1 ]
+[1757154155.293469715]Sent position command 0.64837 to joint X_joint. Last command: 0.63497.
+[1757154155.293506484]Setting joint Y_joint position to (inverted) -0.68 radians (-5817.15 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.293533044]Calculated encoder counts: -264744
+[1757154155.293577377]Tx Data for 2: [ f5 0 8b c8 fb f5 d8 12 ]
+[1757154155.293613355]Sent position command 0.67686 to joint Y_joint. Last command: 0.66287.
+[1757154155.293640005]Setting joint Z_joint position to (inverted) 0.05 radians (419.13 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.293664331]Calculated encoder counts: 19075
+[1757154155.293690811]Tx Data for 3: [ f5 0 1e c8 0 4a 83 ab ]
+[1757154155.293718553]Sent position command -0.04877 to joint Z_joint. Last command: -0.04776.
+[1757154155.293745945]Setting joint A_joint position to (inverted) -0.37 radians (-1030.52 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.293773206]Calculated encoder counts: -46900
+[1757154155.293800047]Tx Data for 4: [ f5 0 4d c8 ff 48 cc 21 ]
+[1757154155.293823681]Sent position command 0.37471 to joint A_joint. Last command: 0.36696.
+[1757154155.388340825]Tx Data for 4: [ 31 35 ]
+[1757154155.389531136]Tx Data for 1: [ 31 32 ]
+[1757154155.390739050]Tx Data for 2: [ 31 33 ]
+[1757154155.391947064]Tx Data for 3: [ 31 34 ]
+[1757154155.393279592]Setting joint X_joint position to (inverted) -0.66 radians (-511.90 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.393361847]Calculated encoder counts: -23297
+[1757154155.393430456]Tx Data for 1: [ f5 0 86 c8 ff a4 ff e6 ]
+[1757154155.393475801]Sent position command 0.66180 to joint X_joint. Last command: 0.64837.
+[1757154155.393500468]Setting joint Y_joint position to (inverted) -0.69 radians (-5937.62 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.393521247]Calculated encoder counts: -270227
+[1757154155.393603893]Tx Data for 2: [ f5 0 8c c8 fb e0 6d 93 ]
+[1757154155.393631745]Sent position command 0.69087 to joint Y_joint. Last command: 0.67686.
+[1757154155.393652534]Setting joint Z_joint position to (inverted) 0.05 radians (427.81 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.393673383]Calculated encoder counts: 19470
+[1757154155.393701536]Tx Data for 3: [ f5 0 1e c8 0 4c e 38 ]
+[1757154155.393737274]Sent position command -0.04978 to joint Z_joint. Last command: -0.04877.
+[1757154155.393756931]Setting joint A_joint position to (inverted) -0.38 radians (-1051.86 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.393772530]Calculated encoder counts: -47871
+[1757154155.393791746]Tx Data for 4: [ f5 0 4d c8 ff 45 1 53 ]
+[1757154155.393812525]Sent position command 0.38247 to joint A_joint. Last command: 0.37471.
+[1757154155.488368252]Tx Data for 4: [ 31 35 ]
+[1757154155.489613927]Tx Data for 1: [ 31 32 ]
+[1757154155.490832671]Tx Data for 2: [ 31 33 ]
+[1757154155.492146084]Tx Data for 3: [ 31 34 ]
+[1757154155.493460188]Setting joint X_joint position to (inverted) -0.68 radians (-522.29 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.493560436]Calculated encoder counts: -23769
+[1757154155.493688137]Tx Data for 1: [ f5 0 86 c8 ff a3 27 d ]
+[1757154155.493742249]Sent position command 0.67523 to joint X_joint. Last command: 0.66180.
+[1757154155.493775120]Setting joint Y_joint position to (inverted) -0.70 radians (-6058.16 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.493803063]Calculated encoder counts: -275713
+[1757154155.493839482]Tx Data for 2: [ f5 0 8c c8 fb ca ff f ]
+[1757154155.493873506]Sent position command 0.70490 to joint Y_joint. Last command: 0.69087.
+[1757154155.493904153]Setting joint Z_joint position to (inverted) 0.05 radians (436.50 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.493932627]Calculated encoder counts: 19865
+[1757154155.493963004]Tx Data for 3: [ f5 0 1e c8 0 4d 99 c4 ]
+[1757154155.493987831]Sent position command -0.05079 to joint Z_joint. Last command: -0.04978.
+[1757154155.494013980]Setting joint A_joint position to (inverted) -0.39 radians (-1073.22 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.494040620]Calculated encoder counts: -48843
+[1757154155.494072961]Tx Data for 4: [ f5 0 4d c8 ff 41 35 83 ]
+[1757154155.494121783]Sent position command 0.39023 to joint A_joint. Last command: 0.38247.
+[1757154155.588352117]Tx Data for 4: [ 31 35 ]
+[1757154155.589542558]Tx Data for 1: [ 31 32 ]
+[1757154155.590713993]Tx Data for 2: [ 31 33 ]
+[1757154155.591888574]Tx Data for 3: [ 31 34 ]
+[1757154155.593174655]Setting joint X_joint position to (inverted) -0.69 radians (-532.63 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.593308537]Calculated encoder counts: -24240
+[1757154155.593390472]Tx Data for 1: [ f5 0 86 c8 ff a1 50 34 ]
+[1757154155.593442490]Sent position command 0.68861 to joint X_joint. Last command: 0.67523.
+[1757154155.593475832]Setting joint Y_joint position to (inverted) -0.72 radians (-6178.15 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.593504597]Calculated encoder counts: -281174
+[1757154155.593541877]Tx Data for 2: [ f5 0 8b c8 fb b5 aa a4 ]
+[1757154155.593578926]Sent position command 0.71886 to joint Y_joint. Last command: 0.70490.
+[1757154155.593606919]Setting joint Z_joint position to (inverted) 0.05 radians (445.14 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.593634942]Calculated encoder counts: 20258
+[1757154155.593669838]Tx Data for 3: [ f5 0 1e c8 0 4f 22 4f ]
+[1757154155.593704343]Sent position command -0.05179 to joint Z_joint. Last command: -0.05079.
+[1757154155.593735551]Setting joint A_joint position to (inverted) -0.40 radians (-1094.47 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.593758484]Calculated encoder counts: -49810
+[1757154155.593794372]Tx Data for 4: [ f5 0 4d c8 ff 3d 6e b8 ]
+[1757154155.593819028]Sent position command 0.39796 to joint A_joint. Last command: 0.39023.
+[1757154155.688344228]Tx Data for 4: [ 31 35 ]
+[1757154155.689503781]Tx Data for 1: [ 31 32 ]
+[1757154155.690650359]Tx Data for 2: [ 31 33 ]
+[1757154155.691812737]Tx Data for 3: [ 31 34 ]
+[1757154155.693005142]Setting joint X_joint position to (inverted) -0.70 radians (-542.99 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.693042021]Calculated encoder counts: -24712
+[1757154155.693084060]Tx Data for 1: [ f5 0 86 c8 ff 9f 78 5a ]
+[1757154155.693115590]Sent position command 0.70200 to joint X_joint. Last command: 0.68861.
+[1757154155.693138383]Setting joint Y_joint position to (inverted) -0.73 radians (-6298.32 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.693159502]Calculated encoder counts: -286643
+[1757154155.693186283]Tx Data for 2: [ f5 0 8b c8 fb a0 4d 32 ]
+[1757154155.693213444]Sent position command 0.73284 to joint Y_joint. Last command: 0.71886.
+[1757154155.693232269]Setting joint Z_joint position to (inverted) 0.05 radians (453.80 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.693251666]Calculated encoder counts: 20652
+[1757154155.693276232]Tx Data for 3: [ f5 0 1e c8 0 50 ac da ]
+[1757154155.693304045]Sent position command -0.05280 to joint Z_joint. Last command: -0.05179.
+[1757154155.693324814]Setting joint A_joint position to (inverted) -0.41 radians (-1115.76 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.693343288]Calculated encoder counts: -50779
+[1757154155.693369398]Tx Data for 4: [ f5 0 4d c8 ff 39 a5 eb ]
+[1757154155.693395266]Sent position command 0.40570 to joint A_joint. Last command: 0.39796.
+[1757154155.788349694]Tx Data for 4: [ 31 35 ]
+[1757154155.789528553]Tx Data for 1: [ 31 32 ]
+[1757154155.790667657]Tx Data for 2: [ 31 33 ]
+[1757154155.791828302]Tx Data for 3: [ 31 34 ]
+[1757154155.793039281]Setting joint X_joint position to (inverted) -0.72 radians (-553.37 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.793124502]Calculated encoder counts: -25184
+[1757154155.793171059]Tx Data for 1: [ f5 0 86 c8 ff 9d a0 80 ]
+[1757154155.793208139]Sent position command 0.71542 to joint X_joint. Last command: 0.70200.
+[1757154155.793237525]Setting joint Y_joint position to (inverted) -0.75 radians (-6418.67 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.793265447]Calculated encoder counts: -292120
+[1757154155.793296846]Tx Data for 2: [ f5 0 8b c8 fb 8a e8 b7 ]
+[1757154155.793328476]Sent position command 0.74685 to joint Y_joint. Last command: 0.73284.
+[1757154155.793354254]Setting joint Z_joint position to (inverted) 0.05 radians (462.47 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.793379562]Calculated encoder counts: 21047
+[1757154155.793410640]Tx Data for 3: [ f5 0 1e c8 0 52 37 67 ]
+[1757154155.793444514]Sent position command -0.05381 to joint Z_joint. Last command: -0.05280.
+[1757154155.793469682]Setting joint A_joint position to (inverted) -0.41 radians (-1137.08 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.793488577]Calculated encoder counts: -51749
+[1757154155.793513053]Tx Data for 4: [ f5 0 4d c8 ff 35 db 1d ]
+[1757154155.793542168]Sent position command 0.41345 to joint A_joint. Last command: 0.40570.
+[1757154155.888335091]Tx Data for 4: [ 31 35 ]
+[1757154155.889496919]Tx Data for 1: [ 31 32 ]
+[1757154155.890648627]Tx Data for 2: [ 31 33 ]
+[1757154155.891806727]Tx Data for 3: [ 31 34 ]
+[1757154155.893015512]Setting joint X_joint position to (inverted) -0.73 radians (-563.74 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.893058794]Calculated encoder counts: -25656
+[1757154155.893101183]Tx Data for 1: [ f5 0 86 c8 ff 9b c8 a6 ]
+[1757154155.893134737]Sent position command 0.72882 to joint X_joint. Last command: 0.71542.
+[1757154155.893156848]Setting joint Y_joint position to (inverted) -0.76 radians (-6538.97 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.893176235]Calculated encoder counts: -297595
+[1757154155.893198046]Tx Data for 2: [ f5 0 8c c8 fb 75 85 40 ]
+[1757154155.893219877]Sent position command 0.76084 to joint Y_joint. Last command: 0.74685.
+[1757154155.893237670]Setting joint Z_joint position to (inverted) 0.05 radians (471.14 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.893255594]Calculated encoder counts: 21442
+[1757154155.893275101]Tx Data for 3: [ f5 0 1e c8 0 53 c2 f3 ]
+[1757154155.893353068]Sent position command -0.05482 to joint Z_joint. Last command: -0.05381.
+[1757154155.893385198]Setting joint A_joint position to (inverted) -0.42 radians (-1158.39 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.893409774]Calculated encoder counts: -52719
+[1757154155.893436274]Tx Data for 4: [ f5 0 4d c8 ff 32 11 50 ]
+[1757154155.893460400]Sent position command 0.42120 to joint A_joint. Last command: 0.41345.
+[1757154155.988337982]Tx Data for 4: [ 31 35 ]
+[1757154155.989497355]Tx Data for 1: [ 31 32 ]
+[1757154155.990637661]Tx Data for 2: [ 31 33 ]
+[1757154155.991794309]Tx Data for 3: [ 31 34 ]
+[1757154155.993005849]Setting joint X_joint position to (inverted) -0.74 radians (-574.11 degrees on motor protactor) with gear ratio 13.50:1
+[1757154155.993062496]Calculated encoder counts: -26128
+[1757154155.993122028]Tx Data for 1: [ f5 0 86 c8 ff 99 f0 cc ]
+[1757154155.993165540]Sent position command 0.74223 to joint X_joint. Last command: 0.72882.
+[1757154155.993189435]Setting joint Y_joint position to (inverted) -0.77 radians (-6659.27 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.993209994]Calculated encoder counts: -303070
+[1757154155.993234690]Tx Data for 2: [ f5 0 8b c8 fb 60 22 c7 ]
+[1757154155.993255069]Sent position command 0.77484 to joint Y_joint. Last command: 0.76084.
+[1757154155.993270187]Setting joint Z_joint position to (inverted) 0.06 radians (479.81 degrees on motor protactor) with gear ratio 150.00:1
+[1757154155.993288862]Calculated encoder counts: 21836
+[1757154155.993311395]Tx Data for 3: [ f5 0 1e c8 0 55 4c 7f ]
+[1757154155.993335710]Sent position command -0.05583 to joint Z_joint. Last command: -0.05482.
+[1757154155.993352001]Setting joint A_joint position to (inverted) -0.43 radians (-1179.71 degrees on motor protactor) with gear ratio 48.00:1
+[1757154155.993365597]Calculated encoder counts: -53689
+[1757154155.993381817]Tx Data for 4: [ f5 0 4d c8 ff 2e 47 82 ]
+[1757154155.993397777]Sent position command 0.42895 to joint A_joint. Last command: 0.42120.
+[1757154156.088335764]Tx Data for 4: [ 31 35 ]
+[1757154156.089492421]Tx Data for 1: [ 31 32 ]
+[1757154156.090634341]Tx Data for 2: [ 31 33 ]
+[1757154156.091801218]Tx Data for 3: [ 31 34 ]
+[1757154156.093060829]Setting joint X_joint position to (inverted) -0.76 radians (-584.49 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.093148143]Calculated encoder counts: -26600
+[1757154156.093204169]Tx Data for 1: [ f5 0 86 c8 ff 98 18 f3 ]
+[1757154156.093259152]Sent position command 0.75565 to joint X_joint. Last command: 0.74223.
+[1757154156.093290892]Setting joint Y_joint position to (inverted) -0.79 radians (-6779.64 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.093317592]Calculated encoder counts: -308548
+[1757154156.093410607]Tx Data for 2: [ f5 0 8c c8 fb 4a bc 4c ]
+[1757154156.093459329]Sent position command 0.78885 to joint Y_joint. Last command: 0.77484.
+[1757154156.093488484]Setting joint Z_joint position to (inverted) 0.06 radians (488.48 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.093515585]Calculated encoder counts: 22231
+[1757154156.093546964]Tx Data for 3: [ f5 0 1e c8 0 56 d7 b ]
+[1757154156.093580988]Sent position command -0.05684 to joint Z_joint. Last command: -0.05583.
+[1757154156.093610063]Setting joint A_joint position to (inverted) -0.44 radians (-1201.03 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.093636432]Calculated encoder counts: -54660
+[1757154156.093665878]Tx Data for 4: [ f5 0 4d c8 ff 2a 7c b3 ]
+[1757154156.093698669]Sent position command 0.43671 to joint A_joint. Last command: 0.42895.
+[1757154156.188354034]Tx Data for 4: [ 31 35 ]
+[1757154156.189589099]Tx Data for 1: [ 31 32 ]
+[1757154156.190805619]Tx Data for 2: [ 31 33 ]
+[1757154156.192056294]Tx Data for 3: [ 31 34 ]
+[1757154156.193434598]Setting joint X_joint position to (inverted) -0.77 radians (-594.90 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.193503518]Calculated encoder counts: -27074
+[1757154156.193562048]Tx Data for 1: [ f5 0 86 c8 ff 96 3e 17 ]
+[1757154156.193606782]Sent position command 0.76911 to joint X_joint. Last command: 0.75565.
+[1757154156.193631589]Setting joint Y_joint position to (inverted) -0.80 radians (-6900.43 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.193653089]Calculated encoder counts: -314046
+[1757154156.193675742]Tx Data for 2: [ f5 0 8b c8 fb 35 42 bc ]
+[1757154156.193696682]Sent position command 0.80290 to joint Y_joint. Last command: 0.78885.
+[1757154156.193712591]Setting joint Z_joint position to (inverted) 0.06 radians (497.18 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.193730565]Calculated encoder counts: 22627
+[1757154156.193753919]Tx Data for 3: [ f5 0 1e c8 0 58 63 99 ]
+[1757154156.193775310]Sent position command -0.05785 to joint Z_joint. Last command: -0.05684.
+[1757154156.193795628]Setting joint A_joint position to (inverted) -0.44 radians (-1222.43 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.193816577]Calculated encoder counts: -55634
+[1757154156.193841334]Tx Data for 4: [ f5 0 4d c8 ff 26 ae e1 ]
+[1757154156.193865429]Sent position command 0.44449 to joint A_joint. Last command: 0.43671.
+[1757154156.288351485]Tx Data for 4: [ 31 35 ]
+[1757154156.289565801]Tx Data for 1: [ 31 32 ]
+[1757154156.290767584]Tx Data for 2: [ 31 33 ]
+[1757154156.291968775]Tx Data for 3: [ 31 34 ]
+[1757154156.293251059]Setting joint X_joint position to (inverted) -0.78 radians (-605.25 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.293402524]Calculated encoder counts: -27545
+[1757154156.293486071]Tx Data for 1: [ f5 0 86 c8 ff 94 67 3e ]
+[1757154156.293528371]Sent position command 0.78249 to joint X_joint. Last command: 0.76911.
+[1757154156.293549961]Setting joint Y_joint position to (inverted) -0.82 radians (-7020.48 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.293568536]Calculated encoder counts: -319510
+[1757154156.293592712]Tx Data for 2: [ f5 0 8c c8 fb 1f ea 4f ]
+[1757154156.293613070]Sent position command 0.81687 to joint Y_joint. Last command: 0.80290.
+[1757154156.293627287]Setting joint Z_joint position to (inverted) 0.06 radians (505.83 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.293643437]Calculated encoder counts: 23021
+[1757154156.293664827]Tx Data for 3: [ f5 0 1e c8 0 59 ed 24 ]
+[1757154156.293691838]Sent position command -0.05886 to joint Z_joint. Last command: -0.05785.
+[1757154156.293710544]Setting joint A_joint position to (inverted) -0.45 radians (-1243.69 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.293727005]Calculated encoder counts: -56601
+[1757154156.293746551]Tx Data for 4: [ f5 0 4d c8 ff 22 e7 16 ]
+[1757154156.293767240]Sent position command 0.45222 to joint A_joint. Last command: 0.44449.
+[1757154156.388362352]Tx Data for 4: [ 31 35 ]
+[1757154156.389580314]Tx Data for 1: [ 31 32 ]
+[1757154156.390784691]Tx Data for 2: [ 31 33 ]
+[1757154156.391977697]Tx Data for 3: [ 31 34 ]
+[1757154156.393214295]Setting joint X_joint position to (inverted) -0.80 radians (-615.63 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.393298163]Calculated encoder counts: -28017
+[1757154156.393371191]Tx Data for 1: [ f5 0 86 c8 ff 92 8f 64 ]
+[1757154156.393422517]Sent position command 0.79590 to joint X_joint. Last command: 0.78249.
+[1757154156.393456952]Setting joint Y_joint position to (inverted) -0.83 radians (-7140.81 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.393488101]Calculated encoder counts: -324986
+[1757154156.393523908]Tx Data for 2: [ f5 0 8b c8 fb a 86 d5 ]
+[1757154156.393561609]Sent position command 0.83087 to joint Y_joint. Last command: 0.81687.
+[1757154156.393592387]Setting joint Z_joint position to (inverted) 0.06 radians (514.50 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.393622574]Calculated encoder counts: 23415
+[1757154156.393655546]Tx Data for 3: [ f5 0 1e c8 0 5b 77 b0 ]
+[1757154156.393691724]Sent position command -0.05987 to joint Z_joint. Last command: -0.05886.
+[1757154156.393721450]Setting joint A_joint position to (inverted) -0.46 radians (-1265.01 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.393750054]Calculated encoder counts: -57572
+[1757154156.393782415]Tx Data for 4: [ f5 0 4d c8 ff 1f 1c 48 ]
+[1757154156.393869028]Sent position command 0.45997 to joint A_joint. Last command: 0.45222.
+[1757154156.488346327]Tx Data for 4: [ 31 35 ]
+[1757154156.489528092]Tx Data for 1: [ 31 32 ]
+[1757154156.490685931]Tx Data for 2: [ 31 33 ]
+[1757154156.491831448]Tx Data for 3: [ 31 34 ]
+[1757154156.493031928]Setting joint X_joint position to (inverted) -0.81 radians (-625.98 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.493108682]Calculated encoder counts: -28489
+[1757154156.493155020]Tx Data for 1: [ f5 0 86 c8 ff 90 b7 8a ]
+[1757154156.493189404]Sent position command 0.80929 to joint X_joint. Last command: 0.79590.
+[1757154156.493218729]Setting joint Y_joint position to (inverted) -0.84 radians (-7260.92 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.493241372]Calculated encoder counts: -330452
+[1757154156.493270066]Tx Data for 2: [ f5 0 8c c8 fa f5 2c 66 ]
+[1757154156.493295664]Sent position command 0.84485 to joint Y_joint. Last command: 0.83087.
+[1757154156.493315732]Setting joint Z_joint position to (inverted) 0.06 radians (523.16 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.493334968]Calculated encoder counts: 23809
+[1757154156.493357972]Tx Data for 3: [ f5 0 1e c8 0 5d 1 3c ]
+[1757154156.493381716]Sent position command -0.06087 to joint Z_joint. Last command: -0.05987.
+[1757154156.493401463]Setting joint A_joint position to (inverted) -0.47 radians (-1286.29 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.493420870]Calculated encoder counts: -58540
+[1757154156.493443072]Tx Data for 4: [ f5 0 4d c8 ff 1b 54 7c ]
+[1757154156.493464763]Sent position command 0.46771 to joint A_joint. Last command: 0.45997.
+[1757154156.588575104]Tx Data for 4: [ 31 35 ]
+[1757154156.589810008]Tx Data for 1: [ 31 32 ]
+[1757154156.590978658]Tx Data for 2: [ 31 33 ]
+[1757154156.592129605]Tx Data for 3: [ 31 34 ]
+[1757154156.593339673]Setting joint X_joint position to (inverted) -0.82 radians (-636.39 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.593385710]Calculated encoder counts: -28962
+[1757154156.593424663]Tx Data for 1: [ f5 0 86 c8 ff 8e de af ]
+[1757154156.593453217]Sent position command 0.82274 to joint X_joint. Last command: 0.80929.
+[1757154156.593473024]Setting joint Y_joint position to (inverted) -0.86 radians (-7381.61 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.593491218]Calculated encoder counts: -335945
+[1757154156.593511156]Tx Data for 2: [ f5 0 8b c8 fa df b7 da ]
+[1757154156.593535431]Sent position command 0.85889 to joint Y_joint. Last command: 0.84485.
+[1757154156.593551572]Setting joint Z_joint position to (inverted) 0.06 radians (531.85 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.593572411]Calculated encoder counts: 24205
+[1757154156.593647132]Tx Data for 3: [ f5 0 1e c8 0 5e 8d c9 ]
+[1757154156.593682548]Sent position command -0.06188 to joint Z_joint. Last command: -0.06087.
+[1757154156.593707706]Setting joint A_joint position to (inverted) -0.48 radians (-1307.67 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.593725569]Calculated encoder counts: -59513
+[1757154156.593745797]Tx Data for 4: [ f5 0 4d c8 ff 17 87 ab ]
+[1757154156.593766086]Sent position command 0.47548 to joint A_joint. Last command: 0.46771.
+[1757154156.688298509]Tx Data for 4: [ 31 35 ]
+[1757154156.689435710]Tx Data for 1: [ 31 32 ]
+[1757154156.690538746]Tx Data for 2: [ 31 33 ]
+[1757154156.691665016]Tx Data for 3: [ 31 34 ]
+[1757154156.692858413]Setting joint X_joint position to (inverted) -0.84 radians (-646.71 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.692896024]Calculated encoder counts: -29432
+[1757154156.692925619]Tx Data for 1: [ f5 0 86 c8 ff 8d 8 d8 ]
+[1757154156.692947030]Sent position command 0.83609 to joint X_joint. Last command: 0.82274.
+[1757154156.692964763]Setting joint Y_joint position to (inverted) -0.87 radians (-7501.36 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.692982687]Calculated encoder counts: -341395
+[1757154156.693003927]Tx Data for 2: [ f5 0 8c c8 fa ca 6d 7c ]
+[1757154156.693026720]Sent position command 0.87282 to joint Y_joint. Last command: 0.85889.
+[1757154156.693043050]Setting joint Z_joint position to (inverted) 0.06 radians (540.48 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.693055364]Calculated encoder counts: 24597
+[1757154156.693070482]Tx Data for 3: [ f5 0 1e c8 0 60 15 53 ]
+[1757154156.693094587]Sent position command -0.06289 to joint Z_joint. Last command: -0.06188.
+[1757154156.693108894]Setting joint A_joint position to (inverted) -0.48 radians (-1328.88 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.693120967]Calculated encoder counts: -60478
+[1757154156.693173977]Tx Data for 4: [ f5 0 4d c8 ff 13 c2 e2 ]
+[1757154156.693196850]Sent position command 0.48320 to joint A_joint. Last command: 0.47548.
+[1757154156.788367725]Tx Data for 4: [ 31 35 ]
+[1757154156.789567604]Tx Data for 1: [ 31 32 ]
+[1757154156.790752454]Tx Data for 2: [ 31 33 ]
+[1757154156.791909843]Tx Data for 3: [ 31 34 ]
+[1757154156.793110954]Setting joint X_joint position to (inverted) -0.85 radians (-657.11 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.793154586]Calculated encoder counts: -29905
+[1757154156.793197757]Tx Data for 1: [ f5 0 86 c8 ff 8b 2f fd ]
+[1757154156.793235489]Sent position command 0.84954 to joint X_joint. Last command: 0.83609.
+[1757154156.793263962]Setting joint Y_joint position to (inverted) -0.89 radians (-7621.98 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.793331790]Calculated encoder counts: -346884
+[1757154156.793368088]Tx Data for 2: [ f5 0 8c c8 fa b4 fc f5 ]
+[1757154156.793401772]Sent position command 0.88686 to joint Y_joint. Last command: 0.87282.
+[1757154156.793427690]Setting joint Z_joint position to (inverted) 0.06 radians (549.17 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.793456054]Calculated encoder counts: 24993
+[1757154156.793486561]Tx Data for 3: [ f5 0 1e c8 0 61 a1 e0 ]
+[1757154156.793516538]Sent position command -0.06390 to joint Z_joint. Last command: -0.06289.
+[1757154156.793543739]Setting joint A_joint position to (inverted) -0.49 radians (-1350.25 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.793570319]Calculated encoder counts: -61451
+[1757154156.793600656]Tx Data for 4: [ f5 0 4d c8 ff f f5 11 ]
+[1757154156.793635081]Sent position command 0.49097 to joint A_joint. Last command: 0.48320.
+[1757154156.888341291]Tx Data for 4: [ 31 35 ]
+[1757154156.889518838]Tx Data for 1: [ 31 32 ]
+[1757154156.890668091]Tx Data for 2: [ 31 33 ]
+[1757154156.891837763]Tx Data for 3: [ 31 34 ]
+[1757154156.893133482]Setting joint X_joint position to (inverted) -0.86 radians (-667.48 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.893214305]Calculated encoder counts: -30377
+[1757154156.893274017]Tx Data for 1: [ f5 0 86 c8 ff 89 57 23 ]
+[1757154156.893321607]Sent position command 0.86294 to joint X_joint. Last command: 0.84954.
+[1757154156.893354438]Setting joint Y_joint position to (inverted) -0.90 radians (-7742.29 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.893382922]Calculated encoder counts: -352360
+[1757154156.893415854]Tx Data for 2: [ f5 0 8c c8 fa 9f 98 7c ]
+[1757154156.893451912]Sent position command 0.90086 to joint Y_joint. Last command: 0.88686.
+[1757154156.893480125]Setting joint Z_joint position to (inverted) 0.06 radians (557.84 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.893507927]Calculated encoder counts: 25387
+[1757154156.893540268]Tx Data for 3: [ f5 0 1e c8 0 63 2b 6c ]
+[1757154156.893572409]Sent position command -0.06491 to joint Z_joint. Last command: -0.06390.
+[1757154156.893601984]Setting joint A_joint position to (inverted) -0.50 radians (-1371.56 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.893631179]Calculated encoder counts: -62421
+[1757154156.893663610]Tx Data for 4: [ f5 0 4d c8 ff c 2b 44 ]
+[1757154156.893699177]Sent position command 0.49871 to joint A_joint. Last command: 0.49097.
+[1757154156.988339824]Tx Data for 4: [ 31 35 ]
+[1757154156.989541877]Tx Data for 1: [ 31 32 ]
+[1757154156.990739391]Tx Data for 2: [ 31 33 ]
+[1757154156.991944670]Tx Data for 3: [ 31 34 ]
+[1757154156.993246681]Sent velocity command 0.090 to joint X_joint. Last command: 0.134
+[1757154156.993385302]Setting joint X_joint position to (inverted) -0.88 radians (-677.10 degrees on motor protactor) with gear ratio 13.50:1
+[1757154156.993427392]Calculated encoder counts: -30815
+[1757154156.993501251]Tx Data for 1: [ f5 0 5a c8 ff 87 a1 3f ]
+[1757154156.993547528]Sent position command 0.87538 to joint X_joint. Last command: 0.86294.
+[1757154156.993570872]Sent velocity command 0.094 to joint Y_joint. Last command: 0.140
+[1757154156.993591601]Setting joint Y_joint position to (inverted) -0.91 radians (-7853.82 degrees on motor protactor) with gear ratio 150.00:1
+[1757154156.993613983]Calculated encoder counts: -357436
+[1757154156.993642146]Tx Data for 2: [ f5 0 5e c8 fa 8b c4 66 ]
+[1757154156.993671060]Sent position command 0.91383 to joint Y_joint. Last command: 0.90086.
+[1757154156.993693362]Sent velocity command 0.052 to joint A_joint. Last command: 0.078
+[1757154156.993714732]Setting joint A_joint position to (inverted) -0.51 radians (-1391.32 degrees on motor protactor) with gear ratio 48.00:1
+[1757154156.993739329]Calculated encoder counts: -63320
+[1757154156.993768413]Tx Data for 4: [ f5 0 34 c8 ff 8 a8 a4 ]
+[1757154156.993797188]Sent position command 0.50590 to joint A_joint. Last command: 0.49871.
+[1757154157.088350841]Tx Data for 4: [ 31 35 ]
+[1757154157.089555118]Tx Data for 1: [ 31 32 ]
+[1757154157.090745509]Tx Data for 2: [ 31 33 ]
+[1757154157.091932063]Tx Data for 3: [ 31 34 ]
+[1757154157.093181545] [arctos_arm_controller]: Goal reached, success!
+[1757154157.093287504]Sent velocity command 0.000 to joint X_joint. Last command: 0.090
+[1757154157.093332910]Setting joint X_joint position to (inverted) -0.88 radians (-680.40 degrees on motor protactor) with gear ratio 13.50:1
+[1757154157.093361484]Calculated encoder counts: -30965
+[1757154157.093428480]Tx Data for 1: [ f5 0 1e c8 ff 87 b 6d ]
+[1757154157.093472543]Sent position command 0.87965 to joint X_joint. Last command: 0.87538.
+[1757154157.093490807]Sent velocity command 0.000 to joint Y_joint. Last command: 0.094
+[1757154157.093508971]Setting joint Y_joint position to (inverted) -0.92 radians (-7892.13 degrees on motor protactor) with gear ratio 150.00:1
+[1757154157.093526444]Calculated encoder counts: -359179
+[1757154157.093552453]Tx Data for 2: [ f5 0 1e c8 fa 84 f5 50 ]
+[1757154157.093585085]Sent position command 0.91829 to joint Y_joint. Last command: 0.91383.
+[1757154157.093605263]Sent velocity command -0.000 to joint Z_joint. Last command: -0.010
+[1757154157.093627224]Setting joint Z_joint position to (inverted) 0.07 radians (568.64 degrees on motor protactor) with gear ratio 150.00:1
+[1757154157.093650408]Calculated encoder counts: 25879
+[1757154157.093679332]Tx Data for 3: [ f5 0 1e c8 0 65 17 5a ]
+[1757154157.093709479]Sent position command -0.06616 to joint Z_joint. Last command: -0.06491.
+[1757154157.093793317]Sent velocity command 0.000 to joint A_joint. Last command: 0.052
+[1757154157.093821680]Setting joint A_joint position to (inverted) -0.51 radians (-1398.11 degrees on motor protactor) with gear ratio 48.00:1
+[1757154157.093841387]Calculated encoder counts: -63629
+[1757154157.093874249]Tx Data for 4: [ f5 0 1e c8 ff 7 73 58 ]
+[1757154157.093900969]Sent position command 0.50837 to joint A_joint. Last command: 0.50590.
+[1757154157.188347060]Tx Data for 4: [ 31 35 ]
+[1757154157.189533804]Tx Data for 1: [ 31 32 ]
+[move_group-9] [INFO] [1757154157.190300357] [moveit.simple_controller_manager.follow_joint_trajectory_controller_handle]: Controller 'arctos_arm_controller' successfully finished
+[1757154157.190708035]Tx Data for 2: [ 31 33 ]
+[1757154157.191895951]Tx Data for 3: [ 31 34 ]
+[1757154157.288341476]Tx Data for 4: [ 31 35 ]
+[1757154157.289502692]Tx Data for 1: [ 31 32 ]
+[1757154157.290615217]Tx Data for 2: [ 31 33 ]
+[1757154157.291752788]Tx Data for 3: [ 31 34 ]
+[1757154157.388409801]Tx Data for 4: [ 31 35 ]
+[1757154157.390009603]Tx Data for 1: [ 31 32 ]
+[1757154157.391327464]Tx Data for 2: [ 31 33 ]
+[1757154157.392651546]Tx Data for 3: [ 31 34 ]
+[move_group-9] [INFO] [1757154157.394540843] [moveit_ros.trajectory_execution_manager]: Completed trajectory execution with status SUCCEEDED ...
+[move_group-9] [INFO] [1757154157.394717165] [moveit_move_group_default_capabilities.execute_trajectory_action_capability]: Execution completed: SUCCEEDED
+[rviz2-8] [INFO] [1757154157.395000187] [move_group_interface]: Execute request success!
+[1757154157.488344855]Tx Data for 4: [ 31 35 ]
+[1757154157.489508406]Tx Data for 1: [ 31 32 ]
+[1757154157.490616321]Tx Data for 2: [ 31 33 ]
+[1757154157.491718736]Tx Data for 3: [ 31 34 ]
+[1757154157.588309194]Tx Data for 4: [ 31 35 ]
+[1757154157.589450333]Tx Data for 1: [ 31 32 ]
+[1757154157.590554150]Tx Data for 2: [ 31 33 ]
+[1757154157.591656976]Tx Data for 3: [ 31 34 ]
+[1757154157.688345128]Tx Data for 4: [ 31 35 ]
+[1757154157.689521853]Tx Data for 1: [ 31 32 ]
+[1757154157.690652542]Tx Data for 2: [ 31 33 ]
+[1757154157.691773873]Tx Data for 3: [ 31 34 ]
+[1757154157.788339724]Tx Data for 4: [ 31 35 ]
+[1757154157.789536868]Tx Data for 1: [ 31 32 ]
+[1757154157.790724965]Tx Data for 2: [ 31 33 ]
+[1757154157.791927238]Tx Data for 3: [ 31 34 ]
+[1757154157.888358927]Tx Data for 4: [ 31 35 ]
+[1757154157.889578503]Tx Data for 1: [ 31 32 ]
+[1757154157.890769414]Tx Data for 2: [ 31 33 ]
+[1757154157.891972539]Tx Data for 3: [ 31 34 ]
+[1757154157.988344266]Tx Data for 4: [ 31 35 ]
+[1757154157.989534336]Tx Data for 1: [ 31 32 ]
+[1757154157.990717984]Tx Data for 2: [ 31 33 ]
+[1757154157.991924575]Tx Data for 3: [ 31 34 ]
+[rviz2-8] [INFO] [1757154168.671046162] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Stopping planning scene monitor
+^C[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[move_group-9] [INFO] [1757154169.912123476] [rclcpp]: signal_handler(signum=2)
+[ERROR] [rviz2-8]: process has died [pid 116803, exit code -11, cmd '/opt/ros/humble/lib/rviz2/rviz2 -d /home/arctos/ros2_ws/install/arctos_moveit_config/share/arctos_moveit_config/config/moveit.rviz --ros-args -r __node:=rviz2'].
+[INFO] [robot_state_publisher-2]: process has finished cleanly [pid 116691]
+[INFO] [socket_can_sender_node_exe-5]: process has finished cleanly [pid 116697]
+[INFO] [socket_can_receiver_node_exe-4]: process has finished cleanly [pid 116695]
+[robot_state_publisher-2] [INFO] [1757154169.912123576] [rclcpp]: signal_handler(signum=2)
+[socket_can_sender_node_exe-5] [INFO] [1757154169.912123335] [rclcpp]: signal_handler(signum=2)
+[socket_can_receiver_node_exe-4] [INFO] [1757154169.912126702] [rclcpp]: signal_handler(signum=2)
+[1757154169.912128094] [rclcpp]: signal_handler(signum=2)
+[1757154169.912263910] [controller_manager]: Shutdown request received....
+[1757154169.912375270] [controller_manager]: Shutting down all controllers in the controller manager.
+[1757154169.912424032] [controller_manager]: Deactivating controller 'joint_state_broadcaster'
+[1757154169.912491038] [controller_manager]: Shutting down controller 'joint_state_broadcaster'
+[1757154169.912608739] [controller_manager]: Deactivating controller 'arctos_arm_controller'
+[1757154169.912674914] [controller_manager]: Shutting down controller 'arctos_arm_controller'
+[1757154169.912716532] [controller_manager]: Deactivating controller 'arctos_hand_controller'
+[1757154169.912760385] [controller_manager]: Shutting down controller 'arctos_hand_controller'
+[1757154169.912814537] [resource_manager]: 'deactivate' hardware 'RealSystems' 
+[1757154169.912842790]Transitioning to INACTIVE state from active
+[1757154169.912926678]Tx Data for 1: [ f3 0 f4 ]
+[1757154169.913001609]Tx Data for 2: [ f3 0 f5 ]
+[1757154169.913047004]Tx Data for 3: [ f3 0 f6 ]
+[1757154169.913104463]Tx Data for 4: [ f3 0 f7 ]
+[1757154169.913152393]Tx Data for 5: [ f3 0 f8 ]
+[1757154169.913189412]Tx Data for 6: [ f3 0 f9 ]
+[1757154169.913224709]Tx Data for 7: [ f3 0 fa ]
+[1757154169.914911294] [resource_manager]: Successful 'deactivate' of hardware 'RealSystems'
+[1757154169.914952171] [resource_manager]: 'shutdown' hardware 'RealSystems' 
+[1757154169.914967159] [resource_manager]: Successful 'shutdown' of hardware 'RealSystems'
+[1757154169.914982217] [controller_manager]: Shutting down the controller manager.
+[1757154170.080814499]Shutting down motor driver, stopping all motors...
+[1757154170.080893237]Tx Data for 4: [ f7 fb ]
+[1757154170.080918365]Tx Data for 5: [ f7 fc ]
+[1757154170.080926049]Tx Data for 6: [ f7 fd ]
+[1757154170.080932762]Tx Data for 7: [ f7 fe ]
+[1757154170.080939284]Tx Data for 1: [ f7 f8 ]
+[1757154170.080945586]Tx Data for 2: [ f7 f9 ]
+[1757154170.080951928]Tx Data for 3: [ f7 fa ]
+[move_group-9] [INFO] [1757154169.960205240] [moveit.ros_planning_interface.moveit_cpp]: Deleting MoveItCpp
+[move_group-9] [INFO] [1757154169.960520754] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Stopped publishing maintained planning scene.
+[move_group-9] [INFO] [1757154169.962706339] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Stopping world geometry monitor
+[move_group-9] [INFO] [1757154169.963797453] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Stopping planning scene monitor
+[move_group-9] Warning: class_loader.ClassLoader: SEVERE WARNING!!! Attempting to unload library while objects created by this loader exist in the heap! You should delete your objects before attempting to unload the library or destroying the ClassLoader. The library will NOT be unloaded.
+[move_group-9]          at line 127 in ./src/class_loader.cpp
+[move_group-9] Stack trace (most recent call last):
+[move_group-9] #16   Object "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2", at 0xffffffffffffffff, in 
+[move_group-9] #15   Object "/opt/ros/humble/lib/moveit_ros_move_group/move_group", at 0x5d6e3d883724, in 
+[move_group-9] #14   Source "../csu/libc-start.c", line 392, in __libc_start_main_impl [0x78b7d8a29e3f]
+[move_group-9] #13   Source "../sysdeps/nptl/libc_start_call_main.h", line 58, in __libc_start_call_main [0x78b7d8a29d8f]
+[move_group-9] #12   Object "/opt/ros/humble/lib/moveit_ros_move_group/move_group", at 0x5d6e3d88265b, in 
+[move_group-9] #11   Object "/opt/ros/humble/lib/moveit_ros_move_group/move_group", at 0x5d6e3d884709, in 
+[move_group-9] #10   Object "/opt/ros/humble/lib/libmoveit_cpp.so.2.5.9", at 0x78b7d9689876, in moveit_cpp::MoveItCpp::~MoveItCpp()
+[move_group-9] #9    Object "/opt/ros/humble/lib/libmoveit_cpp.so.2.5.9", at 0x78b7d9687ba9, in 
+[move_group-9] #8    Object "/opt/ros/humble/lib/libmoveit_trajectory_execution_manager.so.2.5.9", at 0x78b7d898d495, in trajectory_execution_manager::TrajectoryExecutionManager::~TrajectoryExecutionManager()
+[move_group-9] #7    Object "/opt/ros/humble/lib/libmoveit_trajectory_execution_manager.so.2.5.9", at 0x78b7d89a03a9, in 
+[move_group-9] #6    Object "/opt/ros/humble/lib/librclcpp.so", at 0x78b7d92e7d8c, in rclcpp::Node::~Node()
+[move_group-9] #5    Object "/opt/ros/humble/lib/librclcpp.so", at 0x78b7d92e7d2e, in rclcpp::Node::~Node()
+[move_group-9] #4    Object "/opt/ros/humble/lib/librclcpp.so", at 0x78b7d92c2db9, in 
+[move_group-9] #3    Object "/opt/ros/humble/lib/librclcpp.so", at 0x78b7d92f13d9, in 
+[move_group-9] #2    Object "/opt/ros/humble/lib/librclcpp.so", at 0x78b7d92f1320, in rclcpp::node_interfaces::NodeBase::~NodeBase()
+[move_group-9] #1    Object "/opt/ros/humble/lib/librclcpp.so", at 0x78b7d92c2db9, in 
+[move_group-9] #0    Object "/opt/ros/humble/lib/librclcpp.so", at 0x78b7d92c7c71, in rclcpp::CallbackGroup::~CallbackGroup()
+[move_group-9] Segmentation fault (Address not mapped to object [0x78b7a655d798])
+[INFO] [ros2_control_node-1]: process has finished cleanly [pid 116689]
+[ERROR] [move_group-9]: process has died [pid 116805, exit code -11, cmd '/opt/ros/humble/lib/moveit_ros_move_group/move_group --ros-args --params-file /tmp/launch_params_k8ugaha9 --params-file /tmp/launch_params_o9arj_w_'].
