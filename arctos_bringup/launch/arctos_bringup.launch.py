@@ -6,6 +6,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Command, FindExecutable
 from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
+from moveit_configs_utils import MoveItConfigsBuilder
 import os
 
 
@@ -14,41 +15,47 @@ def generate_launch_description():
     arctos_hardware_interface_dir = get_package_share_directory('arctos_hardware_interface')
     arctos_moveit_dir = get_package_share_directory('arctos_moveit_config')
 
-    # Declare Launch Arguments
-    declare_rviz_arg = DeclareLaunchArgument(
-        "rviz_config_file",
-        default_value=PathJoinSubstitution([arctos_moveit_dir, "config", "moveit.rviz"]),
-        description="Path to RViz configuration file"
+    # MoveItConfigsBuilder automatically do the following:
+    # .robot_description: create urdf file using command: xacro arctos.urdf.xacro
+    # .robot_description_semantic
+    moveit_config = (
+        MoveItConfigsBuilder("arctos")
+        .robot_description(file_path="config/arctos.urdf.xacro")
+        .robot_description_semantic(file_path="config/arctos.srdf")
+        .trajectory_execution(file_path="config/moveit_controllers.yaml")
+        .planning_pipelines(pipelines=["ompl", "chomp"])
+        .to_moveit_configs()
     )
 
-    # RViz Configuration
-    rviz_config_file = LaunchConfiguration("rviz_config_file")
+    rviz_base = os.path.join(get_package_share_directory("arctos_moveit_config"), "config")
+    rviz_full_config = os.path.join(rviz_base, "moveit_chomp.rviz")
+    rviz_empty_config = os.path.join(rviz_base, "moveit.rviz")
 
-    # Get URDF via xacro
-    # basically command to convert xacro to urdf using:
-    # xacro arctos.urdf.xacro
-    robot_description_content = Command(
-        [
-            PathJoinSubstitution([FindExecutable(name="xacro")]),
-            " ",
-            PathJoinSubstitution([arctos_moveit_dir, "config", "arctos.urdf.xacro"]),
-        ]
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        output="screen",
+        arguments=["-d", rviz_empty_config],
+        parameters=[
+            moveit_config.robot_description,
+            moveit_config.robot_description_semantic,
+            moveit_config.planning_pipelines,
+            moveit_config.robot_description_kinematics,
+        ],
     )
-
-    robot_description = {"robot_description": robot_description_content}
-
-    # Parameters
-    robot_controllers = os.path.join(
-        arctos_moveit_dir, 'config', 'ros2_controllers.yaml'
-    )
-
     # Nodes
     # publish the state of robot to TF (transform)
     robot_state_pub_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
+        name="robot_state_publisher",
         output="both",
-        parameters=[robot_description],
+        parameters=[moveit_config.robot_description],
+    )
+
+    # Parameters
+    robot_controllers = os.path.join(
+        arctos_moveit_dir, 'config', 'ros2_controllers.yaml'
     )
 
     control_node = Node(
@@ -63,7 +70,7 @@ def generate_launch_description():
             '--log-level', 'controller_manager:=info'
         ],
         remappings={
-            ('~/robot_description', '/robot_description')
+             ("/controller_manager/robot_description", "/robot_description"),
         }
     )
 
@@ -99,15 +106,6 @@ def generate_launch_description():
         )
     )
 
-    # RViz Node
-    rviz_node = Node(
-        package="rviz2",
-        executable="rviz2",
-        name="rviz2",
-        output="screen",
-        arguments=["-d", rviz_config_file],
-    )
-
     # Ensure joint state broadcaster starts before controllers
     delay_robot_arm_controller_spawner = RegisterEventHandler(
         event_handler=OnProcessExit(
@@ -124,7 +122,6 @@ def generate_launch_description():
         ))
     
     return LaunchDescription([
-        declare_rviz_arg,
         LogInfo(msg=["Launching Arctos Bringup with RViz..."]),
         control_node,
         robot_state_pub_node,

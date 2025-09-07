@@ -310,9 +310,19 @@ namespace arctos_interface
 
                 if (has_position_interface_)
                 {
-                    double pos = motor_driver_->getJointPosition(joint_name);
-                    joint_position_[i] = pos;
-                    RCLCPP_DEBUG(node_->get_logger(), "Updated position for joint %s: %.3f", joint_name.c_str(), pos);
+                    // for now, the gripper state will update directly from position_command.
+                    // TODO: read actualy gripper state and update.
+                    if (joint_name == "Left_jaw_joint") 
+                    {
+                        joint_position_[i] = joint_position_command_[i];
+                    }
+                    else 
+                    {
+                        double pos = motor_driver_->getJointPosition(joint_name);
+                        joint_position_[i] = pos;
+                        RCLCPP_DEBUG(node_->get_logger(), "Updated position for joint %s: %.3f", joint_name.c_str(), pos);
+                    }
+                    
                 }
 
                 if (has_velocity_interface_)
@@ -384,12 +394,22 @@ namespace arctos_interface
                     // Only send if position has changed significantly
                     if (std::abs(joint_position_command_[i] - last_position_command_[i]) > position_tolerance_)
                     {
-                        motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i], 200, abs(joint_velocities_command_[i] * 1000));
-                        RCLCPP_INFO(node_->get_logger(),
-                                    "Sent position command %.5f to joint %s. Last command: %.5f.",
-                                    joint_position_command_[i], info_.joints[i].name.c_str(),
-                                    last_position_command_[i]);
-                        last_position_command_[i] = joint_position_command_[i];
+                        if (info_.joints[i].name == "Left_jaw_joint") 
+                        {
+                            // TODO: write function to control gripper.
+                            // down here, we only have to care about what position will we drive our actuator. 
+                            // the talking between actions, msg between moveit and ros2 has been handled by moveit before reaching here.
+                            continue;
+                        }
+                        else
+                        {
+                            motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i], 200, abs(joint_velocities_command_[i] * 1000));
+                            RCLCPP_INFO(node_->get_logger(),
+                                        "Sent position command %.5f to joint %s. Last command: %.5f.",
+                                        joint_position_command_[i], info_.joints[i].name.c_str(),
+                                        last_position_command_[i]);
+                            last_position_command_[i] = joint_position_command_[i];
+                        }
                     }
                     else
                     {

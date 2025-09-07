@@ -1,4 +1,10 @@
 # MoveIt uses this configuration for controller management
+# The MoveItControllerManager can parse the joint names in any command coming from
+# MoveIt and activate the appropriate controllers of ROS2 control
+# try to write command on the same line of attribute. Don't write them in a seperate line.
+# Ex: this is not allowed, may cause unexpected error:
+#   Type: GripperCommand
+#   # dummy comment
 
 moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
 
@@ -8,7 +14,7 @@ moveit_simple_controller_manager:
     - arctos_hand_controller
 
   arctos_arm_controller:
-    type: FollowJointTrajectory
+    type: FollowJointTrajectory   # type of "action"
     joints:
       - X_joint
       - Y_joint
@@ -18,9 +24,10 @@ moveit_simple_controller_manager:
       - C_joint
     action_ns: follow_joint_trajectory
     default: true
+
   arctos_hand_controller:
-    type: GripperCommand
-    joints:
+    type: GripperCommand      # type of "action"
+    joints: 
       - Left_jaw_joint
     action_ns: gripper_cmd
     default: true

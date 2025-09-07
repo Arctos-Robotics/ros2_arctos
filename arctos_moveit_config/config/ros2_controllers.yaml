@@ -1,4 +1,6 @@
 # This config file is used by ros2_control
+# Each JointTrajectoryController provides an action interface. Given the yaml moveit_controllers.yaml, 
+# MoveIt automatically connects to this action interface.
 controller_manager:
   ros__parameters:
     update_rate: 10  # Hz ([read -> update -> write] cycle is executed 20 times per second)
@@ -38,6 +40,9 @@ arctos_arm_controller:
 arctos_hand_controller:
   ros__parameters:
     joint: Left_jaw_joint
+
+    action_monitor_rate: 10.0
+    allow_stalling: false     # Allow stalling will make the action server return success if the gripper stalls when moving to the goal
 
 arctos_hardware_interface:
   ros__parameters:
