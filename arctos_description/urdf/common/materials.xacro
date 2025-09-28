@@ -7,5 +7,14 @@
   <material name="black">
     <color rgba="0.0 0.0 0.0 1.0" />
   </material>
+  <material name="base_blue">
+    <color rgba="0.50196 0.50196 1 1" />
+  </material>
+  <material name="blue">
+    <color rgba="0.78431 0.98039 0.98039 1" />
+  </material>
+  <material name="gray">
+    <color rgba="0.78431 0.98039 0.98039 1" />
+  </material>
 
 </robot>
