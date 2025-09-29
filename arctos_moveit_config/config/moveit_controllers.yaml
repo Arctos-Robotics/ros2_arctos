@@ -24,6 +24,7 @@ moveit_simple_controller_manager:
       - C_joint
     action_ns: follow_joint_trajectory
     default: true
+    allowed_start_tolerance: 0.1
 
   arctos_hand_controller:
     type: GripperCommand      # type of "action"

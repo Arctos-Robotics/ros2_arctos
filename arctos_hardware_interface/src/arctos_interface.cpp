@@ -1,5 +1,6 @@
 #include "arctos_hardware_interface/arctos_interface.hpp"
 // #include "arctos_hardware_interface/arctos_services.hpp"
+#include "transmission_interface/differential_transmission.hpp"
 #include <pluginlib/class_list_macros.hpp>
 #include <string>
 #include <vector>
@@ -8,6 +9,10 @@
 using arctos_motor_driver::MotorMode;
 using hardware_interface::CallbackReturn;
 using hardware_interface::return_type;
+using transmission_interface::ActuatorHandle;
+using transmission_interface::DifferentialTransmission;
+using transmission_interface::Exception;
+using transmission_interface::JointHandle;
 
 namespace arctos_interface
 {
@@ -403,7 +408,7 @@ namespace arctos_interface
                         }
                         else
                         {
-                            motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i], 200, abs(joint_velocities_command_[i] * 1000));
+                            motor_driver_->setJointPosition(info_.joints[i].name, joint_position_command_[i], 0, abs(joint_velocities_command_[i] * 10) * 60);
                             RCLCPP_INFO(node_->get_logger(),
                                         "Sent position command %.5f to joint %s. Last command: %.5f.",
                                         joint_position_command_[i], info_.joints[i].name.c_str(),
