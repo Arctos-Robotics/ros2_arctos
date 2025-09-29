@@ -877,8 +877,8 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
         if (std::abs(joint.position) < POSITION_DEADBAND) {
             joint.position = 0.0;
         }
-        RCLCPP_INFO(node_->get_logger(), "Updated joint %s (%s) position: %.2f rad", 
-                    joint_name.c_str(), joint.inverted_feedback ? "inverted feedback" : "normal", joint.position);
+        RCLCPP_INFO(node_->get_logger(), "Updated motor %d (%s) position: %.2f rad", 
+                    joint.motor_id, joint.inverted_feedback ? "inverted feedback" : "normal", joint.position);
 
         joint.last_update = node_->get_clock()->now();
     } catch (const std::exception& e) {
