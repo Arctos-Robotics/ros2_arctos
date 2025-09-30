@@ -7,7 +7,7 @@ moveit_setup_assistant_config:
   package_settings:
     author_name: Tran Ngoc Cat
     author_email: ngoccatt@gmail.com
-    generated_timestamp: 1757151083
+    generated_timestamp: 1759158227
   control_xacro:
     command:
       - position

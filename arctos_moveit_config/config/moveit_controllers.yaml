@@ -10,10 +10,9 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 
 moveit_simple_controller_manager:
   controller_names:
-    - arctos_arm_controller
-    - arctos_hand_controller
+    - denso_arm_controller
 
-  arctos_arm_controller:
+  denso_arm_controller:
     type: FollowJointTrajectory   # type of "action"
     joints:
       - X_joint
@@ -23,12 +22,4 @@ moveit_simple_controller_manager:
       - B_joint
       - C_joint
     action_ns: follow_joint_trajectory
-    default: true
-    allowed_start_tolerance: 0.1
-
-  arctos_hand_controller:
-    type: GripperCommand      # type of "action"
-    joints: 
-      - Left_jaw_joint
-    action_ns: gripper_cmd
     default: true

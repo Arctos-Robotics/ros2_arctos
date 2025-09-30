@@ -83,7 +83,7 @@ def generate_launch_description():
     robot_arm_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["arctos_arm_controller", "--controller-manager", "/controller_manager"],
+        arguments=["denso_arm_controller", "--controller-manager", "/controller_manager"],
     )
 
     robot_hand_controller_spawner = Node(

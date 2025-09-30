@@ -1,6 +1,5 @@
 #include "arctos_hardware_interface/arctos_interface.hpp"
 // #include "arctos_hardware_interface/arctos_services.hpp"
-#include "transmission_interface/differential_transmission.hpp"
 #include <pluginlib/class_list_macros.hpp>
 #include <string>
 #include <vector>
@@ -9,10 +8,6 @@
 using arctos_motor_driver::MotorMode;
 using hardware_interface::CallbackReturn;
 using hardware_interface::return_type;
-using transmission_interface::ActuatorHandle;
-using transmission_interface::DifferentialTransmission;
-using transmission_interface::Exception;
-using transmission_interface::JointHandle;
 
 namespace arctos_interface
 {

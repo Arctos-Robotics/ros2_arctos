@@ -98,7 +98,7 @@
     parent="link_2" child="link_3"
     origin_xyz="0 0.029976 0.36377" origin_rpy="0 0 0"
     axis_xyz="-1 0 0"
-    limit_l="-2.0769" limit_u="2.9496" limit_e="1" limit_v="3.4907" mimic=""
+    limit_l="-2.0769" limit_u="1.5" limit_e="1" limit_v="3.4907" mimic=""
   />
 
   <xacro:arctos_joint

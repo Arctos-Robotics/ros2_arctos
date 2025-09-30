@@ -3,12 +3,12 @@
     <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
 
     <!-- Import arctos urdf file -->
-    <xacro:include filename="$(find arctos_description)/urdf/arctos.xacro" />
+    <xacro:include filename="$(find arctos_description)/urdf/arctos.urdf" />
 
     <!-- Import control_xacro -->
     <xacro:include filename="arctos.ros2_control.xacro" />
 
 
-    <xacro:arctos_ros2_control name="RealSystems" initial_positions_file="$(arg initial_positions_file)"/>
+    <xacro:arctos_ros2_control name="RealSystem" initial_positions_file="$(arg initial_positions_file)" sim="false"/>
 
 </robot>
