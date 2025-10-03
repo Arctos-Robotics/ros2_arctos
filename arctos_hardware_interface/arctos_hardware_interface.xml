@@ -1,8 +1,6 @@
-<?xml version="1.0"?>
-<library path="arctos_interface">
-  <class name="arctos_interface/ArctosInterface"
-         type="arctos_interface::ArctosInterface"
+<library path="arctos_hardware_interface">
+  <class name="arctos_hardware_interface/ArctosHardwareInterface"
+         type="ArctosHardwareInterface"
          base_class_type="hardware_interface::SystemInterface">
-    <description>The Arctos hardware interface for ROS 2 Control</description>
   </class>
 </library>

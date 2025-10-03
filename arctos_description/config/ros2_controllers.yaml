@@ -1,16 +1,13 @@
-# This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Hz
-
-    arctos_controller:
-      type: arctos_controller/ArctosController
+    update_rate: 100
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-arctos_controller:
-  ros__parameters:
+joint_trajectory_controller:
+  ros__parameters:    
+    type: joint_trajectory_controller/JointTrajectoryController                                         
     joints:
       - X_joint
       - Y_joint
@@ -20,8 +17,7 @@ arctos_controller:
       - C_joint
     command_interfaces:
       - position
-      - velocity
     state_interfaces:
       - position
       - velocity
-
+    state_publish_rate: 100.0
