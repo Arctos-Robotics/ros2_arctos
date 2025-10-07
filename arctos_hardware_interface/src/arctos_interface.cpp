@@ -25,7 +25,7 @@ namespace arctos_interface
     ArctosInterface::~ArctosInterface() = default;
 
     /* communication between the robot hardware needs to be setup and memory dynamic should be allocated */
-    /* HardwareInfo info could be collected from xacro file, under tag hardware/parameters*/
+    /* HardwareInfo info could be collected from yaml file, under tag hardware/parameters*/
     CallbackReturn ArctosInterface::on_init(const hardware_interface::HardwareInfo &info)
     {
         if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS)
@@ -71,8 +71,8 @@ namespace arctos_interface
             node_->declare_parameter(param_prefix + "inverted", false);          // Default no inverted in application side
             node_->declare_parameter(param_prefix + "inverted_feedback", false); // Default no inverted in physical side
             node_->declare_parameter(param_prefix + "requires_homing", false);   // Default no homing needed
-            node_->declare_parameter(param_prefix + "home_position", 0.0);
-            node_->declare_parameter(param_prefix + "opposite_limit", 0.0);
+            node_->declare_parameter(param_prefix + "lower_limit", 0.0);
+            node_->declare_parameter(param_prefix + "upper_limit", 0.0);
 
             // Get motor ID from parameters
             int motor_id;
@@ -318,7 +318,7 @@ namespace arctos_interface
                     }
                     else 
                     {
-                        double pos = motor_driver_->getJointPosition(joint_name);
+                        double pos = motor_driver_->getJointPosition(joint_name, true);
                         joint_position_[i] = pos;
                         RCLCPP_DEBUG(node_->get_logger(), "Updated position for joint %s: %.3f", joint_name.c_str(), pos);
                     }
@@ -355,6 +355,8 @@ namespace arctos_interface
     */
     return_type ArctosInterface::write(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
     {
+        static bool isPositionUpdated;
+        isPositionUpdated = false;
         // Resize last command vectors if not already done
         if (last_position_command_.size() != info_.joints.size())
         {
@@ -410,6 +412,7 @@ namespace arctos_interface
                                         last_position_command_[i]);
                             last_position_command_[i] = joint_position_command_[i];
                         }
+                        isPositionUpdated = true;
                     }
                     else
                     {
@@ -428,6 +431,11 @@ namespace arctos_interface
             }
         }
 
+        // Write command to the actuator.
+        if (isPositionUpdated) {
+            motor_driver_->writeCommand();
+        }
+        
         return return_type::OK;
     }
 
@@ -508,8 +516,8 @@ namespace arctos_interface
             //   motor_driver_->setHoldingCurrent(joint_info.name, static_cast<uint8_t>(holding_current));
             // }
             double gear_ratio;
-            double home_position;
-            double opposite_limit;
+            double lower_limit;
+            double upper_limit;
             double max_rpm = 3000.0;
             std::string param_prefix = "motors." + joint_info.name + ".";
 
@@ -523,17 +531,17 @@ namespace arctos_interface
 
             // Get home position from parameters
 
-            node_->get_parameter(param_prefix + "home_position", home_position);
-            node_->get_parameter(param_prefix + "opposite_limit", opposite_limit);
+            node_->get_parameter(param_prefix + "lower_limit", lower_limit);
+            node_->get_parameter(param_prefix + "upper_limit", upper_limit);
 
             // Calculate maximum velocity based on gear ratio
             double max_velocity = (max_rpm * M_PI / 30.0) / gear_ratio;
 
             // Set joint limits using home position and opposite limit
-            motor_driver_->setJointLimits(joint_info.name, home_position, opposite_limit, max_velocity, 255.0);
+            motor_driver_->setJointLimits(joint_info.name, lower_limit, upper_limit, max_velocity, 255.0);
 
             RCLCPP_INFO(node_->get_logger(), "Set joint limits for joint %s of motor %d: pos=[%.2f, %.2f], vel=%.2f, acc=%.2f",
-                        joint_info.name.c_str(), motor_id, home_position, opposite_limit, max_velocity, 255.0);
+                        joint_info.name.c_str(), motor_id, lower_limit, upper_limit, max_velocity, 255.0);
 
             // auto pos_min_param = joint_info.parameters.find("position_min");
             // auto pos_max_param = joint_info.parameters.find("position_max");

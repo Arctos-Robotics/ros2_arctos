@@ -3,6 +3,7 @@
 
 #include "arctos_motor_driver/motor_types.hpp"
 #include "arctos_motor_driver/can_protocol.hpp"
+#include "serial/serial.h"
 #include <map>
 #include <memory>
 
@@ -12,6 +13,9 @@
  */
 
 namespace arctos_motor_driver {
+
+// this is to define whether we need to convert from degrees to encoder steps or not.
+#define ENCODER_CONVERSION_NEEDED  false
 
 /**
  * @class MotorDriver
@@ -45,7 +49,7 @@ public:
      * @param joint_name The name of the joint.
      * @param motor_id The ID of the motor.
      */
-    void addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio = 1.0, bool inverted = false, bool inverted_feedback = false, double zero_position = 0.0, double home_position = 0.0, double opposite_limit = 0.0);
+    void addJoint(const std::string& joint_name, uint8_t motor_id, std::string hardware_type, double gear_ratio = 1.0, bool inverted = false, bool inverted_feedback = false, double zero_position = 0.0, double lower_limit = 0.0, double upper_limit = 0.0);
 
     /**
      * @brief Removes a joint from the motor driver.
@@ -82,7 +86,7 @@ public:
      * @param joint_name The name of the joint.
      * @return The position of the joint.
      */
-    double getJointPosition(const std::string& joint_name) const;
+    double getJointPosition(const std::string& joint_name, bool convert_to_rad = true) const;
 
     /**
      * @brief Gets the velocity of a joint.
@@ -220,6 +224,12 @@ public:
      * @param joint_name The name of the joint.
      */
     void clearError(const std::string& joint_name);
+
+    /**
+     * @brief Write command to actuator, using buffer from each motors
+     * @param 
+     */
+    void writeCommand();
 
 private:
     rclcpp::Node::SharedPtr node_; /**< A shared pointer to the ROS 2 node. */

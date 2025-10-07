@@ -43,61 +43,61 @@ arctos_hardware_interface:
         requires_homing: false
         inverted: true            # for application: app request go to 10 rad, but raw request to 10 rad
         inverted_feedback: false  # for can communication: raw request go to 1000, but motor run to -1000
-        gear_ratio: 13.5
+        gear_ratio: 1.0
         hardware_type: MKS_57D
-        zero_position: 3.0348389535736033
-        home_position: -3.028106482337883
-        opposite_limit: 2.7484106520134013
+        zero_position: 0.0
+        lower_limit: -170.0  # lower_limit, in degree
+        upper_limit: 170.0   # upper_limit, in degree
       Y_joint:
         motor_id: 2
         requires_homing: false
         inverted: true            # for application: app request go to 10 rad, but raw request to 10 rad
         inverted_feedback: false  # for case of request go to 1000, but motor run to -1000
-        gear_ratio: 150.0
+        gear_ratio: 1.0
         hardware_type: MKS_57D
-        zero_position: 0.8549028328965467
-        home_position: -0.8539415382694717
-        opposite_limit: 2.0056236341982534
+        zero_position: 0.0
+        lower_limit: -100.0  # lower_limit, in degree
+        upper_limit: 135.0   # upper_limit, in degree
       Z_joint:
         motor_id: 3
         requires_homing: false
         inverted: true            # for application: app request go to 10 rad, but raw request to 10 rad
         inverted_feedback: false  # for case of request go to 1000, but motor run to -1000
-        gear_ratio: 150.0
+        gear_ratio: 1.0
         hardware_type: MKS_42D
-        zero_position: 0.6805250101989999
-        home_position: -1.570796327
-        opposite_limit: 0.959931089
+        zero_position: 0.0
+        lower_limit: -119.0             # lower limit, in degree
+        upper_limit: 85.94367           # upper limit, in degree
       A_joint:
         motor_id: 4
         requires_homing: false
         inverted: true            # for application: app request go to 10 rad, but raw request to 10 rad
         inverted_feedback: false  # for case of request go to 1000, but motor run to -1000
-        gear_ratio: 48.0
+        gear_ratio: 1.0
         hardware_type: MKS_42D
-        zero_position: 0.6805250101989999
-        home_position: -1.570796327
-        opposite_limit: 1.570796327
+        zero_position: 0.0
+        lower_limit: -190.0         # lower limit, in degree
+        upper_limit: 190.0          # upper limit, in degree
       B_joint:                    
         motor_id: 5
         requires_homing: false
         inverted: false             # for application: app request go to 10 rad, but raw request to 10 rad (validated)
         inverted_feedback: true     # for case of request go to 1000, but motor run to -1000 (validated)
-        gear_ratio: 67.82
+        gear_ratio: 1.0
         hardware_type: MKS_42D
-        zero_position: -0.43627526433400465
-        home_position: -1.55
-        opposite_limit: 1.55
+        zero_position: -0.0
+        lower_limit: -120.0         # lower limit, in degree
+        upper_limit: 120.0          # upper limit, in degree
       C_joint:
         motor_id: 6
         requires_homing: false
-        inverted: true            # for application: app request go to 10 rad, but raw request to 10 rad
-        inverted_feedback: false  # for case of request go to 1000, but motor run to -1000
-        gear_ratio: 67.82
+        inverted: true                # for application: app request go to 10 rad, but raw request to 10 rad
+        inverted_feedback: false      # for case of request go to 1000, but motor run to -1000
+        gear_ratio: 1.0
         hardware_type: MKS_42D
-        zero_position: -0.3665992422596649
-        home_position: -3.141592654
-        opposite_limit: 3.141592654
+        zero_position: -0.0
+        lower_limit: -360.0     # lower limit, in degree
+        upper_limit: 360.0      # upper limit, in degree
       Left_jaw_joint:
         motor_id: 7
         requires_homing: false
@@ -106,5 +106,5 @@ arctos_hardware_interface:
         gear_ratio: 1.0
         hardware_type: MKS_42D
         zero_position: 0.0
-        home_position: 0.0
-        opposite_limit: 0.015
+        lower_limit: 0.0
+        upper_limit: 0.015
