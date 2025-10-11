@@ -13,6 +13,9 @@
         </xacro:if>
         <xacro:unless value="${sim}">
           <plugin>arctos_interface/ArctosInterface</plugin>
+          <param name="device">/dev/ttyUSB0</param>
+          <param name="baud_rate">57600</param>
+          <param name="timeout">1000</param>
         </xacro:unless>
       </hardware>
       <joint name="X_joint">

@@ -10,7 +10,7 @@
 #include <thread>
 
 #include "arctos_motor_driver/motor_driver.hpp"
-#include "arctos_motor_driver/can_protocol.hpp"
+#include "arctos_motor_driver/uart_protocol.hpp"
 #include "arctos_hardware_interface/arctos_services.hpp"
 
 #include "hardware_interface/handle.hpp"
@@ -75,7 +75,7 @@ protected:
   rclcpp::Node::SharedPtr node_;
   rclcpp::TimerBase::SharedPtr update_timer_;
   std::shared_ptr<arctos_motor_driver::MotorDriver> motor_driver_;
-  std::shared_ptr<arctos_motor_driver::CANProtocol> can_protocol_;
+  std::shared_ptr<arctos_motor_driver::UartProtocol> uart_protocol_;
   // Configuration parameters
   std::vector<uint8_t> motor_ids_;  // Mapping of joint indices to motor IDs
   bool has_velocity_interface_{false};

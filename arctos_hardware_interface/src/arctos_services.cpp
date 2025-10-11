@@ -94,7 +94,7 @@ void Services::handleCalibrationAllRequest(
   
   for (const auto& joint_name : joint_names_) {
     try {
-      motor_driver_->calibrateMotor(joint_name);
+      // motor_driver_->calibrateMotor(joint_name);
       calibration_in_progress_[joint_name] = true;
       message << "Started calibration of joint " << joint_name << "\n";
     } catch (const std::exception& e) {
@@ -121,7 +121,7 @@ void Services::handleHomingAllRequest(
   
   for (const auto& joint_name : joint_names_) {
     try {
-      motor_driver_->homeMotor(joint_name);
+      // motor_driver_->homeMotor(joint_name);
       homing_in_progress_[joint_name] = true;
       message << "Started homing of joint " << joint_name << "\n";
     } catch (const std::exception& e) {
@@ -145,7 +145,7 @@ void Services::handleCalibrationJointRequest(
   RCLCPP_INFO(node_->get_logger(), "Starting calibration of joint %s...", joint_name.c_str());
   
   try {
-    motor_driver_->calibrateMotor(joint_name);
+    // motor_driver_->calibrateMotor(joint_name);
     calibration_in_progress_[joint_name] = true;
     response->success = true;
     response->message = "Started calibration of joint " + joint_name;
@@ -176,7 +176,7 @@ void Services::handleHomingJointRequest(
     RCLCPP_INFO(node_->get_logger(), "Starting homing for joint %s (motor ID: %d)...", 
                 joint_name.c_str(), motor_id);
     
-    motor_driver_->homeMotor(joint_name);
+    // motor_driver_->homeMotor(joint_name);
     homing_in_progress_[joint_name] = true;
     
     response->success = true;

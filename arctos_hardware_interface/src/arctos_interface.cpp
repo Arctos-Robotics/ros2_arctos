@@ -16,9 +16,9 @@ namespace arctos_interface
         : SystemInterface(),
           node_(std::make_shared<rclcpp::Node>("arctos_hardware_interface"))
     {
-        can_protocol_ = std::make_shared<arctos_motor_driver::CANProtocol>(node_);
+        uart_protocol_ = std::make_shared<arctos_motor_driver::UartProtocol>();
         motor_driver_ = std::make_shared<arctos_motor_driver::MotorDriver>(node_);
-        motor_driver_->setCAN(can_protocol_);
+        motor_driver_->setProtocol(uart_protocol_);
 
     }
 
@@ -52,6 +52,21 @@ namespace arctos_interface
         std::vector<std::string> joint_names;
         joint_names.reserve(info_.joints.size());
 
+        
+        try
+        {
+            // Get params from Ros2_control/hardware/param in urdf
+            std::string device = info_.hardware_parameters["device"];
+            int baud_rate = std::stoi(info_.hardware_parameters["baud_rate"]);
+            int timeout = std::stoi(info_.hardware_parameters["timeout"]);
+            // then setup uart connection
+            uart_protocol_->setup(device, baud_rate, timeout);
+        }
+        catch (const std::exception &e)
+        {
+            RCLCPP_WARN(node_->get_logger(), "Failed to initialize UART connection, assuming using simulation: %s", e.what());
+        }
+        
         // Process joints and their interfaces
         for (size_t i = 0; i < info_.joints.size(); i++)
         {
@@ -143,7 +158,7 @@ namespace arctos_interface
 
                 RCLCPP_INFO(node_->get_logger(), "Enabling motor for joint %s", joint_name.c_str());
                 // Enable the motor first
-                motor_driver_->enableMotor(joint_name);
+                // motor_driver_->enableMotor(joint_name);
 
                 // Check if homing is required
                 bool requires_homing = false;
@@ -152,35 +167,6 @@ namespace arctos_interface
                 {
                     RCLCPP_INFO(node_->get_logger(), "Starting homing sequence for joint %s", joint_name.c_str());
 
-                    // Get homing current if specified
-                    // int home_current = 800;  // Default 0.8A
-                    // node_->get_parameter(param_prefix + "home_current", home_current);
-
-                    // Configure motor for homing
-                    // auto current_status = motor_driver_->getMotorStatus(joint_name);
-                    // uint16_t original_current = current_status.params.working_current;
-                    // motor_driver_->setWorkingCurrent(joint_name, static_cast<uint16_t>(home_current));
-
-                    // Start homing (this function is not verified)
-                    // motor_driver_->homeMotor(joint_name);
-
-                    // // Wait for homing to complete (with timeout)
-                    // rclcpp::Time start_time = node_->now();
-                    // while (!motor_driver_->getMotorStatus(joint_name).is_homed) {
-                    //   if ((node_->now() - start_time).seconds() > 30.0) {  // 30 second timeout
-                    //     RCLCPP_ERROR(node_->get_logger(), "Homing timeout for joint %s", joint_name.c_str());
-                    //     return CallbackReturn::ERROR;
-                    //   }
-                    //   if (motor_driver_->getMotorStatus(joint_name).is_error) {
-                    //     RCLCPP_ERROR(node_->get_logger(), "Homing error for joint %s", joint_name.c_str());
-                    //     return CallbackReturn::ERROR;
-                    //   }
-                    //   rclcpp::spin_some(node_);
-                    //   rclcpp::sleep_for(std::chrono::milliseconds(100));  // Check every 100ms
-                    // }
-
-                    // Restore original current
-                    // motor_driver_->setWorkingCurrent(joint_name, original_current);
                     RCLCPP_INFO(node_->get_logger(), "Homing completed for joint %s", joint_name.c_str());
                 }
             }
@@ -192,14 +178,14 @@ namespace arctos_interface
             }
         }
 
-        // thread spin is required for CAN subscription, 
-        // so that node is notified for any subscription event
+        // thread spin is required for continously reading UART strings, 
         allowSpin = true;
         spinThread = std::thread(
             [&]()
             {
                 while (allowSpin) {
-                    rclcpp::spin_some(node_);
+                    uart_protocol_->readToBuffer();
+                    std::this_thread::sleep_for(std::chrono::milliseconds(5));
                 }
             });
 
@@ -214,7 +200,8 @@ namespace arctos_interface
         {
             try
             {
-                motor_driver_->disableMotor(info_.joints[i].name);
+                // motor_driver_->disableMotor(info_.joints[i].name);
+                i = i;
             }
             catch (const std::exception &e)
             {
@@ -283,12 +270,9 @@ namespace arctos_interface
         // rclcpp::spin_some(node_);
         // created a thread that "spin()" for event already, hence spin_some here is not needed. :o
 
-        std::shared_ptr<can_msgs::msg::Frame> data;
-        while (can_protocol_->getFrame(data))
-        {
-            // Process CAN messages
-            motor_driver_->processCANMessage(data);
-        }
+
+        // Process UART messages
+        motor_driver_->processUartMessage();
 
         static rclcpp::Time last_update_time = time; // ✅ Static variable retains value between calls
         auto elapsed_time = time - last_update_time;
@@ -299,7 +283,9 @@ namespace arctos_interface
         //     last_update_time = time;  // ✅ Now correctly updated after each call
         // }
 
-        motor_driver_->updateJointStates();
+        // updateJointStates is a function that explicitly request the joint status of the robot.
+        // currently, data is updated automatically to robot when running. this is not yet used.
+        // motor_driver_->updateJointStates();
 
         for (size_t i = 0; i < info_.joints.size(); i++)
         {
@@ -500,21 +486,6 @@ namespace arctos_interface
     {
         try
         {
-            // Set working mode (default to SR_vFOC)
-            motor_driver_->setWorkingMode(joint_info.name, MotorMode::SR_vFOC);
-
-            // Get working current from parameters
-            // int working_current;
-            // std::string param_prefix = "motors." + joint_info.name + ".";
-            // if (node_->get_parameter(param_prefix + "working_current", working_current)) {
-            //   motor_driver_->setWorkingCurrent(joint_info.name, static_cast<uint16_t>(working_current));
-            // }
-
-            // // Get holding current from parameters
-            // int holding_current;
-            // if (node_->get_parameter(param_prefix + "holding_current", holding_current)) {
-            //   motor_driver_->setHoldingCurrent(joint_info.name, static_cast<uint8_t>(holding_current));
-            // }
             double gear_ratio;
             double lower_limit;
             double upper_limit;
@@ -542,24 +513,6 @@ namespace arctos_interface
 
             RCLCPP_INFO(node_->get_logger(), "Set joint limits for joint %s of motor %d: pos=[%.2f, %.2f], vel=%.2f, acc=%.2f",
                         joint_info.name.c_str(), motor_id, lower_limit, upper_limit, max_velocity, 255.0);
-
-            // auto pos_min_param = joint_info.parameters.find("position_min");
-            // auto pos_max_param = joint_info.parameters.find("position_max");
-            // auto vel_max_param = joint_info.parameters.find("velocity_max");
-            // auto acc_max_param = joint_info.parameters.find("acceleration_max");
-
-            // if (pos_min_param != joint_info.parameters.end() &&
-            //     pos_max_param != joint_info.parameters.end() &&
-            //     vel_max_param != joint_info.parameters.end() &&
-            //     acc_max_param != joint_info.parameters.end())
-            // {
-            //   double pos_min = std::stod(pos_min_param->second);
-            //   double pos_max = std::stod(pos_max_param->second);
-            //   double vel_max = std::stod(vel_max_param->second);
-            //   double acc_max = std::stod(acc_max_param->second);
-
-            // motor_driver_->setJointLimits(joint_info.name, pos_min, pos_max, vel_max, acc_max);
-            // }
 
             return true;
         }

@@ -23,8 +23,7 @@ namespace arctos_motor_driver {
  */
 MotorDriver::MotorDriver(rclcpp::Node::SharedPtr node) 
     : node_(node),
-      can_protocol_(std::make_shared<CANProtocol>(node)) {
-    
+      uart_protocol_(std::make_shared<UartProtocol>()) {
 }
 
 MotorDriver::~MotorDriver() {
@@ -32,8 +31,8 @@ MotorDriver::~MotorDriver() {
     stopAllMotors();
 }
 
-void MotorDriver::setCAN(std::shared_ptr<CANProtocol> can_protocol) {
-    can_protocol_ = can_protocol;
+void MotorDriver::setProtocol(std::shared_ptr<UartProtocol> protocol) {
+    uart_protocol_ = protocol;
 }
 /**
  * @brief Adds a new joint to the motor driver.
@@ -77,8 +76,9 @@ void MotorDriver::addJoint(const std::string& joint_name, uint8_t motor_id, std:
     motor_to_joint_map_[motor_id] = joint_name;
 
     joints_[joint_name].last_update = node_->get_clock()->now();  // Initialize timestamp
-    // add a vector of 8 zero elements to the pre_encoder_data_ buffer
-    pre_encoder_data_.emplace_back(std::vector<uint8_t>(8, 0));
+    // add a vector of "encoder" data for each joint, emplace_back() at the pre_encoder_data
+    // make sure that the datatype used in emplace_back here match the definition!
+    pre_encoder_data_.emplace_back(std::vector<double>(1, 0));
 
     RCLCPP_INFO(node_->get_logger(), "Added joint %s with motor ID %d and gear ratio %.2f:1", 
                 joint_name.c_str(), motor_id, gear_ratio);
@@ -173,13 +173,16 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
  */
 void MotorDriver::writeCommand() {
     std::string command = "";
+    std::vector<double> commandPositions;
     for (auto& [joint_name, joint] : joints_) {
         // Send CAN command
         // std::vector<uint8_t> data1;
         // can_protocol_->sendFrame(joint.motor_id, data1);
         command.append(std::to_string(joint.command_position) + ";");
+        commandPositions.push_back(joint.command_position);
         joint.last_command = node_->get_clock()->now();
     }
+    uart_protocol_->sendPosition(commandPositions);
     RCLCPP_INFO(node_->get_logger(), "Write command to actuator: %s", command.c_str());
 }
 
@@ -217,18 +220,6 @@ void MotorDriver::setJointVelocity(const std::string& joint_name, double velocit
     
     // Determine max speed based on working mode
     double max_speed;
-    switch (static_cast<MotorMode>(joint.params.working_mode)) {
-        case MotorMode::CR_OPEN:
-        case MotorMode::SR_OPEN:
-            max_speed = MotorConstants::MAX_RPM_OPEN;
-            break;
-        case MotorMode::CR_CLOSE:
-        case MotorMode::SR_CLOSE:
-            max_speed = MotorConstants::MAX_RPM_CLOSE;
-            break;
-        default:
-            max_speed = MotorConstants::MAX_RPM_vFOC;
-    }
     
     // Clamp speed to mode-specific max
     rpm = std::min(rpm, max_speed);
@@ -237,29 +228,8 @@ void MotorDriver::setJointVelocity(const std::string& joint_name, double velocit
     uint8_t direction = velocity >= 0 ? 0x00 : 0x80;
     uint16_t speed = static_cast<uint16_t>(rpm);
     
-    // Format CAN message according to manual
-    std::vector<uint8_t> data = {
-        CANCommands::SPEED_CONTROL,
-        static_cast<uint8_t>(direction | ((speed >> 8) & 0x0F)),  // Direction + high nibble of speed
-        static_cast<uint8_t>(speed & 0xFF),  // Low byte of speed
-        0x02  // Default acceleration
-    };
-    
-    can_protocol_->sendFrame(joint.motor_id, data);
     joint.command_velocity = velocity;
     joint.last_command = node_->get_clock()->now();
-}
-
-void MotorDriver::setZeroPosition(const std::string& joint_name) {
-    auto it = joints_.find(joint_name);
-    if (it == joints_.end()) {
-        RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
-        return;
-    }
-
-    auto& joint = it->second;
-
-    can_protocol_->sendFrame(joint.motor_id, {CANCommands::SET_ZERO_POSITION});
 }
 
 /**
@@ -305,57 +275,6 @@ double MotorDriver::getJointVelocity(const std::string& joint_name) const {
 }
 
 /**
- * Enables the motor for the specified joint.
- *
- * @param joint_name The name of the joint.
- */
-void MotorDriver::enableMotor(const std::string& joint_name) {
-    auto it = joints_.find(joint_name);
-    if (it == joints_.end()) {
-        RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
-        return;
-    }
-
-    std::vector<uint8_t> data = {CANCommands::ENABLE_MOTOR, 0x01};
-    can_protocol_->sendFrame(it->second.motor_id, data);
-    it->second.status.is_enabled = true;
-}
-
-/**
- * Enable the motor shaft locked-rotor protection for the specified joint.
- *
- * @param joint_name The name of the joint.
- */
-void MotorDriver::enableShaftProtection(const std::string& joint_name) {
-    auto it = joints_.find(joint_name);
-    if (it == joints_.end()) {
-        RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
-        return;
-    }
-
-    std::vector<uint8_t> data = {CANCommands::ENABLE_SHAFT_PROTECTION, 0x01};
-    can_protocol_->sendFrame(it->second.motor_id, data);
-    it->second.status.is_enabled = true;
-}
-
-/**
- * Disables the motor for the specified joint.
- *
- * @param joint_name The name of the joint.
- */
-void MotorDriver::disableMotor(const std::string& joint_name) {
-    auto it = joints_.find(joint_name);
-    if (it == joints_.end()) {
-        RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
-        return;
-    }
-
-    std::vector<uint8_t> data = {CANCommands::ENABLE_MOTOR, 0x00};
-    can_protocol_->sendFrame(it->second.motor_id, data);
-    it->second.status.is_enabled = false;
-}
-
-/**
  * Stops the motor associated with the given joint name.
  *
  * @param joint_name The name of the joint.
@@ -368,8 +287,6 @@ void MotorDriver::stopMotor(const std::string& joint_name) {
     }
 
     // Send emergency stop command
-    std::vector<uint8_t> data = {CANCommands::EMERGENCY_STOP};
-    can_protocol_->sendFrame(it->second.motor_id, data);
     
     // Reset command values
     it->second.command_velocity = 0.0;
@@ -386,124 +303,6 @@ void MotorDriver::stopAllMotors() {
     for (const auto& joint : joints_) {
         stopMotor(joint.first);
     }
-}
-
-/**
- * Sets the working mode of a motor.
- *
- * @param joint_name The name of the joint.
- * @param mode The desired working mode.
- */
-void MotorDriver::setWorkingMode(const std::string& joint_name, MotorMode mode) {
-    auto it = joints_.find(joint_name);
-    if (it == joints_.end()) {
-        RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
-        return;
-    }
-
-    std::vector<uint8_t> data = {
-        CANCommands::SET_WORKING_MODE,
-        static_cast<uint8_t>(mode)
-    };
-    can_protocol_->sendFrame(it->second.motor_id, data);
-    it->second.params.working_mode = static_cast<uint8_t>(mode);
-}
-
-/**
- * Sets the working current for a specific joint.
- * 
- * @param joint_name The name of the joint.
- * @param current_ma The working current in milliamperes.
- *
- * TODO: Add failsafe for current limits
- */
-void MotorDriver::setWorkingCurrent(const std::string& joint_name, uint16_t current_ma) {
-    auto it = joints_.find(joint_name);
-    if (it == joints_.end()) {
-        RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
-        return;
-    }
-
-    std::vector<uint8_t> data = {
-        CANCommands::SET_CURRENT,
-        static_cast<uint8_t>(current_ma & 0xFF),
-        static_cast<uint8_t>((current_ma >> 8) & 0xFF)
-    };
-    can_protocol_->sendFrame(it->second.motor_id, data);
-    it->second.params.working_current = current_ma;
-}
-
-/**
- * Sets the holding current for a specific joint.
- * 
- * @param joint_name The name of the joint.
- * @param percentage The percentage of the holding current to set (between 10 and 90).
- * TODO: Add failsafe for current limits
- */
-void MotorDriver::setHoldingCurrent(const std::string& joint_name, uint8_t percentage) {
-    auto it = joints_.find(joint_name);
-    if (it == joints_.end()) {
-        RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
-        return;
-    }
-
-    percentage = std::clamp(percentage, uint8_t(10), uint8_t(90));
-    uint8_t holding_value = (percentage - 10) / 10;  // Convert to 0-8 range
-
-    std::vector<uint8_t> data = {0x9B, holding_value};
-    can_protocol_->sendFrame(it->second.motor_id, data);
-    it->second.params.holding_current_percentage = percentage;
-}
-
-/**
- * Calibrates the motor for the specified joint.
- *
- * @param joint_name The name of the joint to calibrate the motor for.
- * 
- * NOTE: Calibration should be done before tensioning the belt or adding any mechanical load.
- */
-void MotorDriver::calibrateMotor(const std::string& joint_name) {
-    auto it = joints_.find(joint_name);
-    if (it == joints_.end()) {
-        RCLCPP_ERROR(node_->get_logger(), "Joint %s not found", joint_name.c_str());
-        return;
-    }
-
-    std::vector<uint8_t> data = {CANCommands::CALIBRATE, 0x00};
-    can_protocol_->sendFrame(it->second.motor_id, data);
-    
-    it->second.status.is_calibrated = false;  // Will be set true when calibration response received
-    RCLCPP_INFO(node_->get_logger(), "Starting calibration for joint %s", joint_name.c_str());
-}
-
-/**
- * @brief Homes the motor for the specified joint.
- * 
- * This function homes the motor for the specified joint by sending a CAN frame with the GO_HOME command.
- * If the joint is not found, an error message is logged and the function returns.
- * 
- * @param joint_name The name of the joint to home the motor for.
- */
-void MotorDriver::homeMotor(const std::string& joint_name) {
-    auto it = joints_.find(joint_name);
-    if (it == joints_.end()) {
-        RCLCPP_ERROR(node_->get_logger(), "[homeMotor] Joint %s not found", joint_name.c_str());
-        return;
-    }
-
-    auto& joint = it->second;
-    auto elapsed_time = node_->get_clock()->now() - joint.last_update;
-    if (elapsed_time.seconds() > 0.5) {
-        RCLCPP_WARN(node_->get_logger(), "[homeMotor] Joint %s has stale state data (last update %.2f seconds ago), homing might fail",
-                    joint_name.c_str(), elapsed_time.seconds());
-    }
-
-    std::vector<uint8_t> data = {CANCommands::GO_HOME};
-    can_protocol_->sendFrame(it->second.motor_id, data);
-    
-    joint.status.is_homed = false;  // Will be set true when homing complete
-    joint.last_command = node_->get_clock()->now();
-    RCLCPP_INFO(node_->get_logger(), "[homeMotor] Starting homing for joint %s", joint_name.c_str());
 }
 
 /**
@@ -546,9 +345,6 @@ bool MotorDriver::isMotorReady(const std::string& joint_name) const {
  * @note This function assumes that the `joints_` map has been populated with valid joint objects and that the `can_protocol_`
  * object has been properly initialized.
  */
-// void MotorDriver::updateJointStates() {
-//     RCLCPP_INFO(node_->get_logger(), "updateJointStates is running...");
-// }
 void MotorDriver::updateJointStates() {
     // RCLCPP_WARN(node_->get_logger(), "[updateJointStates] Starting joint state update cycle");
 
@@ -620,20 +416,47 @@ void MotorDriver::updateJointStates() {
 }
 
 
-void MotorDriver::processCANMessage(const can_msgs::msg::Frame::SharedPtr msg) {
-    std::stringstream encoder_data;
-    for (uint8_t i = 0; i < msg->dlc; i++) {
-        if (i == 0) {
-            encoder_data << "[ ";
-        } 
-        encoder_data << std::hex << static_cast<int>(msg->data[i]) << " ";
-        if (i == msg->dlc-1) {
-            encoder_data << "]"; 
+// void MotorDriver::processCANMessage(const can_msgs::msg::Frame::SharedPtr msg) {
+//     std::stringstream encoder_data;
+//     for (uint8_t i = 0; i < msg->dlc; i++) {
+//         if (i == 0) {
+//             encoder_data << "[ ";
+//         } 
+//         encoder_data << std::hex << static_cast<int>(msg->data[i]) << " ";
+//         if (i == msg->dlc-1) {
+//             encoder_data << "]"; 
+//         }
+//     }
+//     RCLCPP_INFO(node_->get_logger(), "Rx Data for %d: %s", msg->id, encoder_data.str().c_str());
+
+//     canMessageCallback(msg);
+// }
+
+void MotorDriver::processUartMessage() {
+    std::string message;
+    std::vector<double> decodedPositions;
+    do {
+        message = uart_protocol_->getFromBuffer();
+        if (message != "") {
+            decodedPositions = uart_protocol_->decodeMessage(message);
+            if (decodedPositions.size() != joints_.size()) 
+            {
+                RCLCPP_ERROR(node_->get_logger(), "The number of decoded joints does not match with the configured joints!");
+            }
+            else
+            {
+                size_t counter = 0;
+                for (auto& [joint_name, joint] : joints_) 
+                {
+                    std::vector<double> decodedPosition = {decodedPositions[counter]};
+                    processEncoderResponse(joint.motor_id, decodedPosition);      
+                    counter++;
+                }
+            }
+            
         }
     }
-    RCLCPP_INFO(node_->get_logger(), "Rx Data for %d: %s", msg->id, encoder_data.str().c_str());
-
-    canMessageCallback(msg);
+    while (message != "");
 }
 
 /**
@@ -643,58 +466,58 @@ void MotorDriver::processCANMessage(const can_msgs::msg::Frame::SharedPtr msg) {
  * 
  * @param msg The CAN message received.
  */
-void MotorDriver::canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg) {
-    RCLCPP_DEBUG(node_->get_logger(), "CAN message received - ID: %d, Command: 0x%02X", 
-                msg->id, msg->data[0]);
-    auto motor_it = motor_to_joint_map_.find(msg->id);
-    if (motor_it == motor_to_joint_map_.end()) {
-        RCLCPP_DEBUG(node_->get_logger(), "Received message for unknown motor ID: %d", msg->id);
-        return;
-    }
+// void MotorDriver::canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg) {
+//     RCLCPP_DEBUG(node_->get_logger(), "CAN message received - ID: %d, Command: 0x%02X", 
+//                 msg->id, msg->data[0]);
+//     auto motor_it = motor_to_joint_map_.find(msg->id);
+//     if (motor_it == motor_to_joint_map_.end()) {
+//         RCLCPP_DEBUG(node_->get_logger(), "Received message for unknown motor ID: %d", msg->id);
+//         return;
+//     }
 
-    std::vector<uint8_t> data(msg->data.begin(), msg->data.end());
+//     std::vector<uint8_t> data(msg->data.begin(), msg->data.end());
     
-    if (data.empty()) {
-        RCLCPP_WARN(node_->get_logger(), "Received empty CAN message");
-        return;
-    }
+//     if (data.empty()) {
+//         RCLCPP_WARN(node_->get_logger(), "Received empty CAN message");
+//         return;
+//     }
 
-    switch(data[0]) {
-        case CANCommands::READ_ENCODER:
-            if (msg->dlc < 8) {
-                RCLCPP_WARN(node_->get_logger(), "Invalid CAN message response length for READ_ENCODER");
-                return;
-            } else {
-                RCLCPP_INFO(node_->get_logger(), "Processing encoder response");
-                processEncoderResponse(msg->id, data);
-            }
-            break;
+//     switch(data[0]) {
+//         case CANCommands::READ_ENCODER:
+//             if (msg->dlc < 8) {
+//                 RCLCPP_WARN(node_->get_logger(), "Invalid CAN message response length for READ_ENCODER");
+//                 return;
+//             } else {
+//                 RCLCPP_INFO(node_->get_logger(), "Processing encoder response");
+//                 processEncoderResponse(msg->id, data);
+//             }
+//             break;
             
-        case CANCommands::READ_VELOCITY:
-            RCLCPP_INFO(node_->get_logger(), "Processing velocity response");
-            processVelocityResponse(msg->id, data);
-            break;
+//         case CANCommands::READ_VELOCITY:
+//             RCLCPP_INFO(node_->get_logger(), "Processing velocity response");
+//             processVelocityResponse(msg->id, data);
+//             break;
             
-        case CANCommands::READ_IO:
-            RCLCPP_INFO(node_->get_logger(), "Processing IO response");
-            processIOResponse(msg->id, data);
-            break;
+//         case CANCommands::READ_IO:
+//             RCLCPP_INFO(node_->get_logger(), "Processing IO response");
+//             processIOResponse(msg->id, data);
+//             break;
             
-        case CANCommands::ABSOLUTE_POSITION:
-        case CANCommands::CALIBRATE:
-        case CANCommands::GO_HOME:
-        case CANCommands::ENABLE_MOTOR:
-        case CANCommands::SET_ZERO_POSITION:
-        case CANCommands::ENABLE_SHAFT_PROTECTION:
-            RCLCPP_INFO(node_->get_logger(), "Processing status response");
-            processStatusResponse(msg->id, data);
-            break;
+//         case CANCommands::ABSOLUTE_POSITION:
+//         case CANCommands::CALIBRATE:
+//         case CANCommands::GO_HOME:
+//         case CANCommands::ENABLE_MOTOR:
+//         case CANCommands::SET_ZERO_POSITION:
+//         case CANCommands::ENABLE_SHAFT_PROTECTION:
+//             RCLCPP_INFO(node_->get_logger(), "Processing status response");
+//             processStatusResponse(msg->id, data);
+//             break;
             
-        default:
-            RCLCPP_INFO(node_->get_logger(), "Received unhandled command: 0x%02X", data[0]);
-            break;
-    }
-}
+//         default:
+//             RCLCPP_INFO(node_->get_logger(), "Received unhandled command: 0x%02X", data[0]);
+//             break;
+//     }
+// }
 
 /**
  * @brief Process the response from the encoder for a specific motor.
@@ -705,12 +528,7 @@ void MotorDriver::canMessageCallback(const can_msgs::msg::Frame::SharedPtr msg) 
  * @param motor_id The ID of the motor.
  * @param data The received data from the encoder.
  */
-void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uint8_t>& data) {
-    if (data.size() < 7) {
-        RCLCPP_WARN(node_->get_logger(), "Encoder response too short: %zu bytes", data.size());
-        return;
-    }
-
+void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<double>& data) {
     auto it = motor_to_joint_map_.find(motor_id);
     if (it == motor_to_joint_map_.end()) {
         RCLCPP_WARN(node_->get_logger(), "No joint found for motor ID: %d", motor_id);
@@ -720,26 +538,23 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
     const std::string& joint_name = it->second;
     auto& joint = joints_[joint_name];
 
-    // Extract encoder data (bytes 1-6)
-    std::vector<uint8_t> encoder_data(data.begin() + 1, data.begin() + 7);
-
-    // if the encoder response is exactly the same or the last byte is different by 1 as previous encoder data, no need to process.
-    if (isEncoderDataChanged(encoder_data, motor_id) == false) {
+    // if the encoder response is exactly the same as previous encoder data, no need to process.
+    if (isEncoderDataChanged(data, motor_id) == false) {
         RCLCPP_INFO(node_->get_logger(), "No new data for %d", motor_id);
         return;
     } else {
-        pre_encoder_data_[motor_id-1] = encoder_data;
+        pre_encoder_data_[motor_id-1] = data;
     }
 
     try {
         // **Log raw data for debugging**
         RCLCPP_DEBUG(node_->get_logger(), "Raw Encoder Data for %s:", joint_name.c_str());
-        for (size_t i = 0; i < encoder_data.size(); i++) {
-            RCLCPP_DEBUG(node_->get_logger(), "Byte %zu: 0x%02X", i, encoder_data[i]);
+        for (size_t i = 0; i < data.size(); i++) {
+            RCLCPP_DEBUG(node_->get_logger(), "Byte %zu: 0x%02X", i, data[i]);
         }
 
-        // **Decode motor angle**
-        double motor_angle_deg = CANProtocol::decodeInt48(encoder_data);
+        // **Get the decoded data as the first element**
+        double motor_angle_deg = data.front();
         RCLCPP_DEBUG(node_->get_logger(), "Decoded motor angle (degrees): %.2f", motor_angle_deg);
 
         // **Check for invalid values (NaN/Inf)**
@@ -805,21 +620,16 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<uin
  * @param encoder_data The current encoder data. expect a 6-byte vector
  * @return True if the encoder data has changed, false otherwise.
  */
-bool MotorDriver::isEncoderDataChanged(const std::vector<uint8_t>& encoder_data, const uint8_t motor_id) const {
+bool MotorDriver::isEncoderDataChanged(const std::vector<double>& encoder_data, const uint8_t motor_id) const {
     if (motor_id < 1 || motor_id > pre_encoder_data_.size() || encoder_data.size() != 6) {
         RCLCPP_WARN(node_->get_logger(), "Invalid motor ID or wrong encoder data size: %d", motor_id);
         return false;
     }
-    const uint8_t ENCODER_SIZE = 6;
     // Compare first 5 bytes
     for (uint8_t i = 0; i < ENCODER_SIZE-1; ++i) {
         if (encoder_data[i] != pre_encoder_data_[motor_id - 1][i]) {
             return true;
         }
-    }
-    // For last byte, only consider change if difference > 1
-    if (std::abs(encoder_data[5] - pre_encoder_data_[motor_id - 1][5]) > 1) {
-        return true;
     }
     return false;
 }
@@ -845,7 +655,7 @@ void MotorDriver::processVelocityResponse(uint8_t motor_id, const std::vector<ui
     std::vector<uint8_t> velocity_data(data.begin() + 1, data.begin() + 3);
 
     try {
-        double rpm = CANProtocol::decodeVelocityToRPM(velocity_data);
+        double rpm = 0;
         
         // Apply inversion if necessary
         if (joint.inverted) {
@@ -1221,7 +1031,7 @@ void MotorDriver::requestMotorData(uint8_t motor_id) {
     }
 
     for (const auto& request : requests) {
-        can_protocol_->sendFrame(motor_id, request);
+        // can_protocol_->sendFrame(motor_id, request);
         // Add small delay between requests to prevent flooding
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
