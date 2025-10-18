@@ -445,12 +445,12 @@ void MotorDriver::processUartMessage() {
             }
             else
             {
-                size_t counter = 0;
+                
                 for (auto& [joint_name, joint] : joints_) 
                 {
-                    std::vector<double> decodedPosition = {decodedPositions[counter]};
+                    std::vector<double> decodedPosition = {decodedPositions[joint.motor_id - 1]};
                     processEncoderResponse(joint.motor_id, decodedPosition);      
-                    counter++;
+                    
                 }
             }
             
@@ -621,12 +621,12 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<dou
  * @return True if the encoder data has changed, false otherwise.
  */
 bool MotorDriver::isEncoderDataChanged(const std::vector<double>& encoder_data, const uint8_t motor_id) const {
-    if (motor_id < 1 || motor_id > pre_encoder_data_.size() || encoder_data.size() != 6) {
+    if (motor_id < 1 || motor_id > pre_encoder_data_.size()) {
         RCLCPP_WARN(node_->get_logger(), "Invalid motor ID or wrong encoder data size: %d", motor_id);
         return false;
     }
-    // Compare first 5 bytes
-    for (uint8_t i = 0; i < ENCODER_SIZE-1; ++i) {
+    // Compare first bytes
+    for (uint8_t i = 0; i < ENCODER_SIZE; ++i) {
         if (encoder_data[i] != pre_encoder_data_[motor_id - 1][i]) {
             return true;
         }

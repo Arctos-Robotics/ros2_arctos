@@ -1,3 +1,4 @@
+// uart_protocol.h
 #ifndef UART_PROTOCOL_H_
 #define UART_PROTOCOL_H_
 
@@ -6,7 +7,7 @@
 #include <vector>
 #include <queue>
 
-#define DELIMITER   ";"
+#define DELIMITER   ","
 
 namespace arctos_motor_driver {
 
@@ -58,6 +59,6 @@ private:
     bool sendMsg(const std::string &msg_to_send);
 };
 
-}
+} // namespace arctos_motor_driver
 
-#endif  //URT_PROTOCOL_H_
+#endif  //UART_PROTOCOL_H_
