@@ -41,36 +41,36 @@
 
   <xacro:arctos_link
     name="link_3"
-    inertia_origin_xyz="0.054747 0.060447 0.045778" inertia_origin_rpy="0 0 0"
+    inertia_origin_xyz="0.054747 -0.045778 0.060447" inertia_origin_rpy="0 0 0"
     mass="37.594"
-    ixx="0.31727" ixy="0.0065087" ixz="0.0048815" iyy="0.16116" iyz="-0.088578" izz="0.26582"
+    ixx="0.31727" ixy="-0.0048815" ixz="0.0065087" iyy="0.26582" iyz="0.088578" izz="0.16116"
     origin_xyz="0 0 0" origin_rpy="0 0 0"
     material_name="gray"
   />
 
   <xacro:arctos_link
     name="link_4"
-    inertia_origin_xyz="0.0051846 0.10645 0.00064606" inertia_origin_rpy="0 0 0"
-    mass="1.006"
-    ixx="0.062769" ixy="-0.001868" ixz="-3.6977E-05" iyy="0.028683" iyz="0.00032273" izz="0.069443"
+    inertia_origin_xyz="0.0051846 -0.00064606 0.10645" inertia_origin_rpy="0 0 0"
+    mass="14.917"
+    ixx="0.062769" ixy="3.6977E-05" ixz="-0.001868" iyy="0.069443" iyz="-0.00032273" izz="0.028683"
     origin_xyz="0 0 0" origin_rpy="0 0 0"
     material_name="gray"
   />
 
   <xacro:arctos_link
     name="link_5"
-    inertia_origin_xyz="-0.00049422 0.0067098 -2.4246E-07" inertia_origin_rpy="0 0 0"
+    inertia_origin_xyz="-0.00049422 2.4246E-07 0.0067098" inertia_origin_rpy="0 0 0"
     mass="0.34309"
-    ixx="0.00034995" ixy="-1.1371E-06" ixz="1.2487E-09" iyy="0.00022745" iyz="1.4302E-09" izz="0.00030039"
+    ixx="0.00034995" ixy="-1.2487E-09" ixz="-1.1371E-06" iyy="0.00030039" iyz="-1.4302E-09" izz="0.00022745"
     origin_xyz="0 0 0" origin_rpy="0 0 0"
     material_name="gray"
   />
 
   <xacro:arctos_link
     name="link_6"
-    inertia_origin_xyz="3.1972E-05 0.011587 0" inertia_origin_rpy="0.0 0.0 0.0"
+    inertia_origin_xyz="3.1972E-05 -5.2042E-18 0.011587" inertia_origin_rpy="0.0 0.0 0.0"
     mass="0.068739"
-    ixx="2.0617E-05" ixy="-2.849E-08" ixz="-7.3853E-22" iyy="3.4376E-05" iyz="2.1018E-21" izz="2.0453E-05"
+    ixx="2.0617E-05" ixy="-1.6907E-20" ixz="-2.849E-08" iyy="2.0453E-05" iyz="2.0027E-21" izz="3.4376E-05"
     origin_xyz="0 0 0" origin_rpy="0 0 0"
     material_name="gray"
   />
@@ -98,21 +98,21 @@
     parent="link_2" child="link_3"
     origin_xyz="0 0.029976 0.36377" origin_rpy="0 0 0"
     axis_xyz="-1 0 0"
-    limit_l="-2.0769" limit_u="1.5" limit_e="1" limit_v="3.4907" mimic=""
+    limit_l="-2.0769" limit_u="2.949606436" limit_e="1" limit_v="3.4907" mimic=""
   />
 
   <xacro:arctos_joint
     name="A_joint" type="revolute"
     parent="link_3" child="link_4"
-    origin_xyz="0.048 0.198 0.09" origin_rpy="0 0 0"
-    axis_xyz="0.0 1.0 0.0"
+    origin_xyz="0.048 -0.09 0.198" origin_rpy="0 0 0"
+    axis_xyz="0 0 1"
     limit_l="-3.3161" limit_u="3.3161" limit_e="1" limit_v="5.236" mimic=""
   />
 
   <xacro:arctos_joint
     name="B_joint" type="revolute"
     parent="link_4" child="link_5"
-    origin_xyz="0 0.207 0" origin_rpy="0 0 0"
+    origin_xyz="0 0 0.207" origin_rpy="0 0 0"
     axis_xyz="1 0 0"
     limit_l="-2.0944" limit_u="2.0944" limit_e="1" limit_v="5.236" mimic=""
   />
@@ -120,8 +120,8 @@
   <xacro:arctos_joint
     name="C_joint" type="revolute"
     parent="link_5" child="link_6"
-    origin_xyz="0 0.052 0" origin_rpy="0 0 0"
-    axis_xyz="0.0 1.0 0.0"
+    origin_xyz="0 0 0.052" origin_rpy="0 0 0"
+    axis_xyz="0.0 0.0 1.0"
     limit_l="-6.2832" limit_u="6.2832" limit_e="1" limit_v="8.3776" mimic=""
   />
 </robot>

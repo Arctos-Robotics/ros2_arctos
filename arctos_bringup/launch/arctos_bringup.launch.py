@@ -92,12 +92,12 @@ def generate_launch_description():
         arguments=["arctos_hand_controller", "--controller-manager", "/controller_manager"],
     )
 
-    # Include CAN Launch
-    can_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([arctos_hardware_interface_dir, "launch", "can_interface.launch.py"])
-        )
-    )
+    # # Include CAN Launch
+    # can_launch = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         PathJoinSubstitution([arctos_hardware_interface_dir, "launch", "can_interface.launch.py"])
+    #     )
+    # )
 
     # Include MoveIt Launch
     move_group_launch = IncludeLaunchDescription(
@@ -128,5 +128,5 @@ def generate_launch_description():
         joint_state_broadcaster_spawner,
         delay_robot_arm_controller_spawner,
         delay_rviz_and_moveit_launch,
-        can_launch
+        # can_launch
     ])

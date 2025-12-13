@@ -23,3 +23,9 @@ moveit_simple_controller_manager:
       - C_joint
     action_ns: follow_joint_trajectory
     default: true
+
+trajectory_execution:
+  execution_duration_monitoring: false  # Disable monitoring for simplicity
+  # Other optional parameters:
+  # allowed_goal_duration_margin: 0.5  # allows an extra 0.5 seconds beyond expected duration
+  # allowed_start_tolerance: 0.01      # tolerance for trajectory start point validation

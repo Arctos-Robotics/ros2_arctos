@@ -117,6 +117,7 @@ namespace arctos_interface
                 if (interface.name == "velocity")
                     has_velocity_interface_ = true;
             }
+            
         }
 
         node_->declare_parameter("position_tolerance", 0.001);
@@ -169,6 +170,7 @@ namespace arctos_interface
 
                     RCLCPP_INFO(node_->get_logger(), "Homing completed for joint %s", joint_name.c_str());
                 }
+
             }
             catch (const std::exception &e)
             {
@@ -176,6 +178,7 @@ namespace arctos_interface
                              info_.joints[i].name.c_str(), e.what());
                 return CallbackReturn::ERROR;
             }
+            joint_position_command_[i] = 0.0; // force home on first activation
         }
 
         // thread spin is required for continously reading UART strings, 
@@ -274,13 +277,13 @@ namespace arctos_interface
         // Process UART messages
         motor_driver_->processUartMessage();
 
-        static rclcpp::Time last_update_time = time; // ✅ Static variable retains value between calls
+        static rclcpp::Time last_update_time = time; //  Static variable retains value between calls
         auto elapsed_time = time - last_update_time;
 
         // Limit CAN queries to once every 500ms
         // if (elapsed_time.seconds() > 0.01) {
         //     motor_driver_->updateJointStates();  // Fetch fresh data from CAN bus
-        //     last_update_time = time;  // ✅ Now correctly updated after each call
+        //     last_update_time = time;  //  Now correctly updated after each call
         // }
 
         // updateJointStates is a function that explicitly request the joint status of the robot.
@@ -346,7 +349,7 @@ namespace arctos_interface
         // Resize last command vectors if not already done
         if (last_position_command_.size() != info_.joints.size())
         {
-            last_position_command_.resize(info_.joints.size(), 0.0);
+            last_position_command_.resize(info_.joints.size(), -1.0);   // force homing on first activation
             last_velocity_command_.resize(info_.joints.size(), 0.0);
             RCLCPP_INFO(node_->get_logger(), "Initialized last command vectors.");
         }

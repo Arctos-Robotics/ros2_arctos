@@ -51,12 +51,12 @@ inline bool parseDoubleStrict(const std::string &token_in, double &out) {
 }
 
 // EOL dùng khi đọc/ghi dòng. Nếu firmware yêu cầu CRLF, đổi thành "\r\n".
-constexpr const char* kEOL = "\n";
+constexpr const char* kEOL = "\r";
 
 // Lấy ký tự phân tách đầu tiên từ macro DELIMITER (giả định 1 ký tự)
 constexpr char delimChar() { return DELIMITER[0]; }
 
-} // anonymous namespace
+} // anonymous namespaceS
 
 
 namespace arctos_motor_driver {
@@ -114,7 +114,7 @@ bool UartProtocol::sendEmptyMsg()
  * for multiple joints/motors. The expected format should be defined based on
  * the communication protocol (e.g., comma-separated, semicolon-separated values).
  * 
- * @param data The raw message string received from the UART device
+ * @param data The raw message string received from the UART device, the string format is "j1,j2,j3,j4,j5,j6"
  * @return std::vector<double> A vector containing decoded position values for each joint
  * 
  * @note This function currently returns an empty vector - implementation needed
@@ -122,7 +122,7 @@ bool UartProtocol::sendEmptyMsg()
  */
 std::vector<double> UartProtocol::decodeMessage(const std::string data) {
     // decode the data here
-        // Làm việc trên bản sao (đúng prototype nhận by-value)
+    // Làm việc trên bản sao (đúng prototype nhận by-value)
     std::string line = data;
 
     // Bỏ EOL/CR ở cuối nếu có
@@ -192,7 +192,7 @@ bool UartProtocol::sendPosition(std::vector<double> &positions) {
  * @brief Reads incoming data from UART and stores it in the receive buffer.
  * 
  * This function continuously reads data from the serial connection until it encounters
- * the specified delimiter (defined as ";" in DELIMITER). The received data is then
+ * the specified delimiter (defined as "," in DELIMITER). The received data is then
  * stored in a queue buffer for later processing. This function is typically called
  * in a loop or timer to continuously monitor incoming messages.
  * 
@@ -220,7 +220,7 @@ void UartProtocol::readToBuffer(void)
             std::cerr << "uart: readToBuffer: received: " << raw << '\n';
         }
         else{
-            std::cerr << "uart: readToBuffer: empty line received\n";
+            std::cerr << ".";
         }
     } catch (const std::exception& e) {
         std::cerr << "uart: readToBuffer: " << e.what() << '\n';

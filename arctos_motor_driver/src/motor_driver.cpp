@@ -173,17 +173,18 @@ void MotorDriver::setJointPosition(const std::string& joint_name, double positio
  */
 void MotorDriver::writeCommand() {
     std::string command = "";
-    std::vector<double> commandPositions;
+    std::vector<double> commandPositions(joints_.size(), 0.0);
     for (auto& [joint_name, joint] : joints_) {
-        // Send CAN command
-        // std::vector<uint8_t> data1;
-        // can_protocol_->sendFrame(joint.motor_id, data1);
-        command.append(std::to_string(joint.command_position) + ";");
-        commandPositions.push_back(joint.command_position);
+        // motor_id start from 1, so we need to minus 1 to get the correct index
+        commandPositions[joint.motor_id-1] = joint.command_position;
         joint.last_command = node_->get_clock()->now();
     }
+    for (size_t i = 0; i < commandPositions.size(); i++) {
+        command += std::to_string(commandPositions[i]) + ";";
+    }
+        RCLCPP_INFO(node_->get_logger(), "Write command to actuator: %s", command.c_str());
+    
     uart_protocol_->sendPosition(commandPositions);
-    RCLCPP_INFO(node_->get_logger(), "Write command to actuator: %s", command.c_str());
 }
 
 
@@ -225,8 +226,8 @@ void MotorDriver::setJointVelocity(const std::string& joint_name, double velocit
     rpm = std::min(rpm, max_speed);
     
     // Prepare velocity command
-    uint8_t direction = velocity >= 0 ? 0x00 : 0x80;
-    uint16_t speed = static_cast<uint16_t>(rpm);
+    // uint8_t direction = velocity >= 0 ? 0x00 : 0x80;
+    // uint16_t speed = static_cast<uint16_t>(rpm);
     
     joint.command_velocity = velocity;
     joint.last_command = node_->get_clock()->now();
@@ -526,7 +527,7 @@ void MotorDriver::processUartMessage() {
  * It calculates the position error by subtracting the current joint position from the commanded position.
  *
  * @param motor_id The ID of the motor.
- * @param data The received data from the encoder.
+ * @param data The received data from the encoder. currently, data is just a vector of double with size 1.
  */
 void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<double>& data) {
     auto it = motor_to_joint_map_.find(motor_id);
@@ -548,9 +549,9 @@ void MotorDriver::processEncoderResponse(uint8_t motor_id, const std::vector<dou
 
     try {
         // **Log raw data for debugging**
-        RCLCPP_DEBUG(node_->get_logger(), "Raw Encoder Data for %s:", joint_name.c_str());
+        RCLCPP_DEBUG(node_->get_logger(), "Raw Encoder Data for %s", joint_name.c_str());
         for (size_t i = 0; i < data.size(); i++) {
-            RCLCPP_DEBUG(node_->get_logger(), "Byte %zu: 0x%02X", i, data[i]);
+            RCLCPP_DEBUG(node_->get_logger(), "Byte %zu: 0x%02f", i, data[i]);
         }
 
         // **Get the decoded data as the first element**
@@ -1032,6 +1033,7 @@ void MotorDriver::requestMotorData(uint8_t motor_id) {
 
     for (const auto& request : requests) {
         // can_protocol_->sendFrame(motor_id, request);
+        request.empty();
         // Add small delay between requests to prevent flooding
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }

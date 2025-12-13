@@ -3,7 +3,7 @@
 # MoveIt automatically connects to this action interface.
 controller_manager:
   ros__parameters:
-    update_rate: 10  # Hz ([read -> update -> write] cycle is executed 20 times per second)
+    update_rate: 2  # Hz ([read -> update -> write] cycle is executed 20 times per second)
 
     denso_arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
@@ -41,7 +41,7 @@ arctos_hardware_interface:
       X_joint:
         motor_id: 1
         requires_homing: false
-        inverted: true            # for application: app request go to 10 rad, but raw request to 10 rad
+        inverted: false            # for application: app request go to 10 rad, but raw request to 10 rad
         inverted_feedback: false  # for can communication: raw request go to 1000, but motor run to -1000
         gear_ratio: 1.0
         hardware_type: MKS_57D
@@ -51,7 +51,7 @@ arctos_hardware_interface:
       Y_joint:
         motor_id: 2
         requires_homing: false
-        inverted: true            # for application: app request go to 10 rad, but raw request to 10 rad
+        inverted: false            # for application: app request go to 10 rad, but raw request to 10 rad
         inverted_feedback: false  # for case of request go to 1000, but motor run to -1000
         gear_ratio: 1.0
         hardware_type: MKS_57D
@@ -61,7 +61,7 @@ arctos_hardware_interface:
       Z_joint:
         motor_id: 3
         requires_homing: false
-        inverted: true            # for application: app request go to 10 rad, but raw request to 10 rad
+        inverted: false            # for application: app request go to 10 rad, but raw request to 10 rad
         inverted_feedback: false  # for case of request go to 1000, but motor run to -1000
         gear_ratio: 1.0
         hardware_type: MKS_42D
@@ -71,7 +71,7 @@ arctos_hardware_interface:
       A_joint:
         motor_id: 4
         requires_homing: false
-        inverted: true            # for application: app request go to 10 rad, but raw request to 10 rad
+        inverted: false            # for application: app request go to 10 rad, but raw request to 10 rad
         inverted_feedback: false  # for case of request go to 1000, but motor run to -1000
         gear_ratio: 1.0
         hardware_type: MKS_42D
@@ -81,8 +81,8 @@ arctos_hardware_interface:
       B_joint:                    
         motor_id: 5
         requires_homing: false
-        inverted: false             # for application: app request go to 10 rad, but raw request to 10 rad (validated)
-        inverted_feedback: true     # for case of request go to 1000, but motor run to -1000 (validated)
+        inverted: true             # for application: app request go to 10 rad, but raw request to 10 rad (validated)
+        inverted_feedback: false     # for case of request go to 1000, but motor run to -1000 (validated)
         gear_ratio: 1.0
         hardware_type: MKS_42D
         zero_position: -0.0
@@ -91,7 +91,7 @@ arctos_hardware_interface:
       C_joint:
         motor_id: 6
         requires_homing: false
-        inverted: true                # for application: app request go to 10 rad, but raw request to 10 rad
+        inverted: false                # for application: app request go to 10 rad, but raw request to 10 rad
         inverted_feedback: false      # for case of request go to 1000, but motor run to -1000
         gear_ratio: 1.0
         hardware_type: MKS_42D
