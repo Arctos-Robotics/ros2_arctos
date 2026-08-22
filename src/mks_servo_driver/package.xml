@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>mks_servo_driver</name>
+  <version>0.1.0</version>
+  <description>MKS SERVO 42D/57D CAN motor driver node</description>
+  <maintainer email="arctos@arctos.org">Arctos Robotics</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>can_msgs</depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
